@@ -11,10 +11,10 @@ TBD
 
 ## Авторы
 
-* [**Глеб Макаренко**](https://github.com/Glibusss)
-* [**Даниил Капитанов**](https://github.com/SmileyTheSmile)
-* [**Владислав Фоменко**](https://github.com/wolpy01)
-* [**Никита Архаров**](https://github.com/bqback)
+* [**Глеб Макаренко**](https://github.com/Glibusss) - *Фронтенд*
+* [**Даниил Капитанов**](https://github.com/SmileyTheSmile) - *Бекенд*
+* [**Владислав Фоменко**](https://github.com/wolpy01) - *Фронтенд*
+* [**Никита Архаров**](https://github.com/bqback) - *Бекенд*
 
 ## Менторы
 - [Ларкин Егор](https://github.com/WhoIsYgim) - *Бекенд*
