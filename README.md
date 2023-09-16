@@ -1,0 +1,28 @@
+# 2023_2_yablonka
+Фронтенд-репозиторий проекта Trello команды Яблонька
+
+## Деплой
+
+TDB
+
+## API
+
+TBD
+
+## Авторы
+
+* [**Глеб Макаренко**](https://github.com/Glibusss)
+* [**Даниил Капитанов**](https://github.com/SmileyTheSmile)
+* [**Владислав Фоменко**](https://github.com/wolpy01)
+* [**Никита Архаров**](https://github.com/bqback)
+
+## Менторы
+- [Ларкин Егор](https://github.com/WhoIsYgim) - *Бекенд*
+
+- [Александр Салтыков](https://github.com/johnSamilin) - *Фронтенд*
+
+- Анастасия Теренюк - *UX*
+
+## Ссылка на backend
+
+[https://github.com/go-park-mail-ru/2021_2_MAMBa](https://github.com/go-park-mail-ru/2023_2_yablonka)
