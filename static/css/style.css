@@ -118,10 +118,11 @@ html {
   position: relative;
 }
 
-.container__signup-location__container img{
+.container__signup-location__container img {
   height: 2rem;
   width: 2.8rem;
   padding-left: 3px;
+}
 
 .container__signup-location__svg-email::after {
   background-image: url("../svg/email.svg");
