@@ -44,14 +44,13 @@ html {
 }
 
 .container__image-right img {
-  height: 38rem;
-  width: 60rem;
-
+  height: 30rem;
+  width: 50rem;
 }
 
 .container__image-left img {
-  height: 45rem;
-  width: 55rem;
+  height: 34rem;
+  width: 40rem;
 }
 .container__signup-location {
   margin-top: 10rem;
@@ -123,8 +122,29 @@ html {
   height: 2rem;
   width: 2.8rem;
   padding-left: 3px;
+
+.container__signup-location__svg-email::after {
+  background-image: url("../svg/email.svg");
+  bottom: 0.7rem;
+  left: 0.7rem;
+  width: 2rem;
+  height: 2rem;
 }
 
+.container__signup-location__svg-password::after {
+  background-image: url("../svg/password.svg");
+  bottom: 0.3rem;
+  left: 0.4rem;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+.container__signup-location__svg-repeat-password::after {
+  background-image: url("../svg/repeat_password.svg");
+  height: 2.5rem;
+  width: 2.5rem;
+  bottom: 0.3rem;
+  left: 0.4rem;
+}
 .container__signup-location__password::placeholder,
 .container__signup-location__repeat-password::placeholder,
 .container__signup-location__email::placeholder {
