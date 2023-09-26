@@ -4,18 +4,27 @@
   border: 0;
   box-sizing: border-box;
   font-family: Ubuntu;
+  
 }
 
 html {
   font-size: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
 }
 
 .container {
   width: 100%;
-  height: fit-content;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .container__background {
@@ -33,28 +42,25 @@ html {
   right: 2rem;
   width: fit-content;
   height: fit-content;
+  transform: scale(-1, 1);
 }
 
 .container__image-left {
   position: absolute;
   bottom: 0;
-  left: 10rem;
+  left: 8rem;
   width: fit-content;
   height: fit-content;
 }
 
 .container__image-right img {
-  height: 30rem;
-  width: 50rem;
+  height: 37.5rem;
+  width: 60rem;
 }
 
 .container__image-left img {
-  height: 34rem;
-  width: 40rem;
-}
-.container__signup-location {
-  margin-top: 10rem;
-  justify-self: center;
+  height: 42.5rem;
+  width: 60rem;
 }
 
 .container__signup-location__header {
@@ -62,6 +68,7 @@ html {
   color: #fff;
   text-shadow: #000 0 0.5rem 0.4rem;
   display: flex;
+  margin-bottom: 3rem;
 }
 
 .container__signup-location__header img {
@@ -76,16 +83,8 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.href-registration {
-  margin-top: 3.5rem;
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  color: #fff;
-  font-size: 1.8rem;
-  font-weight: bold;
+  justify-content: center;
+  margin-bottom: 5rem;
 }
 
 .container__signup-location__header-registration {
@@ -107,7 +106,6 @@ html {
 .container__signup-location__password,
 .container__signup-location__repeat-password,
 .container__signup-location__email {
-
   color: #b0b0b0;
   background: transparent;
   height: 3rem;
@@ -124,33 +122,21 @@ html {
   padding-left: 3px;
 }
 
-.container__signup-location__svg-email::after {
-  background-image: url("../svg/email.svg");
-  bottom: 0.7rem;
-  left: 0.7rem;
-  width: 2rem;
-  height: 2rem;
-}
-
-.container__signup-location__svg-password::after {
-  background-image: url("../svg/password.svg");
-  bottom: 0.3rem;
-  left: 0.4rem;
-  height: 2.5rem;
-  width: 2.5rem;
-}
-.container__signup-location__svg-repeat-password::after {
-  background-image: url("../svg/repeat_password.svg");
-  height: 2.5rem;
-  width: 2.5rem;
-  bottom: 0.3rem;
-  left: 0.4rem;
-}
 .container__signup-location__password::placeholder,
 .container__signup-location__repeat-password::placeholder,
 .container__signup-location__email::placeholder {
   color: #b0b0b0;
   font-size: 2rem;
+}
+
+.href-registration {
+  margin-top: 2rem;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 .button-registration {
