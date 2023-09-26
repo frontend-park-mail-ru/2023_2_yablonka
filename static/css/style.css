@@ -1,38 +1,9 @@
-@font-face {
-  font-family: "Ubuntu-Bold";
-  src: url("../font/Ubuntu-Bold.ttf") format("truetype");
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Ubuntu-Regular";
-  src: url("../font/Ubuntu-Regular.ttf") format("truetype");
-  font-weight: bolder;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Ubuntu-Medium";
-  src: url("../font/Ubuntu-Medium.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Ubuntu-Light";
-  src: url("../font/Ubuntu-Light.ttf") format("truetype");
-  font-weight: lighter;
-  font-style: normal;
-}
-
 * {
   margin: 0;
   padding: 0;
   border: 0;
   box-sizing: border-box;
-  font-family: "Ubuntu-Medium";
-  /* cursor: url("../cur/Normal.cur") 0 0, default; */
+  font-family: Ubuntu;
 }
 
 html {
@@ -41,8 +12,10 @@ html {
 
 .container {
   width: 100%;
-  height: 75.4rem;
-  display: grid;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .container__background {
@@ -57,23 +30,28 @@ html {
 .container__image-right {
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 2rem;
+  width: fit-content;
+  height: fit-content;
 }
 
 .container__image-left {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 10rem;
+  width: fit-content;
+  height: fit-content;
 }
 
 .container__image-right img {
-  width: 45rem;
-  height: 48.8rem;
+  height: 38rem;
+  width: 60rem;
+
 }
 
 .container__image-left img {
-  width: 36rem;
-  height: 36.6rem;
+  height: 45rem;
+  width: 55rem;
 }
 .container__signup-location {
   margin-top: 10rem;
@@ -85,7 +63,6 @@ html {
   color: #fff;
   text-shadow: #000 0 0.5rem 0.4rem;
   display: flex;
-  vertical-align: middle;
 }
 
 .container__signup-location__header img {
@@ -96,13 +73,20 @@ html {
   color: #fff;
 }
 
+.container__signup-location__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .href-registration {
+  margin-top: 3.5rem;
   display: block;
+  text-align: center;
   text-decoration: none;
   color: #fff;
   font-size: 1.8rem;
-  margin-top: 3.5rem;
-  text-align: center;
+  font-weight: bold;
 }
 
 .container__signup-location__header-registration {
@@ -132,7 +116,6 @@ html {
 .container__signup-location__password::before,
 .container__signup-location__repeat-password::before,
 .container__signup-location__email::before {
-  content: "";
   background-image: url("../svg/email.svg");
 }
 
@@ -141,4 +124,15 @@ html {
 .container__signup-location__email::placeholder {
   color: #b0b0b0;
   font-size: 2rem;
+}
+
+.button-registration {
+  background-color: #000;
+  height: 4.5rem;
+  width: 25rem;
+  border-radius: 10px;
+  margin-top: 2rem;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
 }
