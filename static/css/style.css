@@ -94,36 +94,34 @@ html {
   margin-top: 2rem;
 }
 
-.container__signup-location__password,
-.container__signup-location__repeat-password,
-.container__signup-location__email {
+.container__signup-location__container {
   margin-top: 3.5rem;
-  color: #b0b0b0;
-  background: transparent;
-  height: 3rem;
-  width: 30rem;
   border-color: #fff;
   border-style: solid;
   border-width: 2px;
   border-radius: 5px;
-  padding-left: 3.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.container__signup-location__password,
+.container__signup-location__repeat-password,
+.container__signup-location__email {
+
+  color: #b0b0b0;
+  background: transparent;
+  height: 3rem;
+  width: 30rem;
+  padding-left: 5px;
   font-size: 2rem;
   outline: none;
   position: relative;
 }
 
-.container__signup-location__container {
-  position: relative;
-}
-
-.container__signup-location__svg-email::after,
-.container__signup-location__svg-password::after,
-.container__signup-location__svg-repeat-password::after {
-  content: "";
-  background-size: cover;
-  position: absolute;
-  z-index: 1;
-}
+.container__signup-location__container img{
+  height: 2rem;
+  width: 2.8rem;
+  padding-left: 3px;
 
 .container__signup-location__svg-email::after {
   background-image: url("../svg/email.svg");
@@ -159,7 +157,7 @@ html {
   height: 4.5rem;
   width: 25rem;
   border-radius: 10px;
-  margin-top: 2rem;
+  margin-top: 3rem;
   color: #fff;
   font-size: 2rem;
   font-weight: bold;
