@@ -4,11 +4,104 @@
   border: 0;
   box-sizing: border-box;
   font-family: Ubuntu;
-  
+}
+
+@media only screen and (max-width: 300px) {
+  html {
+    font-size: 1px;
+    --scale-factor: 1;
+  }
+
+  .page__image_right img {
+    display: none;
+  }
+
+  .page__image_left img {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 480px) {
+  html {
+    font-size: 2px;
+    --scale-factor: 1;
+  }
+
+  .page__image_right img {
+    display: none;
+  }
+
+  .page__image_left img {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 550px) {
+  html {
+    font-size: 2px;
+    --scale-factor: 1;
+  }
+
+  .page__image_right img {
+    display: none;
+  }
+
+  .page__image_left img {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 600px) {
+  html {
+    font-size: 3px;
+    --scale-factor: 1;
+  }
+
+  .page__image_right img {
+    display: none;
+  }
+
+  .page__image_left img {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+  html {
+    font-size: 4px;
+    --scale-factor: 1;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 900px) {
+  html {
+    font-size: 5px;
+    --scale-factor: 1;
+  }
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1080px) {
+  html {
+    font-size: 6px;
+    --scale-factor: 1;
+  }
+}
+
+@media only screen and (min-width: 1080px) and (max-width: 1440px) {
+  html {
+    font-size: 7px;
+    --scale-factor: 2;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  html {
+    font-size: 10px;
+    --scale-factor: 2;
+  }
 }
 
 html {
-  font-size: 10px;
   width: 100%;
   height: 100%;
 }
@@ -18,7 +111,7 @@ body {
   height: 100%;
 }
 
-.container {
+.page {
   width: 100%;
   height: 100%;
   display: flex;
@@ -27,7 +120,7 @@ body {
   justify-content: center;
 }
 
-.container__background {
+.page__background {
   position: absolute;
   background-color: #37426d;
   width: 100%;
@@ -36,126 +129,111 @@ body {
   overflow-y: hidden;
 }
 
-.container__image-right {
+.page__image {
   position: absolute;
   bottom: 0;
+}
+
+.page__image_right {
   right: 2rem;
   width: fit-content;
   height: fit-content;
   transform: scale(-1, 1);
 }
 
-.container__image-left {
-  position: absolute;
-  bottom: 0;
-  left: 8rem;
+.page__image_left {
+  left: 2rem;
   width: fit-content;
   height: fit-content;
 }
 
-.container__image-right img {
+.page__image_right img {
   height: 37.5rem;
   width: 60rem;
 }
 
-.container__image-left img {
+.page__image_left img {
   height: 42.5rem;
-  width: 60rem;
+  width: 55rem;
 }
 
-.container__signup-location__header {
-  font-size: 6.4rem;
+.signup-location__header {
+  font-size: calc(56px * var(--scale-factor));
   color: #fff;
   text-shadow: #000 0 0.5rem 0.4rem;
-  display: flex;
   margin-bottom: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.container__signup-location__header img {
+.signup-location__header img {
   padding-right: 1rem;
+  width: calc(70px * var(--scale-factor));
+  height: calc(70px * var(--scale-factor));
 }
 
-.container__signup-location__header-registration {
+.signup-location__header-registration {
   color: #fff;
 }
 
-.container__signup-location__form {
+.signup-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   margin-bottom: 5rem;
 }
 
-.container__signup-location__header-registration {
+.signup-location__header-registration {
   text-align: center;
-  font-size: 2.8rem;
+  font-size: calc(24px * var(--scale-factor));
   margin-top: 2rem;
 }
 
-.container__signup-location__container {
+.signup-form__container {
   margin-top: 3.5rem;
   border-color: #fff;
   border-style: solid;
-  border-width: 2px;
+  border-width: calc(2px * var(--scale-factor));
   border-radius: 5px;
   display: flex;
   align-items: center;
 }
 
-.container__signup-location__password,
-.container__signup-location__repeat-password,
-.container__signup-location__email {
+.signup-form__input {
   color: #b0b0b0;
   background: transparent;
-  height: 3rem;
-  width: 30rem;
+  height: calc(27px * var(--scale-factor));
+  width: calc(270px * var(--scale-factor));
   padding-left: 5px;
-  font-size: 2rem;
+  font-size: calc(18px * var(--scale-factor));
   outline: none;
   position: relative;
 }
 
-.container__signup-location__container img {
-  height: 2rem;
-  width: 2.8rem;
+.signup-form__container img {
+  height: calc(18px * var(--scale-factor));
+  width: calc(25px * var(--scale-factor));
   padding-left: 3px;
 }
 
-.container__signup-location__password::placeholder,
-.container__signup-location__repeat-password::placeholder,
-.container__signup-location__email::placeholder {
-  color: #b0b0b0;
-  font-size: 2rem;
-}
-
-.href-forgotten-password {
-  color: #fff;
-  margin-top: 5px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-decoration: none;
-  display: flex;
-  align-self: flex-end;
-}
-
 .href-registration {
-  margin-top: 2rem;
+  margin-top: 3rem;
   display: block;
   text-align: center;
   text-decoration: none;
   color: #fff;
-  font-size: 1.8rem;
+  font-size: calc(18px * var(--scale-factor));
   font-weight: bold;
 }
 
 .button-registration {
   background-color: #000;
-  height: 4.5rem;
-  width: 25rem;
+  height: calc(42px * var(--scale-factor));
+  width: calc(220px * var(--scale-factor));
   border-radius: 10px;
   margin-top: 3rem;
   color: #fff;
-  font-size: 2rem;
+  font-size: calc(18px * var(--scale-factor));
   font-weight: bold;
 }
