@@ -6,7 +6,7 @@
   font-family: Ubuntu;
 }
 
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 480px) {
   html {
     font-size: 1px;
     --scale-factor: 1;
@@ -19,21 +19,7 @@
   .page__image_left img {
     display: none;
   }
-}
 
-@media only screen and (min-width: 300px) and (max-width: 480px) {
-  html {
-    font-size: 2px;
-    --scale-factor: 1;
-  }
-
-  .page__image_right img {
-    display: none;
-  }
-
-  .page__image_left img {
-    display: none;
-  }
 }
 
 @media only screen and (max-height: 550px) {
@@ -87,17 +73,17 @@
   }
 }
 
-@media only screen and (min-width: 1080px) and (max-width: 1440px) {
+@media only screen and (min-width: 1080px) and (max-width: 1920px) {
   html {
     font-size: 7px;
-    --scale-factor: 2;
+    --scale-factor: 1;
   }
 }
 
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 2560px) {
   html {
     font-size: 10px;
-    --scale-factor: 2;
+    --scale-factor: 1.5;
   }
 }
 
@@ -191,7 +177,7 @@ body {
 }
 
 .signup-form__container {
-  margin-top: 3.5rem;
+  margin-top: calc(27px * var(--scale-factor) + 5px);
   border-color: #fff;
   border-style: solid;
   border-width: calc(2px * var(--scale-factor));
