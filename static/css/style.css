@@ -19,7 +19,6 @@
   .page__image_left img {
     display: none;
   }
-
 }
 
 @media only screen and (max-height: 550px) {
@@ -125,20 +124,14 @@ body {
   width: fit-content;
   height: fit-content;
   transform: scale(-1, 1);
+  height: 37.5rem;
+  width: 60rem;
 }
 
 .page__image_left {
   left: 2rem;
   width: fit-content;
   height: fit-content;
-}
-
-.page__image_right img {
-  height: 37.5rem;
-  width: 60rem;
-}
-
-.page__image_left img {
   height: 42.5rem;
   width: 55rem;
 }
@@ -159,21 +152,21 @@ body {
   height: calc(70px * var(--scale-factor));
 }
 
-.signup-location__header-registration {
-  color: #fff;
-}
-
-.signup-form {
+.signup-form_centered {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.signup-form {
   margin-bottom: 5rem;
 }
 
-.signup-location__header-registration {
+.signup-location__header-title {
   text-align: center;
   font-size: calc(24px * var(--scale-factor));
   margin-top: 2rem;
+  color: #fff;
 }
 
 .signup-form__container {

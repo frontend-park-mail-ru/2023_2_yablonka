@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" type="text/css" />
-    <title>Signup</title>
+    <title>Tabula: Signup</title>
   </head>
   <body>
     <div class="page">
       <div class="page__background"></div>
-      <div class="page__image page__image_right">
-        <img src="../svg/undraw_team_collaboration.svg" />
-      </div>
-      <div class="page__image page__image_left">
-        <img src="../svg/undraw_performance_overview.svg" />
-      </div>
+      <img
+        class="page__image page__image_right"
+        src="../svg/undraw_team_collaboration.svg"
+      />
+      <img
+        class="page__image page__image_left"
+        src="../svg/undraw_performance_overview.svg"
+      />
       <div class="signup-location">
         <h1 class="signup-location__header">
           <img src="../svg/logo.svg" />
           <span class="signup-location__name"></span>Tabula
         </h1>
-        <h2 class="signup-location__header-registration">Регистрация</h2>
+        <h2 class="signup-location__header-title">Регистрация</h2>
         <form
-          class="signup-form"
+          class="signup-form signup-form_centered"
           action="/"
           method="post"
           enctype="application/x-www-form-urlencoded"
@@ -47,12 +49,12 @@
               placeholder="Повторите пароль"
             />
           </div>
-          <a class="href-registration" href="#">Уже есть аккаунт?</a>
-            <input
-              type="submit"
-              class="button-registration"
-              value="Зарегистрироваться"
-            />
+          <a class="href-registration" href="signin.html">Уже есть аккаунт?</a>
+          <input
+            type="submit"
+            class="button-registration"
+            value="Зарегистрироваться"
+          />
         </form>
       </div>
     </div>
