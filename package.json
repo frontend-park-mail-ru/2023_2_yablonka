@@ -1,0 +1,14 @@
+{
+  "name": "vk_server",
+  "version": "1.0.0",
+  "description": "proxy server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Yablonka",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
