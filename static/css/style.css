@@ -12,11 +12,11 @@
     --scale-factor: 1;
   }
 
-  .page__image_right img {
+  .page__image_right {
     display: none;
   }
 
-  .page__image_left img {
+  .page__image_left {
     display: none;
   }
 }
@@ -27,11 +27,11 @@
     --scale-factor: 1;
   }
 
-  .page__image_right img {
+  .page__image_right {
     display: none;
   }
 
-  .page__image_left img {
+  .page__image_left {
     display: none;
   }
 }
@@ -42,11 +42,11 @@
     --scale-factor: 1;
   }
 
-  .page__image_right img {
+  .page__image_right {
     display: none;
   }
 
-  .page__image_left img {
+  .page__image_left {
     display: none;
   }
 }
