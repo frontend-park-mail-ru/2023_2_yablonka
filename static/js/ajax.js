@@ -6,7 +6,7 @@
  * @param {Object} payload - данные, которые мы отсылаем
  * @param {string} method - метод запроса
  * @param {Function} callback - функция для обработки результата запроса
- * @returns {undefined}
+ * @returns {any} - результат callback
  */
 
 const ajax = async (url, payload, method, callback) => {
@@ -24,5 +24,5 @@ const ajax = async (url, payload, method, callback) => {
     .then((res) => JSON.parse(res))
     .catch((err) => new Object({ "status-code": 500 }));
 
-  callback(result);
+  return callback(result);
 };
