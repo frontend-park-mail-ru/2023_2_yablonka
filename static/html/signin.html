@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <title>Signup</title>
   </head>
   <body>
     <div class="page">
+      <div class="page__background"></div>
       <div class="page__image page__image_right">
-        <img src="../svg/undraw_team_collaboration.svg" />
+        <img src="undraw_creative_woman.svg" />
       </div>
       <div class="page__image page__image_left">
-        <img src="../svg/undraw_performance_overview.svg" />
+        <img src="undraw_meet_the_team.svg" />
       </div>
       <div class="signup-location">
         <h1 class="signup-location__header">
-          <img src="../svg/logo.svg" />
+          <img src="logo.svg" />
           <span class="signup-location__name"></span>Tabula
         </h1>
-        <h2 class="signup-location__header-registration">Регистрация</h2>
+        <h2 class="signup-location__header-registration">Вход</h2>
         <form
           class="signup-form"
           action="/"
@@ -27,34 +28,21 @@
           enctype="application/x-www-form-urlencoded"
         >
           <div class="signup-form__container">
-            <img src="../svg/person.svg" />
+            <img src="person.svg" />
             <input type="text" class="signup-form__input" placeholder="Email" />
           </div>
           <div class="signup-form__container">
-            <img src="../svg/lock.svg" />
+            <img src="lock.svg" />
             <input
               type="password"
               class="signup-form__input"
               placeholder="Пароль"
             />
           </div>
-          <div class="signup-form__container">
-            <img src="../svg/key.svg" />
-            <input
-              type="password"
-              class="signup-form__input"
-              placeholder="Повторите пароль"
-            />
-          </div>
-          <a class="href-registration" href="#">Уже есть аккаунт?</a>
-          <input
-            type="submit"
-            class="button-registration"
-            value="Зарегистрироваться"
-          />
+          <a class="href-registration" href="#">Регистрация</a>
+          <input type="submit" class="button-registration" value="Войти" />
         </form>
       </div>
     </div>
-    <script type="module" src="../js/index.js"></script>
   </body>
 </html>
