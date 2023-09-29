@@ -4,6 +4,6 @@ const app = express();
 
 app.use(routes);
 
-app.listen(8080, () => {
-  console.log("Started at 8080");
+app.listen(80, () => {
+  console.log("Started at 80");
 });

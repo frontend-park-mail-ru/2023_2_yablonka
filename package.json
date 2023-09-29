@@ -1,5 +1,5 @@
 {
-  "name": "vk_server",
+  "name": "tabula_server",
   "version": "1.0.0",
   "description": "proxy server",
   "main": "index.js",
