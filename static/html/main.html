@@ -1,214 +1,159 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/style.css" />
-    <title>Tabula</title>
-  </head>
-  <body>
-    <div class="page">
-      <header class="header">
-        <div class="header__logo">
-          <a class="logo-href" href="">
-            <div class="logo-wrapper">
-              <img
-                class="logo-wrapper__logo"
-                src="../svg/logo.svg"
-                alt="This place for logo"
-              />
-              <span class="logo-wrapper__tabula">Tabula</span>
-            </div>
-          </a>
-        </div>
-        <div class="header__menu">
-          <div class="menu__menu-list">
-            <span class="projects__title">Проекты</span>
-            <img class="chevron-down" src="../svg/chevron-down.svg" />
-          </div>
-          <div class="menu__menu-list">
-            <span class="favourites__title">Избранное</span>
-            <img class="chevron-down" src="../svg/chevron-down.svg" />
-          </div>
-          <div class="menu__menu-list">
-            <span class="templates__title">Шаблоны</span>
-            <img class="chevron-down" src="../svg/chevron-down.svg" />
-          </div>
-          <button class="create-button">Создать</button>
-        </div>
-        <div class="filler"></div>
-        <div class="header__search">
-          <div class="input-wrapper">
-            <img src="../svg/search.svg" /><input
-              type="text"
-              placeholder="Найти..."
-            />
-          </div>
-          <div class="bell-wrapper">
-            <img src="../svg/bell-notification.svg" alt="" />
-          </div>
-          <div class="avatar-wrapper">
-            <img src="../img/avatar.jpg" alt="" />
-          </div>
-        </div>
-      </header>
-      <main>
-        <div class="content">
-          <nav>
-            <div class="desk-description">
-              <img
-                class="desk-description__owner-avatar"
-                src="../img/avatar.jpg"
-              />
-              <span class="desk-description__desk-name">BEST DESK</span>
-              <button class="new-desk-button">
-                <img src="../svg/chevron-bar-left.svg" alt="chevron-bar-left" />
-              </button>
-            </div>
-            <div class="settings">
-              <div class="user-desks">
-                <div class="text-icon-wrapper">
-                  <img class="user-desks__icon" src="../svg/clipboard.svg" />
-                  <span class="user-desks__title">Мои доски</span>
-                </div>
-              </div>
-              <div class="participants">
-                <div class="text-icon-wrapper">
-                  <img class="participants__logo" src="../svg/person.svg" />
-                  <span class="participants__title">Участники</span>
-                </div>
-                <a class="participants__add-new" href="#"
-                  ><img src="../svg/plus.svg" alt="1"
-                /></a>
-              </div>
-              <div class="project-settings">
-                <div class="text-icon-wrapper">
-                  <img class="project-settings__logo" src="../svg/gear.svg" />
-                  <span class="project-settings__title">Настройки</span>
-                </div>
-              </div>
-            </div>
-            <div class="my-desks">
-              <div class="my-desks__title-wrapper">
-                <span class="my-desks__title">Мои доски</span>
-                <a href="#"><img src="../svg/plus.svg" alt="1" /></a>
-              </div>
-              <div class="desk">
-                <ul class="desk-list">
-                  <li class="desk-list__element">
-                    <img class="desk__background" src="../img/main_theme.jpg" />
-                    <span class="desk__name">BEST DESK</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="subscribe">
-              <button class="subscribe-button">Оформить подписку</button>
-            </div>
-          </nav>
-          <section class="workspace">
-            <div class="project-utils">
-              <div class="project-utils__left-side">
-                <div class="project-utils__desk-name">
-                  <span>BEST PROJECT</span>
-                </div>
-                <div class="project-utils__favourites">
-                  <img src="../svg/star.svg" />
-                </div>
-                <div class="project-utils__for-project">
-                  <img src="../svg/people.svg" />
-                  <span>Для проекта</span>
-                </div>
-                <a class="switcher-button"
-                  ><img src="../svg/board.svg" alt="" />
-                  <span>По доске</span></a
-                >
-                <div class="switcher-chevron-down">
-                  <img src="../svg/chevron-down.svg" alt="" />
-                </div>
-              </div>
-              <div class="project-utils__middle-side"></div>
-              <div class="project-utils__right-side">
-                <div class="project-utils__share">
-                  <img src="../svg/person-plus.svg" />
-                  <span>Поделиться</span>
-                </div>
-              </div>
-            </div>
-            <div class="task-list">
-              <div class="task-list__desk desk-one">
-                <div class="desk__content">
-                  <div class="desk__content__title">
-                    <span>Доска 1</span
-                    ><img src="../svg/three-dots.svg" alt="three-dots" />
-                  </div>
-                  <div class="desk__content__list">
-                    <ul class="card-list">
-                      <div class="task">
-                        <div class="task__title">Задание 1</div>
-                        <div class="task__info">
-                          <div class="icon-wrapper">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/style.css" />
+        <title>Tabula</title>
+    </head>
+    <body>
+        <div class="page">
+            <header class="header">
+                <div class="header__logo">
+                    <a class="logo-href" href="">
+                        <div class="logo-wrapper">
                             <img
-                              class="info__description"
-                              src="../svg/gear.svg"
-                              alt="description"
-                              width="12"
-                              height="16"
+                                class="logo-wrapper__logo"
+                                src="../svg/logo.svg"
+                                alt="This place for logo"
                             />
-                            <div class="info__files-wrapper">
-                              <img
-                                src="../svg/star.svg"
-                                alt="checklist"
-                                width="22"
-                                height="15"
-                              />
-                              <span>1</span>
-                            </div>
-                            <div class="info__checklist-wrapper">
-                              <img src="../svg/star.svg" alt="checklist" />
-                              <span>0/8</span>
-                            </div>
-                          </div>
-
-                          <div class="info__avatars-wrapper">
-                            <img src="../img/avatar.jpg" alt="mge" /><img
-                              src="../img/avatar.jpg"
-                              alt="mge"
-                            /><span>+1</span>
-                          </div>
+                            <span class="logo-wrapper__tabula">Tabula</span>
                         </div>
-                      </div>
-                    </ul>
-                  </div>
-                  <div class="desk__content__add">+ Добавить</div>
+                    </a>
                 </div>
-              </div>
-              <!-- <!-- <div class="task-list__desk desk-two">
-                <div class="desk__content">
-                  <div class="desk__content__title"></div>
-                  <div class="desk__content__list"></div>
-                  <div class="deskt__content__add"></div>
+                <div class="header__menu">
+                    <div class="menu__menu-list">
+                        <span class="projects__title">Проекты</span>
+                        <img
+                            class="chevron-down"
+                            src="../svg/chevron-down.svg"
+                        />
+                    </div>
+                    <div class="menu__menu-list">
+                        <span class="favourites__title">Избранное</span>
+                        <img
+                            class="chevron-down"
+                            src="../svg/chevron-down.svg"
+                        />
+                    </div>
+                    <div class="menu__menu-list">
+                        <span class="templates__title">Шаблоны</span>
+                        <img
+                            class="chevron-down"
+                            src="../svg/chevron-down.svg"
+                        />
+                    </div>
+                    <button class="create-button">Создать</button>
                 </div>
-              </div> -->
-              <!-- <div class="task-list__desk desk-three">
-                <div class="desk__content">
-                  <div class="desk__content__title"></div>
-                  <div class="desk__content__list"></div>
-                  <div class="deskt__content__add"></div>
+                <div class="filler"></div>
+                <div class="header__search">
+                    <div class="input-wrapper">
+                        <img src="../svg/search.svg" /><input
+                            type="text"
+                            placeholder="Найти..."
+                        />
+                    </div>
+                    <div class="bell-wrapper">
+                        <img src="../svg/bell-notification.svg" alt="" />
+                    </div>
+                    <div class="avatar-wrapper">
+                        <img src="../img/avatar.jpg" alt="" />
+                    </div>
                 </div>
-              </div> -->
-              <!-- <div class="task-list__desk desk-four">
-                <div class="desk__content">
-                  <div class="desk__content__title"></div>
-                  <div class="desk__content__list"></div>
-                  <div class="deskt__content__add"></div>
+            </header>
+            <main>
+                <div class="content">
+                    <div class="sticky-container">
+                        <nav class="left-sidebar">
+                            <div>
+                                <ul class="left-sidebar__menu">
+                                    <li
+                                        class="left-sidebar__menu-item selected"
+                                    >
+                                        <a href=""
+                                            ><img
+                                                src="../svg/board.svg"
+                                                alt=""
+                                            /><span>Доски</span>
+                                        </a>
+                                    </li>
+                                    <li class="left-sidebar__menu-item">
+                                        <a href="">
+                                            <img
+                                                src="../svg/files.svg"
+                                                alt=""
+                                            /><span>Шаблоны</span>
+                                        </a>
+                                    </li>
+                                    <li class="left-sidebar__menu-item">
+                                        <a href="">
+                                            <img
+                                                src="../svg/clipboard-pulse.svg"
+                                                alt=""
+                                            /><span>Главная страница</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="create-workspace">
+                                <ul>
+                                    <div class="create-workspace__title">
+                                        <span>Рабочие пространства</span>
+                                    </div>
+                                    <button class="create-workspace__button">
+                                        <img src="../svg/plus.svg" /><span
+                                            >Создайте рабочее пространство</span
+                                        >
+                                    </button>
+                                </ul>
+                            </div>
+                        </nav>
+                        <div class="all-boards">
+                            <div class="all-boards__content">
+                                <div>
+                                    <h3 class="boards-page-section-header-name">
+                                        ВАШИ РАБОЧИЕ ПРОСТРАНСТВА
+                                    </h3>
+                                    <div
+                                        class="boards-page-section-description"
+                                    >
+                                        <span
+                                            >Вы пока не добавлены ни в одно
+                                            рабочее пространство.
+                                            <button
+                                                class="boards-page-section-create-button"
+                                                type="button"
+                                            >
+                                                Создать рабочее пространство
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="boards-page-section-header-name">
+                                        ГОСТЕВЫЕ РАБОЧИЕ ПРОСТРАНСТВА
+                                    </h3>
+                                    <div
+                                        class="boards-page-section-description"
+                                    >
+                                       <ul class="boards-page-section-boards-list">
+                                        <li class="boards-list-item">
+                                            <div>
+                                                <div><img src="../svg/people.svg" alt=""><span>Smiley Workspace</span></div>
+                                                <a class="board-tile-logo" href="">
+                                                    <div><span>LA TABULA</span></div>
+                                                </a>
+                                            </div>
+                                            
+                                        </li>
+                                       </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div> -->
-              <button class="add-desk">Добавить</button>
-            </div>
-          </section>
+            </main>
         </div>
-      </main>
-    </div>
-  </body>
+    </body>
 </html>
