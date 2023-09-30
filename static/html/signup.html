@@ -1,60 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/style.css" type="text/css" />
-    <title>Signup</title>
+    <title>Tabula: Signup</title>
   </head>
   <body>
     <div class="page">
-      <div class="page__image page__image_right">
-        <img src="../svg/undraw_team_collaboration.svg" />
-      </div>
-      <div class="page__image page__image_left">
-        <img src="../svg/undraw_performance_overview.svg" />
-      </div>
-      <div class="signup-location">
-        <h1 class="signup-location__header">
+      <div class="page__background"></div>
+      <img
+        class="page__image page__image_right"
+        src="../svg/undraw_team_collaboration.svg"
+      />
+      <img
+        class="page__image page__image_left"
+        src="../svg/undraw_performance_overview.svg"
+      />
+      <div class="sign-location">
+        <h1 class="sign-location__header">
           <img src="../svg/logo.svg" />
-          <span class="signup-location__name"></span>Tabula
+          <span class="sign-location__name"></span>Tabula
         </h1>
-        <h2 class="signup-location__header-registration">Регистрация</h2>
+        <h2 class="sign-location__header-title">Регистрация</h2>
         <form
-          class="signup-form"
+          class="sign-form sign-form_centered"
           action="/"
           method="post"
           enctype="application/x-www-form-urlencoded"
         >
-          <div class="signup-form__container">
+          <div class="sign-form__container">
             <img src="../svg/person.svg" />
-            <input type="text" class="signup-form__input" placeholder="Email" />
+            <input type="text" class="sign-form__input" placeholder="Email" />
           </div>
-          <div class="signup-form__container">
+          <div class="sign-form__container">
             <img src="../svg/lock.svg" />
             <input
               type="password"
-              class="signup-form__input"
+              class="sign-form__input"
               placeholder="Пароль"
             />
           </div>
-          <div class="signup-form__container">
+          <div class="sign-form__container">
             <img src="../svg/key.svg" />
             <input
               type="password"
-              class="signup-form__input"
+              class="sign-form__input"
               placeholder="Повторите пароль"
             />
           </div>
-          <a class="href-registration" href="#">Уже есть аккаунт?</a>
+          <a class="href-sign" href="signin.html">Уже есть аккаунт?</a>
           <input
             type="submit"
-            class="button-registration"
+            class="button-sign"
             value="Зарегистрироваться"
           />
         </form>
       </div>
     </div>
-    <script type="module" src="../js/index.js"></script>
   </body>
 </html>
