@@ -197,7 +197,7 @@ body {
   padding-left: 3px;
 }
 
-.href-registration {
+.href-login {
   margin-top: 3rem;
   display: block;
   text-align: center;
@@ -207,7 +207,7 @@ body {
   font-weight: bold;
 }
 
-.button-registration {
+.button-login {
   background-color: #000;
   height: calc(42px * var(--scale-factor));
   width: calc(220px * var(--scale-factor));
