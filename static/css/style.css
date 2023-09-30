@@ -125,15 +125,15 @@ body {
   width: fit-content;
   height: fit-content;
   transform: scale(-1, 1);
-  height: 37.5rem;
-  width: 60rem;
+  height: 46rem;
+  width: 55rem;
 }
 
 .page__image_left {
   left: 2rem;
   width: fit-content;
   height: fit-content;
-  height: 42.5rem;
+  height: 46rem;
   width: 55rem;
 }
 
@@ -216,4 +216,14 @@ body {
   color: #fff;
   font-size: calc(18px * var(--scale-factor));
   font-weight: bold;
+}
+
+.href-forgotten-password {
+  color: #fff;
+  margin-top: 5px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  align-self: flex-end;
 }
