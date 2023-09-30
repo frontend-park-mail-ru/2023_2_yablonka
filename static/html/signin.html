@@ -3,44 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <title>Signup</title>
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <title>Tabula: Signin</title>
   </head>
   <body>
     <div class="page">
       <div class="page__background"></div>
-      <div class="page__image page__image_right">
-        <img src="undraw_creative_woman.svg" />
-      </div>
-      <div class="page__image page__image_left">
-        <img src="undraw_meet_the_team.svg" />
-      </div>
+      <img
+        class="page__image page__image_right"
+        src="../svg/undraw_team_collaboration.svg"
+      />
+      <img
+        class="page__image page__image_left"
+        src="../svg/undraw_performance_overview.svg"
+      />
       <div class="sign-location">
         <h1 class="sign-location__header">
-          <img src="logo.svg" />
+          <img src="../svg/logo.svg" />
           <span class="sign-location__name"></span>Tabula
         </h1>
-        <h2 class="sign-location__header-registration">Вход</h2>
+        <h2 class="sign-location__header-title">Вход</h2>
         <form
-          class="sign-form"
+          class="sign-form sign-form_centered"
           action="/"
           method="post"
           enctype="application/x-www-form-urlencoded"
         >
           <div class="sign-form__container">
-            <img src="person.svg" />
+            <img src="../svg/person.svg" />
             <input type="text" class="sign-form__input" placeholder="Email" />
           </div>
           <div class="sign-form__container">
-            <img src="lock.svg" />
+            <img src="../svg/lock.svg" />
             <input
               type="password"
               class="sign-form__input"
               placeholder="Пароль"
             />
           </div>
-          <a class="href-sign" href="#">Регистрация</a>
-          <input type="submit" class="button-sign" value="Войти" />
+          <a class="href-sign" href="signup.html">Уже есть аккаунт?</a>
+          <input
+            type="submit"
+            class="button-sign"
+            value="Войти"
+          />
         </form>
       </div>
     </div>
