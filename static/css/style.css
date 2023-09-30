@@ -17,7 +17,6 @@ body {
 
 .page {
     height: 100%;
-    overflow: hidden;
 }
 
 .header {
@@ -154,11 +153,16 @@ body {
     flex-direction: row;
     background-color: #1c2127;
     height: 100%;
+    overflow-y: auto;
+    position: relative;
 }
 
 main {
-    height: calc(100% - 50px);
-    overflow-y: auto;
+    position: relative;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .sticky-container {
@@ -166,108 +170,110 @@ main {
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-	flex-grow: 1;
+    flex-grow: 1;
+    height: calc(100vh - 50px);
+    overflow-y: auto;
 }
 
 .left-sidebar {
-	margin: 40px 0 0;
+    margin: 40px 0 0;
     width: 256px;
     padding: 0 16px;
     position: sticky;
     max-height: 90vh;
+    top: 40px
 }
 
 .left-sidebar__menu {
     border-bottom: 1px solid #c4c6ca24;
-	list-style: none;
+    list-style: none;
 }
 
 .left-sidebar__menu-item {
     margin-bottom: 8px;
-	
 }
 .left-sidebar__menu-item a {
-	outline: none;
-	color: #fff;
-	font-size: 16px;
-	font-weight: bold;
-	min-height: 20px;
-	padding: 6px 10px;
-	overflow: hidden;
-	text-decoration: none;
-	display: flex;
-	flex-direction: row;
-	transition-duration: 85ms;
-	border-radius: 10px;
-	align-items: center;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    min-height: 20px;
+    padding: 6px 10px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    transition-duration: 85ms;
+    border-radius: 10px;
+    align-items: center;
 }
 
 .selected a {
-	background-color: #092957;
-	color: #7ba4f3;
+    background-color: #092957;
+    color: #7ba4f3;
 }
 
 .left-sidebar__menu-item a span {
-	flex: 1 1 auto;
-	width: min-content;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	margin-left: 10px;
+    flex: 1 1 auto;
+    width: min-content;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 10px;
 }
 
 .left-sidebar__menu-item a img {
-	width: 16px;
-	height: 16px;
-	margin-bottom: 2px;
-} 
+    width: 16px;
+    height: 16px;
+    margin-bottom: 2px;
+}
 
 .create-workspace ul {
-	overflow-y: auto;
-	padding-top: 12px;
-	padding-bottom: 40px;
+    overflow-y: auto;
+    padding-top: 12px;
+    padding-bottom: 40px;
 }
 
 .create-workspace__title {
-	display: flex;
-	align-items: center;
-	font-size: 10px;
-	color: #fff;
-	font-weight: bold;
-	padding: 0 0 0 14px;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    color: #fff;
+    font-weight: bold;
+    padding: 0 0 0 14px;
 }
 
 .create-workspace__button {
-	margin-bottom: 4px;
-	color: #ffffff;
-	box-shadow: none;
-	width: 100%;
-	padding: 6px 8px 6px 0;
-	font-weight: bold;
-	font-size: 12px;
-	display: flex;
-	align-items: center;
-	overflow: hidden;
-	text-decoration: none;
+    margin-bottom: 4px;
+    color: #ffffff;
+    box-shadow: none;
+    width: 100%;
+    padding: 6px 8px 6px 0;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    text-decoration: none;
     transition-property: background-color, border-color, box-shadow;
     transition-duration: 85ms;
-	transition-timing-function: ease;
-	text-align: left;
-	margin-left: auto;
+    transition-timing-function: ease;
+    text-align: left;
+    margin-left: auto;
     background-color: transparent;
-	margin: 4px 8px 0 0;
-	border: none;
+    margin: 4px 8px 0 0;
+    border: none;
     line-height: 1.5;
 }
 
 .create-workspace__button img {
-	width: 22px;
-	height: 22px;
+    width: 22px;
+    height: 22px;
 }
 
 .all-boards {
-	margin: 40px 16px 0;
-    max-width: 825px;
+    padding: 40px 32px 0;
     min-width: 288px;
+    max-width: 825px;
     width: 100%;
 }
 
@@ -275,43 +281,44 @@ main {
     margin-top: 0;
 }
 
-.boards-page-section-header-name {  
-	align-items: center;
+.boards-page-section-header-name {
+    align-items: center;
     color: #fff;
     display: flex;
     flex: 1;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
-	margin: 20px 0;
+    margin: 20px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .boards-page-section-description {
-	margin-bottom: 32px;
-	font-size: 14px;
-	font-weight: bold;
-	color: #fff;
-	display: flex;
-	align-items: center;
+    margin-bottom: 32px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    display: flex;
+    align-items: center;
 }
 
-
 .boards-page-section-create-button {
-	border: none;
+    border: none;
     box-shadow: none;
     background-color: transparent;
     text-decoration: none;
-    color:  #0c66e4;
+    color: #0c66e4;
     padding: 0;
-	font-weight: bold;
+    font-weight: bold;
     font-size: 14px;
 }
 
 .boards-page-section-boards-list {
     list-style: none;
+    overflow-y: auto;
+    flex-wrap: wrap;
 }
 
 .workspace-card-desctiption {
