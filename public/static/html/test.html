@@ -7,11 +7,15 @@
     <title>Document</title>
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.runtime.js"></script>
+    <script src="../js/handlebars.runtime.js"></script>
     <script
       src="../js/components/background/background.precompiled.js"
       id="background"
     ></script>
-    <script type="module" src="../js/index.js"></script>
+    <script>
+      var template1 = Handlebars.templates['background.hbs'];
+      document.body.innerHTML = template1({text: "123"})
+    </script>
+    <!-- <script type="module" src="../js/index.js"></script> -->
   </body>
 </html>
