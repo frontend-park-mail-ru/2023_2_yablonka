@@ -25,4 +25,4 @@ TBD
 
 ## Ссылка на backend
 
-[https://github.com/go-park-mail-ru/2021_2_MAMBa](https://github.com/go-park-mail-ru/2023_2_yablonka)
+[https://github.com/go-park-mail-ru/2023_2_yablonka](https://github.com/go-park-mail-ru/2023_2_yablonka)

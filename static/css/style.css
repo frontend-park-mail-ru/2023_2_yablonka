@@ -179,8 +179,7 @@ body {
   align-items: center;
 }
 
-.signin-form__input_email,
-.signin-form__input_password {
+.signup-form__input {
   color: #b0b0b0;
   background: transparent;
   height: calc(27px * var(--scale-factor));
@@ -197,7 +196,7 @@ body {
   padding-left: 3px;
 }
 
-.href-login {
+.href-registration {
   margin-top: 3rem;
   display: block;
   text-align: center;
@@ -207,7 +206,7 @@ body {
   font-weight: bold;
 }
 
-.button-login {
+.button-registration {
   background-color: #000;
   height: calc(42px * var(--scale-factor));
   width: calc(220px * var(--scale-factor));
