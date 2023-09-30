@@ -1,9 +1,21 @@
 "use strict";
 
-import { Background } from "../../components/background/Background.js";
+import { Image } from "./components/backgroundImage/BackgroundImage.js";
 
-const rootElement = document.querySelector(".page");
-const background = document.createElement("div");
+const root = document.querySelector(".page");
 
-const bg = new Background(rootElement, background);
-bg.render();
+const signupConfig = {
+    images: {
+        left: {
+            side: "left",
+            picture: "undraw_performance_overview",
+        },
+        right: {
+            side: "right",
+            picture: "undraw_team_collaboration",
+        },
+    },
+};
+
+const images = new Image(root, config.images);
+images.render();

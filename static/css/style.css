@@ -66,17 +66,17 @@
   }
 }
 
-@media only screen and (min-width: 900px) and (max-width: 1080px) {
+@media only screen and (min-width: 900px) and (max-width: 1200px) {
   html {
     font-size: 6px;
     --scale-factor: 1;
   }
 }
 
-@media only screen and (min-width: 1080px) and (max-width: 1920px) {
+@media only screen and (min-width: 1200px) and (max-width: 1920px) {
   html {
     font-size: 7px;
-    --scale-factor: 1;
+    --scale-factor: 1.1;
   }
 }
 
@@ -95,13 +95,13 @@ html {
 body {
   width: 100%;
   height: 100%;
-  background-color: #37426d;
 }
 
 .page {
   width: 100%;
   height: 100%;
   min-width: 320px;
+  background-color: #37426d;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,23 +111,22 @@ body {
 .page__image {
   position: absolute;
   bottom: 0;
-
 }
 
 .page__image_right {
-  right: 2rem;
-  transform: scale(-1, 1);
-  height: 42.5rem;
-  width: 75rem;
-  transition: all 0.2s ease 0.2s;
+  right: 1rem;
+  height: 40rem;
+  width: 65rem;
+  transition: all 0.2s ease-in-out;
 
 }
 
 .page__image_left {
-  left: 2rem;
-  height: 40rem;
-  width: 55rem;
-  transition: all 0.2s ease-in-out 0.2s;
+  left: 3rem;
+  padding-top: 36px;
+  height: 50rem;
+  width: 60rem;
+  transition: all 0.2s ease-in-out;
 }
 
 .sign-location__header {
