@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <title>Signup</title>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page__background"></div>
+      <div class="page__image page__image_right">
+        <img src="undraw_creative_woman.svg" />
+      </div>
+      <div class="page__image page__image_left">
+        <img src="undraw_meet_the_team.svg" />
+      </div>
+      <div class="signup-location">
+        <h1 class="signup-location__header">
+          <img src="logo.svg" />
+          <span class="signup-location__name"></span>Tabula
+        </h1>
+        <h2 class="signup-location__header-registration">Вход</h2>
+        <form
+          class="signup-form"
+          action="/"
+          method="post"
+          enctype="application/x-www-form-urlencoded"
+        >
+          <div class="signup-form__container">
+            <img src="person.svg" />
+            <input type="text" class="signup-form__input" placeholder="Email" />
+          </div>
+          <div class="signup-form__container">
+            <img src="lock.svg" />
+            <input
+              type="password"
+              class="signup-form__input"
+              placeholder="Пароль"
+            />
+          </div>
+          <a class="href-registration" href="#">Регистрация</a>
+          <input type="submit" class="button-registration" value="Войти" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
