@@ -1,0 +1,8 @@
+<script src=../js/components/backgroundImage/backgroundImage.precompile.js></script>
+<script src=../js/components/formComponent/formComponent.precompile.js></script>
+<script src=../js/components/formInput/formInput.precompile.js></script>
+<script src=../js/components/formTitle/formTitle.precompile.js></script>
+<script src=../js/components/mainLogo/mainLogo.precompile.js></script>
+<script src=../js/components/signButton/signButton.precompile.js></script>
+<script src=../js/components/signHref/signHref.precompile.js></script>
+<script src=../js/components/signLocation/signLocation.precompile.js></script>
