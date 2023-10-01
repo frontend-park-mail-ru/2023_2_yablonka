@@ -70,7 +70,7 @@ const signupConfig = {
         text: "Уже есть аккаунт?",
     },
     signButton: {
-        text: "Уже есть аккаунт?",
+        text: "Зарегистрироваться",
     },
 };
 

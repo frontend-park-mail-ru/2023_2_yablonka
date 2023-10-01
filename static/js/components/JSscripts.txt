@@ -1,4 +1,5 @@
 <script src=../js/components/backgroundImage/backgroundImage.precompile.js></script>
+<script src=../js/components/forgottenPassword/forgottenPassword.precompile.js></script>
 <script src=../js/components/formComponent/formComponent.precompile.js></script>
 <script src=../js/components/formInput/formInput.precompile.js></script>
 <script src=../js/components/formTitle/formTitle.precompile.js></script>
