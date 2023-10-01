@@ -189,10 +189,10 @@ main {
     list-style: none;
 }
 
-.left-sidebar__menu-item {
+.menu-item {
     margin-bottom: 8px;
 }
-.left-sidebar__menu-item a {
+.menu-item a {
     outline: none;
     color: #fff;
     font-size: 16px;
@@ -213,7 +213,7 @@ main {
     color: #7ba4f3;
 }
 
-.left-sidebar__menu-item a span {
+.menu-item a span {
     flex: 1 1 auto;
     width: min-content;
     text-overflow: ellipsis;
@@ -221,14 +221,13 @@ main {
     margin-left: 10px;
 }
 
-.left-sidebar__menu-item a img {
+.menu-item a img {
     width: 16px;
     height: 16px;
     margin-bottom: 2px;
 }
 
 .create-workspace ul {
-    overflow-y: auto;
     padding-top: 12px;
     padding-bottom: 40px;
 }
@@ -281,7 +280,7 @@ main {
     margin-top: 0;
 }
 
-.boards-page-section-header-name {
+.content__header-name {
     align-items: center;
     color: #fff;
     display: flex;
@@ -295,7 +294,7 @@ main {
     white-space: nowrap;
 }
 
-.boards-page-section-description {
+.content__description {
     margin-bottom: 32px;
     font-size: 14px;
     font-weight: bold;
@@ -315,13 +314,13 @@ main {
     font-size: 14px;
 }
 
-.boards-page-section-boards-list {
+.content__boards-list {
     list-style: none;
     overflow-y: auto;
     flex-wrap: wrap;
 }
 
-.workspace-card-desctiption {
+.workspace-card__desctiption {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -329,7 +328,7 @@ main {
     margin-left: 10px;
 }
 
-.workspace-card-desctiption img {
+.workspace-card__desctiption img {
     width: 20px;
     height: 20px;
 }
@@ -341,7 +340,7 @@ main {
     margin-left: 10px;
 }
 
-.board-title-logo {
+.board-title__logo {
     background-image: url("../img/main_theme.jpg");
     position: relative;
     background-size: cover;
@@ -355,7 +354,7 @@ main {
     width: 240px;
 }
 
-.board-title-logo div {
+.board-title__logo div {
     position: absolute;
     top: 10px;
     left: 10px;
