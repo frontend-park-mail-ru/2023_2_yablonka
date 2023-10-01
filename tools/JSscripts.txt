@@ -1,0 +1,9 @@
+<script src="../js/components/signComponents/backgroundImage/backgroundImage.precompile.js"></script>
+<script src="../js/components/signComponents/forgottenPassword/forgottenPassword.precompile.js"></script>
+<script src="../js/components/signComponents/formComponent/formComponent.precompile.js"></script>
+<script src="../js/components/signComponents/formInput/formInput.precompile.js"></script>
+<script src="../js/components/signComponents/formTitle/formTitle.precompile.js"></script>
+<script src="../js/components/signComponents/mainLogo/mainLogo.precompile.js"></script>
+<script src="../js/components/signComponents/signButton/signButton.precompile.js"></script>
+<script src="../js/components/signComponents/signHref/signHref.precompile.js"></script>
+<script src="../js/components/signComponents/signLocation/signLocation.precompile.js"></script>

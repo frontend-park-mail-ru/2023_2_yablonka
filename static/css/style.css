@@ -100,7 +100,6 @@ body {
   width: 100%;
   height: 100%;
   min-width: 320px;
-  background-color: #37426d;
   display: flex;
   flex-direction: column;
   align-items: center;
