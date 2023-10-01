@@ -19,6 +19,5 @@ export class Image {
         const template = Handlebars.templates["backgroundImage.hbs"];
         const items = this.items;
         this.#parent.innerHTML += items.reduce((pictures, picture) => pictures + template(picture), "");
-
     }
 }

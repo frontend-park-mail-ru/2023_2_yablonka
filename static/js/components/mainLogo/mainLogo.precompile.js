@@ -10,8 +10,8 @@ templates['mainLogo.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(
 
   return "<h1 class=\"sign-location__header\">\n<img src=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"logo") : depth0), depth0))
-    + ".svg\" />\n<span class=\"sign-location__name\"></span>"
+    + ".svg\" />\n<span class=\"sign-location__name\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"title") : depth0), depth0))
-    + "\n </h1>";
+    + "</span>\n </h1>";
 },"useData":true});
 })();
