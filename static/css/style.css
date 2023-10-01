@@ -115,8 +115,8 @@ body {
 
 .page__image_right {
   right: 1rem;
-  height: 40rem;
-  width: 65rem;
+  height: 32rem;
+  width: 52rem;
   transition: all 0.2s ease-in-out;
 
 }
@@ -124,8 +124,8 @@ body {
 .page__image_left {
   left: 3rem;
   padding-top: 36px;
-  height: 50rem;
-  width: 60rem;
+  height: 46rem;
+  width: 55rem;
   transition: all 0.2s ease-in-out;
 }
 

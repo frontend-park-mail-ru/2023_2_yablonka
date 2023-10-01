@@ -16,7 +16,7 @@ const signinConfig = {
     images: {
         left: {
             side: "left",
-            picture: "../svg/undraw_performance_overview",
+            picture: "../svg/undraw_meet_the_team",
         },
         right: {
             side: "right",
@@ -46,7 +46,7 @@ const signinConfig = {
         text: "Забыли пароль?",
     },
     signHref: {
-        url: "signin",
+        url: "signup",
         text: "Регистрация",
     },
     signButton: {

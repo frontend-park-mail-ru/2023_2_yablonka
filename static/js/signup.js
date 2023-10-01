@@ -66,7 +66,7 @@ const signupConfig = {
         },
     },
     signHref: {
-        url: "signup",
+        url: "signin",
         text: "Уже есть аккаунт?",
     },
     signButton: {
