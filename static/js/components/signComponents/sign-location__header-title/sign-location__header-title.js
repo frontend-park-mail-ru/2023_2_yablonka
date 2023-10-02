@@ -1,13 +1,13 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class ForgottenPassword extends Component {
+export class Sign_LocationHeader_Title extends Component {
     constructor(parent, config) {
-        super(parent, config, "forgottenPassword");
+        super(parent, config, "sign-location__header-title");
     }
 
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (inputs, input) => inputs + this.template(input),
+            (titles, title) => titles + this.template(title),
             ""
         );
     }

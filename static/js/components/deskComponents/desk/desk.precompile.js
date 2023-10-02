@@ -9,7 +9,7 @@ templates['desk.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(cont
     };
 
   return "<a class=\"board-title__logo\" href=\""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"desk") : depth0), depth0))
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"href") : depth0), depth0))
     + "\">\n    <div>\n        <span>"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + "</span>\n    </div>\n</a>";

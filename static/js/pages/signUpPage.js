@@ -1,11 +1,11 @@
-import { Image } from "../components/signComponents/backgroundImage/backgroundImage.js";
-import { Location } from "../components/signComponents/signLocation/signLocation.js";
-import { MainLogo } from "../components/signComponents/mainLogo/mainLogo.js";
-import { FormTitle } from "../components/signComponents/formTitle/formTitle.js";
-import { FormComponent } from "../components/signComponents/formComponent/formComponent.js";
-import { Input } from "../components/signComponents/formInput/formInput.js";
-import { SignHref } from "../components/signComponents/signHref/signHref.js";
-import { SignButton } from "../components/signComponents/signButton/signButton.js";
+import { PageImage } from "../components/signComponents/page__image/page__image.js";
+import { Sign_Location } from "../components/signComponents/sign-location/sign-location.js";
+import { Sign_LocationHeader } from "../components/signComponents/sign-location__header/sign-location__header.js";
+import { Sign_LocationHeader_Title } from "../components/signComponents/sign-location__header-title/sign-location__header-title.js";
+import { Sign_Form } from "../components/signComponents/sign-form/sign-form.js";
+import { Sign_FormContainer } from "../components/signComponents/sign-form__container/sign-form__container.js";
+import { Href_Sign } from "../components/signComponents/href-sign/href-sign.js";
+import { Button_Sign } from "../components/signComponents/button-sign/button-sign.js";
 
 export class SignUp {
     #root;
@@ -75,32 +75,47 @@ export class SignUp {
         this.#root.style.backgroundColor = "#37426d";
         document.title = "Tabula: Sign Up";
 
-        const images = new Image(this.#root, this.signupConfig.images);
+        const images = new PageImage(this.#root, this.signupConfig.images);
         images.render();
 
-        const location = new Location(this.#root, this.signupConfig.location);
+        const location = new Sign_Location(
+            this.#root,
+            this.signupConfig.location
+        );
         location.render();
 
         const sign = document.querySelector(".sign-location");
 
-        const mainLogo = new MainLogo(sign, this.signupConfig.mainLogo);
+        const mainLogo = new Sign_LocationHeader(
+            sign,
+            this.signupConfig.mainLogo
+        );
         mainLogo.render();
 
-        const formTitle = new FormTitle(sign, this.signupConfig.formTitle);
+        const formTitle = new Sign_LocationHeader_Title(
+            sign,
+            this.signupConfig.formTitle
+        );
         formTitle.render();
 
-        const form = new FormComponent(sign);
+        const form = new Sign_Form(sign);
         form.render();
 
         const formSelector = document.querySelector(".sign-form");
 
-        const inputText = new Input(formSelector, this.signupConfig.inputs);
+        const inputText = new Sign_FormContainer(
+            formSelector,
+            this.signupConfig.inputs
+        );
         inputText.render();
 
-        const signHref = new SignHref(formSelector, this.signupConfig.signHref);
+        const signHref = new Href_Sign(
+            formSelector,
+            this.signupConfig.signHref
+        );
         signHref.render();
 
-        const signButton = new SignButton(
+        const signButton = new Button_Sign(
             formSelector,
             this.signupConfig.signButton
         );

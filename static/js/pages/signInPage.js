@@ -1,12 +1,12 @@
-import { Image } from "../components/signComponents/backgroundImage/backgroundImage.js";
-import { Location } from "../components/signComponents/signLocation/signLocation.js";
-import { MainLogo } from "../components/signComponents/mainLogo/mainLogo.js";
-import { FormTitle } from "../components/signComponents/formTitle/formTitle.js";
-import { FormComponent } from "../components/signComponents/formComponent/formComponent.js";
-import { Input } from "../components/signComponents/formInput/formInput.js";
-import { ForgottenPassword } from "../components/signComponents/forgottenPassword/forgottenPassword.js";
-import { SignHref } from "../components/signComponents/signHref/signHref.js";
-import { SignButton } from "../components/signComponents/signButton/signButton.js";
+import { PageImage } from "../components/signComponents/page__image/page__image.js";
+import { Sign_Location } from "../components/signComponents/sign-location/sign-location.js";
+import { Sign_LocationHeader } from "../components/signComponents/sign-location__header/sign-location__header.js";
+import { Sign_LocationHeader_Title } from "../components/signComponents/sign-location__header-title/sign-location__header-title.js";
+import { Sign_Form } from "../components/signComponents/sign-form/sign-form.js";
+import { Sign_FormContainer } from "../components/signComponents/sign-form__container/sign-form__container.js";
+import { Href_Forgotten_Password } from "../components/signComponents/href-forgotten-password/href-forgotten-password.js";
+import { Href_Sign } from "../components/signComponents/href-sign/href-sign.js";
+import { Button_Sign } from "../components/signComponents/button-sign/button-sign.js";
 
 import { SignUp } from "./signUpPage.js";
 
@@ -80,47 +80,61 @@ export class SignIn {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "#37426d";
         document.title = "Tabula: Sign In";
-        const images = new Image(this.#root, this.signinConfig.images);
-        images.render();
-        const location = new Location(this.#root, this.signinConfig.location);
-        location.render();
 
-        const sign = document.querySelector(".sign-location");
+        const pageImage = new PageImage(this.#root, this.signinConfig.images);
+        pageImage.render();
 
-        const mainLogo = new MainLogo(sign, this.signinConfig.mainLogo);
-        mainLogo.render();
+        const sign_Location = new Sign_Location(
+            this.#root,
+            this.signinConfig.location
+        );
+        sign_Location.render();
 
-        const formTitle = new FormTitle(sign, this.signinConfig.formTitle);
-        formTitle.render();
+        const sign_LocationElement = document.querySelector(".sign-location");
 
-        const form = new FormComponent(sign);
-        form.render();
+        const sign_LocationHeader = new Sign_LocationHeader(
+            sign_LocationElement,
+            this.signinConfig.mainLogo
+        );
+        sign_LocationHeader.render();
 
-        const formSelector = document.querySelector(".sign-form");
+        const sign_LocationHeader_Title = new Sign_LocationHeader_Title(
+            sign_LocationElement,
+            this.signinConfig.formTitle
+        );
+        sign_LocationHeader_Title.render();
 
-        const inputText = new Input(formSelector, this.signinConfig.inputs);
-        inputText.render();
+        const sign_Form = new Sign_Form(sign_LocationElement);
+        sign_Form.render();
 
-        const forgottenPassword = new ForgottenPassword(
-            formSelector,
+        const sign_FormElement = document.querySelector(".sign-form");
+
+        const sign_FormContainer = new Sign_FormContainer(sign_FormElement, this.signinConfig.inputs);
+        sign_FormContainer.render();
+
+        const href_Forgotten_Password = new Href_Forgotten_Password(
+            sign_FormElement,
             this.signinConfig.forgottenPassword
         );
-        forgottenPassword.render();
+        href_Forgotten_Password.render();
 
-        const signHref = new SignHref(formSelector, this.signinConfig.signHref);
-        signHref.render();
+        const href_Sign = new Href_Sign(
+            sign_FormElement,
+            this.signinConfig.signHref
+        );
+        href_Sign.render();
 
         document.querySelector(".href-sign").addEventListener("click", (e) => {
             e.preventDefault();
-            const signUp = new SignUp(this.#root);
-            SignUp.renderPage();
+            const href_sign = new Href_Sign(this.#root);
+            href_sign.render();
         });
 
-        const signButton = new SignButton(
-            formSelector,
+        const button_Sign = new Button_Sign(
+            sign_FormElement,
             this.signinConfig.signButton
         );
-        signButton.render();
+        button_Sign.render();
     }
 
     redirectTo(route) {}

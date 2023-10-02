@@ -1,8 +1,8 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class FormComponent extends Component {
+export class Sign_Form extends Component {
     constructor(parent, config) {
-        super(parent, config, "formComponent");
+        super(parent, config, "sign-form");
     }
 
     render() {

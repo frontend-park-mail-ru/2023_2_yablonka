@@ -1,13 +1,13 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class SignButton extends Component {
+export class Sign_FormContainer extends Component {
     constructor(parent, config) {
-        super(parent, config, "signButton");
+        super(parent, config, "sign-form__container");
     }
 
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (buttons, button) => buttons + this.template(button),
+            (inputs, input) => inputs + this.template(input),
             ""
         );
     }

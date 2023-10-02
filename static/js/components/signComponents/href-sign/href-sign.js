@@ -1,13 +1,13 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class MainLogo extends Component {
+export class Href_Sign extends Component {
     constructor(parent, config) {
-        super(parent, config, "mainLogo");
+        super(parent, config, "href-sign");
     }
 
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (logos, logo) => logos + this.template(logo),
+            (hrefs, href) => hrefs + this.template(href),
             ""
         );
     }
