@@ -1,6 +1,6 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class Href_Sign extends Component {
+export class HrefSign extends Component {
     constructor(parent, config) {
         super(parent, config, "href-sign");
     }

@@ -1,6 +1,6 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class Sign_FormContainer extends Component {
+export class SignFormContainer extends Component {
     constructor(parent, config) {
         super(parent, config, "sign-form__container");
     }

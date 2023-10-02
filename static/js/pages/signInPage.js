@@ -1,12 +1,12 @@
 import { PageImage } from "../components/signComponents/page__image/page__image.js";
-import { Sign_Location } from "../components/signComponents/sign-location/sign-location.js";
-import { Sign_LocationHeader } from "../components/signComponents/sign-location__header/sign-location__header.js";
-import { Sign_LocationHeader_Title } from "../components/signComponents/sign-location__header-title/sign-location__header-title.js";
-import { Sign_Form } from "../components/signComponents/sign-form/sign-form.js";
-import { Sign_FormContainer } from "../components/signComponents/sign-form__container/sign-form__container.js";
-import { Href_Forgotten_Password } from "../components/signComponents/href-forgotten-password/href-forgotten-password.js";
-import { Href_Sign } from "../components/signComponents/href-sign/href-sign.js";
-import { Button_Sign } from "../components/signComponents/button-sign/button-sign.js";
+import { SignLocation } from "../components/signComponents/sign-location/sign-location.js";
+import { SignLocationHeader } from "../components/signComponents/sign-location__header/sign-location__header.js";
+import { SignLocationHeaderTitle } from "../components/signComponents/sign-location__header-title/sign-location__header-title.js";
+import { SignForm } from "../components/signComponents/sign-form/sign-form.js";
+import { SignFormContainer } from "../components/signComponents/sign-form__container/sign-form__container.js";
+import { HrefForgottenPassword } from "../components/signComponents/href-forgotten-password/href-forgotten-password.js";
+import { HrefSign } from "../components/signComponents/href-sign/href-sign.js";
+import { ButtonSign } from "../components/signComponents/button-sign/button-sign.js";
 
 import { SignUp } from "./signUpPage.js";
 
@@ -84,57 +84,57 @@ export class SignIn {
         const pageImage = new PageImage(this.#root, this.signinConfig.images);
         pageImage.render();
 
-        const sign_Location = new Sign_Location(
+        const signLocation = new SignLocation(
             this.#root,
             this.signinConfig.location
         );
-        sign_Location.render();
+        signLocation.render();
 
-        const sign_LocationElement = document.querySelector(".sign-location");
+        const signLocationElement = document.querySelector(".sign-location");
 
-        const sign_LocationHeader = new Sign_LocationHeader(
-            sign_LocationElement,
+        const signLocationHeader = new SignLocationHeader(
+            signLocationElement,
             this.signinConfig.mainLogo
         );
-        sign_LocationHeader.render();
+        signLocationHeader.render();
 
-        const sign_LocationHeader_Title = new Sign_LocationHeader_Title(
-            sign_LocationElement,
+        const signLocationHeaderTitle = new SignLocationHeaderTitle(
+            signLocationElement,
             this.signinConfig.formTitle
         );
-        sign_LocationHeader_Title.render();
+        signLocationHeaderTitle.render();
 
-        const sign_Form = new Sign_Form(sign_LocationElement);
-        sign_Form.render();
+        const signForm = new SignForm(signLocationElement);
+        signForm.render();
 
-        const sign_FormElement = document.querySelector(".sign-form");
+        const signFormElement = document.querySelector(".sign-form");
 
-        const sign_FormContainer = new Sign_FormContainer(sign_FormElement, this.signinConfig.inputs);
-        sign_FormContainer.render();
+        const signFormContainer = new SignFormContainer(signFormElement, this.signinConfig.inputs);
+        signFormContainer.render();
 
-        const href_Forgotten_Password = new Href_Forgotten_Password(
-            sign_FormElement,
+        const hrefForgottenPassword = new HrefForgottenPassword(
+            signFormElement,
             this.signinConfig.forgottenPassword
         );
-        href_Forgotten_Password.render();
+        hrefForgottenPassword.render();
 
-        const href_Sign = new Href_Sign(
-            sign_FormElement,
+        const hrefSign = new HrefSign(
+            signFormElement,
             this.signinConfig.signHref
         );
-        href_Sign.render();
+        hrefSign.render();
 
         document.querySelector(".href-sign").addEventListener("click", (e) => {
             e.preventDefault();
-            const href_sign = new Href_Sign(this.#root);
+            const href_sign = new HrefSign(this.#root);
             href_sign.render();
         });
 
-        const button_Sign = new Button_Sign(
-            sign_FormElement,
+        const buttonSign = new ButtonSign(
+            signFormElement,
             this.signinConfig.signButton
         );
-        button_Sign.render();
+        buttonSign.render();
     }
 
     redirectTo(route) {}

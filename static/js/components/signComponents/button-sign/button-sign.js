@@ -1,6 +1,6 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class Button_Sign extends Component {
+export class ButtonSign extends Component {
     constructor(parent, config) {
         super(parent, config, "button-sign");
     }

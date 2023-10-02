@@ -1,6 +1,6 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class Sign_LocationHeader_Title extends Component {
+export class SignLocationHeaderTitle extends Component {
     constructor(parent, config) {
         super(parent, config, "sign-location__header-title");
     }
