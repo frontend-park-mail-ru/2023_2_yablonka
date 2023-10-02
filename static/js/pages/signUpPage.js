@@ -4,7 +4,6 @@ import { MainLogo } from "../components/signComponents/mainLogo/mainLogo.js";
 import { FormTitle } from "../components/signComponents/formTitle/formTitle.js";
 import { FormComponent } from "../components/signComponents/formComponent/formComponent.js";
 import { Input } from "../components/signComponents/formInput/formInput.js";
-import { ForgottenPassword } from "../components/signComponents/forgottenPassword/forgottenPassword.js";
 import { SignHref } from "../components/signComponents/signHref/signHref.js";
 import { SignButton } from "../components/signComponents/signButton/signButton.js";
 
@@ -74,6 +73,7 @@ export class SignUp {
     renderPage() {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "#37426d";
+        document.title = "Tabula: Sign Up";
 
         const images = new Image(this.#root, this.signupConfig.images);
         images.render();

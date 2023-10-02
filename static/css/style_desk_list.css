@@ -304,7 +304,7 @@ main {
     align-items: center;
 }
 
-.boards-page-section-create-button {
+.button__create-workspace {
     border: none;
     box-shadow: none;
     background-color: transparent;
@@ -326,6 +326,10 @@ main {
     flex-direction: row;
     align-items: center;
     margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+.workspace-owner__username { 
     margin-left: 10px;
 }
 

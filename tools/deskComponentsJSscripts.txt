@@ -1,0 +1,10 @@
+<script src="../js/components/deskComponents/allBoards/allBoards.precompile.js"></script>
+<script src="../js/components/deskComponents/boardsList/boardsList.precompile.js"></script>
+<script src="../js/components/deskComponents/content/content.precompile.js"></script>
+<script src="../js/components/deskComponents/contentHeader/contentHeader.precompile.js"></script>
+<script src="../js/components/deskComponents/desk/desk.precompile.js"></script>
+<script src="../js/components/deskComponents/emptyWorkspaces/emptyWorkspaces.precompile.js"></script>
+<script src="../js/components/deskComponents/guestWorkspace/guestWorkspace.precompile.js"></script>
+<script src="../js/components/deskComponents/headerMenu/headerMenu.precompile.js"></script>
+<script src="../js/components/deskComponents/sidebar/sidebar.precompile.js"></script>
+<script src="../js/components/deskComponents/workspaceElement/workspaceElement.precompile.js"></script>

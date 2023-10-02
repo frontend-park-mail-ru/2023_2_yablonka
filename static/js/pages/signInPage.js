@@ -79,6 +79,7 @@ export class SignIn {
     renderPage() {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "#37426d";
+        document.title = "Tabula: Sign In";
         const images = new Image(this.#root, this.signinConfig.images);
         images.render();
         const location = new Location(this.#root, this.signinConfig.location);
@@ -122,7 +123,5 @@ export class SignIn {
         signButton.render();
     }
 
-    redirectTo(route) {
-
-    }
+    redirectTo(route) {}
 }
