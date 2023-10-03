@@ -123,6 +123,12 @@ body {
     margin-left: 3rem;
 }
 
+.log-out-wrapper img {
+    width: 30px;
+    height: 30px;
+    margin-left: 3rem;
+}
+
 .input-wrapper {
     background-color: #d9dcf8;
     display: flex;

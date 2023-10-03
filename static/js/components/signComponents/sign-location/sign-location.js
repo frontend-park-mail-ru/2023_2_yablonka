@@ -6,9 +6,6 @@ export class SignLocation extends Component {
     }
 
     render() {
-        this.parent.innerHTML += this.data.reduce(
-            (elements, element) => elements + this.template(element),
-            ""
-        );
+        this.parent.innerHTML = this.template();
     }
 }

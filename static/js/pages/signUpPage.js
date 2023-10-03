@@ -7,6 +7,7 @@ import { SignFormContainer } from "../components/signComponents/sign-form__conta
 import { HrefSign } from "../components/signComponents/href-sign/href-sign.js";
 import { ButtonSign } from "../components/signComponents/button-sign/button-sign.js";
 import { ErrorMessage } from "../components/signComponents/error-message/error-message.js";
+import { AJAX } from "../components/core/ajax/ajax.js";
 
 export class SignUp {
     #root;
@@ -70,9 +71,6 @@ export class SignUp {
                 id: "signup",
             },
         },
-        location: {
-            location: {},
-        },
     };
 
     renderPage() {
@@ -85,10 +83,7 @@ export class SignUp {
         const pageImage = new PageImage(this.#root, this.signupConfig.images);
         pageImage.render();
 
-        const signLocation = new SignLocation(
-            this.#root,
-            this.signupConfig.location
-        );
+        const signLocation = new SignLocation(this.#root);
         signLocation.render();
 
         const signLocationElement = document.querySelector(".sign-location");
@@ -116,13 +111,18 @@ export class SignUp {
         );
         signFormContainer.render();
 
-        const signFormInputs = document.querySelectorAll(".sign-form__container");
+        const signFormInputs = document.querySelectorAll(
+            ".sign-form__container"
+        );
         signFormInputs.forEach((input) => {
             const errorMessage = new ErrorMessage(input);
-            errorMessage.render()
+            errorMessage.render();
         });
 
-        const hrefSign = new HrefSign(signFormElement, this.signupConfig.signHref);
+        const hrefSign = new HrefSign(
+            signFormElement,
+            this.signupConfig.signHref
+        );
         hrefSign.render();
 
         const buttonSign = new ButtonSign(
@@ -146,7 +146,9 @@ export class SignUp {
             "http://localhost:8080/api/v1/auth/signup/",
             "POST",
             { email: emailInput.value, password: passwInput.value }
-        ).then(res=>JSON.parse(res)).catch(err=>null);
+        )
+            .then((res) => JSON.parse(res))
+            .catch((err) => null);
         return result;
     }
 }

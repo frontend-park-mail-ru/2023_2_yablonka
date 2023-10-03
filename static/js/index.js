@@ -73,7 +73,7 @@ document.querySelector("body").addEventListener("click", (e) => {
             }
             const resp = currentPage.authentificate();
 
-            //ТУт надо условия при разных статус кодах
+            //Тут надо условия при разных статус кодах
         }
     }
 });

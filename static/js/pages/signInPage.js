@@ -8,6 +8,8 @@ import { HrefForgottenPassword } from "../components/signComponents/href-forgott
 import { HrefSign } from "../components/signComponents/href-sign/href-sign.js";
 import { ButtonSign } from "../components/signComponents/button-sign/button-sign.js";
 import { ErrorMessage } from "../components/signComponents/error-message/error-message.js";
+import { AJAX } from "../components/core/ajax/ajax.js";
+
 
 import { SignUp } from "./signUpPage.js";
 
@@ -29,7 +31,7 @@ export class SignIn {
                 picture: "undraw_creative_woman",
             },
         },
-        inputs: {
+        signFormContainer: {
             email: {
                 icon: "person",
                 type: "text",
@@ -43,8 +45,8 @@ export class SignIn {
                 inputType: "password",
             },
         },
-        mainLogo: {
-            mainLogo: {
+        signLocationHeader: {
+            signLocationHeader: {
                 logo: "logo",
                 title: "Tabula",
             },
@@ -74,10 +76,6 @@ export class SignIn {
                 id: "signin",
             },
         },
-
-        location: {
-            location: {},
-        },
     };
 
     renderPage() {
@@ -90,17 +88,14 @@ export class SignIn {
         const pageImage = new PageImage(this.#root, this.signinConfig.images);
         pageImage.render();
 
-        const signLocation = new SignLocation(
-            this.#root,
-            this.signinConfig.location
-        );
+        const signLocation = new SignLocation(this.#root);
         signLocation.render();
 
         const signLocationElement = document.querySelector(".sign-location");
 
         const signLocationHeader = new SignLocationHeader(
             signLocationElement,
-            this.signinConfig.mainLogo
+            this.signinConfig.signLocationHeader
         );
         signLocationHeader.render();
 
@@ -117,7 +112,7 @@ export class SignIn {
 
         const signFormContainer = new SignFormContainer(
             signFormElement,
-            this.signinConfig.inputs
+            this.signinConfig.signFormContainer
         );
         signFormContainer.render();
 
@@ -166,7 +161,9 @@ export class SignIn {
             "http://localhost:8080/api/v1/auth/login/",
             "POST",
             { email: emailInput.value, password: passwInput.value }
-        ).then(res=>JSON.parse(res)).catch(err=>null);
+        )
+            .then((res) => JSON.parse(res))
+            .catch((err) => null);
         return result;
     }
 }

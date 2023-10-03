@@ -11,6 +11,7 @@ export const AJAX = async (url, method = "GET", payload = {}) => {
     const request = new Request({
         headers: {
             "Content-Type": "application/json;charset=utf8",
+            "Access-Control-Allow-Origin": "*",
         },
         credentials: "include",
         method: method,
