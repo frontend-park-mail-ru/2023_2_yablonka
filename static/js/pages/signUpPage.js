@@ -19,28 +19,28 @@ export class SignUp {
         images: {
             left: {
                 side: "left",
-                picture: "../svg/undraw_performance_overview",
+                picture: "undraw_performance_overview",
             },
             right: {
                 side: "right",
-                picture: "../svg/undraw_team_collaboration",
+                picture: "undraw_team_collaboration",
             },
         },
         inputs: {
             email: {
-                icon: "../svg/person",
+                icon: "person",
                 type: "text",
                 placeholder: "Email",
                 inputType: "email",
             },
             password: {
-                icon: "../svg/lock",
+                icon: "lock",
                 type: "password",
                 placeholder: "Пароль",
                 inputType: "password",
             },
             repeatPassword: {
-                icon: "../svg/key",
+                icon: "key",
                 type: "password",
                 placeholder: "Повторите пароль",
                 inputType: "repeatPassword",
@@ -48,7 +48,7 @@ export class SignUp {
         },
         mainLogo: {
             mainLogo: {
-                logo: "../svg/logo",
+                logo: "logo",
                 title: "Tabula",
             },
         },

@@ -12,13 +12,13 @@ const yd = new YourDesks(root);
 const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
-// if (pathname == "/signin") {
-//     signInPage.renderPage();
-// }else if (pathname == '/signup'){
-//     signUpPage.renderPage();
-// }
-
-signInPage.renderPage();
+if (pathname == "/signin") {
+    signInPage.renderPage();
+} else if (pathname == "/signup") {
+    signUpPage.renderPage();
+} else if (pathname == "/") {
+    signUpPage.renderPage();
+}
 
 document.querySelector("body").addEventListener("click", (e) => {
     e.preventDefault();
@@ -47,7 +47,6 @@ document.querySelector("body").addEventListener("click", (e) => {
                 errorMessage("password", "Неверно введён пароль");
             }
             //AJAX...
-            
         } else if (button.getAttribute("id") == "signup") {
             const data = document.querySelectorAll(".sign-form__input");
             if (!validateEmail(data[0].value)) {
@@ -57,7 +56,6 @@ document.querySelector("body").addEventListener("click", (e) => {
             } else if (!validateRepeatPasswords(data[1].value, data[2].value)) {
                 errorMessage("repeatPassword", "Пароли не совпадают");
             }
-
             //Ajax
         }
     }

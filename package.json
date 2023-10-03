@@ -2,9 +2,10 @@
   "name": "tabula_server",
   "version": "1.0.0",
   "description": "proxy server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
+    "debug":"nodemon server.js",
+    "start": "node server.js",
     "test": "test"
   },
   "author": "Yablonka",

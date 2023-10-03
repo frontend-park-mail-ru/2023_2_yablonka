@@ -22,22 +22,22 @@ export class SignIn {
         images: {
             left: {
                 side: "left",
-                picture: "../svg/undraw_meet_the_team",
+                picture: "undraw_meet_the_team",
             },
             right: {
                 side: "right",
-                picture: "../svg/undraw_creative_woman",
+                picture: "undraw_creative_woman",
             },
         },
         inputs: {
             email: {
-                icon: "../svg/person",
+                icon: "person",
                 type: "text",
                 placeholder: "Email",
                 inputType: "email",
             },
             password: {
-                icon: "../svg/lock",
+                icon: "lock",
                 type: "password",
                 placeholder: "Пароль",
                 inputType: "password"
@@ -45,7 +45,7 @@ export class SignIn {
         },
         mainLogo: {
             mainLogo: {
-                logo: "../svg/logo",
+                logo: "logo",
                 title: "Tabula",
             },
         },
