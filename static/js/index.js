@@ -8,6 +8,8 @@ import { AJAX } from "./components/core/ajax/ajax.js";
 const root = document.querySelector(".page");
 const pathname = window.location.pathname;
 
+let currentPage;
+
 const yd = new YourDesks(root);
 const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
@@ -61,10 +63,15 @@ document.querySelector("body").addEventListener("click", (e) => {
     }
 });
 
-// document.querySelector("body").addEventListener("submit", (e) => {
-//     e.preventDefault();
-//     console.log("hello");
-// });
+window.addEventListener("popstate", (e) => {
+    if (pathname == "/signin") {
+        signInPage.renderPage();
+    } else if (pathname == "/signup") {
+        signUpPage.renderPage();
+    } else if (pathname == "/") {
+        signUpPage.renderPage();
+    }
+});
 
 const errorMessage = (inputType, message) => {
     const input = document.querySelector(`input[input-type="${inputType}"]`);
