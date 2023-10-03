@@ -7,7 +7,7 @@
  * @returns {undefined}
  */
 
-export const AJAX = async (url, payload = {}, method = "GET", callback) => {
+export const AJAX = async (url, method = "GET", payload = {}) => {
     const request = new Request({
         headers: {
             "Content-Type": "application/json;charset=utf8",
@@ -19,13 +19,5 @@ export const AJAX = async (url, payload = {}, method = "GET", callback) => {
     if (method.toLowerCase() != "get" && method.toLowerCase() != "head")
         request.payload = payload;
 
-    const result = await fetch(url)
-        .then((res) => {
-            return res;
-        })
-        .catch((err) => {
-            return null;
-        });
-
-    callback(result);
+    return await fetch(url);
 };

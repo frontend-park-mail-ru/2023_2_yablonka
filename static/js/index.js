@@ -8,20 +8,29 @@ import { AJAX } from "./components/core/ajax/ajax.js";
 const root = document.querySelector(".page");
 const pathname = window.location.pathname;
 
-let currentPage;
-
 const yd = new YourDesks(root);
 const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
+const logged = AJAX("http://localhost:8080/api/v1/auth/verify", "GET", {})
+    .then((res) => JSON.parse(res))
+    .catch((err) => null);
+
+let currentPage;
+
+if (logged.statusCode == 200) {
+    currentPage = yd;
+    currentPage.renderPage();
+}
+
 if (pathname == "/signin") {
-    currentPage=signInPage;
+    currentPage = signInPage;
     signInPage.renderPage();
 } else if (pathname == "/signup") {
-    currentPage=signUpPage;
+    currentPage = signUpPage;
     signUpPage.renderPage();
 } else if (pathname == "/") {
-    currentPage=signUpPage;
+    currentPage = signUpPage;
     signUpPage.renderPage();
 }
 
@@ -51,7 +60,8 @@ document.querySelector("body").addEventListener("click", (e) => {
             } else if (!validatePassword(data[1].value)) {
                 errorMessage("password", "Неверно введён пароль");
             }
-            //AJAX...
+            const resp = currentPage.authentificate();
+            //Условия при разных статус кодах
         } else if (button.getAttribute("id") == "signup") {
             const data = document.querySelectorAll(".sign-form__input");
             if (!validateEmail(data[0].value)) {
@@ -61,7 +71,9 @@ document.querySelector("body").addEventListener("click", (e) => {
             } else if (!validateRepeatPasswords(data[1].value, data[2].value)) {
                 errorMessage("repeatPassword", "Пароли не совпадают");
             }
-            //Ajax
+            const resp = currentPage.authentificate();
+
+            //ТУт надо условия при разных статус кодах
         }
     }
 });

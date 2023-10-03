@@ -40,7 +40,7 @@ export class SignIn {
                 icon: "lock",
                 type: "password",
                 placeholder: "Пароль",
-                inputType: "password"
+                inputType: "password",
             },
         },
         mainLogo: {
@@ -71,7 +71,7 @@ export class SignIn {
         signButton: {
             signButton: {
                 text: "Войти",
-                id:"signin"
+                id: "signin",
             },
         },
 
@@ -121,10 +121,12 @@ export class SignIn {
         );
         signFormContainer.render();
 
-        const signFormInputs = document.querySelectorAll(".sign-form__container");
+        const signFormInputs = document.querySelectorAll(
+            ".sign-form__container"
+        );
         signFormInputs.forEach((input) => {
             const errorMessage = new ErrorMessage(input);
-            errorMessage.render()
+            errorMessage.render();
         });
 
         const hrefForgottenPassword = new HrefForgottenPassword(
@@ -153,4 +155,18 @@ export class SignIn {
     }
 
     redirectTo(route) {}
+
+    authentificate() {
+        const emailInput = document.querySelector('input[input-type="email"]');
+        const passwInput = document.querySelector(
+            'input[input-type="password"]'
+        );
+
+        const result = AJAX(
+            "http://localhost:8080/api/v1/auth/login/",
+            "POST",
+            { email: emailInput.value, password: passwInput.value }
+        ).then(res=>JSON.parse(res)).catch(err=>null);
+        return result;
+    }
 }

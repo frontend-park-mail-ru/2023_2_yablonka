@@ -135,4 +135,18 @@ export class SignUp {
     redirectTo(newPage) {
         newPage.renderPage();
     }
+
+    authentificate() {
+        const emailInput = document.querySelector('input[input-type="email"]');
+        const passwInput = document.querySelector(
+            'input[input-type="password"]'
+        );
+
+        const result = AJAX(
+            "http://localhost:8080/api/v1/auth/signup/",
+            "POST",
+            { email: emailInput.value, password: passwInput.value }
+        ).then(res=>JSON.parse(res)).catch(err=>null);
+        return result;
+    }
 }

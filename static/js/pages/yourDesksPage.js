@@ -12,7 +12,7 @@ import { AJAX } from "../components/core/ajax/ajax.js";
 
 export class YourDesks {
     #root;
-
+    //Тут в конструктор надо передавать объект ещё, чтобы в конфиг его отправить для дальнейшего рендера
     constructor(rootElement) {
         this.#root = rootElement;
     }
@@ -69,7 +69,12 @@ export class YourDesks {
         this.#root.style.backgroundColor = "";
         document.title = "Tabula: Ваши Доски";
 
-        // const user=ajax('/auth/verify', {}, 'GET');
+        //Тут я просто не понимаю логику досок, допиши, как можешь
+        //Тебе надо послать аякс как Никита говорил, распарсить его
+        //В случае ошибки рендеришь, что нет рабочих пространств
+        //В случае удачи смотришь на тело запроса. если null, то см. пункт выше
+        //Если не null, то рендер.
+        //Придется немного менять поля в компонентах
 
         history.pushState(null, null, "desks");
 
