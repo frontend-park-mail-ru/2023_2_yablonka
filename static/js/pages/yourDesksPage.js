@@ -33,15 +33,6 @@ export class YourDesks {
                 id: "guest",
             },
         },
-        boardGuestList: {
-            boardGuestList: {},
-        },
-        desksList: {
-            desk: {
-                href: "",
-                name: "Smiley",
-            },
-        },
     };
 
     #renderGuestWorspace(usersDesks) {
