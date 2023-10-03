@@ -15,10 +15,13 @@ const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
 if (pathname == "/signin") {
+    currentPage=signInPage;
     signInPage.renderPage();
 } else if (pathname == "/signup") {
+    currentPage=signUpPage;
     signUpPage.renderPage();
 } else if (pathname == "/") {
+    currentPage=signUpPage;
     signUpPage.renderPage();
 }
 
