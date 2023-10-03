@@ -44,6 +44,94 @@ export class YourDesks {
         },
     };
 
+    #renderGuestWorspace(usersDesks) {
+        const guestWorkspace = document.getElementById("guest");
+
+        if (usersDesks.length == 0) {
+            const buttonCreateWorkspace = new ButtonCreateWorkspace(
+                guestWorkspace
+            );
+            buttonCreateWorkspace.render();
+            return;
+        }
+
+        const contentBoardsList = new ContentBoardsList(guestList);
+        contentBoardsList.render();
+
+        const guestBoards = guestWorkspace.childNodes[0];
+
+        const uniqOwnersId = new Map();
+        let userWorkspaceNumber = 0;
+
+        for (let desk of usersDesks.user_guest_boards) {
+            if (!uniqOwnersId.has(desk.owner_id)) {
+                uniqOwnersId.set(desk.owner_id, usersNumbers);
+                ++userWorkspaceNumber;
+
+                const boardsListItem = new BoardsListItem(guestBoards);
+                boardsListItem.render();
+
+                const workspaceCardDesctiption = new WorkspaceCardDesctiption(
+                    guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)],
+                    {
+                        data: {
+                            userWorkspaceInform: {
+                                name: desk.board_name.email,
+                            },
+                        },
+                    }
+                );
+                workspaceCardDesctiption.render();
+            }
+            const boardTitleLogo = new BoardTitleLogo(
+                guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)],
+                {
+                    data: {
+                        userDeskInform: {
+                            name: desk.board_info.board_name,
+                            image: desk.board_info.thumbnail.url,
+                        },
+                    },
+                }
+            );
+            boardTitleLogo.render();
+        }
+    }
+
+    #renderOwnerWorkspace(usersDesks) {
+        const yourWorkspace = document.getElementById("your");
+
+        if (usersDesks.length == 0) {
+            const buttonCreateWorkspace = new ButtonCreateWorkspace(
+                yourWorkspace
+            );
+            buttonCreateWorkspace.render();
+            return;
+        }
+        const contentBoardsList = new ContentBoardsList(yourWorkspace);
+        contentBoardsList.render();
+
+        const yourBoards = yourWorkspace.childNodes[0];
+
+        const boardsListItem = new BoardsListItem(yourBoards);
+        boardsListItem.render();
+
+        for (let desk of usersDesks.user_guest_boards) {
+            const boardTitleLogo = new BoardTitleLogo(
+                yourBoards.childNodes[0],
+                {
+                    data: {
+                        userDeskInform: {
+                            name: desk.board_info.board_name,
+                            image: desk.board_info.thumbnail.url,
+                        },
+                    },
+                }
+            );
+            boardTitleLogo.render();
+        }
+    }
+
     renderPage() {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "";
@@ -89,56 +177,7 @@ export class YourDesks {
         );
         contentHeaderName.render();
 
-        const yourWorkspaces = document.querySelectorAll(
-            ".content__description"
-        );
-
-        if (userInformationJSON.user_guest_boards.length == 0) {
-            const buttonCreateWorkspace = new ButtonCreateWorkspace(
-                yourWorkspaces[1]
-            );
-            buttonCreateWorkspace.render();
-        } else {
-            const guestList = document.getElementById("guest");
-
-            const contentBoardsList = new ContentBoardsList(guestList);
-            contentBoardsList.render();
-
-            const boardsList = document.querySelectorAll(
-                ".content__boards-list"
-            );
-
-            const uniqOwnersId = new Map();
-            let usersNumbers = 0;
-
-            for (let desk of userInformationJSON.user_guest_boards.sort(
-                (f, s) => f.owner_id < s.owner_id
-            )) {
-                if (!uniqOwnersId.has(desk.owner_id)) {
-                    uniqOwnersId.set(desk.owner_id, usersNumbers);
-                    ++usersNumbers;
-                    const boardsListItem = new BoardsListItem(
-                        boardsList[boardsList.length - 1]
-                    );
-                    boardsListItem.render();
-                    
-                } else {
-                    const boardTitleLogo = new BoardTitleLogo(
-                        boardsList[boardsList.length - 1].childNodes[
-                            uniqOwnersId.get(desk.owner_id)
-                        ],
-                        {
-                            data: {
-                                userDeskInform: {
-                                    name: desk.board_info.board_name,
-                                    image: desk.board_info.thumbnail.url,
-                                },
-                            },
-                        }
-                    );
-                    boardTitleLogo.render();
-                }
-            }
-        }
+        this.#renderOwnerWorkspace(userInformationJSON.user_owned_boards);
+        this.#renderGuestWorspace(userInformationJSON.user_guest_boards);
     }
 }
