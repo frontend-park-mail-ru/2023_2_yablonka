@@ -6,9 +6,6 @@ export class BoardsListItem extends Component {
     }
 
     render() {
-        this.parent.innerHTML += this.data.reduce(
-            (inputs, input) => inputs + this.template(input),
-            ""
-        );
+        this.parent.innerHTML += this.template()
     }
 }

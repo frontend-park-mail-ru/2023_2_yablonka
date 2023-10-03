@@ -352,7 +352,6 @@ main {
 }
 
 .board-title__logo {
-    background-image: url("../img/main_theme.jpg");
     position: relative;
     background-size: cover;
     display: block;

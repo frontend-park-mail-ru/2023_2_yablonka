@@ -1,14 +1,14 @@
-import { PageImage } from "../components/signComponents/page__image/page__image.js";
-import { SignLocation } from "../components/signComponents/sign-location/sign-location.js";
-import { SignLocationHeader } from "../components/signComponents/sign-location__header/sign-location__header.js";
-import { SignLocationHeaderTitle } from "../components/signComponents/sign-location__header-title/sign-location__header-title.js";
-import { SignForm } from "../components/signComponents/sign-form/sign-form.js";
-import { SignFormContainer } from "../components/signComponents/sign-form__container/sign-form__container.js";
-import { HrefForgottenPassword } from "../components/signComponents/href-forgotten-password/href-forgotten-password.js";
-import { HrefSign } from "../components/signComponents/href-sign/href-sign.js";
-import { ButtonSign } from "../components/signComponents/button-sign/button-sign.js";
-import { ErrorMessage } from "../components/signComponents/error-message/error-message.js";
-import { AJAX } from "../components/core/ajax/ajax.js";
+import { PageImage } from "/components/signComponents/page__image/page__image.js";
+import { SignLocation } from "/components/signComponents/sign-location/sign-location.js";
+import { SignLocationHeader } from "/components/signComponents/sign-location__header/sign-location__header.js";
+import { SignLocationHeaderTitle } from "/components/signComponents/sign-location__header-title/sign-location__header-title.js";
+import { SignForm } from "/components/signComponents/sign-form/sign-form.js";
+import { SignFormContainer } from "/components/signComponents/sign-form__container/sign-form__container.js";
+import { HrefForgottenPassword } from "/components/signComponents/href-forgotten-password/href-forgotten-password.js";
+import { HrefSign } from "/components/signComponents/href-sign/href-sign.js";
+import { ButtonSign } from "/components/signComponents/button-sign/button-sign.js";
+import { ErrorMessage } from "/components/signComponents/error-message/error-message.js";
+import { AJAX } from "/components/core/ajax/ajax.js";
 
 
 import { SignUp } from "./signUpPage.js";
@@ -51,14 +51,14 @@ export class SignIn {
                 title: "Tabula",
             },
         },
-        formTitle: {
-            formTitle: {
+        signLocationHeaderTitle: {
+            signLocationHeaderTitle: {
                 title: "Вход",
             },
         },
 
-        forgottenPassword: {
-            forgottenPassword: {
+        hrefForgottenPassword: {
+            hrefForgottenPassword: {
                 text: "Забыли пароль?",
             },
         },
@@ -70,8 +70,8 @@ export class SignIn {
             },
         },
 
-        signButton: {
-            signButton: {
+        buttonSign: {
+            buttonSign: {
                 text: "Войти",
                 id: "signin",
             },
@@ -101,7 +101,7 @@ export class SignIn {
 
         const signLocationHeaderTitle = new SignLocationHeaderTitle(
             signLocationElement,
-            this.signinConfig.formTitle
+            this.signinConfig.signLocationHeaderTitle
         );
         signLocationHeaderTitle.render();
 
@@ -126,7 +126,7 @@ export class SignIn {
 
         const hrefForgottenPassword = new HrefForgottenPassword(
             signFormElement,
-            this.signinConfig.forgottenPassword
+            this.signinConfig.hrefForgottenPassword
         );
         hrefForgottenPassword.render();
 
@@ -144,7 +144,7 @@ export class SignIn {
 
         const buttonSign = new ButtonSign(
             signFormElement,
-            this.signinConfig.signButton
+            this.signinConfig.buttonSign
         );
         buttonSign.render();
     }
