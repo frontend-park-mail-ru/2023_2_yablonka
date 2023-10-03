@@ -1,4 +1,5 @@
 <script src="../js/components/signComponents/button-sign/button-sign.precompile.js"></script>
+<script src="../js/components/signComponents/error-message/error-message.precompile.js"></script>
 <script src="../js/components/signComponents/href-forgotten-password/href-forgotten-password.precompile.js"></script>
 <script src="../js/components/signComponents/href-sign/href-sign.precompile.js"></script>
 <script src="../js/components/signComponents/page__image/page__image.precompile.js"></script>

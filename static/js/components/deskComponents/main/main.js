@@ -1,8 +1,8 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class EmptyWorkspaces extends Component {
+export class Main extends Component {
     constructor(parent, config) {
-        super(parent, config, "emptyWorkspaces");
+        super(parent, config, "main");
     }
 
     render() {

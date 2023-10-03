@@ -1,13 +1,14 @@
-import { HeaderMenu } from "../components/deskComponents/headerMenu/headerMenu.js";
-import { Content } from "../components/deskComponents/content/content.js";
+import { Header } from "../components/deskComponents/header/header.js";
+import { Main } from "../components/deskComponents/main/main.js";
 import { Sidebar } from "../components/deskComponents/sidebar/sidebar.js";
-import { AllBoards } from "../components/deskComponents/allBoards/allBoards.js";
-import { ContentHeader } from "../components/deskComponents/contentHeader/contentHeader.js";
-import { EmptyWorkspaces } from "../components/deskComponents/emptyWorkspaces/emptyWorkspaces.js";
-import { BoardsList } from "../components/deskComponents/boardsList/boardsList.js";
-import { WorkspaceElement } from "../components/deskComponents/workspaceElement/workspaceElement.js";
-import { GuestWorkspace } from "../components/deskComponents/guestWorkspace/guestWorkspace.js";
-import { Desk } from "../components/deskComponents/desk/desk.js";
+import { AllBoards } from "../components/deskComponents/all-boards/all-boards.js";
+import { ContentHeaderName } from "../components/deskComponents/content__header-name/content__header-name.js";
+import { ButtonCreateWorkspace } from "../components/deskComponents/button__create-workspace/button__create-workspace.js";
+import { ContentBoardsList } from "../components/deskComponents/content__boards-list/content__boards-list.js";
+import { BoardsListItem } from "../components/deskComponents/boards-list-item/boards-list-item.js";
+import { WorkspaceCardDesctiption } from "../components/deskComponents/workspace-card__desctiption/workspace-card__desctiption.js";
+import { BoardTitleLogo } from "../components/deskComponents/board-title__logo/board-title__logo.js";
+import { AJAX } from "../components/core/ajax/ajax.js";
 
 export class YourDesks {
     #root;
@@ -68,63 +69,72 @@ export class YourDesks {
         this.#root.style.backgroundColor = "";
         document.title = "Tabula: Ваши Доски";
 
-        const header = new HeaderMenu(
-            this.#root,
-            this.yourDesksConfig.headerMenu
-        );
+        // const user=ajax('/auth/verify', {}, 'GET');
+
+        history.pushState(null, null, "desks");
+
+        const header = new Header(this.#root, this.yourDesksConfig.headerMenu);
         header.render();
-        const content = new Content(this.#root, this.yourDesksConfig.content);
-        content.render();
+
+        const main = new Main(this.#root, this.yourDesksConfig.content);
+        main.render();
+
         const container = document.querySelector(".sticky-container");
         const sidebar = new Sidebar(container, this.yourDesksConfig.sidebar);
         sidebar.render();
+
         const allBoards = new AllBoards(
             container,
             this.yourDesksConfig.allBoards
         );
         allBoards.render();
+
         const contentContainer = document.querySelector(".content-container");
-        const contentHeader = new ContentHeader(
+
+        const contentHeader = new ContentHeaderName(
             contentContainer,
             this.yourDesksConfig.contentHeader
         );
         contentHeader.render();
+
         const yourWorkspaces = document.querySelectorAll(
             ".content__description"
         );
-        const emptyWorkspace = new EmptyWorkspaces(
+
+        const buttonCreateWorkspace = new ButtonCreateWorkspace(
             yourWorkspaces[0],
             this.yourDesksConfig.emptyWorkspaces
         );
-        emptyWorkspace.render();
+        buttonCreateWorkspace.render();
 
         const guestList = document.getElementById("guest");
 
-        const boardGuestList = new BoardsList(
+        const contentBoardsList = new ContentBoardsList(
             guestList,
             this.yourDesksConfig.boardGuestList
         );
-        boardGuestList.render();
+        contentBoardsList.render();
 
         const boardsList = document.querySelectorAll(".content__boards-list");
 
-        const boardsListItems = new WorkspaceElement(
+        const boardsListItem = new BoardsListItem(
             boardsList[boardsList.length - 1],
             this.yourDesksConfig.guestWorkspaces
         );
-        boardsListItems.render();
+        boardsListItem.render();
 
-        const guestWorkspaces = guestList.querySelectorAll(".item__workspace");
-        guestWorkspaces.forEach((element) => {
-            const guestNicknames = new GuestWorkspace(
+        const workspaceCardDesctiption =
+            guestList.querySelectorAll(".item__workspace");
+        workspaceCardDesctiption.forEach((element) => {
+            const guestNicknames = new WorkspaceCardDesctiption(
                 element,
                 this.yourDesksConfig.guestWorkspaces
             );
             guestNicknames.render();
         });
 
-        guestWorkspaces.forEach((element) => {
-            const guestNicknames = new Desk(
+        workspaceCardDesctiption.forEach((element) => {
+            const guestNicknames = new BoardTitleLogo(
                 element,
                 this.yourDesksConfig.desksList
             );

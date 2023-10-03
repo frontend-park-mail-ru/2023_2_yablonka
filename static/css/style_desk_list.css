@@ -164,6 +164,7 @@ main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    width: 100%;
 }
 
 .sticky-container {
@@ -173,19 +174,18 @@ main {
     justify-content: center;
     flex-grow: 1;
     height: calc(100vh - 50px);
-    overflow-y: auto;
 }
 
-.left-sidebar {
+.sidebar {
     margin: 40px 0 0;
     width: 256px;
     padding: 0 16px;
     position: sticky;
     max-height: 90vh;
-    top: 40px
+    top: 40px;
 }
 
-.left-sidebar__menu {
+.sidebar__menu {
     border-bottom: 1px solid #c4c6ca24;
     list-style: none;
 }
@@ -329,7 +329,7 @@ main {
     margin-left: 10px;
 }
 
-.workspace-owner__username { 
+.workspace-owner__username {
     margin-left: 10px;
 }
 

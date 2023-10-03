@@ -7,6 +7,7 @@ import { SignFormContainer } from "../components/signComponents/sign-form__conta
 import { HrefForgottenPassword } from "../components/signComponents/href-forgotten-password/href-forgotten-password.js";
 import { HrefSign } from "../components/signComponents/href-sign/href-sign.js";
 import { ButtonSign } from "../components/signComponents/button-sign/button-sign.js";
+import { ErrorMessage } from "../components/signComponents/error-message/error-message.js";
 
 import { SignUp } from "./signUpPage.js";
 
@@ -33,11 +34,13 @@ export class SignIn {
                 icon: "../svg/person",
                 type: "text",
                 placeholder: "Email",
+                inputType: "email",
             },
             password: {
                 icon: "../svg/lock",
                 type: "password",
                 placeholder: "Пароль",
+                inputType: "password"
             },
         },
         mainLogo: {
@@ -68,6 +71,7 @@ export class SignIn {
         signButton: {
             signButton: {
                 text: "Войти",
+                id:"signin"
             },
         },
 
@@ -80,6 +84,8 @@ export class SignIn {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "#37426d";
         document.title = "Tabula: Sign In";
+
+        history.pushState(null, null, "signin");
 
         const pageImage = new PageImage(this.#root, this.signinConfig.images);
         pageImage.render();
@@ -109,8 +115,17 @@ export class SignIn {
 
         const signFormElement = document.querySelector(".sign-form");
 
-        const signFormContainer = new SignFormContainer(signFormElement, this.signinConfig.inputs);
+        const signFormContainer = new SignFormContainer(
+            signFormElement,
+            this.signinConfig.inputs
+        );
         signFormContainer.render();
+
+        const signFormInputs = document.querySelectorAll(".sign-form__container");
+        signFormInputs.forEach((input) => {
+            const errorMessage = new ErrorMessage(input);
+            errorMessage.render()
+        });
 
         const hrefForgottenPassword = new HrefForgottenPassword(
             signFormElement,
@@ -126,8 +141,8 @@ export class SignIn {
 
         document.querySelector(".href-sign").addEventListener("click", (e) => {
             e.preventDefault();
-            const href_sign = new HrefSign(this.#root);
-            href_sign.render();
+            const hrefSign = new HrefSign(this.#root);
+            hrefSign.render();
         });
 
         const buttonSign = new ButtonSign(

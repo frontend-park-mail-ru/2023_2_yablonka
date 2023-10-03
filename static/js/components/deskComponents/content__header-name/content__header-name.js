@@ -1,8 +1,8 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class GuestWorkspace extends Component {
+export class ContentHeaderName extends Component {
     constructor(parent, config) {
-        super(parent, config, "guestWorkspace");
+        super(parent, config, "content__header-name");
     }
 
     render() {

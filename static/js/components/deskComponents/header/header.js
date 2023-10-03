@@ -1,8 +1,8 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class ContentHeader extends Component {
+export class Header extends Component {
     constructor(parent, config) {
-        super(parent, config, "contentHeader");
+        super(parent, config, "header");
     }
 
     render() {

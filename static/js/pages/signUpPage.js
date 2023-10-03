@@ -6,6 +6,7 @@ import { SignForm } from "../components/signComponents/sign-form/sign-form.js";
 import { SignFormContainer } from "../components/signComponents/sign-form__container/sign-form__container.js";
 import { HrefSign } from "../components/signComponents/href-sign/href-sign.js";
 import { ButtonSign } from "../components/signComponents/button-sign/button-sign.js";
+import { ErrorMessage } from "../components/signComponents/error-message/error-message.js";
 
 export class SignUp {
     #root;
@@ -30,16 +31,19 @@ export class SignUp {
                 icon: "../svg/person",
                 type: "text",
                 placeholder: "Email",
+                inputType: "email",
             },
             password: {
                 icon: "../svg/lock",
                 type: "password",
                 placeholder: "Пароль",
+                inputType: "password",
             },
             repeatPassword: {
                 icon: "../svg/key",
                 type: "password",
                 placeholder: "Повторите пароль",
+                inputType: "repeatPassword",
             },
         },
         mainLogo: {
@@ -63,6 +67,7 @@ export class SignUp {
         signButton: {
             signButton: {
                 text: "Зарегистрироваться",
+                id: "signup",
             },
         },
         location: {
@@ -75,51 +80,56 @@ export class SignUp {
         this.#root.style.backgroundColor = "#37426d";
         document.title = "Tabula: Sign Up";
 
-        const images = new PageImage(this.#root, this.signupConfig.images);
-        images.render();
+        history.pushState(null, null, "signup");
 
-        const location = new SignLocation(
+        const pageImage = new PageImage(this.#root, this.signupConfig.images);
+        pageImage.render();
+
+        const signLocation = new SignLocation(
             this.#root,
             this.signupConfig.location
         );
-        location.render();
+        signLocation.render();
 
-        const sign = document.querySelector(".sign-location");
+        const signLocationElement = document.querySelector(".sign-location");
 
-        const mainLogo = new SignLocationHeader(
-            sign,
+        const signLocationHeader = new SignLocationHeader(
+            signLocationElement,
             this.signupConfig.mainLogo
         );
-        mainLogo.render();
+        signLocationHeader.render();
 
         const formTitle = new SignLocationHeaderTitle(
-            sign,
+            signLocationElement,
             this.signupConfig.formTitle
         );
         formTitle.render();
 
-        const form = new SignForm(sign);
-        form.render();
+        const signForm = new SignForm(signLocationElement);
+        signForm.render();
 
-        const formSelector = document.querySelector(".sign-form");
+        const signFormElement = document.querySelector(".sign-form");
 
-        const inputText = new SignFormContainer(
-            formSelector,
+        const signFormContainer = new SignFormContainer(
+            signFormElement,
             this.signupConfig.inputs
         );
-        inputText.render();
+        signFormContainer.render();
 
-        const signHref = new HrefSign(
-            formSelector,
-            this.signupConfig.signHref
-        );
-        signHref.render();
+        const signFormInputs = document.querySelectorAll(".sign-form__container");
+        signFormInputs.forEach((input) => {
+            const errorMessage = new ErrorMessage(input);
+            errorMessage.render()
+        });
 
-        const signButton = new ButtonSign(
-            formSelector,
+        const hrefSign = new HrefSign(signFormElement, this.signupConfig.signHref);
+        hrefSign.render();
+
+        const buttonSign = new ButtonSign(
+            signFormElement,
             this.signupConfig.signButton
         );
-        signButton.render();
+        buttonSign.render();
     }
 
     redirectTo(newPage) {

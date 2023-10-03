@@ -1,8 +1,8 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class HeaderMenu extends Component {
+export class WorkspaceCardDesctiption extends Component {
     constructor(parent, config) {
-        super(parent, config, "headerMenu");
+        super(parent, config, "workspace-card__desctiption");
     }
 
     render() {

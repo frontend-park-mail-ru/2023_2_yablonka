@@ -1,8 +1,8 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class BoardsList extends Component {
+export class ButtonCreateWorkspace extends Component {
     constructor(parent, config) {
-        super(parent, config, "boardsList");
+        super(parent, config, "button__create-workspace");
     }
 
     render() {

@@ -1,6 +1,6 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-templates['contentHeader.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
+templates['board-title__logo.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
@@ -8,10 +8,10 @@ templates['contentHeader.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":func
         return undefined
     };
 
-  return "<h3 class=\"content__header-name\">"
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"title") : depth0), depth0))
-    + "</h3>\n<div id=\""
-    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"id") : depth0), depth0))
-    + "\" class=\"content__description\"></div>";
+  return "<a class=\"board-title__logo\" href=\""
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"href") : depth0), depth0))
+    + "\">\n    <div>\n        <span>"
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
+    + "</span>\n    </div>\n</a>";
 },"useData":true});
 })();

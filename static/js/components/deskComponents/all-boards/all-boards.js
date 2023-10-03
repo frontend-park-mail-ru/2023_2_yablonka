@@ -1,8 +1,8 @@
 import { Component } from "../../core/componentClass/component.js";
 
-export class Desk extends Component {
+export class AllBoards extends Component {
     constructor(parent, config) {
-        super(parent, config, "desk");
+        super(parent, config, "all-boards");
     }
 
     render() {

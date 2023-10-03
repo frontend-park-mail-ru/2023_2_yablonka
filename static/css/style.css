@@ -160,13 +160,14 @@ body {
 }
 
 .sign-form__container {
-    margin-top: calc(27px * var(--scale-factor) + 5px);
+    margin-top: calc(27px * var(--scale-factor) + 7px);
     border-color: #fff;
     border-style: solid;
     border-width: calc(2px * var(--scale-factor));
     border-radius: 5px;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .sign-form__input {
@@ -215,4 +216,27 @@ body {
     text-decoration: none;
     display: flex;
     align-self: flex-end;
+}
+
+.error-message {
+    position: absolute;
+    height: 100%;
+    opacity: 0;
+    width: calc(100% + 4px);
+    bottom: calc(27px * var(--scale-factor) + 3px);
+    left: -2px;
+    right: 2px;
+    background-color: #cb4d4d;
+    color: #fff;
+    font-size: calc(18px * var(--scale-factor));
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+    margin-top: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all;
+    transition-duration: 500ms;
+    transition-timing-function: ease-in-out;
 }

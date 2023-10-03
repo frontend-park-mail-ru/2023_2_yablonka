@@ -12,6 +12,8 @@ templates['sign-form__container.hbs'] = template({"compiler":[8,">= 4.3.0"],"mai
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"icon") : depth0), depth0))
     + ".svg\" />\n    <input\n        type=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"type") : depth0), depth0))
+    + "\"\n        input-type=\""
+    + alias2(alias1((depth0 != null ? lookupProperty(depth0,"inputType") : depth0), depth0))
     + "\"\n        class=\"sign-form__input\"\n        placeholder=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"placeholder") : depth0), depth0))
     + "\"\n    />\n</div>";
