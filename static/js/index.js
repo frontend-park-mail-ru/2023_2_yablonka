@@ -12,10 +12,7 @@ const yd = new YourDesks(root);
 const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
-const logged = await AJAX(
-    "http://213.219.215.40:8080/api/v1/auth/verify/",
-    "GET"
-)
+const logged = await AJAX("http://213.219.215.40:8080/api/v1/auth/verify/", "GET")
     .then((res) => res.json())
     .catch((err) => null);
 
@@ -24,17 +21,15 @@ let currentPage;
 if (logged && !("error_response" in logged.body)) {
     currentPage = yd;
     currentPage.renderPage(logged.body.user);
+} else if (pathname == "/signin") {
+    currentPage = signInPage;
+    signInPage.renderPage();
+} else if (pathname == "/signup") {
+    currentPage = signUpPage;
+    signUpPage.renderPage();
 } else {
-    if (pathname == "/signin") {
-        currentPage = signInPage;
-        signInPage.renderPage();
-    } else if (pathname == "/signup") {
-        currentPage = signUpPage;
-        signUpPage.renderPage();
-    } else {
-        currentPage = signInPage;
-        signInPage.renderPage();
-    }
+    currentPage = signInPage;
+    signInPage.renderPage();
 }
 
 document.querySelector("body").addEventListener("click", async (e) => {
@@ -55,45 +50,49 @@ document.querySelector("body").addEventListener("click", async (e) => {
         e.target.tagName == "INPUT" &&
         e.target.getAttribute("type") == "submit"
     ) {
-        const resp = await currentPage
-            .authentificate()
-            .then((res) => res.json())
-            .catch((err) => null);
+        const button = document.querySelector(".button-sign");
 
-        if (!resp || "error_response" in resp.body) {
-            errorMessage("email", "Ошибка авторизации");
-            return;
-        }
-        currentPage = yd;
-        yd.renderPage(resp.body.user);
-    } else if (button.getAttribute("id") == "signup") {
-        const data = document.querySelectorAll(".sign-form__input");
-        if (!validateEmail(data[0].value)) {
-            errorMessage("email", "Неверно введён email");
-            return;
-        } else if (!validatePassword(data[1].value)) {
-            errorMessage(
-                "password",
-                "Неверно введён пароль, он должен состоять из букв и цифр"
-            );
-            return;
-        } else if (!validateRepeatPasswords(data[1].value, data[2].value)) {
-            errorMessage("repeatPassword", "Пароли не совпадают");
-            return;
-        } else {
+        if (button.getAttribute("id") == "signin") {
             const resp = await currentPage
                 .authentificate()
                 .then((res) => res.json())
                 .catch((err) => null);
+
             if (!resp || "error_response" in resp.body) {
-                errorMessage(
-                    "email",
-                    "Что-то пошло не так, попробуйте изменить email"
-                );
+                errorMessage("email", "Ошибка авторизации");
                 return;
             }
             currentPage = yd;
-            yd.renderPage(resp.body.user);
+            currentPage.renderPage(resp.body.user);
+        } else if (button.getAttribute("id") == "signup") {
+            const data = document.querySelectorAll(".sign-form__input");
+            if (!validateEmail(data[0].value)) {
+                errorMessage("email", "Неккоректный email");
+                return;
+            } else if (!validatePassword(data[1].value)) {
+                errorMessage(
+                    "password",
+                    "Неккоректный пароль, он должен состоять из букв и цифр и быть длиннее 8 символов"
+                );
+                return;
+            } else if (!validateRepeatPasswords(data[1].value, data[2].value)) {
+                errorMessage("repeatPassword", "Пароли не совпадают");
+                return;
+            } else {
+                const resp = await currentPage
+                    .authentificate()
+                    .then((res) => res.json())
+                    .catch((err) => null);
+                if (!resp || "error_response" in resp.body) {
+                    errorMessage(
+                        "email",
+                        "Что-то пошло не так, попробуйте изменить email"
+                    );
+                    return;
+                }
+                currentPage = yd;
+                yd.renderPage(resp.body.user);
+            }
         }
     } else if (e.target.tagName == "IMG" && e.target.className == "log-out") {
         const logout = await AJAX(
@@ -108,7 +107,7 @@ document.querySelector("body").addEventListener("click", async (e) => {
     }
 });
 
-window.addEventListener("popstate", (e) => {
+window.addEventListener("popstate", () => {
     if (pathname == "/signin") {
         signInPage.renderPage();
     } else if (pathname == "/signup") {
@@ -154,9 +153,7 @@ const errorMessage = (inputType, message) => {
  */
 
 const validateEmail = (email) => {
-    let re = new RegExp(
-        /^[A-Za-z0-9_!-]+@[A-Za-z0-9.-]+$/gm
-    );
+    let re = new RegExp(/^[A-Za-z0-9_!-]+@[A-Za-z0-9.-]+$/gm);
     return re.test(email);
 };
 
