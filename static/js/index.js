@@ -177,6 +177,6 @@ const validateRepeatPasswords = (passwordOne, passwordTwo) => {
  */
 
 const validatePassword = (password) => {
-    let re = new RegExp(/^(?=\d)(?=[a-zA-Z])\w{8,}$/);
+    let re = new RegExp(/^(?=.*?[a-zA-Z])(?=.*?\d)\w{8,}$/);
     return re.test(password);
 };
