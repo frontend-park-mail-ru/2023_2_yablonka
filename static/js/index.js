@@ -12,7 +12,10 @@ const yd = new YourDesks(root);
 const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
-const logged = await AJAX("http://213.219.215.40:8080/api/v1/auth/verify/", "GET")
+const logged = await AJAX(
+    "http://213.219.215.40:8080/api/v1/auth/verify/",
+    "GET"
+)
     .then((res) => res.json())
     .catch((err) => null);
 
@@ -57,56 +60,53 @@ document.querySelector("body").addEventListener("click", async (e) => {
 
         if (button.getAttribute("id") == "signin") {
             const data = document.querySelectorAll(".sign-form__input");
-            if (!validateEmail(data[0].value)) {
-                errorMessage("email", "Неверно введён email");
-                return;
-            } else if (!validatePassword(data[1].value)) {
-                errorMessage("password", "Неверно введён пароль");
+            if (
+                !validateEmail(data[0].value) ||
+                !validatePassword(data[1].value)
+            ) {
+                errorMessage("email", "Неверно введён email или пароль");
                 return;
             }
+        }
+        const resp = await currentPage
+            .authentificate()
+            .then((res) => res.json())
+            .catch((err) => null);
+
+        if (!resp || "error_response" in resp.body) {
+            errorMessage("email", "Ошибка авторизации");
+            return;
+        }
+        currentPage = yd;
+        yd.renderPage(resp.body.user);
+    } else if (button.getAttribute("id") == "signup") {
+        const data = document.querySelectorAll(".sign-form__input");
+        if (!validateEmail(data[0].value)) {
+            errorMessage("email", "Неверно введён email");
+            return;
+        } else if (!validatePassword(data[1].value)) {
+            errorMessage(
+                "password",
+                "Неверно введён пароль, он должен состоять из букв и цифр"
+            );
+            return;
+        } else if (!validateRepeatPasswords(data[1].value, data[2].value)) {
+            errorMessage("repeatPassword", "Пароли не совпадают");
+            return;
+        } else {
             const resp = await currentPage
                 .authentificate()
                 .then((res) => res.json())
                 .catch((err) => null);
-
-            if (!resp) {
-                errorMessage("email", "Что-то пошло не так");
-                return;
-            } else if ("error_response" in resp.body) {
-                errorMessage("email", "Неверный логин или пароль");
+            if (!resp || "error_response" in resp.body) {
+                errorMessage(
+                    "email",
+                    "Что-то пошло не так, попробуйте изменить email"
+                );
                 return;
             }
             currentPage = yd;
             yd.renderPage(resp.body.user);
-        } else if (button.getAttribute("id") == "signup") {
-            const data = document.querySelectorAll(".sign-form__input");
-            if (!validateEmail(data[0].value)) {
-                errorMessage("email", "Неверно введён email");
-                return;
-            } else if (!validatePassword(data[1].value)) {
-                errorMessage("password", "Неверно введён пароль");
-                return;
-            } else if (!validateRepeatPasswords(data[1].value, data[2].value)) {
-                errorMessage("repeatPassword", "Пароли не совпадают");
-                return;
-            } else {
-                const resp = await currentPage
-                    .authentificate()
-                    .then((res) => res.json())
-                    .catch((err) => null);
-
-                console.log(resp);
-
-                if (!resp) {
-                    errorMessage("email", "Что-то пошло не так");
-                    return;
-                } else if ("error_response" in resp.body) {
-                    errorMessage("email", "Пользователь уже существует");
-                    return;
-                }
-                currentPage = yd;
-                yd.renderPage(resp.body.user);
-            }
         }
     } else if (e.target.tagName == "IMG" && e.target.className == "log-out") {
         const logout = await AJAX(
@@ -193,6 +193,6 @@ const validateRepeatPasswords = (passwordOne, passwordTwo) => {
  */
 
 const validatePassword = (password) => {
-    let re = new RegExp(/^\w{8,}$/);
+    let re = new RegExp(/^(?=\d)(?=[a-zA-Z])\w{8,}$/);
     return re.test(password);
 };

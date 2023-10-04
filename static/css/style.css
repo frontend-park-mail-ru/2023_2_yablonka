@@ -443,7 +443,7 @@ body {
     right: 2px;
     background-color: #cb4d4d;
     color: #fff;
-    font-size: calc(18px * var(--scale-factor));
+    font-size: calc(14px * var(--scale-factor));
     text-overflow: ellipsis;
     margin-bottom: 2px;
     margin-top: 5px;
