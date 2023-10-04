@@ -146,8 +146,6 @@ export class SignIn {
         buttonSign.render();
     }
 
-    redirectTo(route) {}
-
     async authentificate() {
         const emailInput = document.querySelector('input[input-type="email"]');
         const passwInput = document.querySelector(

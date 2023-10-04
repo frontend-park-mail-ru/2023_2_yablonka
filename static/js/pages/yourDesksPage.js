@@ -8,21 +8,16 @@ import { ContentBoardsList } from "/components/deskComponents/content__boards-li
 import { BoardsListItem } from "/components/deskComponents/boards-list-item/boards-list-item.js";
 import { WorkspaceCardDesctiption } from "/components/deskComponents/workspace-card__desctiption/workspace-card__desctiption.js";
 import { BoardTitleLogo } from "/components/deskComponents/board-title__logo/board-title__logo.js";
+import { BoardsLogo } from "/components/deskComponents/boards-logo/boards-logo.js";
 import { AJAX } from "/components/core/ajax/ajax.js";
 
 export class YourDesks {
     #root;
-    //Тут в конструктор надо передавать объект ещё, чтобы в конфиг его отправить для дальнейшего рендера
     constructor(rootElement) {
         this.#root = rootElement;
     }
 
     yourDesksConfig = {
-        header: {
-            header: {
-                avatar: "avatar.jpg",
-            },
-        },
         contentHeaderName: {
             yours: {
                 title: "ВАШИ РАБОЧИЕ ПРОСТРАНСТВА",
@@ -46,7 +41,7 @@ export class YourDesks {
             return;
         }
 
-        const contentBoardsList = new ContentBoardsList(guestList);
+        const contentBoardsList = new ContentBoardsList(guestWorkspace);
         contentBoardsList.render();
 
         const guestBoards = guestWorkspace.childNodes[0];
@@ -54,34 +49,36 @@ export class YourDesks {
         const uniqOwnersId = new Map();
         let userWorkspaceNumber = 0;
 
-        for (let desk of usersDesks.user_guest_boards) {
+        for (let desk of usersDesks) {
             if (!uniqOwnersId.has(desk.owner_id)) {
-                uniqOwnersId.set(desk.owner_id, usersNumbers);
+                uniqOwnersId.set(desk.owner_id, userWorkspaceNumber);
                 ++userWorkspaceNumber;
 
                 const boardsListItem = new BoardsListItem(guestBoards);
                 boardsListItem.render();
 
+                const boardsImages = guestBoards.childNodes[0];
+
                 const workspaceCardDesctiption = new WorkspaceCardDesctiption(
-                    guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)],
+                    boardsImages,
                     {
-                        data: {
-                            userWorkspaceInform: {
-                                name: desk.board_name.email,
-                            },
+                        user: {
+                            name: desk.owner_email,
                         },
                     }
                 );
                 workspaceCardDesctiption.render();
+
+                const boardsLogo = new BoardsLogo(boardsImages);
+                boardsLogo.render();
             }
+            const guestProjects = guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)];
             const boardTitleLogo = new BoardTitleLogo(
-                guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)],
+                guestProjects.childNodes[guestProjects.childNodes.length - 1],
                 {
-                    data: {
-                        userDeskInform: {
-                            name: desk.board_info.board_name,
-                            image: desk.board_info.thumbnail.url,
-                        },
+                    userDeskInform: {
+                        name: desk.board_info.board_name,
+                        image: desk.board_info.thumbnail_url,
                     },
                 }
             );
@@ -90,7 +87,7 @@ export class YourDesks {
     }
 
     #renderOwnerWorkspace(usersDesks) {
-        const yourWorkspace = document.getElementById("your");
+        const yourWorkspace = document.getElementById("yours");
 
         if (usersDesks.length == 0) {
             const buttonCreateWorkspace = new ButtonCreateWorkspace(
@@ -107,15 +104,18 @@ export class YourDesks {
         const boardsListItem = new BoardsListItem(yourBoards);
         boardsListItem.render();
 
-        for (let desk of usersDesks.user_guest_boards) {
+        const boardsImages = yourBoards.childNodes[0];
+
+        const boardsLogo = new BoardsLogo(boardsImages);
+        boardsLogo.render();
+
+        for (let desk of usersDesks) {
             const boardTitleLogo = new BoardTitleLogo(
-                yourBoards.childNodes[0],
+                boardsImages.childNodes[boardsImages.childNodes.length - 1],
                 {
-                    data: {
-                        userDeskInform: {
-                            name: desk.board_info.board_name,
-                            image: desk.board_info.thumbnail.url,
-                        },
+                    userDeskInform: {
+                        name: desk.board_name,
+                        image: desk.thumbnail_url,
                     },
                 }
             );
@@ -123,31 +123,23 @@ export class YourDesks {
         }
     }
 
-    renderPage() {
+    async renderPage(user) {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "";
         document.title = "Tabula: Ваши Доски";
 
-        //Тут я просто не понимаю логику досок, допиши, как можешь
-        //Тебе надо послать аякс как Никита говорил, распарсить его
-        //В случае ошибки рендеришь, что нет рабочих пространств
-        //В случае удачи смотришь на тело запроса. если null, то см. пункт выше
-        //Если не null, то рендер.
-        //Придется немного менять поля в компонентах
-
         history.pushState(null, null, "desks");
 
-        // const userInformation = async function f() {
-        //     return await AJAX(
-        //         "http://localhost:8080/api/v1/user/boards/",
-        //         "POST",
-        //         {}
-        //     );
-        // };
+        const desksInformation = await AJAX(
+            "http://localhost:8080/api/v1/user/boards/",
+            "GET"
+        )
+            .then((res) => res.json())
+            .catch((err) => null);
 
-        // let userInformationJSON = JSON.parse(userInformation);
-
-        const header = new Header(this.#root, this.yourDesksConfig.header);
+        const header = new Header(this.#root, {
+            user: { avatar: user.thumbnail_url },
+        });
         header.render();
 
         const main = new Main(this.#root);
@@ -167,8 +159,13 @@ export class YourDesks {
             this.yourDesksConfig.contentHeaderName
         );
         contentHeaderName.render();
+        console.log(desksInformation.body.boards.user_owned_boards);
 
-        // this.#renderOwnerWorkspace(userInformationJSON.user_owned_boards);
-        // this.#renderGuestWorspace(userInformationJSON.user_guest_boards);
+        this.#renderOwnerWorkspace(
+            desksInformation.body.boards.user_owned_boards
+        );
+        this.#renderGuestWorspace(
+            desksInformation.body.boards.user_guest_boards
+        );
     }
 }

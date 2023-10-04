@@ -13,16 +13,16 @@ const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
 const logged = await AJAX("http://localhost:8080/api/v1/auth/verify/", "GET")
-    .then((res) => res)
+    .then((res) => res.json())
     .catch((err) => null);
 
 console.log(logged);
-
 let currentPage;
 
-if (logged && logged.status == 200) {
+if (logged && !("error_response" in logged.body)) {
     currentPage = yd;
-    currentPage.renderPage();
+    console.log(logged);
+    currentPage.renderPage(logged.body.user);
 } else {
     if (pathname == "/signin") {
         currentPage = signInPage;
@@ -30,9 +30,9 @@ if (logged && logged.status == 200) {
     } else if (pathname == "/signup") {
         currentPage = signUpPage;
         signUpPage.renderPage();
-    } else if (pathname == "/") {
-        currentPage = signUpPage;
-        signUpPage.renderPage();
+    } else {
+        currentPage = signInPage;
+        signInPage.renderPage();
     }
 }
 
@@ -78,7 +78,8 @@ document.querySelector("body").addEventListener("click", async (e) => {
                 errorMessage("email", "Неверный логин или пароль");
                 return;
             }
-            yd.renderPage();
+            currentPage = yd;
+            yd.renderPage(resp.body.user);
         } else if (button.getAttribute("id") == "signup") {
             const data = document.querySelectorAll(".sign-form__input");
             if (!validateEmail(data[0].value)) {
@@ -103,11 +104,20 @@ document.querySelector("body").addEventListener("click", async (e) => {
                 } else if ("error_response" in resp.body) {
                     errorMessage("email", "Пользователь уже существует");
                 }
-                yd.renderPage();
+                currentPage = yd;
+                yd.renderPage(resp.body.user);
             }
         }
     } else if (e.target.tagName == "IMG" && e.target.className == "log-out") {
-        console.log("Hello");
+        const logout = await AJAX(
+            "http://localhost:8080/api/v1/auth/logout/",
+            "POST",
+            {}
+        )
+            .then((res) => res)
+            .catch((err) => null);
+        currentPage = signInPage;
+        currentPage.renderPage();
     }
 });
 

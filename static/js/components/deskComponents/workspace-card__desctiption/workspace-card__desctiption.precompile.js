@@ -8,8 +8,8 @@ templates['workspace-card__desctiption.hbs'] = template({"compiler":[8,">= 4.3.0
         return undefined
     };
 
-  return "<div class=\"workspace-card__desctiption\">\n    <img src=\"../svg/people.svg\" alt=\"\" /><span\n        class=\"workspace-owner__username\"\n    >"
-    + container.escapeExpression(container.lambda((depth0 != null ? lookupProperty(depth0,"username") : depth0), depth0))
+  return "<div class=\"workspace-card__desctiption\">\n    <img src=\"people.svg\" alt=\"\" /><span\n        class=\"workspace-owner__username\"\n    >"
+    + container.escapeExpression(container.lambda((depth0 != null ? lookupProperty(depth0,"name") : depth0), depth0))
     + " Workspace</span>\n</div>";
 },"useData":true});
 })();

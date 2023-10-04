@@ -1,5 +1,6 @@
 <script src="../js/components/deskComponents/all-boards/all-boards.precompile.js"></script>
 <script src="../js/components/deskComponents/boards-list-item/boards-list-item.precompile.js"></script>
+<script src="../js/components/deskComponents/boards-logo/boards-logo.precompile.js"></script>
 <script src="../js/components/deskComponents/board-title__logo/board-title__logo.precompile.js"></script>
 <script src="../js/components/deskComponents/button__create-workspace/button__create-workspace.precompile.js"></script>
 <script src="../js/components/deskComponents/content__boards-list/content__boards-list.precompile.js"></script>

@@ -1,9 +1,8 @@
 /**
  * Делает ajax-запрос на сервер
  * @param {string} url - URL, куда делаем запрос.
- * @param {Object} payload - данные, которые мы отсылаем
  * @param {string} method - метод запроса
- * @param {Function} callback - функция обратного вызова
+ * @param {Object} payload - данные, которые мы отсылаем
  * @returns {undefined}
  */
 

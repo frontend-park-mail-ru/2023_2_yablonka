@@ -24,7 +24,7 @@ function findView(view) {
 router.get("*", (req, res) => {
     filePath = createPath("index");
     if (!fs.existsSync(filePath)) {
-        res.status(404).send("404. Page not found");
+        res.status(500).send("500. Internal server Error");
         return;
     }
 
@@ -42,7 +42,7 @@ router.get("/:view?", (req, res) => {
     }
 
     if (!fs.existsSync(filePath)) {
-        res.status(404).send("404. Page not found");
+        res.status(500).send("500. Internal server Error");
         return;
     }
 
