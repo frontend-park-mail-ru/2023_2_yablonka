@@ -51,23 +51,10 @@ document.querySelector("body").addEventListener("click", async (e) => {
             signInPage.renderPage();
         }
     }
-
     if (
         e.target.tagName == "INPUT" &&
         e.target.getAttribute("type") == "submit"
     ) {
-        const button = document.querySelector(".button-sign");
-
-        if (button.getAttribute("id") == "signin") {
-            const data = document.querySelectorAll(".sign-form__input");
-            if (
-                !validateEmail(data[0].value) ||
-                !validatePassword(data[1].value)
-            ) {
-                errorMessage("email", "Неверно введён email или пароль");
-                return;
-            }
-        }
         const resp = await currentPage
             .authentificate()
             .then((res) => res.json())
