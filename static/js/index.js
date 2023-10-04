@@ -153,8 +153,8 @@ const errorMessage = (inputType, message) => {
 };
 
 const validateEmail = (email) => {
-    //let re = new RegExp(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);
-    return true;
+    let re = new RegExp(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);
+    return re.test(email);
 };
 
 const validateRepeatPasswords = (password1, password2) => {
@@ -162,6 +162,6 @@ const validateRepeatPasswords = (password1, password2) => {
 };
 
 const validatePassword = (password) => {
-    //let re = new RegExp(/^\w{8,}$/);
-    return true;
+    let re = new RegExp(/^\w{8,}$/);
+    return re.test(password);
 };
