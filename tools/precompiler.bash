@@ -22,7 +22,7 @@ ls -d */ | rev | cut -c 2- | rev | while read component; do
         cd ./$el
         handlebars $el.hbs -f $el.precompile.js
         cd ..
-        echo "<script src=\"../js/components/$component/$el/$el.precompile.js\"></script>" >>$scriptsPath/$component"JSscripts.txt"
+        echo "<script src=\"components/$component/$el/$el.precompile.js\"></script>" >>$scriptsPath/$component"JSscripts.txt"
     done
     cd ..
 done

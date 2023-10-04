@@ -3,6 +3,11 @@ const fs = require("fs");
 const path = require("path");
 const router = express.Router();
 
+/**
+ * Создает путь к файлу
+ * @param {string} page - название страницы
+ * @returns {string} - адрес(в файлах) страницы
+ */
 const createPath = (page) =>
     path.resolve(__dirname, "../static/html", `${page}.html`);
 
@@ -10,6 +15,12 @@ router.use(express.static(path.resolve(__dirname, "../static/css")));
 router.use(express.static(path.resolve(__dirname, "../static/img")));
 router.use(express.static(path.resolve(__dirname, "../static/svg")));
 router.use(express.static(path.resolve(__dirname, "../static/js")));
+
+/**
+ * Проверяет, можно ли переходить по такому адресу
+ * @param {string} view - название страницы
+ * @returns {boolean} - true, если разрешено, false, если нет
+ */
 
 function findView(view) {
     let views = ["signup", "signin", "desks"];

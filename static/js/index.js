@@ -16,12 +16,10 @@ const logged = await AJAX("http://localhost:8080/api/v1/auth/verify/", "GET")
     .then((res) => res.json())
     .catch((err) => null);
 
-console.log(logged);
 let currentPage;
 
 if (logged && !("error_response" in logged.body)) {
     currentPage = yd;
-    console.log(logged);
     currentPage.renderPage(logged.body.user);
 } else {
     if (pathname == "/signin") {
@@ -101,8 +99,10 @@ document.querySelector("body").addEventListener("click", async (e) => {
 
                 if (!resp) {
                     errorMessage("email", "Что-то пошло не так");
+                    return;
                 } else if ("error_response" in resp.body) {
                     errorMessage("email", "Пользователь уже существует");
+                    return;
                 }
                 currentPage = yd;
                 yd.renderPage(resp.body.user);
@@ -131,6 +131,13 @@ window.addEventListener("popstate", (e) => {
     }
 });
 
+/**
+ * Отображает ошибку над определенным input
+ *
+ * @param {string} inputType - Тип input
+ * @param {string} message - Текст ошибки
+ */
+
 const errorMessage = (inputType, message) => {
     const input = document.querySelector(`input[input-type="${inputType}"]`);
     let err = input.parentElement.childNodes[0];
@@ -152,14 +159,38 @@ const errorMessage = (inputType, message) => {
     }, 5000);
 };
 
+/**
+ * Проверяет email на правильность
+ *
+ * @param {string} email - Строка с email
+ * @return {boolean} - false если неправильный, true, если правильный
+ */
+
 const validateEmail = (email) => {
-    let re = new RegExp(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);
+    let re = new RegExp(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
     return re.test(email);
 };
 
-const validateRepeatPasswords = (password1, password2) => {
-    return password1 === password2;
+/**
+ * Проверяет пароли на совпадение
+ *
+ * @param {string} passwordOne - Строка с паролем
+ * @param {string} passwordTwo - Строка с повтроенным паролем
+ * @return {boolean} - false если неправильный, true, если правильный
+ */
+
+const validateRepeatPasswords = (passwordOne, passwordTwo) => {
+    return passwordOne === passwordTwo;
 };
+
+/**
+ * Проверяет пароль на правильность
+ *
+ * @param {string} password - Строка с паролем
+ * @return {boolean} - false если неправильный, true, если правильный
+ */
 
 const validatePassword = (password) => {
     let re = new RegExp(/^\w{8,}$/);

@@ -17,6 +17,6 @@ export class ButtonCreateWorkspace extends Component {
      */
     
     render() {
-        this.parent.innerHTML = this.template();
+        this.parent.innerHTML += this.template();
     }
 }

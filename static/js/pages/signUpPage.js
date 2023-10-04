@@ -9,6 +9,12 @@ import { ButtonSign } from "/components/signComponents/button-sign/button-sign.j
 import { ErrorMessage } from "/components/signComponents/error-message/error-message.js";
 import { AJAX } from "/components/core/ajax/ajax.js";
 
+/**
+ * Класс для рендера страницы регистрации
+ * @class
+ * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
+ */
+
 export class SignUp {
     #root;
 
@@ -73,6 +79,10 @@ export class SignUp {
         },
     };
 
+    /**
+     * Рендер страницы в DOM
+     */
+
     renderPage() {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "#37426d";
@@ -131,6 +141,11 @@ export class SignUp {
         );
         buttonSign.render();
     }
+
+    /**
+     * Аутентифицирует данные
+     * @returns {Promise} - Результат запроса
+     */
 
     async authentificate() {
         const emailInput = document.querySelector('input[input-type="email"]');

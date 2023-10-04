@@ -10,6 +10,12 @@ import { ButtonSign } from "/components/signComponents/button-sign/button-sign.j
 import { ErrorMessage } from "/components/signComponents/error-message/error-message.js";
 import { AJAX } from "/components/core/ajax/ajax.js";
 
+/**
+ * Класс для рендера страницы логина
+ * @class
+ * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
+ */
+
 export class SignIn {
     #root;
 
@@ -75,6 +81,9 @@ export class SignIn {
         },
     };
 
+    /**
+     * Рендер страницы в DOM
+     */
     renderPage() {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "#37426d";
@@ -145,6 +154,11 @@ export class SignIn {
         );
         buttonSign.render();
     }
+
+    /**
+     * Аутентифицирует данные
+     * @returns {Promise} - Результат запроса
+     */
 
     async authentificate() {
         const emailInput = document.querySelector('input[input-type="email"]');

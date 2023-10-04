@@ -9,8 +9,14 @@ import { BoardsListItem } from "/components/deskComponents/boards-list-item/boar
 import { WorkspaceCardDesctiption } from "/components/deskComponents/workspace-card__desctiption/workspace-card__desctiption.js";
 import { BoardTitleLogo } from "/components/deskComponents/board-title__logo/board-title__logo.js";
 import { BoardsLogo } from "/components/deskComponents/boards-logo/boards-logo.js";
+import { WorkspaceMessage } from "/components/deskComponents/workspace-message/workspace-message.js";
 import { AJAX } from "/components/core/ajax/ajax.js";
 
+/**
+ * Класс для рендера страницы досок
+ * @class
+ * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
+ */
 export class YourDesks {
     #root;
     constructor(rootElement) {
@@ -30,14 +36,22 @@ export class YourDesks {
         },
     };
 
+    /**
+     * Рендер досок пользователя
+     * @param {Object} usersDesks - данные о досках(не своих), в которых пользователь участвует
+     */
+
     #renderGuestWorspace(usersDesks) {
         const guestWorkspace = document.getElementById("guest");
 
-        if (usersDesks.length == 0) {
-            const buttonCreateWorkspace = new ButtonCreateWorkspace(
-                guestWorkspace
-            );
-            buttonCreateWorkspace.render();
+        if (usersDesks === null) {
+            const workspaceMessage = new WorkspaceMessage(guestWorkspace, {
+                workspace: {
+                    message:
+                        "Вы пока что не добавлены ни в одно рабочее пространство.",
+                },
+            });
+            workspaceMessage.render();
             return;
         }
 
@@ -48,7 +62,6 @@ export class YourDesks {
 
         const uniqOwnersId = new Map();
         let userWorkspaceNumber = 0;
-
         for (let desk of usersDesks) {
             if (!uniqOwnersId.has(desk.owner_id)) {
                 uniqOwnersId.set(desk.owner_id, userWorkspaceNumber);
@@ -72,7 +85,8 @@ export class YourDesks {
                 const boardsLogo = new BoardsLogo(boardsImages);
                 boardsLogo.render();
             }
-            const guestProjects = guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)];
+            const guestProjects =
+                guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)];
             const boardTitleLogo = new BoardTitleLogo(
                 guestProjects.childNodes[guestProjects.childNodes.length - 1],
                 {
@@ -86,12 +100,24 @@ export class YourDesks {
         }
     }
 
+    /**
+     * Рендер досок пользователя
+     * @param {Object} usersDesks - данные о досках авторизованного пользователя
+     */
+
     #renderOwnerWorkspace(usersDesks) {
         const yourWorkspace = document.getElementById("yours");
 
-        if (usersDesks.length == 0) {
+        if (usersDesks === null) {
+            const workspaceMessage = new WorkspaceMessage(yourWorkspace, {
+                workspace: {
+                    message:
+                        "Вы пока что не создали ни одно рабочее пространство.",
+                },
+            });
+            workspaceMessage.render();
             const buttonCreateWorkspace = new ButtonCreateWorkspace(
-                yourWorkspace
+                yourWorkspace.childNodes[0]
             );
             buttonCreateWorkspace.render();
             return;
@@ -122,6 +148,11 @@ export class YourDesks {
             boardTitleLogo.render();
         }
     }
+
+    /**
+     * Рендер страницы в DOM
+     * @param {Object} user - данные авторизованного пользователя
+     */
 
     async renderPage(user) {
         this.#root.innerHTML = "";
@@ -159,7 +190,6 @@ export class YourDesks {
             this.yourDesksConfig.contentHeaderName
         );
         contentHeaderName.render();
-        console.log(desksInformation.body.boards.user_owned_boards);
 
         this.#renderOwnerWorkspace(
             desksInformation.body.boards.user_owned_boards

@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class Sidebar extends Component {
+export class WorkspaceMessage extends Component {
     constructor(parent, config) {
-        super(parent, config, "sidebar");
+        super(parent, config, "workspace-message");
     }
 
     /**
@@ -17,6 +17,9 @@ export class Sidebar extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += this.data.reduce(
+            (messages, message) => messages + this.template(message),
+            ""
+        );
     }
 }

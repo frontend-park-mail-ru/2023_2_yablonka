@@ -3,7 +3,7 @@
  * @param {string} url - URL, куда делаем запрос.
  * @param {string} method - метод запроса
  * @param {Object} payload - данные, которые мы отсылаем
- * @returns {undefined}
+ * @returns {Promise} - результат fetch
  */
 
 export const AJAX = async (url, requestMethod, requestPayload = {}) => {
@@ -29,7 +29,6 @@ export const AJAX = async (url, requestMethod, requestPayload = {}) => {
             method: requestMethod,
         });
     }
-    console.log(request);
 
     return await fetch(request);
 };
