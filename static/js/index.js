@@ -12,7 +12,7 @@ const yd = new YourDesks(root);
 const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
-const logged = await AJAX("http://localhost:8080/api/v1/auth/verify/", "GET")
+const logged = await AJAX("http://213.219.215.40:8080/api/v1/auth/verify/", "GET")
     .then((res) => res.json())
     .catch((err) => null);
 
@@ -110,7 +110,7 @@ document.querySelector("body").addEventListener("click", async (e) => {
         }
     } else if (e.target.tagName == "IMG" && e.target.className == "log-out") {
         const logout = await AJAX(
-            "http://localhost:8080/api/v1/auth/logout/",
+            "http://213.219.215.40:8080/api/v1/auth/logout/",
             "POST",
             {}
         )

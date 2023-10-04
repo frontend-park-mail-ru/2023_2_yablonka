@@ -162,7 +162,7 @@ export class YourDesks {
         history.pushState(null, null, "desks");
 
         const desksInformation = await AJAX(
-            "http://localhost:8080/api/v1/user/boards/",
+            "http://213.219.215.40:8080/api/v1/user/boards/",
             "GET"
         )
             .then((res) => res.json())
