@@ -122,7 +122,7 @@ body {
     left: 3rem;
     padding-top: 36px;
     height: 46rem;
-    width: 55rem;
+    width: 53rem;
     transition: all 0.2s ease-in-out;
 }
 
@@ -161,9 +161,7 @@ body {
 
 .sign-form__container {
     margin-top: calc(27px * var(--scale-factor) + 7px);
-    border-color: #fff;
-    border-style: solid;
-    border-width: calc(2px * var(--scale-factor));
+    border: calc(2px * var(--scale-factor)) solid #fff;
     border-radius: 5px;
     display: flex;
     align-items: center;

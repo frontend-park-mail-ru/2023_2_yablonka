@@ -136,19 +136,18 @@ export class SignUp {
         newPage.renderPage();
     }
 
-    authentificate() {
+    async authentificate() {
         const emailInput = document.querySelector('input[input-type="email"]');
         const passwInput = document.querySelector(
             'input[input-type="password"]'
         );
 
-        const result = AJAX(
+        const result = await AJAX(
             "http://localhost:8080/api/v1/auth/signup/",
             "POST",
             { email: emailInput.value, password: passwInput.value }
-        )
-            .then((res) => JSON.parse(res))
-            .catch((err) => null);
+        );
+
         return result;
     }
 }

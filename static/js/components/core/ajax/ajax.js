@@ -7,18 +7,30 @@
  * @returns {undefined}
  */
 
-export const AJAX = async (url, method = "GET", payload = {}) => {
-    const request = new Request({
-        headers: {
-            "Content-Type": "application/json;charset=utf8",
-            "Origin": "http://localhost:8081/",
-        },
-        credentials: "include",
-        method: method,
-    });
+export const AJAX = async (url, requestMethod, requestPayload = {}) => {
+    let request;
+    if (
+        requestMethod.toLowerCase() != "get" &&
+        requestMethod.toLowerCase() != "head"
+    ) {
+        request = new Request(url, {
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+            credentials: "include",
+            body: JSON.stringify(requestPayload),
+            method: requestMethod,
+        });
+    } else {
+        request = new Request(url, {
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+            credentials: "include",
+            method: requestMethod,
+        });
+    }
+    console.log(request);
 
-    if (method.toLowerCase() != "get" && method.toLowerCase() != "head")
-        request.payload = payload;
-
-    return await fetch(url);
+    return await fetch(request);
 };

@@ -20,7 +20,7 @@ export class YourDesks {
     yourDesksConfig = {
         header: {
             header: {
-                picture: "/img/avatar.jpg",
+                avatar: "avatar.jpg",
             },
         },
         contentHeaderName: {
@@ -137,15 +137,15 @@ export class YourDesks {
 
         history.pushState(null, null, "desks");
 
-        const userInformation = async function f() {
-            return await AJAX(
-                "http://localhost:8080/api/v1/user/boards/",
-                "POST",
-                {}
-            );
-        };
+        // const userInformation = async function f() {
+        //     return await AJAX(
+        //         "http://localhost:8080/api/v1/user/boards/",
+        //         "POST",
+        //         {}
+        //     );
+        // };
 
-        let userInformationJSON = JSON.parse(userInformation);
+        // let userInformationJSON = JSON.parse(userInformation);
 
         const header = new Header(this.#root, this.yourDesksConfig.header);
         header.render();
@@ -168,7 +168,7 @@ export class YourDesks {
         );
         contentHeaderName.render();
 
-        this.#renderOwnerWorkspace(userInformationJSON.user_owned_boards);
-        this.#renderGuestWorspace(userInformationJSON.user_guest_boards);
+        // this.#renderOwnerWorkspace(userInformationJSON.user_owned_boards);
+        // this.#renderGuestWorspace(userInformationJSON.user_guest_boards);
     }
 }

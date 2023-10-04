@@ -10,9 +10,6 @@ import { ButtonSign } from "/components/signComponents/button-sign/button-sign.j
 import { ErrorMessage } from "/components/signComponents/error-message/error-message.js";
 import { AJAX } from "/components/core/ajax/ajax.js";
 
-
-import { SignUp } from "./signUpPage.js";
-
 export class SignIn {
     #root;
 
@@ -151,19 +148,18 @@ export class SignIn {
 
     redirectTo(route) {}
 
-    authentificate() {
+    async authentificate() {
         const emailInput = document.querySelector('input[input-type="email"]');
         const passwInput = document.querySelector(
             'input[input-type="password"]'
         );
 
-        const result = AJAX(
+        const result = await AJAX(
             "http://localhost:8080/api/v1/auth/login/",
             "POST",
             { email: emailInput.value, password: passwInput.value }
-        )
-            .then((res) => JSON.parse(res))
-            .catch((err) => null);
+        );
+
         return result;
     }
 }

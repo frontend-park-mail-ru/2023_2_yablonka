@@ -1,9 +1,9 @@
 "use strict";
 
-import { SignIn } from "./pages/signInPage.js";
-import { SignUp } from "./pages/signUpPage.js";
-import { YourDesks } from "./pages/yourDesksPage.js";
-import { AJAX } from "./components/core/ajax/ajax.js";
+import { SignIn } from "/pages/signInPage.js";
+import { SignUp } from "/pages/signUpPage.js";
+import { YourDesks } from "/pages/yourDesksPage.js";
+import { AJAX } from "/components/core/ajax/ajax.js";
 
 const root = document.querySelector(".page");
 const pathname = window.location.pathname;
@@ -12,37 +12,41 @@ const yd = new YourDesks(root);
 const signUpPage = new SignUp(root);
 const signInPage = new SignIn(root);
 
-const logged = AJAX("http://localhost:8080/api/v1/auth/verify", "GET", {})
-    .then((res) => JSON.parse(res))
+const logged = await AJAX("http://localhost:8080/api/v1/auth/verify/", "GET")
+    .then((res) => res)
     .catch((err) => null);
+
+console.log(logged);
 
 let currentPage;
 
-if (logged.statusCode == 200) {
+if (logged && logged.status == 200) {
     currentPage = yd;
     currentPage.renderPage();
+} else {
+    if (pathname == "/signin") {
+        currentPage = signInPage;
+        signInPage.renderPage();
+    } else if (pathname == "/signup") {
+        currentPage = signUpPage;
+        signUpPage.renderPage();
+    } else if (pathname == "/") {
+        currentPage = signUpPage;
+        signUpPage.renderPage();
+    }
 }
 
-if (pathname == "/signin") {
-    currentPage = signInPage;
-    signInPage.renderPage();
-} else if (pathname == "/signup") {
-    currentPage = signUpPage;
-    signUpPage.renderPage();
-} else if (pathname == "/") {
-    currentPage = signUpPage;
-    signUpPage.renderPage();
-}
-
-document.querySelector("body").addEventListener("click", (e) => {
+document.querySelector("body").addEventListener("click", async (e) => {
     e.preventDefault();
     if (e.target.tagName == "A") {
         const ref = e.target;
         const link = ref.getAttribute("href");
 
         if (link == "signup.html") {
+            currentPage = signUpPage;
             signUpPage.renderPage();
         } else if (link == "signin.html") {
+            currentPage = signInPage;
             signInPage.renderPage();
         }
     }
@@ -57,24 +61,53 @@ document.querySelector("body").addEventListener("click", (e) => {
             const data = document.querySelectorAll(".sign-form__input");
             if (!validateEmail(data[0].value)) {
                 errorMessage("email", "Неверно введён email");
+                return;
             } else if (!validatePassword(data[1].value)) {
                 errorMessage("password", "Неверно введён пароль");
+                return;
             }
-            const resp = currentPage.authentificate();
-            //Условия при разных статус кодах
+            const resp = await currentPage
+                .authentificate()
+                .then((res) => res.json())
+                .catch((err) => null);
+
+            if (!resp) {
+                errorMessage("email", "Что-то пошло не так");
+                return;
+            } else if ("error_response" in resp.body) {
+                errorMessage("email", "Неверный логин или пароль");
+                return;
+            }
+            yd.renderPage();
         } else if (button.getAttribute("id") == "signup") {
             const data = document.querySelectorAll(".sign-form__input");
             if (!validateEmail(data[0].value)) {
                 errorMessage("email", "Неверно введён email");
+                return;
             } else if (!validatePassword(data[1].value)) {
                 errorMessage("password", "Неверно введён пароль");
+                return;
             } else if (!validateRepeatPasswords(data[1].value, data[2].value)) {
                 errorMessage("repeatPassword", "Пароли не совпадают");
-            }
-            const resp = currentPage.authentificate();
+                return;
+            } else {
+                const resp = await currentPage
+                    .authentificate()
+                    .then((res) => res.json())
+                    .catch((err) => null);
 
-            //Тут надо условия при разных статус кодах
+                console.log(resp);
+
+                if (!resp) {
+                    errorMessage("email", "Что-то пошло не так");
+                } else if ("error_response" in resp.body) {
+                    errorMessage("email", "Пользователь уже существует");
+                }
+                yd.renderPage();
+            }
         }
+    } else if (e.target.tagName == "IMG" && e.target.className == "log-out") {
+        console.log("Hello");
     }
 });
 
@@ -110,10 +143,8 @@ const errorMessage = (inputType, message) => {
 };
 
 const validateEmail = (email) => {
-    let re = new RegExp(
-        /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?.)*/
-    );
-    return re.test(email);
+    //let re = new RegExp(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);
+    return true;
 };
 
 const validateRepeatPasswords = (password1, password2) => {
@@ -121,6 +152,6 @@ const validateRepeatPasswords = (password1, password2) => {
 };
 
 const validatePassword = (password) => {
-    let re = new RegExp(/^\w{8,}$/);
-    return re.test(password);
+    //let re = new RegExp(/^\w{8,}$/);
+    return true;
 };

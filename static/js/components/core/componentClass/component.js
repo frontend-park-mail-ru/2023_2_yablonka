@@ -12,9 +12,4 @@ export class Component {
             ...configs,
         }));
     }
-
-    // render() {
-
-    //     this.#parent.innerHTML += this.data.reduce((inputs, input) => inputs + this.#template(input), "");
-    // }
 }

@@ -12,7 +12,7 @@ router.use(express.static(path.resolve(__dirname, "../static/svg")));
 router.use(express.static(path.resolve(__dirname, "../static/js")));
 
 function findView(view) {
-    let views = ["signup", "signin", "main"];
+    let views = ["signup", "signin", "desks"];
 
     for (let i = 0; i, views.length; ++i) {
         if (views[i] == view) return true;
@@ -38,7 +38,7 @@ router.get("/:view?", (req, res) => {
     if (view == "/" || !view) {
         filePath = createPath("index");
     } else if (findView(view)) {
-        filePath = createPath(view);
+        filePath = createPath("index");
     }
 
     if (!fs.existsSync(filePath)) {
