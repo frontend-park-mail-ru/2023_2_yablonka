@@ -1,13 +1,13 @@
 @font-face {
     font-family: "Ubuntu-Regular";
-    src: url("../font/Ubuntu-Regular.woff2") format("truetype");
+    src: url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Ubuntu-Bold";
-    src: url("../font/Ubuntu-Bold.woff2") format("truetype");
+    src: url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
