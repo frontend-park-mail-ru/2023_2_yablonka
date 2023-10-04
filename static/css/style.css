@@ -1,9 +1,23 @@
+@font-face {
+    font-family: "Ubuntu-Regular";
+    src: url("../font/Ubuntu-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Ubuntu-Bold";
+    src: url("../font/Ubuntu-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
     border: 0;
     box-sizing: border-box;
-    font-family: Ubuntu;
+    font-family: Ubuntu-Bold;
 }
 
 @media only screen and (max-width: 480px) {
