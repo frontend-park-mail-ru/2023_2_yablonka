@@ -1,7 +1,7 @@
 #!/bin/bash
 scriptsPath=$(pwd)
 cd ..
-componentPath=$(pwd)/static/js/components/
+componentPath=$(pwd)/js/components/
 
 coreComponent="core"
 
