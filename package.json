@@ -11,8 +11,11 @@
   "author": "Yablonka",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^8.50.0",
     "express": "^4.18.2",
     "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "nodemon": "^3.0.1"
   }
 }

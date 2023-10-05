@@ -450,6 +450,7 @@ body {
     color: #fff;
     font-size: calc(18px * var(--scale-factor));
     font-weight: bold;
+    cursor: pointer;
 }
 
 .button-sign {

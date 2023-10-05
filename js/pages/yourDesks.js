@@ -11,6 +11,7 @@ import { BoardTitleLogo } from "/components/deskComponents/board-title__logo/boa
 import { BoardsLogo } from "/components/deskComponents/boards-logo/boards-logo.js";
 import { WorkspaceMessage } from "/components/deskComponents/workspace-message/workspace-message.js";
 import { AJAX } from "/components/core/ajax/ajax.js";
+import { loginCheck } from "../components/core/routing/loginCheck.js";
 
 /**
  * Класс для рендера страницы досок
@@ -154,22 +155,28 @@ export class YourDesks {
      * @param {Object} user - данные авторизованного пользователя
      */
 
-    async renderPage(user) {
+    async renderPage() {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "";
         document.title = "Tabula: Ваши Доски";
 
-        history.pushState(null, null, "desks");
+        const data = await loginCheck();
+
+        if ( !data || "error_response" in data.body) {
+            history.pushState(null, null, "signin");
+            window.dispatchEvent(new PopStateEvent("popstate"));
+            return;
+        }
 
         const desksInformation = await AJAX(
-            "http://213.219.215.40:8080/api/v1/user/boards/",
+            "http://localhost:8080/api/v1/user/boards/",
             "GET"
         )
             .then((res) => res.json())
             .catch((err) => null);
 
         const header = new Header(this.#root, {
-            user: { avatar: user.thumbnail_url },
+            user: { avatar: data.body.user.thumbnail_url },
         });
         header.render();
 
@@ -197,5 +204,23 @@ export class YourDesks {
         this.#renderGuestWorspace(
             desksInformation.body.boards.user_guest_boards
         );
+
+        this.#addEventListeners();
+    }
+
+    #addEventListeners() {
+        document
+            .querySelector(".log-out")
+            .addEventListener("click", async (e) => {
+                const logout = await AJAX(
+                    "http://localhost:8080/api/v1/auth/logout/",
+                    "POST",
+                    {}
+                )
+                    .then((res) => res)
+                    .catch((err) => null);
+                history.pushState(null, null, "signin");
+                window.dispatchEvent(new PopStateEvent("popstate"));
+            });
     }
 }

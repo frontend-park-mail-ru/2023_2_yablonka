@@ -9,6 +9,9 @@ import { HrefSign } from "/components/signComponents/href-sign/href-sign.js";
 import { ButtonSign } from "/components/signComponents/button-sign/button-sign.js";
 import { ErrorMessage } from "/components/signComponents/error-message/error-message.js";
 import { AJAX } from "/components/core/ajax/ajax.js";
+import { Validator } from "/components/core/validation/validator.js";
+import { loginCheck } from "../components/core/routing/loginCheck.js";
+import { errorMessage } from "../components/core/signErrorMessage/errorMessage.js";
 
 /**
  * Класс для рендера страницы логина
@@ -84,12 +87,18 @@ export class SignIn {
     /**
      * Рендер страницы в DOM
      */
-    renderPage() {
+    async renderPage() {
         this.#root.innerHTML = "";
         this.#root.style.backgroundColor = "#37426d";
         document.title = "Tabula: Sign In";
 
-        history.pushState(null, null, "signin");
+        const logged = await loginCheck();
+
+        if (logged && !("error_response" in logged.body)) {
+            history.pushState(null, null, "desks");
+            window.dispatchEvent(new PopStateEvent("popstate"));
+            return;
+        }
 
         const pageImage = new PageImage(this.#root, this.signinConfig.images);
         pageImage.render();
@@ -142,17 +151,47 @@ export class SignIn {
         );
         hrefSign.render();
 
-        document.querySelector(".href-sign").addEventListener("click", (e) => {
-            e.preventDefault();
-            const hrefSign = new HrefSign(this.#root);
-            hrefSign.render();
-        });
-
         const buttonSign = new ButtonSign(
             signFormElement,
             this.signinConfig.buttonSign
         );
         buttonSign.render();
+        this.#addEventListeners();
+    }
+
+    #addEventListeners() {
+        document
+            .querySelector(".button-sign")
+            .addEventListener("click", async (e) => {
+                e.preventDefault();
+                const data = document.querySelectorAll(".sign-form__input");
+                if (!Validator.validateEmail(data[0].value)) {
+                    errorMessage("email", "Некорректный email");
+                } else if (!Validator.validatePassword(data[1].value)) {
+                    errorMessage(
+                        "password",
+                        "Некорректный пароль, он должен состоять из букв и цифр и быть длиннее 8 символов"
+                    );
+                } else {
+                    const resp = await SignIn.authentificate()
+                        .then((res) => res.json())
+                        .catch((err) => null);
+                    if (!resp || "error_response" in resp.body) {
+                        errorMessage(
+                            "email",
+                            "Что-то пошло не так, попробуйте изменить email"
+                        );
+                    } else {
+                        history.pushState(null, null, "desks");
+                        window.dispatchEvent(new PopStateEvent("popstate"));
+                    }
+                }
+            });
+        document.querySelector(".href-sign").addEventListener("click", (e) => {
+            const href = e.target.getAttribute("id");
+            history.pushState(null, null, href);
+            window.dispatchEvent(new PopStateEvent("popstate"));
+        });
     }
 
     /**
@@ -160,14 +199,14 @@ export class SignIn {
      * @returns {Promise} - Результат запроса
      */
 
-    async authentificate() {
+    static async authentificate() {
         const emailInput = document.querySelector('input[input-type="email"]');
         const passwInput = document.querySelector(
             'input[input-type="password"]'
         );
 
         const result = await AJAX(
-            "http://213.219.215.40:8080/api/v1/auth/login/",
+            "http://localhost:8080/api/v1/auth/login/",
             "POST",
             { email: emailInput.value, password: passwInput.value }
         );

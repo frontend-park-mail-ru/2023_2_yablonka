@@ -139,6 +139,7 @@ body {
 }
 
 .log-out-wrapper img {
+    cursor: pointer;
     width: 30px;
     height: 30px;
     margin-left: 3rem;
@@ -382,6 +383,7 @@ main {
     height: 120px;
     width: 240px;
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .board-title__logo div {

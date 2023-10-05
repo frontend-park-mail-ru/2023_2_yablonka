@@ -8,7 +8,7 @@ templates['href-forgotten-password.hbs'] = template({"compiler":[8,">= 4.3.0"],"
         return undefined
     };
 
-  return "<a class=\"href-forgotten-password\" href=\"#\">\n    "
+  return "<a class=\"href-forgotten-password\" id=\"\">\n    "
     + container.escapeExpression(container.lambda((depth0 != null ? lookupProperty(depth0,"text") : depth0), depth0))
     + "\n</a>";
 },"useData":true});

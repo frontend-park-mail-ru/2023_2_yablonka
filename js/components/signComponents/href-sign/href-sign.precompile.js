@@ -8,9 +8,9 @@ templates['href-sign.hbs'] = template({"compiler":[8,">= 4.3.0"],"main":function
         return undefined
     };
 
-  return "<a class=\"href-sign\" href=\""
+  return "<a class=\"href-sign\" id=\""
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"url") : depth0), depth0))
-    + ".html\">"
+    + "\">"
     + alias2(alias1((depth0 != null ? lookupProperty(depth0,"text") : depth0), depth0))
     + "</a>";
 },"useData":true});
