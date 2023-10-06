@@ -1,8 +1,24 @@
+@font-face {
+    font-family: "Ubuntu-Regular";
+    src: url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap")
+        format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Ubuntu-Bold";
+    src: url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap")
+        format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Ubuntu;
+    font-family: Ubuntu-Bold;
 }
 
 html {
@@ -76,8 +92,7 @@ body {
 }
 
 .filler {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 }
 
 .header__search {
@@ -118,6 +133,13 @@ body {
 
 .avatar-wrapper img {
     border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-left: 3rem;
+}
+
+.log-out-wrapper img {
+    cursor: pointer;
     width: 30px;
     height: 30px;
     margin-left: 3rem;
@@ -164,6 +186,7 @@ main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    width: 100%;
 }
 
 .sticky-container {
@@ -173,19 +196,18 @@ main {
     justify-content: center;
     flex-grow: 1;
     height: calc(100vh - 50px);
-    overflow-y: auto;
 }
 
-.left-sidebar {
+.sidebar {
     margin: 40px 0 0;
     width: 256px;
     padding: 0 16px;
     position: sticky;
     max-height: 90vh;
-    top: 40px
+    top: 40px;
 }
 
-.left-sidebar__menu {
+.sidebar__menu {
     border-bottom: 1px solid #c4c6ca24;
     list-style: none;
 }
@@ -304,7 +326,7 @@ main {
     align-items: center;
 }
 
-.boards-page-section-create-button {
+.button__create-workspace {
     border: none;
     box-shadow: none;
     background-color: transparent;
@@ -318,6 +340,10 @@ main {
 .content__boards-list {
     list-style: none;
     overflow-y: auto;
+}
+
+.boards-logo {
+    display: flex;
     flex-wrap: wrap;
 }
 
@@ -326,6 +352,10 @@ main {
     flex-direction: row;
     align-items: center;
     margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+.workspace-owner__username {
     margin-left: 10px;
 }
 
@@ -342,7 +372,6 @@ main {
 }
 
 .board-title__logo {
-    background-image: url("../img/main_theme.jpg");
     position: relative;
     background-size: cover;
     display: block;
@@ -350,9 +379,11 @@ main {
     color: #fff;
     font-weight: bold;
     font-size: 16px;
-    border-radius: 3px;
+    border-radius: 5px;
     height: 120px;
     width: 240px;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .board-title__logo div {
