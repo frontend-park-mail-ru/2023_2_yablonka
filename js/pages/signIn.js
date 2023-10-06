@@ -159,6 +159,10 @@ export class SignIn {
         this.#addEventListeners();
     }
 
+    /**
+     * Навешивание обработчиков событий на элементы страницы
+     */
+
     #addEventListeners() {
         document
             .querySelector(".button-sign")
@@ -206,7 +210,7 @@ export class SignIn {
         );
 
         const result = await AJAX(
-            "http://localhost:8080/api/v1/auth/login/",
+            "http://213.219.215.40:8080/api/v1/auth/login/",
             "POST",
             { email: emailInput.value, password: passwInput.value }
         );

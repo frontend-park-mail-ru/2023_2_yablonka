@@ -152,7 +152,6 @@ export class YourDesks {
 
     /**
      * Рендер страницы в DOM
-     * @param {Object} user - данные авторизованного пользователя
      */
 
     async renderPage() {
@@ -162,14 +161,14 @@ export class YourDesks {
 
         const data = await loginCheck();
 
-        if ( !data || "error_response" in data.body) {
+        if (!data || "error_response" in data.body) {
             history.pushState(null, null, "signin");
             window.dispatchEvent(new PopStateEvent("popstate"));
             return;
         }
 
         const desksInformation = await AJAX(
-            "http://localhost:8080/api/v1/user/boards/",
+            "http://213.219.215.40:8080/api/v1/user/boards/",
             "GET"
         )
             .then((res) => res.json())
@@ -208,12 +207,16 @@ export class YourDesks {
         this.#addEventListeners();
     }
 
+    /**
+     * Навешивание обработчиков событий на элементы страницы
+     */
+
     #addEventListeners() {
         document
             .querySelector(".log-out")
             .addEventListener("click", async (e) => {
                 const logout = await AJAX(
-                    "http://localhost:8080/api/v1/auth/logout/",
+                    "http://213.219.215.40:8080/api/v1/auth/logout/",
                     "POST",
                     {}
                 )
