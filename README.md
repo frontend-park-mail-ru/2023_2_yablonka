@@ -1,5 +1,6 @@
 # 2023_2_yablonka
 Фронтенд-репозиторий проекта Trello команды Яблонька
+[Figma](https://www.figma.com/file/22weajWTtWmka18H5LD2ZX/Main-page)
 
 ## Деплой
 
