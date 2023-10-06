@@ -1,7 +1,6 @@
 import { YourDesks } from "/pages/yourDesks.js";
 import { SignIn } from "/pages/signIn.js";
 import { SignUp } from "/pages/signUp.js";
-import { loginCheck } from "./components/core/routing/loginCheck.js";
 
 const root = document.querySelector(".page");
 let pathname = window.location.pathname;
