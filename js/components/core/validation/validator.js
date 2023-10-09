@@ -1,9 +1,8 @@
-
 /**
  * Класс для валидации данных формы
  * @class
  */
-export class Validator {
+export default class Validator {
     /**
      * Проверяет email на правильность
      *
@@ -12,8 +11,8 @@ export class Validator {
      */
 
     static validateEmail = (email) => {
-        let re = new RegExp(/^[A-Za-z0-9_.-]+@[A-Za-z0-9.-]+$/g);
-        return re.test(email);
+        const re = /^[A-Za-z0-9_.-]+@[A-Za-z0-9.-]+$/g;
+        return re.test(email.trim());
     };
 
     /**
@@ -24,7 +23,7 @@ export class Validator {
      */
 
     static validatePassword = (password) => {
-        let re = new RegExp(/^\w{8,}$/);
+        const re = /^\w{8,}$/;
         return re.test(password);
     };
 
@@ -36,7 +35,5 @@ export class Validator {
      * @return {boolean} - false если неправильный, true, если правильный
      */
 
-    static validateRepeatPasswords = (passwordOne, passwordTwo) => {
-        return passwordOne === passwordTwo;
-    };
+    static validateRepeatPasswords = (passwordOne, passwordTwo) => passwordOne === passwordTwo;
 }

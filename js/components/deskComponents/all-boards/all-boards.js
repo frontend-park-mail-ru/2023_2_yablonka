@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Контейнер для досок
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class AllBoards extends Component {
+export default class AllBoards extends Component {
     constructor(parent, config) {
-        super(parent, config, "all-boards");
+        super(parent, config, 'all-boards');
     }
 
     /**

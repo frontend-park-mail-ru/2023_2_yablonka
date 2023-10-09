@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Форма для логина/регистрации
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class SignForm extends Component {
+export default class SignForm extends Component {
     constructor(parent, config) {
-        super(parent, config, "sign-form");
+        super(parent, config, 'sign-form');
     }
 
     /**

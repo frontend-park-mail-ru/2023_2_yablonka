@@ -1,6 +1,7 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+
 const router = express.Router();
 
 /**
@@ -8,13 +9,12 @@ const router = express.Router();
  * @param {string} page - название страницы
  * @returns {string} - адрес(в файлах) страницы
  */
-const createPath = (page) =>
-    path.resolve(__dirname, "../static/html", `${page}.html`);
+const createPath = (page) => path.resolve(__dirname, '../static/html', `${page}.html`);
 
-router.use(express.static(path.resolve(__dirname, "../static/css")));
-router.use(express.static(path.resolve(__dirname, "../static/img")));
-router.use(express.static(path.resolve(__dirname, "../static/svg")));
-router.use(express.static(path.resolve(__dirname, "../js")));
+router.use(express.static(path.resolve(__dirname, '../static/css')));
+router.use(express.static(path.resolve(__dirname, '../static/img')));
+router.use(express.static(path.resolve(__dirname, '../static/svg')));
+router.use(express.static(path.resolve(__dirname, '../js')));
 
 /**
  * Проверяет, можно ли переходить по такому адресу
@@ -23,7 +23,7 @@ router.use(express.static(path.resolve(__dirname, "../js")));
  */
 
 function findView(view) {
-    let views = ["signup", "signin", "desks"];
+    const views = ['signup', 'signin', 'desks'];
 
     for (let i = 0; i, views.length; ++i) {
         if (views[i] == view) return true;
@@ -32,28 +32,28 @@ function findView(view) {
     return false;
 }
 
-router.get("*", (req, res) => {
-    filePath = createPath("index");
+router.get('*', (req, res) => {
+    const filePath = createPath('index');
     if (!fs.existsSync(filePath)) {
-        res.status(500).send("500. Internal server Error");
+        res.status(500).send('500. Internal server Error');
         return;
     }
 
     res.sendFile(filePath);
 });
 
-router.get("/:view?", (req, res) => {
+router.get('/:view?', (req, res) => {
     const view = req.params.view;
     let filePath;
 
-    if (view == "/" || !view) {
-        filePath = createPath("index");
+    if (view == '/' || !view) {
+        filePath = createPath('index');
     } else if (findView(view)) {
-        filePath = createPath("index");
+        filePath = createPath('index');
     }
 
     if (!fs.existsSync(filePath)) {
-        res.status(500).send("500. Internal server Error");
+        res.status(500).send('500. Internal server Error');
         return;
     }
 

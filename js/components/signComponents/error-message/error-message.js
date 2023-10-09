@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Ошибка при неправильном логине/пароле и тп
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class ErrorMessage extends Component {
+export default class ErrorMessage extends Component {
     constructor(parent, config) {
-        super(parent, config, "error-message");
+        super(parent, config, 'error-message');
     }
 
     /**
@@ -17,7 +17,7 @@ export class ErrorMessage extends Component {
      */
 
     render() {
-        const errorDiv = document.createElement("div");
+        const errorDiv = document.createElement('div');
         errorDiv.innerHTML = this.template();
         this.parent.insertBefore(errorDiv.firstChild, this.parent.firstChild);
     }

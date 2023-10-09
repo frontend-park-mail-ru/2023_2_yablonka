@@ -1,25 +1,26 @@
-import { Header } from "/components/deskComponents/header/header.js";
-import { Main } from "/components/deskComponents/main/main.js";
-import { Sidebar } from "/components/deskComponents/sidebar/sidebar.js";
-import { AllBoards } from "/components/deskComponents/all-boards/all-boards.js";
-import { ContentHeaderName } from "/components/deskComponents/content__header-name/content__header-name.js";
-import { ButtonCreateWorkspace } from "/components/deskComponents/button__create-workspace/button__create-workspace.js";
-import { ContentBoardsList } from "/components/deskComponents/content__boards-list/content__boards-list.js";
-import { BoardsListItem } from "/components/deskComponents/boards-list-item/boards-list-item.js";
-import { WorkspaceCardDesctiption } from "/components/deskComponents/workspace-card__desctiption/workspace-card__desctiption.js";
-import { BoardTitleLogo } from "/components/deskComponents/board-title__logo/board-title__logo.js";
-import { BoardsLogo } from "/components/deskComponents/boards-logo/boards-logo.js";
-import { WorkspaceMessage } from "/components/deskComponents/workspace-message/workspace-message.js";
-import { AJAX } from "/components/core/ajax/ajax.js";
-import { loginCheck } from "../components/core/routing/loginCheck.js";
+import Header from '../components/deskComponents/header/header.js';
+import Main from '../components/deskComponents/main/main.js';
+import Sidebar from '../components/deskComponents/sidebar/sidebar.js';
+import AllBoards from '../components/deskComponents/all-boards/all-boards.js';
+import ContentHeaderName from '../components/deskComponents/content__header-name/content__header-name.js';
+import ButtonCreateWorkspace from '../components/deskComponents/button__create-workspace/button__create-workspace.js';
+import ContentBoardsList from '../components/deskComponents/content__boards-list/content__boards-list.js';
+import BoardsListItem from '../components/deskComponents/boards-list-item/boards-list-item.js';
+import WorkspaceCardDesctiption from '../components/deskComponents/workspace-card__desctiption/workspace-card__desctiption.js';
+import BoardTitleLogo from '../components/deskComponents/board-title__logo/board-title__logo.js';
+import BoardsLogo from '../components/deskComponents/boards-logo/boards-logo.js';
+import WorkspaceMessage from '../components/deskComponents/workspace-message/workspace-message.js';
+import AJAX from '../components/core/ajax/ajax.js';
+import loginCheck from '../components/core/routing/loginCheck.js';
 
 /**
  * Класс для рендера страницы досок
  * @class
  * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
  */
-export class YourDesks {
+export default class YourDesks {
     #root;
+
     constructor(rootElement) {
         this.#root = rootElement;
     }
@@ -27,12 +28,12 @@ export class YourDesks {
     yourDesksConfig = {
         contentHeaderName: {
             yours: {
-                title: "ВАШИ РАБОЧИЕ ПРОСТРАНСТВА",
-                id: "yours",
+                title: 'ВАШИ РАБОЧИЕ ПРОСТРАНСТВА',
+                id: 'yours',
             },
             guest: {
-                title: "ГОСТЕВЫЕ РАБОЧИЕ ПРОСТРАНСТВА",
-                id: "guest",
+                title: 'ГОСТЕВЫЕ РАБОЧИЕ ПРОСТРАНСТВА',
+                id: 'guest',
             },
         },
     };
@@ -42,14 +43,13 @@ export class YourDesks {
      * @param {Object} usersDesks - данные о досках(не своих), в которых пользователь участвует
      */
 
-    #renderGuestWorspace(usersDesks) {
-        const guestWorkspace = document.getElementById("guest");
+    static #renderGuestWorspace(usersDesks) {
+        const guestWorkspace = document.getElementById('guest');
 
         if (usersDesks === null) {
             const workspaceMessage = new WorkspaceMessage(guestWorkspace, {
                 workspace: {
-                    message:
-                        "Вы пока что не добавлены ни в одно рабочее пространство.",
+                    message: 'Вы пока что не добавлены ни в одно рабочее пространство.',
                 },
             });
             workspaceMessage.render();
@@ -63,31 +63,27 @@ export class YourDesks {
 
         const uniqOwnersId = new Map();
         let userWorkspaceNumber = 0;
-        for (let desk of usersDesks) {
+        usersDesks.forEach((desk) => {
             if (!uniqOwnersId.has(desk.owner_id)) {
                 uniqOwnersId.set(desk.owner_id, userWorkspaceNumber);
-                ++userWorkspaceNumber;
+                userWorkspaceNumber += 1;
 
                 const boardsListItem = new BoardsListItem(guestBoards);
                 boardsListItem.render();
 
                 const boardsImages = guestBoards.childNodes[0];
 
-                const workspaceCardDesctiption = new WorkspaceCardDesctiption(
-                    boardsImages,
-                    {
-                        user: {
-                            name: desk.owner_email,
-                        },
-                    }
-                );
+                const workspaceCardDesctiption = new WorkspaceCardDesctiption(boardsImages, {
+                    user: {
+                        name: desk.owner_email,
+                    },
+                });
                 workspaceCardDesctiption.render();
 
                 const boardsLogo = new BoardsLogo(boardsImages);
                 boardsLogo.render();
             }
-            const guestProjects =
-                guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)];
+            const guestProjects = guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)];
             const boardTitleLogo = new BoardTitleLogo(
                 guestProjects.childNodes[guestProjects.childNodes.length - 1],
                 {
@@ -95,10 +91,10 @@ export class YourDesks {
                         name: desk.board_info.board_name,
                         image: desk.board_info.thumbnail_url,
                     },
-                }
+                },
             );
             boardTitleLogo.render();
-        }
+        });
     }
 
     /**
@@ -106,20 +102,17 @@ export class YourDesks {
      * @param {Object} usersDesks - данные о досках авторизованного пользователя
      */
 
-    #renderOwnerWorkspace(usersDesks) {
-        const yourWorkspace = document.getElementById("yours");
+    static #renderOwnerWorkspace(usersDesks) {
+        const yourWorkspace = document.getElementById('yours');
 
         if (usersDesks === null) {
             const workspaceMessage = new WorkspaceMessage(yourWorkspace, {
                 workspace: {
-                    message:
-                        "Вы пока что не создали ни одно рабочее пространство.",
+                    message: 'Вы пока что не создали ни одно рабочее пространство.',
                 },
             });
             workspaceMessage.render();
-            const buttonCreateWorkspace = new ButtonCreateWorkspace(
-                yourWorkspace.childNodes[0]
-            );
+            const buttonCreateWorkspace = new ButtonCreateWorkspace(yourWorkspace.childNodes[0]);
             buttonCreateWorkspace.render();
             return;
         }
@@ -136,7 +129,7 @@ export class YourDesks {
         const boardsLogo = new BoardsLogo(boardsImages);
         boardsLogo.render();
 
-        for (let desk of usersDesks) {
+        usersDesks.forEach((desk) => {
             const boardTitleLogo = new BoardTitleLogo(
                 boardsImages.childNodes[boardsImages.childNodes.length - 1],
                 {
@@ -144,10 +137,10 @@ export class YourDesks {
                         name: desk.board_name,
                         image: desk.thumbnail_url,
                     },
-                }
+                },
             );
             boardTitleLogo.render();
-        }
+        });
     }
 
     /**
@@ -155,24 +148,21 @@ export class YourDesks {
      */
 
     async renderPage() {
-        this.#root.innerHTML = "";
-        this.#root.style.backgroundColor = "";
-        document.title = "Tabula: Ваши Доски";
+        this.#root.innerHTML = '';
+        this.#root.style.backgroundColor = '';
+        document.title = 'Tabula: Ваши Доски';
 
         const data = await loginCheck();
 
-        if (!data || "error_response" in data.body) {
-            history.pushState(null, null, "signin");
-            window.dispatchEvent(new PopStateEvent("popstate"));
+        if (!data || 'error_response' in data.body) {
+            history.pushState(null, null, 'signin');
+            window.dispatchEvent(new PopStateEvent('popstate'));
             return;
         }
 
-        const desksInformation = await AJAX(
-            "http://213.219.215.40:8080/api/v1/user/boards/",
-            "GET"
-        )
+        const desksInformation = await AJAX('http://localhost:8080/api/v1/user/boards/', 'GET')
             .then((res) => res.json())
-            .catch((err) => null);
+            .catch(() => null);
 
         const header = new Header(this.#root, {
             user: { avatar: data.body.user.thumbnail_url },
@@ -182,48 +172,38 @@ export class YourDesks {
         const main = new Main(this.#root);
         main.render();
 
-        const container = document.querySelector(".sticky-container");
+        const container = document.querySelector('.sticky-container');
         const sidebar = new Sidebar(container);
         sidebar.render();
 
         const allBoards = new AllBoards(container);
         allBoards.render();
 
-        const contentContainer = document.querySelector(".content-container");
+        const contentContainer = document.querySelector('.content-container');
 
         const contentHeaderName = new ContentHeaderName(
             contentContainer,
-            this.yourDesksConfig.contentHeaderName
+            this.yourDesksConfig.contentHeaderName,
         );
         contentHeaderName.render();
 
-        this.#renderOwnerWorkspace(
-            desksInformation.body.boards.user_owned_boards
-        );
-        this.#renderGuestWorspace(
-            desksInformation.body.boards.user_guest_boards
-        );
+        YourDesks.#renderOwnerWorkspace(desksInformation.body.boards.user_owned_boards);
+        YourDesks.#renderGuestWorspace(desksInformation.body.boards.user_guest_boards);
 
-        this.#addEventListeners();
+        YourDesks.#addEventListeners();
     }
 
     /**
      * Навешивание обработчиков событий на элементы страницы
      */
 
-    #addEventListeners() {
-        document
-            .querySelector(".log-out")
-            .addEventListener("click", async (e) => {
-                const logout = await AJAX(
-                    "http://213.219.215.40:8080/api/v1/auth/logout/",
-                    "POST",
-                    {}
-                )
-                    .then((res) => res)
-                    .catch((err) => null);
-                history.pushState(null, null, "signin");
-                window.dispatchEvent(new PopStateEvent("popstate"));
-            });
+    static #addEventListeners() {
+        document.querySelector('.log-out').addEventListener('click', async () => {
+            await AJAX('http://localhost:8080/api/v1/auth/logout/', 'POST', {})
+                .then((res) => res)
+                .catch(() => null);
+            history.pushState(null, null, 'signin');
+            window.dispatchEvent(new PopStateEvent('popstate'));
+        });
     }
 }

@@ -1,0 +1,29 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "airbnb-base",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "ignorePatterns": ["handlebars.runtime.js", "handlebars.precompiled.js"],
+    "rules": {
+        "indent": ["error", 4],
+        "import/no-unresolved": [2, { "ignore": ["\\.js$"] }],
+        "import/extensions": [
+            "error",
+            {
+                "js": "ignorePackages",
+                "jsx": "ignorePackages",
+                "ts": "ignorePackages",
+                "tsx": "ignorePackages"
+            }
+        ],
+        "no-restricted-globals": ["error", "event", "fdescribe"]
+    },
+    "globals": {
+        "Handlebars": "readonly"
+    }
+}

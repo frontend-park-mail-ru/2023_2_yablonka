@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Показывает чьё рабочее пространство
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class WorkspaceCardDesctiption extends Component {
+export default class WorkspaceCardDesctiption extends Component {
     constructor(parent, config) {
-        super(parent, config, "workspace-card__desctiption");
+        super(parent, config, 'workspace-card__desctiption');
     }
 
     /**
@@ -19,7 +19,7 @@ export class WorkspaceCardDesctiption extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (inputs, input) => inputs + this.template(input),
-            ""
+            '',
         );
     }
 }

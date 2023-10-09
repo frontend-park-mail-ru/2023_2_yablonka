@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Заголовок мои/гостевые рабочие пространства
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class ContentHeaderName extends Component {
+export default class ContentHeaderName extends Component {
     constructor(parent, config) {
-        super(parent, config, "content__header-name");
+        super(parent, config, 'content__header-name');
     }
 
     /**
@@ -19,7 +19,7 @@ export class ContentHeaderName extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (inputs, input) => inputs + this.template(input),
-            ""
+            '',
         );
     }
 }

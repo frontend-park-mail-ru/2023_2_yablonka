@@ -5,7 +5,7 @@
  * @param {Object} config - Объект с конфигурацией компонента.
  * @param {string} templateName - Название шаблона компонента(hbs).
  */
-export class Component {
+export default class Component {
     constructor(parent, config, templateName) {
         this.parent = parent;
         this.config = config;

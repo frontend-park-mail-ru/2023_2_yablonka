@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Список досок по всем пользователям
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class ContentBoardsList extends Component {
+export default class ContentBoardsList extends Component {
     constructor(parent, config) {
-        super(parent, config, "content__boards-list");
+        super(parent, config, 'content__boards-list');
     }
 
     /**

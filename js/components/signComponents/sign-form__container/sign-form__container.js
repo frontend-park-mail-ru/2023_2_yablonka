@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Контейнер для формы входа/регистрации
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class SignFormContainer extends Component {
+export default class SignFormContainer extends Component {
     constructor(parent, config) {
-        super(parent, config, "sign-form__container");
+        super(parent, config, 'sign-form__container');
     }
 
     /**
@@ -19,7 +19,7 @@ export class SignFormContainer extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (inputs, input) => inputs + this.template(input),
-            ""
+            '',
         );
     }
 }

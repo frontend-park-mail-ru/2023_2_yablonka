@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Компонент кнопки для входа/регистрации
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class ButtonSign extends Component {
+export default class ButtonSign extends Component {
     constructor(parent, config) {
-        super(parent, config, "button-sign");
+        super(parent, config, 'button-sign');
     }
 
     /**
@@ -18,7 +18,7 @@ export class ButtonSign extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (buttons, button) => buttons + this.template(button),
-            ""
+            '',
         );
     }
 }

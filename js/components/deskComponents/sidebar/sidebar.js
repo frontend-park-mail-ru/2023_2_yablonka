@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Меню слева
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class Sidebar extends Component {
+export default class Sidebar extends Component {
     constructor(parent, config) {
-        super(parent, config, "sidebar");
+        super(parent, config, 'sidebar');
     }
 
     /**

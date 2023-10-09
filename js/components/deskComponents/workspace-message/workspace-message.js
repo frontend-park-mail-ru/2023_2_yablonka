@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Меню слева
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class WorkspaceMessage extends Component {
+export default class WorkspaceMessage extends Component {
     constructor(parent, config) {
-        super(parent, config, "workspace-message");
+        super(parent, config, 'workspace-message');
     }
 
     /**
@@ -19,7 +19,7 @@ export class WorkspaceMessage extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (messages, message) => messages + this.template(message),
-            ""
+            '',
         );
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Ссылка на восстановление пароля
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class HrefForgottenPassword extends Component {
+export default class HrefForgottenPassword extends Component {
     constructor(parent, config) {
-        super(parent, config, "href-forgotten-password");
+        super(parent, config, 'href-forgotten-password');
     }
 
     /**
@@ -19,7 +19,7 @@ export class HrefForgottenPassword extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (inputs, input) => inputs + this.template(input),
-            ""
+            '',
         );
     }
 }

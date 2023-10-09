@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Заголовок с лого
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class SignLocationHeader extends Component {
+export default class SignLocationHeader extends Component {
     constructor(parent, config) {
-        super(parent, config, "sign-location__header");
+        super(parent, config, 'sign-location__header');
     }
 
     /**
@@ -19,7 +19,7 @@ export class SignLocationHeader extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (logos, logo) => logos + this.template(logo),
-            ""
+            '',
         );
     }
 }

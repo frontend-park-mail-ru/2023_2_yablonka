@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * слои-обертки
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class Main extends Component {
+export default class Main extends Component {
     constructor(parent, config) {
-        super(parent, config, "main");
+        super(parent, config, 'main');
     }
 
     /**

@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Компонент перехода на вход/регистрацию
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class HrefSign extends Component {
+export default class HrefSign extends Component {
     constructor(parent, config) {
-        super(parent, config, "href-sign");
+        super(parent, config, 'href-sign');
     }
 
     /**
@@ -19,7 +19,7 @@ export class HrefSign extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (hrefs, href) => hrefs + this.template(href),
-            ""
+            '',
         );
     }
 }

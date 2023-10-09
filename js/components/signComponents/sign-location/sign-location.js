@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Абстрактный слой для размещения формы и того, что рядом с ней
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class SignLocation extends Component {
+export default class SignLocation extends Component {
     constructor(parent, config) {
-        super(parent, config, "sign-location");
+        super(parent, config, 'sign-location');
     }
 
     /**

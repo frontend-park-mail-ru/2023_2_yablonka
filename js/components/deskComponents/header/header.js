@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Хедер
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class Header extends Component {
+export default class Header extends Component {
     constructor(parent, config) {
-        super(parent, config, "header");
+        super(parent, config, 'header');
     }
 
     /**
@@ -19,7 +19,7 @@ export class Header extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (inputs, input) => inputs + this.template(input),
-            ""
+            '',
         );
     }
 }

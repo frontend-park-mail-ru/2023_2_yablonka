@@ -1,21 +1,26 @@
 {
-  "name": "tabula_server",
-  "version": "1.0.0",
-  "description": "proxy server",
-  "main": "server.js",
-  "scripts": {
-    "debug": "nodemon server.js",
-    "start": "node server.js",
-    "test": "test"
-  },
-  "author": "Yablonka",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2",
-    "handlebars": "^4.7.8"
-  },
-  "devDependencies": {
-    "eslint": "^8.50.0",
-    "nodemon": "^3.0.1"
-  }
+    "name": "tabula_server",
+    "version": "1.0.0",
+    "description": "proxy server",
+    "main": "server.js",
+    "scripts": {
+        "debug": "nodemon server.js",
+        "start": "node server.js",
+        "compile": "globstar -- npx handlebars js/**/*.hbs -f js/utils/handlebars.precompiled.js",
+        "test": "test",
+        "lintcheck": "eslint js"
+    },
+    "author": "Yablonka",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.18.2",
+        "globstar": "^1.0.0",
+        "handlebars": "^4.7.8"
+    },
+    "devDependencies": {
+        "eslint": "^8.51.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.28.1",
+        "nodemon": "^3.0.1"
+    }
 }

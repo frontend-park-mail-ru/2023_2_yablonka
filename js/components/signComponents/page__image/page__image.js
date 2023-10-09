@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Изображение на фоне страницы логина/регистрации
@@ -7,9 +7,9 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class PageImage extends Component {
+export default class PageImage extends Component {
     constructor(parent, config) {
-        super(parent, config, "page__image");
+        super(parent, config, 'page__image');
     }
 
     /**
@@ -19,7 +19,7 @@ export class PageImage extends Component {
     render() {
         this.parent.innerHTML += this.data.reduce(
             (pictures, picture) => pictures + this.template(picture),
-            ""
+            '',
         );
     }
 }

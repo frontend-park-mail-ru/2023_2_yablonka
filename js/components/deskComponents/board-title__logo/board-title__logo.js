@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Доска с названием и картинкой
@@ -7,19 +7,19 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class BoardTitleLogo extends Component {
+export default class BoardTitleLogo extends Component {
     constructor(parent, config) {
-        super(parent, config, "board-title__logo");
+        super(parent, config, 'board-title__logo');
     }
 
     /**
      * Рендерит компонент в DOM
      */
-    
+
     render() {
         this.parent.innerHTML += this.data.reduce(
             (inputs, input) => inputs + this.template(input),
-            ""
+            '',
         );
     }
 }

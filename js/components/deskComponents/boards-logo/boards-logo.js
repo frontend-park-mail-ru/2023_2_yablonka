@@ -1,4 +1,4 @@
-import { Component } from "../../core/componentClass/component.js";
+import Component from '../../core/componentClass/component.js';
 
 /**
  * Все доски одного гостевого пространства
@@ -7,15 +7,15 @@ import { Component } from "../../core/componentClass/component.js";
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 
-export class BoardsLogo extends Component {
+export default class BoardsLogo extends Component {
     constructor(parent, config) {
-        super(parent, config, "boards-logo");
+        super(parent, config, 'boards-logo');
     }
 
     /**
      * Рендерит компонент в DOM
      */
-    
+
     render() {
         this.parent.innerHTML += this.template();
     }
