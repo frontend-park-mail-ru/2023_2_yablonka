@@ -405,10 +405,6 @@ body {
     align-items: center;
 }
 
-.sign-form {
-    margin-bottom: 5rem;
-}
-
 .sign-location__header-title {
     text-align: center;
     font-size: calc(24px * var(--scale-factor));

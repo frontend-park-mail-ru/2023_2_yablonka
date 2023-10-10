@@ -14,7 +14,7 @@ const createPath = (page) => path.resolve(__dirname, '../static/html', `${page}.
 router.use(express.static(path.resolve(__dirname, '../static/css')));
 router.use(express.static(path.resolve(__dirname, '../static/img')));
 router.use(express.static(path.resolve(__dirname, '../static/svg')));
-router.use(express.static(path.resolve(__dirname, '../js')));
+router.use(express.static(path.resolve(__dirname, '../src')));
 
 /**
  * Проверяет, можно ли переходить по такому адресу

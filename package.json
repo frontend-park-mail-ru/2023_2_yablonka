@@ -8,8 +8,8 @@
         "start": "node server.js",
         "compile": "globstar -- npx handlebars js/**/*.hbs -f js/utils/handlebars.precompiled.js",
         "test": "test",
-        "lintcheck": "eslint js router",
-        "lintfix": "eslint js router --fix"
+        "lintcheck": "eslint src router",
+        "lintfix": "eslint src router --fix"
     },
     "author": "Yablonka",
     "license": "ISC",
