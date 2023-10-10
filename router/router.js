@@ -25,8 +25,8 @@ router.use(express.static(path.resolve(__dirname, '../js')));
 function findView(view) {
     const views = ['signup', 'signin', 'desks'];
 
-    for (let i = 0; i, views.length; ++i) {
-        if (views[i] == view) return true;
+    for (let i = 0; views.length; i += 1) {
+        if (views[i] === view) return true;
     }
 
     return false;
@@ -43,10 +43,10 @@ router.get('*', (req, res) => {
 });
 
 router.get('/:view?', (req, res) => {
-    const view = req.params.view;
+    const {view} = req.params;
     let filePath;
 
-    if (view == '/' || !view) {
+    if (view === '/' || !view) {
         filePath = createPath('index');
     } else if (findView(view)) {
         filePath = createPath('index');

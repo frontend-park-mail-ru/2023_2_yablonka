@@ -21,7 +21,9 @@
                 "tsx": "ignorePackages"
             }
         ],
-        "no-restricted-globals": ["error", "event", "fdescribe"]
+        "no-restricted-globals": ["error", "event", "fdescribe"],
+        "linebreak-style": ["error", "unix"],
+        "object-curly-spacing": "off"
     },
     "globals": {
         "Handlebars": "readonly"
