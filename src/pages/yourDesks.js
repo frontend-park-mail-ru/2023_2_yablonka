@@ -199,7 +199,7 @@ export default class YourDesks {
             await AJAX('http://localhost:8080/api/v1/auth/logout/', 'POST', {})
                 .then((res) => res)
                 .catch(() => null);
-            history.pushState(null, null, 'signin');
+            window.history.pushState(null, null, 'signin');
             window.dispatchEvent(new PopStateEvent('popstate'));
         });
     }

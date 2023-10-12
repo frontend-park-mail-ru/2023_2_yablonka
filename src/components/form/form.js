@@ -1,21 +1,25 @@
-import Component from '../../core/basicComponent.js';
+import Component from '../core/basicComponent.js';
 
 /**
- * Компонент перехода на вход/регистрацию
+ * Контейнер для досок
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class HrefSign extends Component {
+export default class Form extends Component {
     constructor(parent, config) {
-        super(parent, config, 'href-sign');
+        super(parent, config, 'form');
+    }
+
+    get className() {
+        const { className } = this.config;
+        return `.form_${className}`;
     }
 
     /**
      * Рендерит компонент в DOM
      */
-
     render() {
-        this.parent.innerHTML += this.data.reduce((hrefs, href) => hrefs + this.template(href), '');
+        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
     }
 }

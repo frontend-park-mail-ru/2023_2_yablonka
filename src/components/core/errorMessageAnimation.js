@@ -4,7 +4,7 @@
  * @param {string} inputType - Тип input
  * @param {string} message - Текст ошибки
  */
-export default function errorMessage(inputType, message) {
+export default function errorMessageAnimation(inputType, message) {
     const input = document.querySelector(`input[input-type="${inputType}"]`);
     const err = input.parentElement.childNodes[0];
     const errMessage = err.childNodes[0];

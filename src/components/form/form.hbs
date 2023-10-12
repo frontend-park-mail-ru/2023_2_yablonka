@@ -1,0 +1,15 @@
+{{#if thisFile}}
+    <form
+        class='form form_{{this.className}}'
+        action='{{this.url}}'
+        method='{{this.method}}'
+        enctype='multipart/form-data'
+    ></form>
+{{else}}
+    <form
+        class='form form_{{this.className}}'
+        action='{{this.url}}'
+        method='{{this.method}}'
+        enctype='application/x-www-form-urlencoded'
+    ></form>
+{{/if}}

@@ -10,7 +10,7 @@ export default class Validator {
      * @return {boolean} - false если неправильный, true, если правильный
      */
     static validateEmail = (email) => {
-        const re = /^[\\x00-\\x7F]*$/g;
+        const re = /^[\x00-\x7F]*$/g;
         return re.test(email.trim()) && (email.trim().match(/@/g) || []).length === 1;
     };
 

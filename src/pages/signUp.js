@@ -1,17 +1,15 @@
-import PageImage from '../components/signComponents/page__image/page__image.js';
-import SignLocation from '../components/signComponents/sign-location/sign-location.js';
-import SignLocationHeader from '../components/signComponents/sign-location__header/sign-location__header.js';
-import SignLocationHeaderTitle from '../components/signComponents/sign-location__header-title/sign-location__header-title.js';
-import SignForm from '../components/signComponents/sign-form/sign-form.js';
-import SignFormContainer from '../components/signComponents/sign-form__container/sign-form__container.js';
-import HrefSign from '../components/signComponents/href-sign/href-sign.js';
-import ButtonSign from '../components/signComponents/button-sign/button-sign.js';
-import ErrorMessage from '../components/signComponents/error-message/error-message.js';
+import PageLayout from '../components/pageLayout/pageLayout.js';
+import SignDecorator from '../components/signDecoration/signDecoration.js';
+import ContentHeader from '../components/contentHeader/contentHeader.js';
+import Form from '../components/form/form.js';
+import FormInput from '../components/formInput/formInput.js';
+import LinkButton from '../components/linkButton/linkButton.js';
+import Button from '../components/button/button.js';
+import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import AJAX from '../modules/ajax.js';
 import Validator from '../modules/validator.js';
-import errorMessage from '../components/core/signErrorMessage.js';
 import loginRequest from '../modules/loginRequest.js';
-
+import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 /**
  * Класс для рендера страницы регистрации
  * @class
@@ -20,22 +18,8 @@ import loginRequest from '../modules/loginRequest.js';
 export default class SignUp {
     #root;
 
-    constructor(rootElement) {
-        this.#root = rootElement;
-    }
-
-    signupConfig = {
-        images: {
-            left: {
-                side: 'left',
-                picture: 'undraw_performance_overview',
-            },
-            right: {
-                side: 'right',
-                picture: 'undraw_team_collaboration',
-            },
-        },
-        inputs: {
+    #config = {
+        formContainer: {
             email: {
                 icon: 'person',
                 type: 'text',
@@ -48,46 +32,24 @@ export default class SignUp {
                 placeholder: 'Пароль',
                 inputType: 'password',
             },
-            repeatPassword: {
+            repeat_password: {
                 icon: 'key',
                 type: 'password',
                 placeholder: 'Повторите пароль',
-                inputType: 'repeatPassword',
-            },
-        },
-        mainLogo: {
-            mainLogo: {
-                logo: 'logo',
-                title: 'Tabula',
-            },
-        },
-
-        formTitle: {
-            formTitle: {
-                title: 'Регистрация',
-            },
-        },
-        signHref: {
-            signHref: {
-                url: 'signin',
-                text: 'Уже есть аккаунт?',
-            },
-        },
-        signButton: {
-            signButton: {
-                text: 'Зарегистрироваться',
-                id: 'signup',
+                inputType: 'repeat-password',
             },
         },
     };
 
+    constructor(rootElement) {
+        this.#root = rootElement;
+    }
+
     /**
      * Рендер страницы в DOM
      */
-
     async renderPage() {
         this.#root.innerHTML = '';
-        this.#root.style.backgroundColor = '#37426d';
         document.title = 'Tabula: Sign Up';
 
         const logged = await loginRequest();
@@ -98,45 +60,63 @@ export default class SignUp {
             return;
         }
 
-        const pageImage = new PageImage(this.#root, this.signupConfig.images);
-        pageImage.render();
+        history.replaceState(null, null, 'signup');
 
-        const signLocation = new SignLocation(this.#root);
-        signLocation.render();
+        const pageLayout = new PageLayout(this.#root, { className: 'sign' });
+        pageLayout.render();
 
-        const signLocationElement = document.querySelector('.sign-location');
+        const signDecorator = new SignDecorator(this.#root.querySelector(pageLayout.className), {
+            leftPicture: 'undraw_performance_overview',
+            rightPicture: 'undraw_team_collaboration',
+        });
+        signDecorator.render();
 
-        const signLocationHeader = new SignLocationHeader(
-            signLocationElement,
-            this.signupConfig.mainLogo,
+        const contentHeader = new ContentHeader(
+            this.#root.querySelector(SignDecorator.lastWrapperClassName),
+            { className: 'sign', title: 'Регистрация' },
         );
-        signLocationHeader.render();
+        contentHeader.render();
 
-        const formTitle = new SignLocationHeaderTitle(
-            signLocationElement,
-            this.signupConfig.formTitle,
-        );
-        formTitle.render();
+        const form = new Form(this.#root.querySelector(SignDecorator.lastWrapperClassName), {
+            className: 'sign',
+            url: '/',
+            method: 'POST',
+            isFile: false,
+        });
+        form.render();
 
-        const signForm = new SignForm(signLocationElement);
-        signForm.render();
+        Object.entries(this.#config.formContainer).forEach((input) => {
+            const formInput = new FormInput(this.#root.querySelector(form.className), {
+                className: input[1].inputType,
+                icon: input[1].icon,
+                type: input[1].type,
+                placeholder: input[1].placeholder,
+                inputType: input[1].inputType,
+            });
+            formInput.render();
 
-        const signFormElement = document.querySelector('.sign-form');
-
-        const signFormContainer = new SignFormContainer(signFormElement, this.signupConfig.inputs);
-        signFormContainer.render();
-
-        const signFormInputs = document.querySelectorAll('.sign-form__container');
-        signFormInputs.forEach((input) => {
-            const errMessage = new ErrorMessage(input);
-            errMessage.render();
+            const errorMessage = new ErrorMessage(this.#root.querySelector(formInput.className), {
+                className: input[0],
+            });
+            errorMessage.render();
         });
 
-        const hrefSign = new HrefSign(signFormElement, this.signupConfig.signHref);
-        hrefSign.render();
+        const linkButtonSignIn = new LinkButton(this.#root.querySelector(form.className), {
+            className: 'signin',
+            componentId: 'signin',
+            text: 'Уже есть аккаунт?',
+        });
+        linkButtonSignIn.render();
 
-        const buttonSign = new ButtonSign(signFormElement, this.signupConfig.signButton);
-        buttonSign.render();
+        const buttonSignUp = new Button(this.#root.querySelector(form.className), {
+            className: 'sign',
+            type: 'submit',
+            formName: 'sign',
+            id: 'signUp',
+            text: 'Регистрация',
+        });
+        buttonSignUp.render();
+
         this.#addEventListeners();
     }
 
@@ -144,33 +124,45 @@ export default class SignUp {
      * Добавление обработчиков событий на элементы страницы
      */
     #addEventListeners = () => {
-        this.#root.querySelector('.button-sign').addEventListener('click', async (e) => {
+        this.#root.querySelector('.button_sign').addEventListener('click', async (e) => {
             e.preventDefault();
-            const data = document.querySelectorAll('.sign-form__input');
-            if (!Validator.validateEmail(data[0].value)) {
-                errorMessage('email', 'Некорректный email');
-            } else if (!Validator.validatePassword(data[1].value)) {
-                errorMessage(
+            if (
+                !Validator.validateEmail(
+                    this.#root.querySelector('input[input-type="email"]').value,
+                )
+            ) {
+                errorMessageAnimation('email', 'Некорректный email');
+            } else if (
+                !Validator.validatePassword(
+                    this.#root.querySelector('input[input-type="password"]').value,
+                )
+            ) {
+                errorMessageAnimation(
                     'password',
                     'Некорректный пароль, он должен состоять из букв и цифр или спец. символов и быть длиннее 8 символов',
                 );
-            } else if (!Validator.validateRepeatPasswords(data[1].value, data[2].value)) {
-                errorMessage('repeatPassword', 'Пароли не совпадают');
+            } else if (
+                !Validator.validateRepeatPasswords(
+                    this.#root.querySelector('input[input-type="password"]').value,
+                    this.#root.querySelector('input[input-type="repeat-password"]').value,
+                )
+            ) {
+                errorMessageAnimation('repeatPassword', 'Пароли не совпадают');
             } else {
                 const resp = await this.authentificate()
                     .then((res) => res.json())
                     .catch(() => null);
                 if (!resp || 'error_response' in resp.body) {
-                    errorMessage('email', 'Что-то пошло не так, попробуйте изменить email');
+                    errorMessageAnimation('email', 'Что-то пошло не так, попробуйте изменить email');
                 } else {
                     history.pushState(null, null, 'desks');
                     window.dispatchEvent(new PopStateEvent('popstate'));
                 }
             }
         });
-        document.querySelector('.href-sign').addEventListener('click', (e) => {
+        document.querySelector('.link-button_signin').addEventListener('click', (e) => {
             const href = e.target.getAttribute('id');
-            history.pushState(null, null, href);
+            window.history.pushState(null, null, href);
             window.dispatchEvent(new PopStateEvent('popstate'));
         });
     };

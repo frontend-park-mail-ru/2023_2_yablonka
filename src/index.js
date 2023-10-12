@@ -1,6 +1,7 @@
 import YourDesks from './pages/yourDesks.js';
 import SignIn from './pages/signIn.js';
 import SignUp from './pages/signUp.js';
+import router from './modules/routes.js';
 
 const root = document.querySelector('.page');
 let { pathname } = window.location;
@@ -31,3 +32,5 @@ window.addEventListener('popstate', () => {
         yourDesksPage.renderPage();
     }
 });
+
+// router.init();

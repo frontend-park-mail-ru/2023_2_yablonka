@@ -1,21 +1,19 @@
-import Component from '../../core/basicComponent.js';
-
+import Component from '../core/basicComponent.js';
 /**
- * Абстрактный слой для размещения формы и того, что рядом с ней
+ * Компонент кнопки для входа/регистрации
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class SignLocation extends Component {
+export default class Button extends Component {
     constructor(parent, config) {
-        super(parent, config, 'sign-location');
+        super(parent, config, 'button');
     }
 
     /**
      * Рендерит компонент в DOM
      */
-
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
     }
 }

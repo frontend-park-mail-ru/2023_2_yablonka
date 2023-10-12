@@ -1,4 +1,4 @@
-import Component from '../../core/basicComponent.js';
+import Component from '../core/basicComponent.js';
 
 /**
  * Ошибка при неправильном логине/пароле и тп
@@ -8,16 +8,15 @@ import Component from '../../core/basicComponent.js';
  */
 export default class ErrorMessage extends Component {
     constructor(parent, config) {
-        super(parent, config, 'error-message');
+        super(parent, config, 'errorMessage');
     }
 
     /**
      * Рендерит компонент в DOM
      */
-
     render() {
         const errorDiv = document.createElement('div');
-        errorDiv.innerHTML = this.template();
+        errorDiv.insertAdjacentHTML('beforeend', this.template(this.config));
         this.parent.insertBefore(errorDiv.firstChild, this.parent.firstChild);
     }
 }

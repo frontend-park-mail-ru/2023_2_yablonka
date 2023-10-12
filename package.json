@@ -6,7 +6,7 @@
     "scripts": {
         "debug": "nodemon server.js",
         "start": "node server.js",
-        "compile": "globstar -- npx handlebars js/**/*.hbs -f js/utils/handlebars.precompiled.js",
+        "compile": "globstar -- npx handlebars src/**/*.hbs -f src/utils/handlebars.precompiled.js",
         "test": "test",
         "lintcheck": "eslint src router",
         "lintfix": "eslint src router --fix"
