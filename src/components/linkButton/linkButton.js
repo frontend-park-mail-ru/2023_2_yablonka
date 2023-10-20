@@ -13,7 +13,7 @@ export default class LinkButton extends Component {
 
     get className() {
         const { className } = this.config;
-        return `.linkButton_${className}`;
+        return `.linkButton-${className}`;
     }
 
     /**

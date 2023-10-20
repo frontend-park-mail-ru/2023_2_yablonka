@@ -13,7 +13,7 @@ export default class PageLayout extends Component {
 
     get className() {
         const { className } = this.config;
-        return `.page__layout_${className}`;
+        return `.page__layout-${className}`;
     }
 
     /**

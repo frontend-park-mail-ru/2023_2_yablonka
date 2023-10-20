@@ -13,7 +13,7 @@ export default class FormInput extends Component {
 
     get className() {
         const { className } = this.config;
-        return `.form__input_${className}`;
+        return `.form__input-${className}`;
     }
 
     /**

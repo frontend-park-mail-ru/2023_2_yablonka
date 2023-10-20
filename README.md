@@ -8,7 +8,7 @@
 
 ## API
 
-[Swagger](https://app.swaggerhub.com/apis/IBlonka/IBLAPI/1.0.0)
+[Swagger](http://213.219.215.40:8080/swagger/)
 
 ## Авторы
 
@@ -32,6 +32,8 @@
 ## Правила форматирования
 
 Используется линтер Prettier, camelCase для объявлений.
+
+Линтер - ESlint
 
 Prettier - расширение для VSCode. Рекомендуется работать в нём.
 

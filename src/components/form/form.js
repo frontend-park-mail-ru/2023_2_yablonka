@@ -13,7 +13,7 @@ export default class Form extends Component {
 
     get className() {
         const { className } = this.config;
-        return `.form_${className}`;
+        return `.form-${className}`;
     }
 
     /**

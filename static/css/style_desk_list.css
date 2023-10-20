@@ -17,12 +17,12 @@
 * {
     margin: 0;
     padding: 0;
+    border: 0;
     box-sizing: border-box;
     font-family: Ubuntu-Bold;
 }
 
 html {
-    font-size: 10px;
     height: 100%;
     width: 100%;
 }

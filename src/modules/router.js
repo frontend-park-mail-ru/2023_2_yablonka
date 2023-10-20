@@ -1,68 +1,170 @@
-export default class Router {
-    #routes;
+import userStorage from '../storages/userStorage.js';
+import { ROOT, routes, signedinRoutes, actionsWithLogin } from '../configs/configs.js';
+import SignIn from '../view/signin.js';
 
-    #currentRoute;
+class Router {
+    constructor(root) {
+        this.root = root;
+        this.views = new Map();
+        this.signedinViews = new Map();
+        this.actionsWithLogin = new Map();
 
-    #currentDynamicParams;
+        routes.forEach((route) => {
+            this.registerView(route);
+        });
 
-    constructor(routes) {
-        this.routes = routes;
-        this.currentRoute = undefined;
-        this.currentDynamicParams = undefined;
+        signedinRoutes.forEach((route) => {
+            this.registerView(route, true);
+        });
+
+        actionsWithLogin.forEach((action) => {
+            this.registerActions(action, true);
+        });
     }
 
-    /**
-     * Запускает Router.
-     * Вызывается при изменении URL в адресной строке.
-     */
-    init = () => {
-        window.addEventListener('popstate', (e) => {
-            e.preventDefault();
+    registerView({ path, view }, privatePath = false) {
+        privatePath ? this.signedinViews.set(path, view) : this.views.set(path, view);
+    }
 
-            this.go(window.location.pathname);
-        });
-    };
+    registerActions({ path, action }, privateAction = false) {
+        privateAction ? this.actionsWithLogin.set(path, action) : this.actions.set(path, action);
+    }
 
-    /**
-     * Изменяет текущий маршрут.
-     * @param {string} path - Новый путь.
-     */
-    route = (path) => {
-        this.go(path);
-
-        window.history.pushState(this.currentDynamicParams, '', path);
-    };
-
-    /**
-     * Ищет маршрут, соответствующий текущему пути.
-     * @param {string} path - Текущий путь.
-     */
-    match = (path) => {
-        this.currentRoute = this.routes.find((route) => {
-            const match = path.match(route.path);
-
-            if (match) {
-                this.currentDynamicParams = match.slice(1);
-
-                return true;
+    matchHref(href) {
+        const parts = href.split('/');
+        const newHref = [];
+        parts.forEach((part) => {
+            if (part !== '') {
+                newHref.push(`/${part}`);
             }
-
-            return false;
         });
+
+        return newHref;
+    }
+
+    onClickEvent = (e) => {
+        e.preventDefault();
+        const { target } = e;
+
+        if (target instanceof HTMLElement || target instanceof SVGElement) {
+            if (target.dataset.section) {
+                const matchedHref = this.matchHref(target.dataset.section);
+
+                if (
+                    this.views.get(matchedHref[0]) ||
+                    this.signedinViews.get(matchedHref[0]) ||
+                    RegExp('^(\\/\\d+)').test(matchedHref[0])
+                ) {
+                    e.preventDefault();
+
+                    this.navigate({ path: target.dataset.section, props: '', pushState: true });
+                }
+            }
+        }
     };
 
-    /**
-     * Обновляет состояние Router в соответствии с новым маршрутом.
-     * @param {string} path - Новый путь.
-     */
-    go = (path) => {
-        this.match(path);
+    onPopStateEvent = () => {
+        let matchedHref = [];
+        matchedHref[0] = decodeURIComponent(
+            window.location.href.match('/^w+:.*?(:)d|^w+://w+.w+/')
+                ? window.location.href.replace('/^w+:.*?(:)d|^w+://w+.w+/', '')
+                : window.location.href.replace('/^w+:.*?(:)d*/', ''),
+        );
 
-        if (!this.currentRoute) {
-            // TODO: отрендерить 404
-            return;
+        matchedHref = this.matchHref(matchedHref[0]);
+
+        this.open({ path: matchedHref[0], props: matchedHref[1] }, false, false);
+        this.prevUrl = matchedHref[0];
+    };
+
+    open(stateObject, pushState, refresh) {
+        if (this.currentPage) {
+            this.currentPage.clear();
         }
 
-        this.#currentRoute.renderPage();
-    };
+        const { path } = stateObject;
+        const { props } = stateObject;
+
+        this.currentPage =
+            this.views.get(stateObject.path) || this.signedinViews.get(stateObject.path);
+
+        this.currentPage.renderPage();
+
+        this.navigate({ path, props, pushState });
+    }
+
+    redirectHandle(href) {
+        userStorage.authVerify();
+        const isAuth = userStorage.storage.get(userStorage.userModel.status) === 200;
+        if (href === '/') {
+            return isAuth ? '/boards' : '/login';
+        } else {
+            if (!isAuth) {
+                if (href === '/signup') {
+                    return href;
+                }
+                this.redirectUrl = href;
+                return '/login';
+            } else {
+                if (this.redirectUrl) {
+                    href = this.redirectUrl;
+                    this.redirectUrl = undefined;
+                }
+                return href;
+            }
+        }
+    }
+
+    refresh(redirect = false) {
+        const href = this.redirectHandle(window.location.pathname);
+        const matchedHref = this.matchHref(href);
+        if (
+            this.views.get(matchedHref[0]) ||
+            this.signedinViews.get(matchedHref[0]) ||
+            RegExp('^(\\/\\d+)').test(matchedHref[0])
+        ) {
+            this.open(
+                {
+                    path: matchedHref[0],
+                    props: matchedHref[1],
+                },
+                !redirect,
+                !redirect,
+            );
+        } else {
+            SignIn.renderPage();
+        }
+    }
+
+    start() {
+        document.addEventListener('click', this.onClickEvent);
+        window.addEventListener('popstate', this.onPopStateEvent);
+        this.refresh();
+    }
+
+    navigate({ path, props, pushState }) {
+        const location = decodeURIComponent(
+            window.location.href.match('/^w+:.*?(:)d|^w+://w+.w+/')
+                ? window.location.href.match('/^w+:.*?(:)d|^w+://w+.w+/')[0]
+                : window.location.href.match(/.+:\/\/.+:\d+/)[0],
+        );
+
+        if (pushState) {
+            if (props) {
+                window.history.pushState(props, '', `${location + path}${props}`);
+            } else {
+                window.history.pushState(props, '', location + path);
+            }
+        } else {
+            if (props) {
+                window.history.replaceState(props, '', `${location + path}${props}`);
+            } else {
+                window.history.replaceState(props, '', location + path);
+            }
+        }
+        this.prevUrl = path;
+    }
 }
+
+const router = new Router(ROOT);
+export default router;

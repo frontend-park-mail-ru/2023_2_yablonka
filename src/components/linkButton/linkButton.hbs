@@ -1,3 +1,9 @@
-<a class="link-button link-button_{{this.className}}" id="{{this.componentId}}">
-    {{this.text}}
-</a>
+{{#if disable}}
+    <a class='link-button {{this.className}}-link_disabled' href='{{this.href}}' aria-disabled='true'>
+        {{this.text}}
+    </a>
+{{else}}
+    <a class='link-button {{this.className}}-link' href='{{this.href}}'>
+        {{this.text}}
+    </a>
+{{/if}}

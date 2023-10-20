@@ -13,7 +13,7 @@ export default class ContentHeader extends Component {
 
     get className() {
         const { className } = this.config;
-        return `.content-header_${className}`;
+        return `.content-header-${className}`;
     }
 
     /**
