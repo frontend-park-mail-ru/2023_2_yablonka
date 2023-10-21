@@ -6,7 +6,6 @@ import FormInput from '../components/formInput/formInput.js';
 import LinkButton from '../components/linkButton/linkButton.js';
 import Button from '../components/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
-import Validator from '../modules/validator.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 import emitter from '../modules/eventEmitter.js';
 import dispatcher from '../modules/dispatcher.js';
@@ -16,7 +15,6 @@ import userStorage from '../storages/userStorage.js';
 /**
  * Класс для рендера страницы логина
  * @class
- * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
  */
 class SignIn {
     #root;
@@ -38,21 +36,23 @@ class SignIn {
         },
     };
 
+    /**
+     * @constructor
+     */
     constructor() {
         this.#root = document.querySelector('.page');
 
         emitter.bind('signin', this.listenSignInAction.bind(this));
-
-        emitter.bind('renderSignin', this.listenSignInRender.bind(this));
+        emitter.bind('renderSignin', this.renderPage.bind(this));
     }
 
     /**
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.#root.innerHTML = '';
-        document.title = 'Tabula: Sign In';
+        this.clear();
 
+        document.title = 'Tabula: Sign In';
         history.replaceState(null, null, 'signin');
 
         const pageLayout = new PageLayout(this.#root, { className: 'sign' });
@@ -99,7 +99,7 @@ class SignIn {
             this.#root.querySelector(form.className),
             {
                 className: 'forgotten-password',
-                href: 'signup', // исправить после добавления функционала
+                href: 'signup',
                 text: 'Забыли пароль?',
                 disable: true,
             },
@@ -126,43 +126,50 @@ class SignIn {
         this.addEventListeners();
     }
 
+    /**
+     * Добавляет подписки на события
+     */
     addEventListeners() {
         this.#root.querySelector('.signup-link').addEventListener('click', this.goSignupHandler);
-
-        this.#root.querySelector('.form-sign').addEventListener('submit', this.onSubmitHandler);
+        this.#root.querySelector('.button-sign').addEventListener('click', this.onSubmitHandler);
     }
 
+    /**
+     * Убирает подписки на события
+     */
     removeEventListeners() {
-        this.#root.querySelector('.signup-link').removeEventListener('click', this.goSignupHandler);
-
-        this.#root.querySelector('.form-sign').removeEventListener('submit', this.onSubmitHandler);
+        this.#root
+            .querySelector('.signup-link')
+            .removeEventListener('click', this.goSignupHandler);
+        this.#root.querySelector('.button-sign').removeEventListener('click', this.onSubmitHandler);
     }
 
+    /**
+     * Хендлер события нажатия на ссылку перехода на регистрацию
+     * @param {Event} e - Событие
+     */
     goSignupHandler(e) {
         e.preventDefault();
-
         dispatcher.dispatch(actionToSignUp());
     }
 
+    /**
+     * Очистка страницы
+     */
     clear() {
-        document.querySelectorAll('div.layout').forEach((e) => {
-            e.remove();
-        });
+        this.#root.innerHTML = '';
     }
 
-    listenSignInRender = () => {
-        this.clear();
-        this.renderPage();
-    };
-
+    /**
+     * Функция реагирующая на событие renderSignup, которое прокидывается через eventEmitter
+     */
     listenSignInAction() {
         const status = userStorage.storage.get(userStorage.userModel.status);
-        const body = userStorage.storage.get(userStorage.userModel.body);
         switch (status) {
             case 200:
                 this.removeEventListeners();
                 this.clear();
-                dispatcher.dispatch(actionRedirect('/boards', true, false));
+                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
                 break;
             case 401:
                 errorMessageAnimation('email', 'Неверный логин или пароль');
@@ -172,21 +179,23 @@ class SignIn {
         }
     }
 
+    /**
+     * Handler события нажатия на кнопку логина
+     * @param {Event} e - Событие
+     */
     onSubmitHandler = async (e) => {
         e.preventDefault();
-        const data = document.querySelector('.form-sign');
+        const formInputs = this.#root.querySelector('.form-sign');
 
-        const loginForm = data.querySelector('input[type=text]');
-        const passwordForm = data.querySelector('input[type=password]');
+        const loginInput = formInputs.querySelector('input[type=text]');
+        const passwordInput = formInputs.querySelector('input[type=password]');
 
-        const user = {};
-        user.email = loginForm.value;
-        user.password = passwordForm.value;
+        const user = { email: loginInput.value, password: passwordInput.value };
 
         await dispatcher.dispatch(actionSignin(user));
     };
 }
 
-const signIn = new SignIn(document.querySelector('.page'));
+const signIn = new SignIn();
 
 export default signIn;

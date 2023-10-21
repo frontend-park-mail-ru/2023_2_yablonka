@@ -11,7 +11,7 @@ const handlers = [
     { type: 'userLogout', method: userStorage.logout.bind(userStorage) },
     { type: 'goSignup', method: userStorage.getSignupPage.bind(userStorage) },
     { type: 'goSignin', method: userStorage.getSigninPage.bind(userStorage) },
-    { type: 'boards', method: workspaceStorage.getWorkspaces.bind(workspaceStorage) },
+    { type: 'getBoards', method: workspaceStorage.getWorkspaces.bind(workspaceStorage) },
 ];
 
 export default handlers;

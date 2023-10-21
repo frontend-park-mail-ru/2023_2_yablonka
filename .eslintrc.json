@@ -10,8 +10,11 @@
     },
     "ignorePatterns": ["handlebars.runtime.js", "handlebars.precompiled.js"],
     "rules": {
-        "indent": ["error", 4],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "class-methods-use-this": "off",
         "import/no-unresolved": [2, { "ignore": ["\\.js$"] }],
+        "import/no-cycle": "off",
+        "import/no-named-as-default": "off",
         "import/extensions": [
             "error",
             {

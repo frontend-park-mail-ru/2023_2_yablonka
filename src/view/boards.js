@@ -25,6 +25,9 @@ import workspaceStorage from '../storages/workspaceStorage.js';
 class Boards {
     #root;
 
+    /**
+     * @constructor
+     */
     constructor() {
         this.#root = document.querySelector('.page');
         emitter.bind('logout', this.close);
@@ -154,10 +157,10 @@ class Boards {
         this.#root.style.backgroundColor = '';
         document.title = 'Tabula: Ваши Доски';
 
-        const data = userStorage.storage.get(userStorage.userModel.body);
+        const user = userStorage.storage.get(userStorage.userModel.body);
 
         const header = new Header(this.#root, {
-            user: { avatar: data.body.user.thumbnail_url },
+            user: { avatar: user.body.user.thumbnail_url },
         });
         header.render();
 
@@ -181,32 +184,51 @@ class Boards {
 
         await dispatcher.dispatch(actionGetBoards());
 
-        this.#renderOwnerWorkspace(undefined);
-        this.#renderGuestWorspace(undefined);
+        const boards = workspaceStorage.storage.get(workspaceStorage.workspaceModel.body);
+
+        this.#renderOwnerWorkspace(boards.body.boards.user_owned_boards);
+        this.#renderGuestWorspace(boards.body.boards.user_guest_boards);
         this.addEventListeners();
     }
 
+    /**
+     * Добавляет обработчики событий
+     */
     addEventListeners() {
         this.#root.querySelector('.log-out').addEventListener('click', this.logoutHandler);
     }
 
+    /**
+     * Убирает обработчики событий
+     */
+    removeEventListeners() {
+        this.#root.querySelector('.log-out').removeEventListener('click', this.logoutHandler);
+    }
+
+    /**
+     * Handler события нажатия на ссылку для перехода на log out
+     * @param {Event} e - Событие
+     */
     logoutHandler(e) {
         e.preventDefault();
-
         dispatcher.dispatch(actionLogout());
     }
 
+    /**
+     * Закрытие страницы и редирект на страницу логина
+     */
     close() {
-        dispatcher.dispatch(actionRedirect('/signin', false, false));
+        dispatcher.dispatch(actionRedirect('/signin', false));
     }
 
+    /**
+     * Очистка страницы
+     */
     clear() {
-        document.querySelectorAll('div.layout').forEach((e) => {
-            e.remove();
-        });
+        this.#root.querySelectorAll('.page__layout').remove();
     }
 }
 
-const desks = new Boards(document.querySelector('.page'));
+const desks = new Boards();
 
 export default desks;

@@ -3,6 +3,10 @@ import AJAX from '../modules/ajax.js';
 import { apiPath, apiVersion } from '../configs/configs.js';
 import emitter from '../modules/eventEmitter.js';
 
+/**
+ * Хранилище объекта "пользователь"
+ * @class
+ */
 class UserStorage extends BaseStorage {
     userModel = {
         name: 'name',
@@ -10,12 +14,18 @@ class UserStorage extends BaseStorage {
         status: 'status',
     };
 
+    /**
+     * @constructor
+     */
     constructor() {
         super();
         this.storage.set(this.userModel.name, undefined);
         this.storage.set(this.userModel.body, undefined);
     }
 
+    /**
+     * Проверка, залоигнен ли пользователь
+     */
     authVerify() {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', `${apiPath + apiVersion}auth/verify`, false);
@@ -30,6 +40,10 @@ class UserStorage extends BaseStorage {
         xhr.send();
     }
 
+    /**
+     * Запрос на логин
+     * @param {Object} user - Данные пользователя
+     */
     async signin(user) {
         const responsePromise = await AJAX(`${apiPath + apiVersion}auth/login/`, 'POST', user);
 
@@ -44,6 +58,10 @@ class UserStorage extends BaseStorage {
         emitter.trigger('signin');
     }
 
+    /**
+     * Запрос на регистрацию
+     * @param {Object} user - Данные пользователя
+     */
     async signup(user) {
         const responsePromise = await AJAX(`${apiPath + apiVersion}auth/signup/`, 'POST', user);
 
@@ -60,15 +78,24 @@ class UserStorage extends BaseStorage {
         emitter.trigger('signup');
     }
 
+    /**
+     * Запрос на выход из аккаунта
+     */
     async logout() {
         await AJAX(`${apiPath + apiVersion}auth/logout/`, 'DELETE', {});
         emitter.trigger('logout');
     }
 
+    /**
+     * Рендер страницы регистрации
+     */
     getSignupPage = async () => {
         emitter.trigger('renderSignup');
     };
 
+    /**
+     * Рендер страницы логина
+     */
     getSigninPage = async () => {
         emitter.trigger('renderSignin');
     };

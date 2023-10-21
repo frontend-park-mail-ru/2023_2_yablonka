@@ -1,7 +1,15 @@
+/**
+ * Базовый класс хранилища
+ * @class
+ */
 export default class BaseStorage {
     changed;
+
     storage;
 
+    /**
+     * @constructor
+     */
     constructor() {
         this.changed = false;
         this.storage = new Map();

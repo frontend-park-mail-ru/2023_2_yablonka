@@ -1,10 +1,22 @@
+/**
+ * Класс, который реагирует на передаваемые события
+ * @class
+ */
 class EventEmitter {
     #events;
 
+    /**
+     * @constructor
+     */
     constructor() {
         this.#events = {};
     }
 
+    /**
+     * Выполняет bind функции на определенное событие
+     * @param {string} event - название события
+     * @param {Function} callback - функция, которая вызывается при передаче события
+     */
     bind(event, callback) {
         this.#events = this.#events || {};
         this.#events[event] = this.#events[event] || [];
@@ -12,6 +24,11 @@ class EventEmitter {
         this.#events[event].push(callback);
     }
 
+    /**
+     * Выполняет unbind функции на определенное событие
+     * @param {string} event - название события
+     * @param {Function} callback - функция, которая вызывается при передаче события
+     */
     unbind(event, callback) {
         this.#events = this.#events || {};
         if (!(event in this.#events)) {
@@ -23,13 +40,17 @@ class EventEmitter {
         }
     }
 
+    /**
+     * Вызывает событие
+     * @param {string} event - название события
+     */
     trigger(event) {
         this.#events = this.#events || {};
         if (!(event in this.#events)) {
             return;
         }
         this.#events[event].forEach((ev) => {
-            ev.apply(this, Array.prototype.slice.call(arguments, 1));
+            ev.apply(this, Array.prototype.slice.call(event, 1));
         });
     }
 }

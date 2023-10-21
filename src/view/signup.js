@@ -16,7 +16,6 @@ import userStorage from '../storages/userStorage.js';
 /**
  * Класс для рендера страницы регистрации
  * @class
- * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
  */
 class SignUp {
     #root;
@@ -44,19 +43,22 @@ class SignUp {
         },
     };
 
+    /**
+     * @constructor
+     */
     constructor() {
         this.#root = document.querySelector('.page');
 
         emitter.bind('signup', this.listenSignUpAction.bind(this));
-
-        emitter.bind('renderSignup', this.listenSignUpRender.bind(this));
+        emitter.bind('renderSignup', this.renderPage.bind(this));
     }
 
     /**
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.#root.innerHTML = '';
+        this.clear();
+
         document.title = 'Tabula: Sign Up';
 
         history.replaceState(null, null, 'signup');
@@ -121,43 +123,48 @@ class SignUp {
         this.addEventListeners();
     }
 
+    /**
+     * Добавляет подписки на события
+     */
     addEventListeners() {
-        this.#root.querySelector('.signin-link').addEventListener('click', this.goSignupHandler);
-
+        this.#root.querySelector('.signin-link').addEventListener('click', this.goSigninHandler);
         this.#root.querySelector('.button-sign').addEventListener('click', this.onSubmitHandler);
     }
 
+    /**
+     * Убирает подписки на события
+     */
     removeEventListeners() {
-        this.#root.querySelector('.signin-link').removeEventListener('click', this.goSignupHandler);
-
+        this.#root.querySelector('.signin-link').removeEventListener('click', this.goSigninHandler);
         this.#root.querySelector('.button-sign').removeEventListener('click', this.onSubmitHandler);
     }
 
-    goSignupHandler(e) {
+    /**
+     * Хендлер события нажатия на ссылку перехода на логин
+     * @param {Event} e - Событие
+     */
+    goSigninHandler(e) {
         e.preventDefault();
-
         dispatcher.dispatch(actionToSignIn());
     }
 
+    /**
+     * Очистка страницы
+     */
     clear() {
-        document.querySelectorAll('div.layout').forEach((e) => {
-            e.remove();
-        });
+        this.#root.innerHTML = '';
     }
 
-    listenSignUpRender = () => {
-        this.clear();
-        this.renderPage();
-    };
-
+    /**
+     * Функция реагирующая на событие renderSignup, которое прокидывается через eventEmitter
+     */
     listenSignUpAction() {
         const status = userStorage.storage.get(userStorage.userModel.status);
-        const body = userStorage.storage.get(userStorage.userModel.body);
         switch (status) {
             case 200:
                 this.removeEventListeners();
                 this.clear();
-                dispatcher.dispatch(actionRedirect('/boards', true, false));
+                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
                 break;
             case 401:
                 errorMessageAnimation('email', 'Произошла ошибка. Пожалуйста, попробуйте ещё раз');
@@ -170,16 +177,19 @@ class SignUp {
         }
     }
 
+    /**
+     * Handler события нажатия на кнопку регистрации
+     * @param {Event} e - Событие
+     */
     onSubmitHandler = async (e) => {
         e.preventDefault();
-        const data = document.querySelector('.form-sign');
-        const loginForm = data.querySelector('input[input-type=email]');
-        const passwordForm = data.querySelector('input[input-type=password]');
-        const repeatPasswordForm = data.querySelector('input[input-type=repeat-password]');
+        const formInputs = this.#root.querySelector('.form-sign');
 
-        const user = {};
-        user.email = loginForm.value;
-        user.password = passwordForm.value;
+        const loginInput = formInputs.querySelector('input[input-type=email]');
+        const passwordInput = formInputs.querySelector('input[input-type=password]');
+        const repeatPasswordInput = formInputs.querySelector('input[input-type=repeat-password]');
+
+        const user = { email: loginInput.value, password: passwordInput.value };
 
         if (!Validator.validateEmail(user.email)) {
             errorMessageAnimation('email', 'Введён неккоректный email');
@@ -188,7 +198,7 @@ class SignUp {
                 'password',
                 'Пароль должен состоять из букв, цифр и быть не менее 8 символов',
             );
-        } else if (!Validator.validateRepeatPasswords(user.password, repeatPasswordForm.value)) {
+        } else if (!Validator.validateRepeatPasswords(user.password, repeatPasswordInput.value)) {
             errorMessageAnimation('repeat-password', 'Пароли не совпадают');
         } else {
             await dispatcher.dispatch(actionSignup(user));

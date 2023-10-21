@@ -3,17 +3,6 @@
  * @class
  */
 export default class Validator {
-    static #allowLinks = [/^signin&/, /^signup&/, /^desks&/];
-
-    static validateHref = (href) => {
-        this.#allowLinks.forEach((template) => {
-            if (template.test(href)) {
-                return true;
-            }
-            return false;
-        });
-    };
-
     /**
      * Проверяет email на правильность
      *

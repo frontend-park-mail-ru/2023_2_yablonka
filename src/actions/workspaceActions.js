@@ -1,4 +1,7 @@
+/**
+ * Действие, означающее получение досок
+ */
 export const actionGetBoards = () => ({
-    type: 'boards',
+    type: 'getBoards',
     value: {},
 });
