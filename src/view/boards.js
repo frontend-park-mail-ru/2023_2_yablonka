@@ -225,7 +225,7 @@ class Boards {
      * Очистка страницы
      */
     clear() {
-        this.#root.querySelectorAll('.page__layout').remove();
+        this.#root.innerHTML = '';
     }
 }
 

@@ -61,8 +61,6 @@ class SignUp {
 
         document.title = 'Tabula: Sign Up';
 
-        history.replaceState(null, null, 'signup');
-
         const pageLayout = new PageLayout(this.#root, { className: 'sign' });
         pageLayout.render();
 
@@ -106,6 +104,8 @@ class SignUp {
         const linkButtonSignIn = new LinkButton(this.#root.querySelector(form.className), {
             className: 'signin',
             href: 'signin',
+            action: 'load',
+            section: '/signin',
             text: 'Уже есть аккаунт?',
             disable: false,
         });
@@ -115,6 +115,7 @@ class SignUp {
             className: 'sign',
             type: 'submit',
             formName: 'sign',
+            action: 'send',
             id: 'signup',
             text: 'Регистрация',
         });

@@ -85,12 +85,16 @@ class Router {
     onClickEvent = (e) => {
         e.preventDefault();
         const { target } = e;
-
         if (target instanceof HTMLElement || target instanceof SVGElement) {
             if (target.dataset.section) {
                 const matchedView = this.matchView(target.dataset.section);
                 if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
-                    this.navigate({ path: target.dataset.section, props: '', pushState: true });
+                    const pagePath = `${window.location.origin}${target.dataset.section}`;
+                    this.navigate({
+                        path: pagePath,
+                        props: '',
+                        pushState: true,
+                    });
                 }
             }
         }
@@ -105,14 +109,10 @@ class Router {
     navigate({ path, props, pushState }) {
         if (pushState) {
             if (props) {
-                window.history.pushState(props, '', `${path}?${props}`);
-            } else {
                 window.history.pushState(props, '', `${path}`);
+            } else {
+                window.history.pushState('', '', `${path}`);
             }
-        } else if (props) {
-            window.history.replaceState(props, '', `${path}?${props}`);
-        } else {
-            window.history.replaceState(props, '', `${path}`);
         }
     }
 
@@ -120,8 +120,7 @@ class Router {
      * Обработчик события изменения активной записи истории
      */
     onPopStateEvent = () => {
-        const [_path, _props] = this.getPath().split('?');
-        this.open({ path: _path, props: _props ?? '' }, false);
+        this.open({ path: this.getPath(), props: window.history.state }, false);
     };
 
     /**
@@ -179,29 +178,28 @@ class Router {
      * Метод для валидации URL и определения страницы для отображения
      * после перезагрузки окна браузера
      */
-    refresh() {
+    refresh(pushState) {
         const matchedPath = this.getPath();
         const matchedView = this.matchView(matchedPath);
-        const [_path, _props] = matchedPath.split('?');
 
-        const redirectedPath = this.redirect(_path.replace(window.location.origin, ''));
-        const redirectedProps = redirectedPath === _path ? _props : '';
+        const redirectedPath = this.redirect(matchedPath.replace(window.location.origin, ''));
+        const pageState = '';
 
         if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
             this.open(
                 {
                     path: redirectedPath,
-                    props: redirectedProps,
+                    props: pageState,
                 },
-                true,
+                pushState,
             );
         } else {
             this.open(
                 {
                     path: `${window.location.origin}/signin`,
-                    props: '',
+                    props: pageState,
                 },
-                true,
+                pushState,
             );
         }
     }
@@ -212,7 +210,7 @@ class Router {
     start() {
         document.addEventListener('click', this.onClickEvent);
         window.addEventListener('popstate', this.onPopStateEvent);
-        this.refresh();
+        this.refresh(false);
     }
 }
 
