@@ -129,8 +129,14 @@ class Router {
      */
     onPopStateEvent = () => {
         const redirection = this.redirect(window.location.href.replace(window.location.origin, ''));
-        console.log(redirection);
-        this.open({ path: redirection, state: window.history.state }, false);
+
+        this.open(
+            {
+                path: redirection,
+                state: '',
+            },
+            false,
+        );
     };
 
     /**
