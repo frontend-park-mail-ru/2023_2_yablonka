@@ -167,6 +167,7 @@ class SignUp {
             case 200:
                 this.removeEventListeners();
                 this.clear();
+                window.history.replaceState(window.history.state, '', `${window.location.origin}/boards`);
                 dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
                 break;
             case 401:

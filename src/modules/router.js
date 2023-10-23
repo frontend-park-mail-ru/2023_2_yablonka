@@ -87,9 +87,10 @@ class Router {
         const { target } = e;
         if (target instanceof HTMLElement || target instanceof SVGElement) {
             if (target.dataset.section) {
-                const matchedView = this.matchView(target.dataset.section);
+                const redirection = this.redirect(target.dataset.section);
+                const matchedView = this.matchView(redirection);
                 if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
-                    const pagePath = `${window.location.origin}${target.dataset.section}`;
+                    const pagePath = redirection;
                     this.navigate({
                         path: pagePath,
                         state: '',
@@ -106,7 +107,7 @@ class Router {
      * @param {state} stateObject.state - GET-параметры запроса
      * @param {boolean} stateObject.pushState - требуется ли запись в историю браузера
      */
-    navigate({ path, state, pushState}) {
+    navigate({ path, state, pushState }) {
         if (pushState) {
             const nextTitle = document.title;
             document.title = document.title ? window.history.state : document.title;
@@ -116,6 +117,10 @@ class Router {
                 window.history.pushState('', '', `${path}`);
             }
             document.title = nextTitle;
+        } else if (state) {
+            window.history.replaceState(state, '', `${path}`);
+        } else {
+            window.history.replaceState('', '', `${path}`);
         }
     }
 
@@ -123,7 +128,9 @@ class Router {
      * Обработчик события изменения активной записи истории
      */
     onPopStateEvent = () => {
-        this.open({ path: this.getPath(), state: window.history.state }, false);
+        const redirection = this.redirect(window.location.href.replace(window.location.origin, ''));
+        console.log(redirection);
+        this.open({ path: redirection, state: window.history.state }, false);
     };
 
     /**
@@ -143,7 +150,6 @@ class Router {
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 
         this.currentPage.renderPage();
-        console.log(path);
         this.navigate({ path, state, pushState });
     }
 
