@@ -1,6 +1,7 @@
 import signInPage from '../view/signin.js';
 import signUpPage from '../view/signup.js';
 import Boards from '../view/boards.js';
+import Profile from '../view/profile.js';
 
 export const apiPath = 'http://localhost:8080';
 
@@ -11,9 +12,11 @@ export const routes = [
     { path: '/signup', view: signUpPage },
 ];
 
-// export const titles = [{ path: '/signin', title: 'Tabula: Sign In' }];
-
-export const signedInRoutes = [{ path: '/boards', view: Boards }];
+console.log(Profile);
+export const signedInRoutes = [
+    { path: '/boards', view: Boards },
+    { path: '/profile', view: Profile },
+];
 
 export const actionsWithLogin = [
     // { path: '/boards', action: actionGetBoards },

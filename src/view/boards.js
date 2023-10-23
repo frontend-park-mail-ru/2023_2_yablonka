@@ -30,7 +30,6 @@ class Boards {
      */
     constructor() {
         this.#root = document.querySelector('.page');
-        emitter.bind('logout', this.close);
     }
 
     yourDesksConfig = {
@@ -189,21 +188,23 @@ class Boards {
 
         this.#renderOwnerWorkspace(boards.body.boards.user_owned_boards);
         this.#renderGuestWorspace(boards.body.boards.user_guest_boards);
-        this.addEventListeners();
+        this.addListeners();
     }
 
     /**
      * Добавляет обработчики событий
      */
-    addEventListeners() {
+    addListeners() {
         this.#root.querySelector('.log-out').addEventListener('click', this.logoutHandler);
+        emitter.bind('logout', this.close);
     }
 
     /**
      * Убирает обработчики событий
      */
-    removeEventListeners() {
+    removeListeners() {
         this.#root.querySelector('.log-out').removeEventListener('click', this.logoutHandler);
+        emitter.unbind('logout', this.close);
     }
 
     /**
@@ -228,6 +229,7 @@ class Boards {
      * Очистка страницы
      */
     clear() {
+        this.removeListeners();
         this.#root.innerHTML = '';
     }
 }
