@@ -10,7 +10,12 @@ import Validator from '../modules/validator.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 import emitter from '../modules/eventEmitter.js';
 import dispatcher from '../modules/dispatcher.js';
-import { actionToSignIn, actionSignup, actionRedirect } from '../actions/userActions.js';
+import {
+    actionToSignIn,
+    actionSignup,
+    actionRedirect,
+    actionNavigate,
+} from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 
 /**
@@ -58,9 +63,7 @@ class SignUp {
      */
     async renderPage() {
         this.clear();
-        if (document.title !== '' && window.history.state !== 'Tabula: Sign Up') {
-            window.history.replaceState(document.title, '', window.location.href);
-        }
+
         document.title = 'Tabula: Sign Up';
 
         const pageLayout = new PageLayout(this.#root, { className: 'sign' });
@@ -148,7 +151,9 @@ class SignUp {
      */
     goSigninHandler(e) {
         e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
         dispatcher.dispatch(actionToSignIn());
+        dispatcher.dispatch(actionNavigate(e.target.href, '', false));
     }
 
     /**
@@ -167,8 +172,9 @@ class SignUp {
             case 200:
                 this.removeEventListeners();
                 this.clear();
-                window.history.replaceState(window.history.state, '', `${window.location.origin}/boards`);
+                dispatcher.dispatch(actionNavigate(window.location.href, '', true));
                 dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
+                dispatcher.dispatch(actionNavigate(`${window.location.origin}/boards`, '', false));
                 break;
             case 401:
                 errorMessageAnimation('email', 'Произошла ошибка. Пожалуйста, попробуйте ещё раз');

@@ -22,6 +22,15 @@ export const actionStart = () => ({
     value: {},
 });
 
+export const actionNavigate = (_path, _state, _pushState) => ({
+    type: 'navigate',
+    value: {
+        path: _path,
+        state: _state,
+        pushState: _pushState,
+    },
+});
+
 /**
  * Действие, означающее логин
  * @param {Object} user - данные пользователя

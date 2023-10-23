@@ -79,29 +79,6 @@ class Router {
     }
 
     /**
-     * Обработчик события нажатия на ссылку через HTML- и SVG-элементы
-     * @param {Event} e - объект интерфейса Event
-     */
-    onClickEvent = (e) => {
-        e.preventDefault();
-        const { target } = e;
-        if (target instanceof HTMLElement || target instanceof SVGElement) {
-            if (target.dataset.section) {
-                const redirection = this.redirect(target.dataset.section);
-                const matchedView = this.matchView(redirection);
-                if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
-                    const pagePath = redirection;
-                    this.navigate({
-                        path: pagePath,
-                        state: '',
-                        pushState: true,
-                    });
-                }
-            }
-        }
-    };
-
-    /**
      * Метод для изменения истории текущей сессии браузера
      * @param {string} stateObject.path - URL без GET-параметров
      * @param {state} stateObject.state - GET-параметры запроса
@@ -109,19 +86,17 @@ class Router {
      */
     navigate({ path, state, pushState }) {
         if (pushState) {
-            const nextTitle = document.title;
-            document.title = document.title ? window.history.state : document.title;
             if (state) {
-                window.history.pushState(state, '', `${path}`);
+                window.history.pushState(state, '', path);
             } else {
-                window.history.pushState('', '', `${path}`);
+                window.history.pushState('', '', path);
             }
-            document.title = nextTitle;
         } else if (state) {
-            window.history.replaceState(state, '', `${path}`);
+            window.history.replaceState(state, '', path);
         } else {
-            window.history.replaceState('', '', `${path}`);
+            window.history.replaceState('', '', path);
         }
+        this.prevURL = path;
     }
 
     /**
@@ -129,10 +104,9 @@ class Router {
      */
     onPopStateEvent = () => {
         const redirection = this.redirect(window.location.href.replace(window.location.origin, ''));
-
         this.open(
             {
-                path: redirection,
+                path: redirection === window.location.href ? redirection : this.prevURL,
                 state: '',
             },
             false,
@@ -152,6 +126,7 @@ class Router {
 
         const { path, state } = stateObject;
         const currentView = this.matchView(path);
+        console.log(currentView);
 
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 
@@ -224,7 +199,6 @@ class Router {
      * Метод для запуска роутера
      */
     start() {
-        document.addEventListener('click', this.onClickEvent);
         window.addEventListener('popstate', this.onPopStateEvent);
         this.refresh(false);
     }

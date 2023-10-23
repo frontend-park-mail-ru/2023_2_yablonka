@@ -9,7 +9,12 @@ import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 import emitter from '../modules/eventEmitter.js';
 import dispatcher from '../modules/dispatcher.js';
-import { actionToSignUp, actionSignin, actionRedirect } from '../actions/userActions.js';
+import {
+    actionToSignUp,
+    actionSignin,
+    actionRedirect,
+    actionNavigate,
+} from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 
 /**
@@ -51,9 +56,7 @@ class SignIn {
      */
     async renderPage() {
         this.clear();
-        if (document.title !== '' && window.history.state !== 'Tabula: Sign In') {
-            window.history.replaceState(document.title, '', window.location.href);
-        }
+
         document.title = 'Tabula: Sign In';
 
         const pageLayout = new PageLayout(this.#root, { className: 'sign' });
@@ -142,9 +145,7 @@ class SignIn {
      * Убирает подписки на события
      */
     removeEventListeners() {
-        this.#root
-            .querySelector('.signup-link')
-            .removeEventListener('click', this.goSignupHandler);
+        this.#root.querySelector('.signup-link').removeEventListener('click', this.goSignupHandler);
         this.#root.querySelector('.button-sign').removeEventListener('click', this.onSubmitHandler);
     }
 
@@ -154,7 +155,9 @@ class SignIn {
      */
     goSignupHandler(e) {
         e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
         dispatcher.dispatch(actionToSignUp());
+        dispatcher.dispatch(actionNavigate(e.target.href, '', false));
     }
 
     /**
@@ -173,8 +176,9 @@ class SignIn {
             case 200:
                 this.removeEventListeners();
                 this.clear();
-                window.history.replaceState(window.history.state, '', `${window.location.origin}/boards`);
+                dispatcher.dispatch(actionNavigate(window.location.href, '', true));
                 dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
+                dispatcher.dispatch(actionNavigate(`${window.location.origin}/boards`, '', false));
                 break;
             case 401:
                 errorMessageAnimation('email', 'Неверный логин или пароль');

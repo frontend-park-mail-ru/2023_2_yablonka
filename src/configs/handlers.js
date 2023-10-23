@@ -7,6 +7,7 @@ const handlers = [
     { type: 'userSignup', method: userStorage.signup.bind(userStorage) },
     { type: 'userSignin', method: userStorage.signin.bind(userStorage) },
     { type: 'redirect', method: router.open.bind(router) },
+    { type: 'navigate', method: router.navigate.bind(router) },
     { type: 'start', method: router.start.bind(router) },
     { type: 'userLogout', method: userStorage.logout.bind(userStorage) },
     { type: 'goSignup', method: userStorage.getSignupPage.bind(userStorage) },

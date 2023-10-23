@@ -10,7 +10,7 @@ import WorkspaceCardDesctiption from '../components/deskComponents/workspace-car
 import BoardTitleLogo from '../components/deskComponents/board-title__logo/board-title__logo.js';
 import BoardsLogo from '../components/deskComponents/boards-logo/boards-logo.js';
 import WorkspaceMessage from '../components/deskComponents/workspace-message/workspace-message.js';
-import { actionRedirect, actionLogout } from '../actions/userActions.js';
+import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/eventEmitter.js';
@@ -156,9 +156,6 @@ class Boards {
         this.#root.innerHTML = '';
         this.#root.style.backgroundColor = '';
 
-        if (document.title !== '' && window.history.state !== 'Tabula: Ваши Доски') {
-            window.history.replaceState(document.title, '', window.location.href);
-        }
         document.title = 'Tabula: Ваши Доски';
 
         const user = userStorage.storage.get(userStorage.userModel.body);
@@ -222,7 +219,9 @@ class Boards {
      * Закрытие страницы и редирект на страницу логина
      */
     close() {
+        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
         dispatcher.dispatch(actionRedirect('/signin', false));
+        dispatcher.dispatch(actionNavigate(`${window.location.origin}/signin`, '', false));
     }
 
     /**
