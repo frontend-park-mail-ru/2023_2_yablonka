@@ -92,7 +92,7 @@ class Router {
                     const pagePath = `${window.location.origin}${target.dataset.section}`;
                     this.navigate({
                         path: pagePath,
-                        props: '',
+                        state: '',
                         pushState: true,
                     });
                 }
@@ -103,16 +103,19 @@ class Router {
     /**
      * Метод для изменения истории текущей сессии браузера
      * @param {string} stateObject.path - URL без GET-параметров
-     * @param {props} stateObject.props - GET-параметры запроса
+     * @param {state} stateObject.state - GET-параметры запроса
      * @param {boolean} stateObject.pushState - требуется ли запись в историю браузера
      */
-    navigate({ path, props, pushState }) {
+    navigate({ path, state, pushState}) {
         if (pushState) {
-            if (props) {
-                window.history.pushState(props, '', `${path}`);
+            const nextTitle = document.title;
+            document.title = document.title ? window.history.state : document.title;
+            if (state) {
+                window.history.pushState(state, '', `${path}`);
             } else {
                 window.history.pushState('', '', `${path}`);
             }
+            document.title = nextTitle;
         }
     }
 
@@ -120,13 +123,13 @@ class Router {
      * Обработчик события изменения активной записи истории
      */
     onPopStateEvent = () => {
-        this.open({ path: this.getPath(), props: window.history.state }, false);
+        this.open({ path: this.getPath(), state: window.history.state }, false);
     };
 
     /**
      * Метод для запуска процесса отображения страницы по переданному URL
      * @param {string} stateObject.path - URL без GET-параметров
-     * @param {props} stateObject.props - GET-параметры запроса
+     * @param {state} stateObject.state - GET-параметры запроса
      * @param {boolean} stateObject.pushState - требуется ли запись в историю браузера
      */
     open(stateObject, pushState) {
@@ -134,13 +137,14 @@ class Router {
             this.currentPage.clear();
         }
 
-        const { path, props } = stateObject;
+        const { path, state } = stateObject;
         const currentView = this.matchView(path);
 
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 
         this.currentPage.renderPage();
-        this.navigate({ path, props, pushState });
+        console.log(path);
+        this.navigate({ path, state, pushState });
     }
 
     /**
@@ -189,7 +193,7 @@ class Router {
             this.open(
                 {
                     path: redirectedPath,
-                    props: pageState,
+                    state: pageState,
                 },
                 pushState,
             );
@@ -197,7 +201,7 @@ class Router {
             this.open(
                 {
                     path: `${window.location.origin}/signin`,
-                    props: pageState,
+                    state: pageState,
                 },
                 pushState,
             );

@@ -155,6 +155,10 @@ class Boards {
     async renderPage() {
         this.#root.innerHTML = '';
         this.#root.style.backgroundColor = '';
+
+        if (document.title !== '') {
+            window.history.replaceState(document.title, '', window.location.href);
+        }
         document.title = 'Tabula: Ваши Доски';
 
         const user = userStorage.storage.get(userStorage.userModel.body);

@@ -51,7 +51,9 @@ class SignIn {
      */
     async renderPage() {
         this.clear();
-
+        if (document.title !== '') {
+            window.history.replaceState(document.title, '', window.location.href);
+        }
         document.title = 'Tabula: Sign In';
 
         const pageLayout = new PageLayout(this.#root, { className: 'sign' });

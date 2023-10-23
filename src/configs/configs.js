@@ -11,6 +11,8 @@ export const routes = [
     { path: '/signup', view: signUpPage },
 ];
 
+// export const titles = [{ path: '/signin', title: 'Tabula: Sign In' }];
+
 export const signedInRoutes = [{ path: '/boards', view: Boards }];
 
 export const actionsWithLogin = [
