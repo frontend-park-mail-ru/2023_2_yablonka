@@ -1,7 +1,7 @@
 import Header from '../components/deskComponents/header/header.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
-import emitter from '../modules/eventEmitter.js';
+import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
 

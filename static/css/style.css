@@ -396,7 +396,7 @@ body {
     text-decoration: none;
     display: flex;
     align-self: flex-end;
-    pointer-events:none
+    pointer-events: none;
 }
 
 .error-email,

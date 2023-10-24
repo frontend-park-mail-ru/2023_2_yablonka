@@ -1,5 +1,6 @@
 import userStorage from '../storages/userStorage.js';
 import { routes, signedInRoutes, actionsWithLogin } from '../configs/configs.js';
+import { hrefRegExp } from './regExp.js';
 
 /**
  * Класс, реализующий роутер
@@ -72,9 +73,9 @@ class Router {
      */
     getPath() {
         return decodeURIComponent(
-            window.location.href.match('/^w+:.*?(:)d|^w+://w+.w+/')
-                ? window.location.href.replace('/^w+:.*?(:)d|^w+://w+.w+/', '')
-                : window.location.href.replace('/^w+:.*?(:)d*/', ''),
+            window.location.href.match(hrefRegExp.host)
+                ? window.location.href.replace(hrefRegExp.host, '')
+                : window.location.href.replace(hrefRegExp.localhost, ''),
         );
     }
 
@@ -126,7 +127,6 @@ class Router {
 
         const { path, state } = stateObject;
         const currentView = this.matchView(path);
-        console.log(currentView);
 
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 

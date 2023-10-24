@@ -1,3 +1,5 @@
+import { validatorPasswordRegExp } from './regExp.js';
+
 /**
  * Класс для валидации данных формы
  * @class
@@ -17,7 +19,7 @@ export default class Validator {
      * @param {string} password - Строка с паролем
      * @return {boolean} - false, если неправильный, true, если правильный
      */
-    static validatePassword = (password) => /^[a-zA-Z0-9!?#^$&_]{8,}$/.test(password);
+    static validatePassword = (password) => validatorPasswordRegExp.test(password);
 
     /**
      * Проверяет пароли на совпадение

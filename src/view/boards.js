@@ -13,7 +13,7 @@ import WorkspaceMessage from '../components/deskComponents/workspace-message/wor
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
 import userStorage from '../storages/userStorage.js';
-import emitter from '../modules/eventEmitter.js';
+import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
 

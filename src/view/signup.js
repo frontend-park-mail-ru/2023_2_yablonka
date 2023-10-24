@@ -8,7 +8,7 @@ import Button from '../components/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import Validator from '../modules/validator.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
-import emitter from '../modules/eventEmitter.js';
+import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import {
     actionToSignIn,
@@ -97,6 +97,7 @@ class SignUp {
                 type: input[1].type,
                 placeholder: input[1].placeholder,
                 inputType: input[1].inputType,
+                withImage: true,
             });
             formInput.render();
 
