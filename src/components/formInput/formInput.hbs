@@ -1,0 +1,11 @@
+<div class='form__input form__input-{{this.className}}'>
+    {{#if withImage}}
+        <img src='{{this.icon}}.svg' />
+    {{/if}}
+    <input
+        type='{{this.type}}'
+        input-type='{{this.inputType}}'
+        class='input input-{{this.className}}'
+        placeholder='{{this.placeholder}}'
+    />
+</div>

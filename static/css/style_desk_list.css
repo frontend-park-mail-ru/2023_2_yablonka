@@ -17,12 +17,12 @@
 * {
     margin: 0;
     padding: 0;
+    border: 0;
     box-sizing: border-box;
     font-family: Ubuntu-Bold;
 }
 
 html {
-    font-size: 10px;
     height: 100%;
     width: 100%;
 }
@@ -258,7 +258,7 @@ main {
 .create-workspace__title {
     display: flex;
     align-items: center;
-    font-size: 10px;
+    font-size: 14px;
     color: #fff;
     font-weight: bold;
     padding: 0 0 0 14px;
@@ -271,7 +271,7 @@ main {
     width: 100%;
     padding: 6px 8px 6px 0;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -288,8 +288,8 @@ main {
 }
 
 .create-workspace__button img {
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
 }
 
 .all-boards {
