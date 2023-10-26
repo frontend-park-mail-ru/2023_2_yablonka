@@ -325,9 +325,9 @@ body {
     color: #fff;
 }
 
-.form__input-email,
-.form__input-password,
-.form__input-repeat-password {
+.form__input-sign-email,
+.form__input-sign-password,
+.form__input-sign-repeat-password {
     margin-top: calc(27px + 14px);
     border: 2px solid #fff;
     border-radius: 5px;
@@ -336,9 +336,9 @@ body {
     position: relative;
 }
 
-.input-email,
-.input-password,
-.input-repeat-password {
+.input-sign-email,
+.input-sign-password,
+.input-sign-repeat-password {
     color: #b0b0b0;
     background: transparent;
     height: 27px;

@@ -26,7 +26,13 @@ class WorkspaceStorage extends BaseStorage {
     async getWorkspaces() {
         const responsePromise = await AJAX(`${apiPath + apiVersion}user/boards/`, 'GET');
 
-        const body = await responsePromise.json();
+        let body;
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
         const { status } = responsePromise;
 
         if (status === 200) {

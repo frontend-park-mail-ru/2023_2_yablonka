@@ -494,8 +494,8 @@ body {
     gap: 25px;
 }
 
-.profile-navifation__user-information,
-.profile-navifation__security {
+.profile-navigation__user-information,
+.profile-navigation__security {
     color: var(--text-color-on-page);
     font-size: 16px;
     padding-bottom: 5px;
@@ -503,7 +503,7 @@ body {
     text-decoration: none;
 }
 
-.profile-navifation_active {
+.profile-navigation_active {
     font-weight: bold;
     color: #7ba4f3;
     border-bottom: 2px solid #7ba4f3;
@@ -532,11 +532,12 @@ body {
     margin-top: 30px;
 }
 
-.form__input-email,
-.form__input-name,
-.form__input-surname,
-.form__input-nickname,
-.form__textarea-user-information {
+.form__input-profile-email,
+.form__input-profile-name,
+.form__input-profile-surname,
+.form__input-profile-nickname,
+.form__input-profile-password,
+.form__textarea-profile-user-information {
     border: 2px solid #55575f;
     border-radius: 5px;
     display: flex;
@@ -559,7 +560,8 @@ body {
 .input-profile-email,
 .input-profile-name,
 .input-profile-surname,
-.input-profile-nickname {
+.input-profile-nickname,
+.input-profile-password {
     background: #070f17;
     color: #b0b0b0;
     padding-left: 5px;

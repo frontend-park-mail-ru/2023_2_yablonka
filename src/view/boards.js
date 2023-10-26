@@ -1,4 +1,4 @@
-import Header from '../components/deskComponents/header/header.js';
+import Header from '../components/header/header.js';
 import Main from '../components/deskComponents/main/main.js';
 import Sidebar from '../components/deskComponents/sidebar/sidebar.js';
 import AllBoards from '../components/deskComponents/all-boards/all-boards.js';
@@ -186,8 +186,8 @@ class Boards {
 
         const boards = workspaceStorage.storage.get(workspaceStorage.workspaceModel.body);
 
-        this.#renderOwnerWorkspace(boards.body.boards.user_owned_boards);
-        this.#renderGuestWorspace(boards.body.boards.user_guest_boards);
+        this.#renderOwnerWorkspace(boards.body?.boards.user_owned_boards);
+        this.#renderGuestWorspace(boards.body?.boards.user_guest_boards);
         this.addListeners();
     }
 

@@ -172,10 +172,8 @@ class Router {
     refresh(pushState) {
         const matchedPath = this.getPath();
         const matchedView = this.matchView(matchedPath);
-
         const redirectedPath = this.redirect(matchedPath.replace(window.location.origin, ''));
         const pageState = '';
-
         if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
             this.open(
                 {

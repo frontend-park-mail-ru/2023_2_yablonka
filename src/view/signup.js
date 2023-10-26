@@ -26,24 +26,33 @@ class SignUp {
     #root;
 
     #config = {
-        formContainer: {
+        formInput: {
             email: {
+                withImage: true,
                 icon: 'person',
                 type: 'text',
                 placeholder: 'Email',
                 inputType: 'email',
+                className: 'sign-email',
+                disable: false,
             },
             password: {
+                withImage: true,
                 icon: 'lock',
                 type: 'password',
                 placeholder: 'Пароль',
                 inputType: 'password',
+                className: 'sign-password',
+                disable: false,
             },
             repeat_password: {
+                withImage: true,
                 icon: 'key',
                 type: 'password',
                 placeholder: 'Повторите пароль',
                 inputType: 'repeat-password',
+                className: 'sign-repeat-password',
+                disable: false,
             },
         },
     };
@@ -90,14 +99,15 @@ class SignUp {
         });
         form.render();
 
-        Object.entries(this.#config.formContainer).forEach((input) => {
+        Object.entries(this.#config.formInput).forEach((input) => {
             const formInput = new FormInput(this.#root.querySelector(form.className), {
-                className: input[1].inputType,
+                className: input[1].className,
                 icon: input[1].icon,
                 type: input[1].type,
                 placeholder: input[1].placeholder,
                 inputType: input[1].inputType,
                 withImage: true,
+                text: '',
             });
             formInput.render();
 

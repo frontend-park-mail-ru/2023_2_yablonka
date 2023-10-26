@@ -22,36 +22,8 @@ router.use(express.static(path.resolve(__dirname, '../src')));
  * @returns {boolean} - true, если разрешено, false, если нет
  */
 
-function findView(view) {
-    const views = ['signup', 'signin', 'desks'];
-
-    for (let i = 0; views.length; i += 1) {
-        if (views[i] === view) return true;
-    }
-
-    return false;
-}
-
 router.get('*', (req, res) => {
     const filePath = createPath('index');
-    if (!fs.existsSync(filePath)) {
-        res.status(500).send('500. Internal server Error');
-        return;
-    }
-
-    res.sendFile(filePath);
-});
-
-router.get('/:view?', (req, res) => {
-    const {view} = req.params;
-    let filePath;
-
-    if (view === '/' || !view) {
-        filePath = createPath('index');
-    } else if (findView(view)) {
-        filePath = createPath('index');
-    }
-
     if (!fs.existsSync(filePath)) {
         res.status(500).send('500. Internal server Error');
         return;
