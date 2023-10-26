@@ -3,7 +3,7 @@ import signUpPage from '../view/signup.js';
 import Boards from '../view/boards.js';
 import Profile from '../view/profile.js';
 
-export const apiPath = 'http://localhost:8080';
+export const apiPath = 'http://213.219.215.40:8080';
 
 export const apiVersion = '/api/v2/';
 
