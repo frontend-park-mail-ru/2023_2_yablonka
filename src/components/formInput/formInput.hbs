@@ -9,7 +9,7 @@
     {{#if disable}}
     <input
         type='{{this.type}}'
-        input-type='{{this.inputType}}'
+        data-name='{{this.dataName}}'
         placeholder='{{this.placeholder}}'
         class='input input-{{this.className}} input_disable'
         value="{{this.text}}"
@@ -17,7 +17,7 @@
     {{else}}
     <input
         type='{{this.type}}'
-        input-type='{{this.inputType}}'
+        data-name='{{this.dataName}}'
         placeholder='{{this.placeholder}}'
         class='input input-{{this.className}}'
         value="{{this.text}}"

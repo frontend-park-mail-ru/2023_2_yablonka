@@ -1,6 +1,5 @@
 import PageLayout from '../components/pageLayout/pageLayout.js';
 import SignDecoration from '../components/signDecoration/signDecoration.js';
-import ContentHeader from '../components/contentHeader/contentHeader.js';
 import Form from '../components/form/form.js';
 import FormInput from '../components/formInput/formInput.js';
 import LinkButton from '../components/linkButton/linkButton.js';
@@ -31,7 +30,7 @@ class SignIn {
                 icon: 'person',
                 type: 'text',
                 placeholder: 'Email',
-                inputType: 'email',
+                dataName: 'email',
                 className: 'sign-email',
                 disable: false,
             },
@@ -40,7 +39,7 @@ class SignIn {
                 icon: 'lock',
                 type: 'password',
                 placeholder: 'Пароль',
-                inputType: 'password',
+                dataName: 'password',
                 className: 'sign-email',
                 disable: false,
             },
@@ -69,16 +68,10 @@ class SignIn {
         pageLayout.render();
 
         const signDecoration = new SignDecoration(this.#root.querySelector(pageLayout.className), {
-            leftPicture: 'undraw_meet_the_team',
-            rightPicture: 'undraw_creative_woman',
+            leftPicture: 'undraw_creative_woman',
+            rightPicture: 'undraw_meet_the_team',
         });
         signDecoration.render();
-
-        const contentHeader = new ContentHeader(
-            this.#root.querySelector(SignDecoration.lastWrapperClassName),
-            { className: 'sign', title: 'Вход' },
-        );
-        contentHeader.render();
 
         const form = new Form(this.#root.querySelector(SignDecoration.lastWrapperClassName), {
             componentId: 'form-sign',
@@ -91,24 +84,28 @@ class SignIn {
 
         Object.entries(this.#config.formInput).forEach((input) => {
             const formInput = new FormInput(this.#root.querySelector(form.className), {
-                className: input[1].className,
+                className: 'sign',
                 icon: input[1].icon,
                 type: input[1].type,
                 placeholder: input[1].placeholder,
-                inputType: input[1].inputType,
+                dataName: input[1].dataName,
                 withImage: true,
                 text: '',
             });
             formInput.render();
-
-            const errorMessage = new ErrorMessage(this.#root.querySelector(formInput.className), {
-                className: input[0],
-            });
-            errorMessage.render();
         });
 
+        const errorMessage = new ErrorMessage(
+            this.#root.querySelector('input[data-name=email]').parentNode,
+            {
+                className: 'sign',
+                errorName: 'login-or-password',
+            },
+        );
+        errorMessage.render();
+
         const linkButtonForgottenPassword = new LinkButton(
-            this.#root.querySelector(form.className),
+            this.#root.querySelector(SignDecoration.lastWrapperClassName),
             {
                 className: 'forgotten-password',
                 href: 'signup',
@@ -118,24 +115,30 @@ class SignIn {
         );
         linkButtonForgottenPassword.render();
 
-        const linkButtonRegistration = new LinkButton(this.#root.querySelector(form.className), {
-            className: 'signup',
-            href: 'signup',
-            action: 'load',
-            section: '/signup',
-            text: 'Регистрация',
-            disable: false,
-        });
+        const linkButtonRegistration = new LinkButton(
+            this.#root.querySelector(SignDecoration.lastWrapperClassName),
+            {
+                className: 'sign',
+                href: 'signup',
+                action: 'load',
+                section: '/signup',
+                text: 'Регистрация',
+                disable: false,
+            },
+        );
         linkButtonRegistration.render();
 
-        const buttonSignIn = new Button(this.#root.querySelector(form.className), {
-            className: 'sign',
-            type: 'submit',
-            formId: 'form-sign',
-            action: 'send',
-            id: 'signin',
-            text: 'Войти',
-        });
+        const buttonSignIn = new Button(
+            this.#root.querySelector(SignDecoration.lastWrapperClassName),
+            {
+                className: 'sign',
+                type: 'submit',
+                formId: 'form-sign',
+                action: 'send',
+                id: 'signin',
+                text: 'Войти',
+            },
+        );
         buttonSignIn.render();
 
         this.addEventListeners();
@@ -145,7 +148,7 @@ class SignIn {
      * Добавляет подписки на события
      */
     addEventListeners() {
-        this.#root.querySelector('.signup-link').addEventListener('click', this.goSignupHandler);
+        this.#root.querySelector('.sign-link').addEventListener('click', this.goSignupHandler);
         this.#root.querySelector('.button-sign').addEventListener('click', this.onSubmitHandler);
     }
 
@@ -153,7 +156,7 @@ class SignIn {
      * Убирает подписки на события
      */
     removeEventListeners() {
-        this.#root.querySelector('.signup-link').removeEventListener('click', this.goSignupHandler);
+        this.#root.querySelector('.sign-link').removeEventListener('click', this.goSignupHandler);
         this.#root.querySelector('.button-sign').removeEventListener('click', this.onSubmitHandler);
     }
 
@@ -189,7 +192,7 @@ class SignIn {
                 dispatcher.dispatch(actionNavigate(`${window.location.origin}/boards`, '', false));
                 break;
             case 401:
-                errorMessageAnimation('email', 'Неверный логин или пароль');
+                errorMessageAnimation('sign', 'login-or-password', 'Неверный логин или пароль');
                 break;
             default:
                 break;
@@ -204,8 +207,8 @@ class SignIn {
         e.preventDefault();
         const formInputs = this.#root.querySelector('.form-sign');
 
-        const loginInput = formInputs.querySelector('input[type=text]');
-        const passwordInput = formInputs.querySelector('input[type=password]');
+        const loginInput = formInputs.querySelector('input[data-name=email]');
+        const passwordInput = formInputs.querySelector('input[data-name=password]');
 
         const user = { email: loginInput.value, password: passwordInput.value };
 

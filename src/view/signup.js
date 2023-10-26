@@ -32,8 +32,7 @@ class SignUp {
                 icon: 'person',
                 type: 'text',
                 placeholder: 'Email',
-                inputType: 'email',
-                className: 'sign-email',
+                dataName: 'email',
                 disable: false,
             },
             password: {
@@ -41,8 +40,7 @@ class SignUp {
                 icon: 'lock',
                 type: 'password',
                 placeholder: 'Пароль',
-                inputType: 'password',
-                className: 'sign-password',
+                dataName: 'password',
                 disable: false,
             },
             repeat_password: {
@@ -50,8 +48,7 @@ class SignUp {
                 icon: 'key',
                 type: 'password',
                 placeholder: 'Повторите пароль',
-                inputType: 'repeat-password',
-                className: 'sign-repeat-password',
+                dataName: 'repeat-password',
                 disable: false,
             },
         },
@@ -101,40 +98,50 @@ class SignUp {
 
         Object.entries(this.#config.formInput).forEach((input) => {
             const formInput = new FormInput(this.#root.querySelector(form.className), {
-                className: input[1].className,
+                className: 'sign',
                 icon: input[1].icon,
                 type: input[1].type,
                 placeholder: input[1].placeholder,
-                inputType: input[1].inputType,
+                dataName: input[1].dataName,
                 withImage: true,
                 text: '',
             });
             formInput.render();
 
-            const errorMessage = new ErrorMessage(this.#root.querySelector(formInput.className), {
-                className: input[1].inputType,
-            });
+            const errorMessage = new ErrorMessage(
+                this.#root.querySelector(`input[data-name="${input[1].dataName}"]`).parentNode,
+                {
+                    className: 'sign',
+                    errorName: input[1].dataName,
+                },
+            );
             errorMessage.render();
         });
 
-        const linkButtonSignIn = new LinkButton(this.#root.querySelector(form.className), {
-            className: 'signin',
-            href: 'signin',
-            action: 'load',
-            section: '/signin',
-            text: 'Уже есть аккаунт?',
-            disable: false,
-        });
+        const linkButtonSignIn = new LinkButton(
+            this.#root.querySelector(SignDecoration.lastWrapperClassName),
+            {
+                className: 'sign',
+                href: 'signin',
+                action: 'load',
+                section: '/signin',
+                text: 'Уже есть аккаунт?',
+                disable: false,
+            },
+        );
         linkButtonSignIn.render();
 
-        const buttonSignUp = new Button(this.#root.querySelector(form.className), {
-            className: 'sign',
-            type: 'submit',
-            formName: 'sign',
-            action: 'send',
-            id: 'signup',
-            text: 'Регистрация',
-        });
+        const buttonSignUp = new Button(
+            this.#root.querySelector(SignDecoration.lastWrapperClassName),
+            {
+                className: 'sign',
+                type: 'submit',
+                formName: 'sign',
+                action: 'send',
+                id: 'signup',
+                text: 'Регистрация',
+            },
+        );
         buttonSignUp.render();
 
         this.addEventListeners();
@@ -144,7 +151,7 @@ class SignUp {
      * Добавляет подписки на события
      */
     addEventListeners() {
-        this.#root.querySelector('.signin-link').addEventListener('click', this.goSigninHandler);
+        this.#root.querySelector('.sign-link').addEventListener('click', this.goSigninHandler);
         this.#root.querySelector('.button-sign').addEventListener('click', this.onSubmitHandler);
     }
 
@@ -152,7 +159,7 @@ class SignUp {
      * Убирает подписки на события
      */
     removeEventListeners() {
-        this.#root.querySelector('.signin-link').removeEventListener('click', this.goSigninHandler);
+        this.#root.querySelector('.sign-link').removeEventListener('click', this.goSigninHandler);
         this.#root.querySelector('.button-sign').removeEventListener('click', this.onSubmitHandler);
     }
 
@@ -188,10 +195,10 @@ class SignUp {
                 dispatcher.dispatch(actionNavigate(`${window.location.origin}/boards`, '', false));
                 break;
             case 401:
-                errorMessageAnimation('email', 'Произошла ошибка. Пожалуйста, попробуйте ещё раз');
+                errorMessageAnimation('sign', 'email', 'Произошла ошибка. Пожалуйста, попробуйте ещё раз');
                 break;
             case 409:
-                errorMessageAnimation('email', 'Пользователь c таким email уже существует');
+                errorMessageAnimation('sign', 'email', 'Пользователь c таким email уже существует');
                 break;
             default:
                 break;
@@ -206,21 +213,18 @@ class SignUp {
         e.preventDefault();
         const formInputs = this.#root.querySelector('.form-sign');
 
-        const loginInput = formInputs.querySelector('input[input-type=email]');
-        const passwordInput = formInputs.querySelector('input[input-type=password]');
-        const repeatPasswordInput = formInputs.querySelector('input[input-type=repeat-password]');
+        const loginInput = formInputs.querySelector('input[data-name=email]');
+        const passwordInput = formInputs.querySelector('input[data-name=password]');
+        const repeatPasswordInput = formInputs.querySelector('input[data-name=repeat-password]');
 
         const user = { email: loginInput.value, password: passwordInput.value };
 
         if (!Validator.validateEmail(user.email)) {
-            errorMessageAnimation('email', 'Введён неккоректный email');
+            errorMessageAnimation('sign', 'email', 'Введён неккоректный email');
         } else if (!Validator.validatePassword(user.password)) {
-            errorMessageAnimation(
-                'password',
-                'Пароль должен состоять из букв, цифр и быть не менее 8 символов',
-            );
+            errorMessageAnimation('sign', 'password', 'Пароль должен состоять из букв, цифр и быть не менее 8 символов');
         } else if (!Validator.validateRepeatPasswords(user.password, repeatPasswordInput.value)) {
-            errorMessageAnimation('repeat-password', 'Пароли не совпадают');
+            errorMessageAnimation('sign', 'repeat-password', 'Пароли не совпадают');
         } else {
             await dispatcher.dispatch(actionSignup(user));
         }

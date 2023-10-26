@@ -1,27 +1,15 @@
 /**
  * Отображает ошибку над определенным input
  *
- * @param {string} inputType - Тип input
+ * @param {string} errorClass - Название класса элемента ошибки
+ * @param {string} errorName - Название элемента ошибки
  * @param {string} message - Текст ошибки
  */
-export default function errorMessageAnimation(inputType, message) {
-    const input = document.querySelector(`input[input-type="${inputType}"]`);
-    const err = input.parentElement.childNodes[0];
-    const errMessage = err.childNodes[0];
-    errMessage.textContent = message;
+export default function errorMessageAnimation(errorClass, errorName, message) {
+    const errorElement = document.querySelector(`.error-${errorClass}[data-name="${errorName}"]`);
+    const err = errorElement.firstChild;
+    err.textContent = message;
     setTimeout(() => {
-        err.style.opacity = '0';
-        err.style.opacity = '1';
-    }, 1);
-
-    setTimeout(() => {
-        err.style.opacity = '0';
-        err.style.opacity = '1';
-    }, 500);
-
-    setTimeout(() => {
-        err.style.opacity = '1';
-        err.style.opacity = '0';
-        errMessage.textContent = '';
-    }, 5000);
+        err.textContent = '';
+    }, 7000);
 }

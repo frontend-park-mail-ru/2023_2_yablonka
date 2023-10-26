@@ -253,6 +253,9 @@
 html {
     width: 100%;
     height: 100%;
+    --text-color-in-input: #C7C7C7;
+    --sign-page-background: #0C1116;
+    color: var(--text-color-in-input);
 }
 
 body {
@@ -266,7 +269,7 @@ body {
 }
 
 .page__layout-sign {
-    background-color: #37426d;
+    background-color: var(--sign-page-background);
     width: 100%;
     height: 100%;
     min-width: 320px;
@@ -283,36 +286,46 @@ body {
 }
 
 .page__image_right {
-    right: 100px;
-    height: 260px;
-    width: 300px;
+    right: 40px;
+    height: 220px;
+    width: 330px;
     transition: all 0.2s ease-in-out;
 }
 
 .page__image_left {
-    left: 15px;
+    left: 40px;
     height: 270px;
-    width: 380px;
+    width: 330px;
     transition: all 0.2s ease-in-out;
 }
 
-.authentication__header {
-    font-size: 56px;
-    color: #fff;
-    text-shadow: #000 0 0.5rem 0.4rem;
-    margin-bottom: 3rem;
+.authentication {
     display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.authentication__header {
+    font-size: 72px;
+    color: #fff;
+    text-shadow: rgb(41, 41, 41, 50%) 0 15px 10px;
+    margin-bottom: 75px;
+    display: flex;
+    align-items: center;
     flex-direction: row;
     justify-content: center;
 }
 
 .authentication__header img {
+    text-shadow: rgb(41, 41, 41, 50%) 0 15px 10px;
     padding-right: 10px;
-    width: 70px;
+    width: 90px;
     height: 70px;
 }
 
 .form-sign {
+    gap: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -321,105 +334,91 @@ body {
 .content-header-sign {
     text-align: center;
     font-size: 24px;
-    margin-top: 20px;
+    margin-bottom: 35px;
     color: #fff;
 }
 
-.form__input-sign-email,
-.form__input-sign-password,
-.form__input-sign-repeat-password {
-    margin-top: calc(27px + 14px);
+.form__input-sign {
     border: 2px solid #fff;
+    box-shadow: rgb(255, 255, 255, 25%) 4px 4px 10px;
     border-radius: 5px;
     display: flex;
     align-items: center;
     position: relative;
 }
 
-.input-sign-email,
-.input-sign-password,
-.input-sign-repeat-password {
+
+.input-sign {
     color: #b0b0b0;
     background: transparent;
-    height: 27px;
-    width: 270px;
+    font-weight: 400;
+    height: 34px;
+    width: 320px;
     padding-left: 5px;
-    font-size: 18px;
+    font-size: 20px;
     outline: none;
     position: relative;
 }
 
 .form__input img {
-    height: 18px;
-    width: 25px;
+    height: 32px;
+    width: 32px;
     padding-left: 3px;
 }
 
-.signup-link,
-.signin-link {
-    margin-top: 3rem;
+.sign-link {
+    margin-top: 40px;
     display: block;
     text-align: center;
     text-decoration: none;
     color: #fff;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 400;
     cursor: pointer;
 }
 
 .button-sign {
     background-color: #000;
-    height: 42px;
-    width: 220px;
-    border-radius: 10px;
-    margin-top: 20px;
+    box-shadow: rgb(255, 255, 255, 15%) 4px 4px 10px;
+    border: rgb(255, 255, 255) 2px solid;
+    height: 50px;
+    width: 180px;
+    border-radius: 15px;
+    margin-top: 15px;
     color: #fff;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
+    align-self: center;
 }
 
 .forgotten-password-link {
-    color: #fff;
+    color: rgb(199, 199, 199);
     margin-top: 5px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 400;
     text-decoration: none;
     display: flex;
     align-self: flex-end;
 }
 
 .forgotten-password-link_disabled {
-    color: #fff;
-    margin-top: 5px;
+    color: rgb(199, 199, 199);
+    margin-top: 8px;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 400;
     text-decoration: none;
     display: flex;
     align-self: flex-end;
     pointer-events: none;
 }
 
-.error-email,
-.error-password,
-.error-repeat-password {
+.error-sign {
+    color: rgb(244, 98, 133);
+    font-size: 16px;
+    height: 20px;
+    z-index: 999;
+    font-weight: 400;
+    align-self: flex-start;
     position: absolute;
-    height: 110%;
-    opacity: 0;
-    width: calc(100% + 4px);
-    bottom: calc(27px + 7px);
-    left: -2px;
-    right: 2px;
-    background-color: #cb4d4d;
-    color: #fff;
-    font-size: 12px;
-    text-overflow: ellipsis;
-    border-radius: 5px;
-    padding: auto;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    transition: all;
-    transition-duration: 500ms;
-    transition-timing-function: ease-in-out;
+    top: -24px;
 }
