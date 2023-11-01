@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../css/style_desk_list.css" />
         <link rel="stylesheet" href="../css/style_profile.css" />
-        <link rel="stylesheet" href="./css/style.css" type="text/css" />
+        <link rel="stylesheet" href="../css/style.css" type="text/css" />
+        <link rel="stylesheet" href="../css/style_popover.css" type="text/css" />
         <link rel="icon" type="image/svg+xml" sizes="32x32" href="logo_favicon.svg" />
         <title></title>
     </head>
@@ -102,11 +103,75 @@
                         <img class="notification-image" src="../svg/bell-notification.svg" alt="" />
                     </div>
                     <div class="avatar">
-                        <img class="avatar-image" src="../img/avatar.jpg" alt="Avatar" />
+                        <button class="avatar-popevent" popovertarget="navigation-menu">
+                            <img class="avatar-image" src="../img/avatar.jpg" alt="Avatar" />
+                        </button>
                     </div>
-                    
                 </div>
             </header>
+            <dialog id="navigation-menu" class="popover-menu" popover>
+                <div class="popover-menu-wrapper">
+                    <div class="popover-menu__user">
+                        <span class="popover-menu__menu-name">Учётная запись</span>
+                        <div class="popover-menu__user-profile">
+                            <div class="popover-menu__user-avatar">
+                                <img
+                                    class="popover-menu__avatar-image"
+                                    src="../img/avatar.jpg"
+                                    alt="avatar"
+                                />
+                            </div>
+                            <div class="popover-menu__user-information">
+                                <span class="user-information__nickname">Engineer</span
+                                ><span class="user-information__email">TeamFortress@MGE.JS</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popover-menu__underline"></div>
+                    <div class="popover-menu__navigation">
+                        <span class="popover-menu__menu-name">Tabula</span>
+                        <div class="navigation__item">
+                            <a
+                                class="link-button boards-link"
+                                data-action="load"
+                                data-section="load"
+                                href="/boards"
+                                >Доски</a
+                            >
+                        </div>
+                        <div class="navigation__item">
+                            <a
+                                class="link-button profile-link"
+                                data-action="load"
+                                data-section="load"
+                                href="/profile"
+                                >Профиль</a
+                            >
+                        </div>
+                        <div class="navigation__item">
+                            <a
+                                class="link-button security-link"
+                                data-action="load"
+                                data-section="load"
+                                href="/secirity"
+                                >Безопасность</a
+                            >
+                        </div>
+                    </div>
+                    <div class="popover-menu__underline"></div>
+                    <div class="popover-menu__log-out">
+                        <div class="navigation__item">
+                            <a
+                                class="link-button log-out-link"
+                                data-action="load"
+                                data-section="load"
+                                href="/logout"
+                                >Выход</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </dialog>
         </div>
     </body>
 </html>
