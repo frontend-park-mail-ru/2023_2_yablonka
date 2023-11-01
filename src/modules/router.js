@@ -130,8 +130,8 @@ class Router {
 
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 
-        this.currentPage.renderPage();
         this.navigate({ path, state, pushState });
+        this.currentPage.renderPage();
     }
 
     /**

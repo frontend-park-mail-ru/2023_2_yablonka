@@ -167,8 +167,7 @@ class SignIn {
     goSignupHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionToSignUp());
-        dispatcher.dispatch(actionNavigate(e.target.href, '', false));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signup`, false));
     }
 
     /**
@@ -188,8 +187,7 @@ class SignIn {
                 this.removeEventListeners();
                 this.clear();
                 dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
-                dispatcher.dispatch(actionNavigate(`${window.location.origin}/boards`, '', false));
+                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
                 break;
             case 401:
                 errorMessageAnimation('sign', 'login-or-password', 'Неверный логин или пароль');

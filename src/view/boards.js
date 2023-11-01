@@ -10,6 +10,7 @@ import WorkspaceCardDesctiption from '../components/deskComponents/workspace-car
 import BoardTitleLogo from '../components/deskComponents/board-title__logo/board-title__logo.js';
 import BoardsLogo from '../components/deskComponents/boards-logo/boards-logo.js';
 import WorkspaceMessage from '../components/deskComponents/workspace-message/workspace-message.js';
+import NavPopup from '../components/navPopup/navPopup.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
 import userStorage from '../storages/userStorage.js';
@@ -164,6 +165,18 @@ class Boards {
         });
         header.render();
 
+        const namesurname = `${user.body.user.name ? user.body.user.name : ''} ${
+            user.body.user.surname ? user.body.user.surname : ''
+        }`;
+
+        const navPopup = new NavPopup(this.#root, {
+            email: user.body.user.email,
+            avatar: user.body.user.thumbnail_url,
+            name: namesurname,
+        });
+
+        navPopup.render();
+
         const main = new Main(this.#root);
         main.render();
 
@@ -195,7 +208,11 @@ class Boards {
      * Добавляет обработчики событий
      */
     addListeners() {
-        this.#root.querySelector('.log-out').addEventListener('click', this.logoutHandler);
+        this.#root.querySelector('.log-out-link').addEventListener('click', this.logoutHandler);
+        this.#root.querySelector('.profile-link').addEventListener('click', this.toProfileHandler);
+        this.#root
+            .querySelector('.security-link')
+            .addEventListener('click', this.toSecurityHandler);
         emitter.bind('logout', this.close);
     }
 
@@ -203,7 +220,13 @@ class Boards {
      * Убирает обработчики событий
      */
     removeListeners() {
-        this.#root.querySelector('.log-out').removeEventListener('click', this.logoutHandler);
+        this.#root.querySelector('.log-out-link').removeEventListener('click', this.logoutHandler);
+        this.#root
+            .querySelector('.profile-link')
+            .removeEventListener('click', this.toProfileHandler);
+        this.#root
+            .querySelector('.security-link')
+            .removeEventListener('click', this.toSecurityHandler);
         emitter.unbind('logout', this.close);
     }
 
@@ -216,13 +239,24 @@ class Boards {
         dispatcher.dispatch(actionLogout());
     }
 
+    toSecurityHandler(e) {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/security`, false));
+    }
+
+    toProfileHandler(e) {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/profile`, false));
+    }
+
     /**
      * Закрытие страницы и редирект на страницу логина
      */
     close() {
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect('/signin', false));
-        dispatcher.dispatch(actionNavigate(`${window.location.origin}/signin`, '', false));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signin`, false));
     }
 
     /**

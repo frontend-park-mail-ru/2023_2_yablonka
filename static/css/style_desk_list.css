@@ -37,7 +37,7 @@ body {
     height: 100%;
 }
 
-.header {
+header {
     display: flex;
     background-color: #161a1d;
     gap: 20px;
@@ -94,6 +94,7 @@ body {
     margin-left: 40px;
     display: flex;
     align-items: center;
+    color: var(--text-color-on-page);
 }
 
 .projects-action-image,
@@ -132,8 +133,7 @@ body {
 }
 
 .avatar,
-.notification,
-.log-out {
+.notification {
     width: 35px;
     height: 35px;
     margin-left: 35px;
@@ -151,17 +151,13 @@ body {
 }
 
 .avatar-popevent:active {
-    scale: 0.9
+    scale: 0.9;
 }
 
 .avatar-image {
-    width: 100%;
-    height: 100%;
-}
-
-.log-out-image {
     height: 100%;
     width: 100%;
+    border-radius: 50%;
 }
 
 .notification-image {

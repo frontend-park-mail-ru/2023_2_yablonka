@@ -5,6 +5,7 @@ import Form from '../components/form/form.js';
 import FormInput from '../components/formInput/formInput.js';
 import TextArea from '../components/textArea/textArea.js';
 import Button from '../components/button/button.js';
+import NavPopup from '../components/navPopup/navPopup.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/eventTrigger.js';
@@ -104,6 +105,15 @@ class Profile {
         const namesurname = `${user.body.user.name ? user.body.user.name : ''} ${
             user.body.user.surname ? user.body.user.surname : ''
         }`;
+
+        const navPopup = new NavPopup(this.#root, {
+            email: user.body.user.email,
+            avatar: user.body.user.thumbnail_url,
+            name: namesurname,
+        });
+
+        navPopup.render();
+
         const containerProfile = new ContainerProfile(
             this.#root.querySelector(pageLayout.className),
             {
@@ -239,6 +249,11 @@ class Profile {
      * Добавляет общие обработчики событий
      */
     addListeners() {
+        this.#root.querySelector('.profile-link').addEventListener('click', this.goProfileHandler);
+        this.#root
+            .querySelector('.security-link')
+            .addEventListener('click', this.goSecurityHandler);
+        this.#root.querySelector('.boards-link').addEventListener('click', this.toMainPageHandler);
         this.#root
             .querySelector('.profile-navigation__security')
             .addEventListener('click', this.goSecurityHandler);
@@ -247,7 +262,7 @@ class Profile {
             .querySelector('.profile-navigation__user-information')
             .addEventListener('click', this.goProfileHandler);
 
-        this.#root.querySelector('.log-out').addEventListener('click', this.logoutHandler);
+        this.#root.querySelector('.log-out-link').addEventListener('click', this.logoutHandler);
 
         this.#root
             .querySelector('.header-menu__logo')
@@ -259,6 +274,13 @@ class Profile {
      * Убирает общие обработчики событий
      */
     removeListeners() {
+        this.#root.querySelector('.profile-link').removeEventListener('click', this.renderProfile);
+        this.#root
+            .querySelector('.security-link')
+            .removeEventListener('click', this.renderSecurity);
+        this.#root
+            .querySelector('.boards-link')
+            .removeEventListener('click', this.toMainPageHandler);
         this.#root
             .querySelector('.profile-navigation__security')
             .removeEventListener('click', this.goSecurityHandler);
@@ -267,7 +289,7 @@ class Profile {
             .querySelector('.profile-navigation__user-information')
             .removeEventListener('click', this.goProfileHandler);
 
-        this.#root.querySelector('.log-out').removeEventListener('click', this.logoutHandler);
+        this.#root.querySelector('.log-out-link').removeEventListener('click', this.logoutHandler);
 
         this.#root
             .querySelector('.header-menu__logo')

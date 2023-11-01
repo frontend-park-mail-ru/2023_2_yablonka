@@ -1,0 +1,56 @@
+<dialog id='navigation-menu' class='popover-menu' popover>
+    <div class='popover-menu-wrapper'>
+        <div class='popover-menu__user'>
+            <span class='popover-menu__menu-name'>Учётная запись</span>
+            <div class='popover-menu__user-profile'>
+                <div class='popover-menu__user-avatar'>
+                    <img class='popover-menu__avatar-image' src='{{this.avatar}}' alt='avatar' />
+                </div>
+                <div class='popover-menu__user-information'>
+                    <span class='user-information__nickname'>{{this.name}}</span><span
+                        class='user-information__email'
+                    >{{this.email}}</span>
+                </div>
+            </div>
+        </div>
+        <div class='popover-menu__underline'></div>
+        <div class='popover-menu__navigation'>
+            <span class='popover-menu__menu-name'>Tabula</span>
+            <div class='navigation__item'>
+                <a
+                    class='link-button boards-link'
+                    data-action='load'
+                    data-section='load'
+                    href='/boards'
+                >Доски</a>
+            </div>
+            <div class='navigation__item'>
+                <a
+                    class='link-button profile-link'
+                    data-action='load'
+                    data-section='load'
+                    href='/profile'
+                >Профиль</a>
+            </div>
+            <div class='navigation__item'>
+                <a
+                    class='link-button security-link'
+                    data-action='load'
+                    data-section='load'
+                    href='/security'
+                >Безопасность</a>
+            </div>
+        </div>
+        <div class='popover-menu__underline'></div>
+        <div class='popover-menu__log-out'>
+            <div class='navigation__item'>
+                <a
+                    class='link-button log-out-link'
+                    data-action='load'
+                    data-section='load'
+                    href='/logout'
+                >Выход</a>
+            </div>
+        </div>
+    </div>
+</dialog>

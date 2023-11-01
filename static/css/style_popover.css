@@ -248,8 +248,12 @@
     border: 0;
     box-sizing: border-box;
     font-family: Ubuntu;
+}
+
+html {
+    height: 100%;
+    width: 100%;
     --text-color-on-page: #c0c9f4;
-    color: var(--text-color-on-page);
 }
 
 .popover-menu {
@@ -259,6 +263,7 @@
     left: calc(100% - 230px - 10px);
     border-radius: 10px;
     overflow: hidden;
+    color: var(--text-color-on-page);
 }
 
 .popover-menu-wrapper {
@@ -271,13 +276,15 @@
     padding: 15px;
 }
 
-.popover-menu__user, .popover-menu__navigation {
+.popover-menu__user,
+.popover-menu__navigation {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     gap: 5px;
+    color: var(--text-color-on-page);
 }
 
 .popover-menu__menu-name {
@@ -351,6 +358,7 @@
 .log-out-link {
     outline: none;
     text-decoration: none;
+    color: var(--text-color-on-page);
 }
 
 .popover-menu__underline {

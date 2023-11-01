@@ -170,8 +170,7 @@ class SignUp {
     goSigninHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionToSignIn());
-        dispatcher.dispatch(actionNavigate(e.target.href, '', false));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signin`, false));
     }
 
     /**
@@ -191,8 +190,7 @@ class SignUp {
                 this.removeEventListeners();
                 this.clear();
                 dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
-                dispatcher.dispatch(actionNavigate(`${window.location.origin}/boards`, '', false));
+                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
                 break;
             case 401:
                 errorMessageAnimation('sign', 'email', 'Произошла ошибка. Пожалуйста, попробуйте ещё раз');
