@@ -1,5 +1,5 @@
 import PageLayout from '../components/pageLayout/pageLayout.js';
-import SignDecoration from '../components/signDecoration/signDecoration.js';
+import SignDecoration from '../components/containerSign/containerSign.js';
 import ContentHeader from '../components/contentHeader/contentHeader.js';
 import Form from '../components/form/form.js';
 import FormInput from '../components/formInput/formInput.js';
@@ -10,12 +10,7 @@ import Validator from '../modules/validator.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import {
-    actionToSignIn,
-    actionSignup,
-    actionRedirect,
-    actionNavigate,
-} from '../actions/userActions.js';
+import { actionSignup, actionRedirect, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 
 /**
@@ -68,8 +63,6 @@ class SignUp {
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.clear();
-
         document.title = 'Tabula: Sign Up';
 
         const pageLayout = new PageLayout(this.#root, { className: 'sign' });
@@ -124,7 +117,6 @@ class SignUp {
                 className: 'sign',
                 href: 'signin',
                 action: 'load',
-                section: '/signin',
                 text: 'Уже есть аккаунт?',
                 disable: false,
             },
@@ -193,7 +185,11 @@ class SignUp {
                 dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
                 break;
             case 401:
-                errorMessageAnimation('sign', 'email', 'Произошла ошибка. Пожалуйста, попробуйте ещё раз');
+                errorMessageAnimation(
+                    'sign',
+                    'email',
+                    'Произошла ошибка. Пожалуйста, попробуйте ещё раз',
+                );
                 break;
             case 409:
                 errorMessageAnimation('sign', 'email', 'Пользователь c таким email уже существует');
@@ -220,7 +216,11 @@ class SignUp {
         if (!Validator.validateEmail(user.email)) {
             errorMessageAnimation('sign', 'email', 'Введён неккоректный email');
         } else if (!Validator.validatePassword(user.password)) {
-            errorMessageAnimation('sign', 'password', 'Пароль должен состоять из букв, цифр и быть не менее 8 символов');
+            errorMessageAnimation(
+                'sign',
+                'password',
+                'Пароль должен состоять из букв, цифр и быть не менее 8 символов',
+            );
         } else if (!Validator.validateRepeatPasswords(user.password, repeatPasswordInput.value)) {
             errorMessageAnimation('sign', 'repeat-password', 'Пароли не совпадают');
         } else {

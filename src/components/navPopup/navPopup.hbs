@@ -1,5 +1,5 @@
 <dialog id='navigation-menu' class='popover-menu' popover>
-    <div class='popover-menu-wrapper'>
+    <div class='popover-wrapper popover-menu-wrapper'>
         <div class='popover-menu__user'>
             <span class='popover-menu__menu-name'>Учётная запись</span>
             <div class='popover-menu__user-profile'>
@@ -18,9 +18,8 @@
             <span class='popover-menu__menu-name'>Tabula</span>
             <div class='navigation__item'>
                 <a
-                    class='link-button boards-link'
+                    class='link-button profile-link'
                     data-action='load'
-                    data-section='load'
                     href='/boards'
                 >Доски</a>
             </div>
@@ -28,15 +27,13 @@
                 <a
                     class='link-button profile-link'
                     data-action='load'
-                    data-section='load'
                     href='/profile'
                 >Профиль</a>
             </div>
             <div class='navigation__item'>
                 <a
-                    class='link-button security-link'
+                    class='link-button profile-link'
                     data-action='load'
-                    data-section='load'
                     href='/security'
                 >Безопасность</a>
             </div>
@@ -45,9 +42,8 @@
         <div class='popover-menu__log-out'>
             <div class='navigation__item'>
                 <a
-                    class='link-button log-out-link'
+                    class='link-button profile-link'
                     data-action='load'
-                    data-section='load'
                     href='/logout'
                 >Выход</a>
             </div>

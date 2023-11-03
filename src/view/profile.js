@@ -6,6 +6,7 @@ import FormInput from '../components/formInput/formInput.js';
 import TextArea from '../components/textArea/textArea.js';
 import Button from '../components/button/button.js';
 import NavPopup from '../components/navPopup/navPopup.js';
+import ChangeAvatarPopup from '../components/changeAvatarPopup/changeAvatarPopup.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/eventTrigger.js';
@@ -26,7 +27,7 @@ class Profile {
                 type: 'email',
                 placeholder: 'Email',
                 inputType: 'email',
-                className: 'profile-email',
+                className: 'profile',
                 disable: true,
             },
             name: {
@@ -34,7 +35,7 @@ class Profile {
                 type: 'text',
                 placeholder: 'Имя',
                 inputType: 'name',
-                className: 'profile-email',
+                className: 'profile',
                 disable: false,
             },
             surname: {
@@ -42,7 +43,7 @@ class Profile {
                 type: 'text',
                 placeholder: 'Фамилия',
                 inputType: 'surname',
-                className: 'profile-email',
+                className: 'profile',
                 disable: false,
             },
         },
@@ -52,7 +53,7 @@ class Profile {
                 type: 'password',
                 placeholder: 'Старый пароль',
                 inputType: 'old-password',
-                className: 'profile-password',
+                className: 'profile',
                 disable: false,
             },
             newPassword: {
@@ -60,7 +61,7 @@ class Profile {
                 type: 'password',
                 placeholder: 'Новый пароль',
                 inputType: 'new-password',
-                className: 'profile-password',
+                className: 'profile',
                 disable: false,
             },
             surname: {
@@ -68,7 +69,7 @@ class Profile {
                 type: 'password',
                 placeholder: 'Повторите новый пароль',
                 inputType: 'repeat-new-password',
-                className: 'profile-password',
+                className: 'profile',
                 disable: false,
             },
         },
@@ -87,9 +88,6 @@ class Profile {
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.#root.innerHTML = '';
-        this.#root.style.backgroundColor = '';
-
         document.title = 'Tabula: Profile';
 
         const user = userStorage.storage.get(userStorage.userModel.body);
@@ -111,8 +109,12 @@ class Profile {
             avatar: user.body.user.thumbnail_url,
             name: namesurname,
         });
-
         navPopup.render();
+
+        const changeAvatarPopup = new ChangeAvatarPopup(this.#root, {
+            path: window.location.pathname,
+        });
+        changeAvatarPopup.render();
 
         const containerProfile = new ContainerProfile(
             this.#root.querySelector(pageLayout.className),
@@ -164,7 +166,7 @@ class Profile {
         });
 
         const textArea = new TextArea(this.#root.querySelector(form.className), {
-            className: 'profile-user-information',
+            className: 'profile',
             length: 1024,
             rows: 50,
             columns: 100,
@@ -309,8 +311,7 @@ class Profile {
     toMainPageHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, true));
-        dispatcher.dispatch(actionNavigate(`${window.location.origin}/boards`, '', false));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
     }
 
     /**
@@ -318,8 +319,7 @@ class Profile {
      */
     close() {
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect('/signin', false));
-        dispatcher.dispatch(actionNavigate(`${window.location.origin}/signin`, '', false));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signin`, false));
     }
 
     /**

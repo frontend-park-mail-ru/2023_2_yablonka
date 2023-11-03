@@ -153,9 +153,6 @@ class Boards {
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.#root.innerHTML = '';
-        this.#root.style.backgroundColor = '';
-
         document.title = 'Tabula: Ваши Доски';
 
         const user = userStorage.storage.get(userStorage.userModel.body);
@@ -208,6 +205,8 @@ class Boards {
      * Добавляет обработчики событий
      */
     addListeners() {
+        this.#root.querySelector('.link-button-logo').addEventListener('click', this.toBoardsHandler);
+        this.#root.querySelector('.boards-link').addEventListener('click', this.toBoardsHandler);
         this.#root.querySelector('.log-out-link').addEventListener('click', this.logoutHandler);
         this.#root.querySelector('.profile-link').addEventListener('click', this.toProfileHandler);
         this.#root
@@ -237,6 +236,12 @@ class Boards {
     logoutHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionLogout());
+    }
+
+    toBoardsHandler(e) {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
+        dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
     }
 
     toSecurityHandler(e) {

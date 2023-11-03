@@ -1,5 +1,5 @@
 import PageLayout from '../components/pageLayout/pageLayout.js';
-import SignDecoration from '../components/signDecoration/signDecoration.js';
+import SignDecoration from '../components/containerSign/containerSign.js';
 import Form from '../components/form/form.js';
 import FormInput from '../components/formInput/formInput.js';
 import LinkButton from '../components/linkButton/linkButton.js';
@@ -8,12 +8,7 @@ import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import {
-    actionToSignUp,
-    actionSignin,
-    actionRedirect,
-    actionNavigate,
-} from '../actions/userActions.js';
+import { actionSignin, actionRedirect, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 
 /**
@@ -121,7 +116,6 @@ class SignIn {
                 className: 'sign',
                 href: 'signup',
                 action: 'load',
-                section: '/signup',
                 text: 'Регистрация',
                 disable: false,
             },
