@@ -399,29 +399,54 @@ body {
 .card-information__tags-list {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
     width: 200px;
 }
 
 .tags-list__tag {
     height: 30px;
-    background-color: green;
-    border-radius: 10px;
-    padding: 5px 0;
+    border-radius: 5px;
+    padding: 5px 5px;
     text-align: center;
     vertical-align: middle;
-    width: 50px;
     margin-bottom: 5px;
+    margin-right: 5px;
+    max-width: 100px;
+    min-width: 50px;
     text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.tags-list__tag_green {
+    background-color: green;
+}
+
+.tags-list__tag_orange {
+    background-color: orange;
+}
+
+.tags-list__tag_brown {
+    background-color: brown;
+}
+
+.tags-list__tag_black {
+    background-color: black;
 }
 
 .tags-list__add-tag {
     height: 30px;
     width: 30px;
     background-color: #414b56;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 7px;
+}
+
+.tags-list__add-tag:hover,
+.tags-list__tag:hover,
+.card-settings__action:hover,
+.user-actions__action:hover {
+    opacity: 0.7;
 }
 
 .tags-list__add-tag img {
@@ -571,6 +596,7 @@ body {
     height: 25px;
     border-radius: 5px;
     color: #c0c9f4;
+    cursor: pointer;
 }
 
 .card-information__comment {
@@ -608,12 +634,14 @@ body {
     justify-content: space-around;
     align-items: center;
     padding: 0 8px;
+    cursor: pointer;
 }
 
 .card-information__reply {
     color: #c0c9f4;
     font-size: 12px;
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .button-like__icon {
@@ -669,6 +697,7 @@ body {
     padding: 0 10px;
     border-radius: 10px;
     margin-top: 30px;
+    cursor: pointer;
 }
 
 .action-logo {

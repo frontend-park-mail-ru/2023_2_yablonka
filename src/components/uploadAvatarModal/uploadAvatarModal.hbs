@@ -1,0 +1,37 @@
+<dialog id='upload-avatar' class='modal-upload-avatar' aria-modal='true' popover>
+    <div class='upload-avatar-modal__wrapper'>
+        <div class='upload-avatar-modal__title'><span></span></div>
+        <form
+            id='upload-avatar'
+            class='form form-upload-avatar'
+            action='/profile'
+            method='POST'
+            enctype='multipart/form-data'
+        >
+            <div class='upload-avatar-modal__image'><img
+                    src='upload.png'
+                    alt='upload image'
+                /></div>
+            <div class='form__input form__input-upload-avatar'>
+                <button
+                    type='button'
+                    data-action='send'
+                    class='button button-upload-avatar'
+                    form='upload-avatar'
+                >
+                    <span>Загрузите фото</span>
+                    <input
+                        type='file'
+                        data-name='upload-avatar'
+                        accept='image/jpeg, image/png'
+                        class='input input-upload-avatar'
+                    />
+                </button>
+            </div>
+            <div class='upload-avatar-modal__buttons'>
+                <button class='upload-avatar-modal__button_cancel'><span>Отменить</span></button>
+                <button class='upload-avatar-modal__button_upload'><span>Загрузить</span></button>
+            </div>
+        </form>
+    </div>
+</dialog>

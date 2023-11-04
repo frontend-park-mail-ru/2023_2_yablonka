@@ -205,12 +205,20 @@ class Boards {
      * Добавляет обработчики событий
      */
     addListeners() {
-        this.#root.querySelector('.link-button-logo').addEventListener('click', this.toBoardsHandler);
-        this.#root.querySelector('.boards-link').addEventListener('click', this.toBoardsHandler);
-        this.#root.querySelector('.log-out-link').addEventListener('click', this.logoutHandler);
-        this.#root.querySelector('.profile-link').addEventListener('click', this.toProfileHandler);
         this.#root
-            .querySelector('.security-link')
+            .querySelector('.link-button-logo')
+            .addEventListener('click', this.toBoardsHandler);
+        this.#root
+            .querySelector('.profile-link[data-action=boards]')
+            .addEventListener('click', this.toBoardsHandler);
+        this.#root
+            .querySelector('.profile-link[data-action=logout]')
+            .addEventListener('click', this.logoutHandler);
+        this.#root
+            .querySelector('.profile-link[data-action=profile]')
+            .addEventListener('click', this.toProfileHandler);
+        this.#root
+            .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
         emitter.bind('logout', this.close);
     }
@@ -219,12 +227,14 @@ class Boards {
      * Убирает обработчики событий
      */
     removeListeners() {
-        this.#root.querySelector('.log-out-link').removeEventListener('click', this.logoutHandler);
         this.#root
-            .querySelector('.profile-link')
+            .querySelector('.profile-link[data-action=logout]')
+            .removeEventListener('click', this.logoutHandler);
+        this.#root
+            .querySelector('.profile-link[data-action=profile]')
             .removeEventListener('click', this.toProfileHandler);
         this.#root
-            .querySelector('.security-link')
+            .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.toSecurityHandler);
         emitter.unbind('logout', this.close);
     }
@@ -238,18 +248,30 @@ class Boards {
         dispatcher.dispatch(actionLogout());
     }
 
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу досок
+     * @param {Event} e - Событие
+     */
     toBoardsHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
         dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
     }
 
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу смены пароля
+     * @param {Event} e - Событие
+     */
     toSecurityHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
         dispatcher.dispatch(actionRedirect(`${window.location.origin}/security`, false));
     }
 
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу профиля
+     * @param {Event} e - Событие
+     */
     toProfileHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));

@@ -11,6 +11,7 @@ import { actionRedirect, actionLogout, actionNavigate } from '../actions/userAct
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
+import UploadAvatarModal from '../components/uploadAvatarModal/uploadAvatarModal.js';
 
 /**
  * Класс для рендера страницы профиля
@@ -112,9 +113,12 @@ class Profile {
         navPopup.render();
 
         const changeAvatarPopup = new ChangeAvatarPopup(this.#root, {
-            path: window.location.pathname,
+            dialogID: 'upload-avatar',
         });
         changeAvatarPopup.render();
+
+        const uploadAvatarModal = new UploadAvatarModal(this.#root, {});
+        uploadAvatarModal.render();
 
         const containerProfile = new ContainerProfile(
             this.#root.querySelector(pageLayout.className),
@@ -133,6 +137,10 @@ class Profile {
 
         this.addListeners();
     }
+
+    /**
+     * Рендер части с профилем
+     */
 
     renderProfile() {
         this.#root
@@ -188,6 +196,10 @@ class Profile {
             .classList.add('profile-navigation_active');
     }
 
+    /**
+     * Запись в историю части с профилем отправка события на рендер части со сменой пароля
+     * @param {Event} e - событие
+     */
     goSecurityHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
@@ -195,6 +207,10 @@ class Profile {
         emitter.trigger('security');
     }
 
+    /**
+     * Запись в историю части со сменой пароля отправка события на рендер части с профилем
+     * @param {Event} e - событие
+     */
     goProfileHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));
@@ -202,6 +218,9 @@ class Profile {
         emitter.trigger('profile');
     }
 
+    /**
+     *Рендерит части со сменой пароля
+     */
     renderSecurity() {
         this.#root
             .querySelector('.profile-navigation__user-information')
@@ -251,21 +270,24 @@ class Profile {
      * Добавляет общие обработчики событий
      */
     addListeners() {
-        this.#root.querySelector('.profile-link').addEventListener('click', this.goProfileHandler);
         this.#root
-            .querySelector('.security-link')
+            .querySelector('.profile-link[data-action=profile]')
+            .addEventListener('click', this.goProfileHandler);
+        this.#root
+            .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.goSecurityHandler);
-        this.#root.querySelector('.boards-link').addEventListener('click', this.toMainPageHandler);
+        this.#root
+            .querySelector('.profile-link[data-action=boards]')
+            .addEventListener('click', this.toMainPageHandler);
         this.#root
             .querySelector('.profile-navigation__security')
             .addEventListener('click', this.goSecurityHandler);
-
         this.#root
             .querySelector('.profile-navigation__user-information')
             .addEventListener('click', this.goProfileHandler);
-
-        this.#root.querySelector('.log-out-link').addEventListener('click', this.logoutHandler);
-
+        this.#root
+            .querySelector('.profile-link[data-action=logout]')
+            .addEventListener('click', this.logoutHandler);
         this.#root
             .querySelector('.header-menu__logo')
             .addEventListener('click', this.toMainPageHandler);
@@ -276,23 +298,24 @@ class Profile {
      * Убирает общие обработчики событий
      */
     removeListeners() {
-        this.#root.querySelector('.profile-link').removeEventListener('click', this.renderProfile);
         this.#root
-            .querySelector('.security-link')
+            .querySelector('.profile-link[data-action=profile]')
+            .removeEventListener('click', this.renderProfile);
+        this.#root
+            .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.renderSecurity);
         this.#root
-            .querySelector('.boards-link')
+            .querySelector('.profile-link[data-action=boards]')
             .removeEventListener('click', this.toMainPageHandler);
         this.#root
             .querySelector('.profile-navigation__security')
             .removeEventListener('click', this.goSecurityHandler);
-
         this.#root
             .querySelector('.profile-navigation__user-information')
             .removeEventListener('click', this.goProfileHandler);
-
-        this.#root.querySelector('.log-out-link').removeEventListener('click', this.logoutHandler);
-
+        this.#root
+            .querySelector('.profile-link[data-action=logout]')
+            .removeEventListener('click', this.logoutHandler);
         this.#root
             .querySelector('.header-menu__logo')
             .removeEventListener('click', this.toMainPageHandler);
@@ -308,6 +331,10 @@ class Profile {
         dispatcher.dispatch(actionLogout());
     }
 
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу досок
+     * @param {Event} e - Событие
+     */
     toMainPageHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.href, '', true));

@@ -1,4 +1,4 @@
-<dialog id='navigation-menu' class='popover-menu' popover>
+<dialog id='navigation-menu' class='popover-menu' aria-modal='false' popover>
     <div class='popover-wrapper popover-menu-wrapper'>
         <div class='popover-menu__user'>
             <span class='popover-menu__menu-name'>Учётная запись</span>
@@ -19,21 +19,21 @@
             <div class='navigation__item'>
                 <a
                     class='link-button profile-link'
-                    data-action='load'
+                    data-action='boards'
                     href='/boards'
                 >Доски</a>
             </div>
             <div class='navigation__item'>
                 <a
                     class='link-button profile-link'
-                    data-action='load'
+                    data-action='profile'
                     href='/profile'
                 >Профиль</a>
             </div>
             <div class='navigation__item'>
                 <a
                     class='link-button profile-link'
-                    data-action='load'
+                    data-action='security'
                     href='/security'
                 >Безопасность</a>
             </div>
@@ -43,7 +43,7 @@
             <div class='navigation__item'>
                 <a
                     class='link-button profile-link'
-                    data-action='load'
+                    data-action='logout'
                     href='/logout'
                 >Выход</a>
             </div>
