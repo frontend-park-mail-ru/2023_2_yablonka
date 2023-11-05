@@ -253,8 +253,6 @@
 html {
     width: 100%;
     height: 100%;
-    --text-color-in-input: #c7c7c7;
-    --sign-page-background: #0c1116;
     color: var(--text-color-in-input);
 }
 

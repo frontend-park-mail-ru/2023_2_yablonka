@@ -17,6 +17,8 @@ import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
+import navPopupAction from '../components/navPopup/navPopupHelper.js';
+import popeventProcess from '../components/core/popeventProcessing.js';
 
 /**
  * Класс для рендера страницы досок
@@ -205,6 +207,9 @@ class Boards {
      * Добавляет обработчики событий
      */
     addListeners() {
+        this.#root.querySelector('.avatar__button').addEventListener('click', navPopupAction);
+        this.#root.addEventListener('click', popeventProcess);
+
         this.#root
             .querySelector('.link-button-logo')
             .addEventListener('click', this.toBoardsHandler);
@@ -227,6 +232,9 @@ class Boards {
      * Убирает обработчики событий
      */
     removeListeners() {
+        this.#root.querySelector('.avatar__button').removeEventListener('click', navPopupAction);
+        this.#root.removeEventListener('click', popeventProcess);
+
         this.#root
             .querySelector('.profile-link[data-action=logout]')
             .removeEventListener('click', this.logoutHandler);

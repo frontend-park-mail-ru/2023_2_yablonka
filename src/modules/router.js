@@ -146,7 +146,6 @@ class Router {
         if (href === '/') {
             return isAuth ? `${window.location.origin}/boards` : `${window.location.origin}/signin`;
         }
-
         if (!isAuth) {
             if (href === '/signup') {
                 return `${window.location.origin}${href}`;
@@ -185,7 +184,7 @@ class Router {
         } else {
             this.open(
                 {
-                    path: `${window.location.origin}/signin`,
+                    path: `${window.location.origin}/404`,
                     state: pageState,
                 },
                 pushState,

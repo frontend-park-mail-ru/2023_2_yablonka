@@ -1,37 +1,55 @@
 <dialog id='upload-avatar' class='modal-upload-avatar' aria-modal='true' popover>
     <div class='upload-avatar-modal__wrapper'>
-        <div class='upload-avatar-modal__title'><span></span></div>
+        <div class='upload-avatar-modal__title'><span>Изменить фото профиля</span></div>
         <form
-            id='upload-avatar'
+            id='upload-profile-avatar'
             class='form form-upload-avatar'
-            action='/profile'
+            action='/change_avatar'
             method='POST'
             enctype='multipart/form-data'
         >
             <div class='upload-avatar-modal__image'><img
+                    class='upload-avatar-modal__picture'
                     src='upload.png'
                     alt='upload image'
-                /></div>
+                />
+                <span class='upload-avatar-modal-image__message'>Перетащите изображения сюда</span></div>
+            <div class='upload-avatar-modal__alternative'><span
+                    class='upload-avatar-modal-image__message'
+                >или</span></div>
             <div class='form__input form__input-upload-avatar'>
                 <button
                     type='button'
-                    data-action='send'
+                    data-action='choose'
                     class='button button-upload-avatar'
                     form='upload-avatar'
                 >
-                    <span>Загрузите фото</span>
-                    <input
-                        type='file'
-                        data-name='upload-avatar'
-                        accept='image/jpeg, image/png'
-                        class='input input-upload-avatar'
-                    />
+                    <span>Загрузите фото<input
+                            type='file'
+                            data-name='upload-avatar'
+                            accept='image/jpeg, image/png'
+                            class='input input-upload-avatar'
+                        /></span>
                 </button>
             </div>
-            <div class='upload-avatar-modal__buttons'>
-                <button class='upload-avatar-modal__button_cancel'><span>Отменить</span></button>
-                <button class='upload-avatar-modal__button_upload'><span>Загрузить</span></button>
-            </div>
+            <div class='upload-avatar-modal__avatar-preview'><img
+                    class='avatar-preview__image'
+                    src=''
+                    alt='avatar-preview'
+                /><div class='upload-avatar-modal__undo'><button
+                        class='button button-revert-change-avatar'
+                    ><img src='close.svg' alt='undo-change-avatar' /></button></div></div>
         </form>
+        <div class='upload-avatar-modal__buttons'>
+            <button
+                class='upload-avatar-modal__button upload-avatar-modal__button_cancel'
+                popovertarget='upload-avatar'
+            ><span>Отменить</span></button>
+            <button
+                type='submit'
+                form='upload-profile-avatar'
+                class='upload-avatar-modal__button upload-avatar-modal__button_upload'
+            ><span>Сохранить</span></button>
+        </div>
     </div>
 </dialog>
