@@ -5,9 +5,9 @@ import Component from '../core/basicComponent.js';
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class NavPopup extends Component {
+export default class NavigationPopup extends Component {
     constructor(parent, config) {
-        super(parent, config, 'navPopup');
+        super(parent, config, 'navigationPopup');
     }
 
     /**

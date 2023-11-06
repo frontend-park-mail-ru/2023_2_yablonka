@@ -1,4 +1,4 @@
-const navPopupAction = (e) => {
+const navigationPopupAction = (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -11,4 +11,4 @@ const navPopupAction = (e) => {
     }
 };
 
-export default navPopupAction;
+export default navigationPopupAction;

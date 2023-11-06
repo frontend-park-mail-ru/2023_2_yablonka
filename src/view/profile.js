@@ -5,14 +5,14 @@ import Form from '../components/form/form.js';
 import FormInput from '../components/formInput/formInput.js';
 import TextArea from '../components/textArea/textArea.js';
 import Button from '../components/button/button.js';
-import NavPopup from '../components/navPopup/navPopup.js';
+import NavigationPopup from '../components/navigationPopup/navigationPopup.js';
 import ChangeAvatarPopup from '../components/changeAvatarPopup/changeAvatarPopup.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/eventTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import UploadAvatarModal from '../components/uploadAvatarModal/uploadAvatarModal.js';
-import navPopupAction from '../components/navPopup/navPopupHelper.js';
+import navigationPopupAction from '../components/navigationPopup/navigationPopupHelper.js';
 import popoventProcess from '../components/core/popeventProcessing.js';
 import changeAvatarPopupAction from '../components/changeAvatarPopup/changeAvatarPopupHelper.js';
 import {
@@ -114,12 +114,12 @@ class Profile {
             user.body.user.surname ? user.body.user.surname : ''
         }`;
 
-        const navPopup = new NavPopup(this.#root, {
+        const navigationPopup = new NavigationPopup(this.#root, {
             email: user.body.user.email,
             avatar: user.body.user.thumbnail_url,
             name: namesurname,
         });
-        navPopup.render();
+        navigationPopup.render();
 
         const changeAvatarPopup = new ChangeAvatarPopup(this.#root, {
             dialogID: 'upload-avatar',
@@ -279,7 +279,9 @@ class Profile {
      * Добавляет общие обработчики событий
      */
     addListeners() {
-        this.#root.querySelector('.avatar__button').addEventListener('click', navPopupAction);
+        this.#root
+            .querySelector('.avatar__button')
+            .addEventListener('click', navigationPopupAction);
         this.#root
             .querySelector('.change-avatar__button')
             .addEventListener('click', changeAvatarPopupAction);
@@ -329,7 +331,9 @@ class Profile {
      * Убирает общие обработчики событий
      */
     removeListeners() {
-        this.#root.querySelector('.avatar__button').removeEventListener('click', navPopupAction);
+        this.#root
+            .querySelector('.avatar__button')
+            .removeEventListener('click', navigationPopupAction);
         this.#root
             .querySelector('.change-avatar__button')
             .removeEventListener('click', changeAvatarPopupAction);
