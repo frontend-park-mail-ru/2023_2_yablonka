@@ -69,3 +69,12 @@ export const actionLogout = () => ({
     type: 'userLogout',
     value: {},
 });
+
+/**
+ * Действие, означающее изменение профиля пользователя
+ * @param {Object} user - данные пользователя
+ */
+export const actionSignup = (user) => ({
+    type: 'userSignup',
+    value: user,
+});

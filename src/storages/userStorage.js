@@ -91,17 +91,15 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async updateProfile(user) {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}auth/login/`, 'POST', user);
+        const responsePromise = await AJAX(`${apiPath + apiVersion}user/edit/`, 'POST', user);
 
         const body = await responsePromise.json();
         const { status } = responsePromise;
         if (status === 200) {
             this.changed = true;
-            this.storage.set(this.userModel.name, 'auth');
+            this.storage.set(this.userModel.body, body);
+            emitter.trigger('profile');
         }
-        this.storage.set(this.userModel.body, body);
-        this.storage.set(this.userModel.status, status);
-        emitter.trigger('signin');
     }
 
     /**
