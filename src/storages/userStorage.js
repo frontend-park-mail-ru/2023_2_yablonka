@@ -1,7 +1,7 @@
 import BaseStorage from './baseStorage.js';
 import AJAX from '../modules/ajax.js';
 import { apiPath, apiVersion } from '../configs/configs.js';
-import emitter from '../modules/eventTrigger.js';
+import emitter from '../modules/actionTrigger.js';
 
 /**
  * Хранилище объекта "пользователь"

@@ -2,7 +2,7 @@
  * Класс, который реагирует на передаваемые события
  * @class
  */
-class EventTrigger {
+class ActionTrigger {
     #events;
 
     /**
@@ -55,6 +55,6 @@ class EventTrigger {
     }
 }
 
-const emitter = new EventTrigger();
+const emitter = new ActionTrigger();
 
 export default emitter;
