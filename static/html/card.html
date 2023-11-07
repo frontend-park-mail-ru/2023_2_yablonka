@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/style_card_modal.css" type="text/css" />
+        <link rel="icon" type="image/svg+xml" sizes="32x32" href="logo_favicon.svg" />
+
+        <title></title>
+        <script src="/utils/handlebars.runtime.js"></script>
+        <script src="/utils/handlebars.precompiled.js"></script>
+        <script type="module" src="index.js"></script>
+    </head>
+    <body>
+        <div class="page">
+            <div class="card-modal">
+                <div class="card-modal__exit-wrapper">
+                    <img class="card-modal__exit" src="../svg/close.svg" alt="exit" />
+                </div>
+                <div class="card-modal__card-layout">
+                    <img class="card-layout__image" src="../img/Design.png" alt="background" />
+                    <div class="card-layout-change__wrapper">
+                        <img class="card-layout-change__icon" src="../svg/card-image.svg" />
+                        <span class="card-layout-change__title">Обложка</span>
+                    </div>
+                </div>
+                <div class="card-modal__card-data">
+                    <div class="card-data__card-information">
+                        <div class="card-information__name-and-tags-wrapper">
+                            <div class="card-information__name-wrapper">
+                                <img class="card-information__icon" src="../svg/card-name.svg" />
+                                <span class="card-information__card-name">Card name</span>
+                                <span class="card-information__list-name"
+                                    >в колонке&nbsp<u>List name</u></span
+                                >
+                            </div>
+                            <div class="card-information__tags-wrapper">
+                                <div class="card-information__tags-title">Метки</div>
+                                <div class="card-information__tag-actions-wrapper">
+                                    <div class="card-information__tags-list">
+                                        <div class="tags-list__tag tags-list__tag_green">Tag 1</div>
+                                        <div class="tags-list__tag tags-list__tag_brown">Tag 2</div>
+                                        <div class="tags-list__tag tags-list__tag_black">Tag 3</div>
+                                        <div class="tags-list__tag tags-list__tag_blue">Tag 4</div>
+                                        <div class="tags-list__add-tag">
+                                            <img
+                                                class="add-tag__image"
+                                                src="../svg/plus.svg"
+                                                alt="add-tag"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-information__description-wrapper">
+                            <img class="card-information__icon" src="../svg/card-description.svg" />
+                            <span class="card-information__card-description-title"
+                                >Описание карточки Card Name</span
+                            >
+                            <textarea
+                                class="card-information__card-description"
+                                maxlength="1024"
+                                placeholder="Описание карточки..."
+                            ></textarea>
+                            <div class="card-information__buttons-wrapper">
+                                <button class="card-information__button-save">Сохранить</button>
+                                <button class="card-information__button-cancel">Отмена</button>
+                            </div>
+                        </div>
+                        <div class="card-information__files-wrapper">
+                            <div class="card-information__files-title">
+                                <img class="card-information__icon" src="../svg/paperclip.svg" />
+                                <span class="card-information__card-description-title"
+                                    >Вложения</span
+                                >
+                            </div>
+                            <div class="card-information__file-wrapper">
+                                <img
+                                    class="card-information__file-image"
+                                    src="../img/Design.png"
+                                    alt="file"
+                                />
+                                <div class="card-information__file-description-wrapper">
+                                    <span class="card-information__file-name">background.jpg</span>
+                                    <span class="card-information__file-added-date">
+                                        Добавлено 11.11.2011
+                                    </span>
+                                    <span class="card-information__file-actions">
+                                        <span class="file-actions__comment">Комментарий</span> •
+                                        <span class="file-actions__update">Изменить</span> •
+                                        <span class="file-actions__delete">Удалить</span>
+                                    </span>
+                                    <div class="card-information__remove-layout">
+                                        <img
+                                            class="remove-layout__icon"
+                                            src="../svg/remove-file.svg"
+                                            alt="remove"
+                                        />
+                                        <span class="remove-layout__title">Убрать обложку</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-information__comments-wrapper">
+                            <div class="card-information__comments-title">
+                                <img class="card-information__icon" src="../svg/comments.svg" />
+                                <span class="card-information__card-description-title"
+                                    >Действия</span
+                                >
+                                <button class="button button-hide-comments">
+                                    Скрыть подробности
+                                </button>
+                            </div>
+                            <div class="card-information__comment-wrapper">
+                                <div class="card-information__comment">
+                                    <img
+                                        src="../img/avatar.jpg"
+                                        alt="avatar"
+                                        class="card-inforamtion__comments-avatar"
+                                    />
+                                    <textarea
+                                        class="card-information__comment-text"
+                                        maxlength="1024"
+                                        placeholder="Добавить комментарий..."
+                                    ></textarea>
+                                </div>
+                                <div class="card-information__comment-actions-wrapper">
+                                    <button class="button button-like">
+                                        <img
+                                            class="button-like__icon"
+                                            src="../svg/like.svg"
+                                            alt="like"
+                                        />
+                                        <span class="button-like__count">1</span>
+                                    </button>
+                                    <span class="card-information__reply">Ответить</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-data__card-actions">
+                        <div class="card-actions__card-settings">
+                            <span class="card-settings__title">Настройка карточки</span>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/person.svg" />
+                                <span class="action-name">Участники</span>
+                            </div>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/tag.svg" />
+                                <span class="action-name">Метки</span>
+                            </div>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/clock.svg" />
+                                <span class="action-name">Даты</span>
+                            </div>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/checklist.svg" />
+                                <span class="action-name">Чеклист</span>
+                            </div>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/paperclip.svg" />
+                                <span class="action-name">Вложения</span>
+                            </div>
+                        </div>
+                        <div class="card-actions__user-actions">
+                            <span class="user-actions__title">Действия с карточкой</span>
+                            <div class="user-actions__action">
+                                <img class="action-logo" src="../svg/copy.svg" />
+                                <span class="action-name">Копировать</span>
+                            </div>
+                            <div class="user-actions__action">
+                                <img class="action-logo" src="../svg/card-notification.svg" />
+                                <span class="action-name">Подписаться</span>
+                            </div>
+                            <div class="user-actions__action">
+                                <img class="action-logo" src="../svg/trash.svg" />
+                                <span class="action-name">Удалить</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

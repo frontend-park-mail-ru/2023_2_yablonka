@@ -6,7 +6,7 @@ import LinkButton from '../components/linkButton/linkButton.js';
 import Button from '../components/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
-import emitter from '../modules/eventTrigger.js';
+import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionSignin, actionRedirect, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';

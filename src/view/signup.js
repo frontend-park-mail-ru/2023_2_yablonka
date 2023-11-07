@@ -8,7 +8,7 @@ import Button from '../components/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import Validator from '../modules/validator.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
-import emitter from '../modules/eventTrigger.js';
+import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionSignup, actionRedirect, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';

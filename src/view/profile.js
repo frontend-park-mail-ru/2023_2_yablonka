@@ -9,7 +9,7 @@ import NavigationPopup from '../components/navigationPopup/navigationPopup.js';
 import ChangeAvatarPopup from '../components/changeAvatarPopup/changeAvatarPopup.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
-import emitter from '../modules/eventTrigger.js';
+import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import UploadAvatarModal from '../components/uploadAvatarModal/uploadAvatarModal.js';
 import navigationPopupAction from '../components/navigationPopup/navigationPopupHelper.js';

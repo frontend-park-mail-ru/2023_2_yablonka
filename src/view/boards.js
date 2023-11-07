@@ -10,14 +10,14 @@ import WorkspaceCardDesctiption from '../components/deskComponents/workspace-car
 import BoardTitleLogo from '../components/deskComponents/board-title__logo/board-title__logo.js';
 import BoardsLogo from '../components/deskComponents/boards-logo/boards-logo.js';
 import WorkspaceMessage from '../components/deskComponents/workspace-message/workspace-message.js';
-import NavPopup from '../components/navPopup/navPopup.js';
+import NavigationPopup from '../components/navigationPopup/navigationPopup.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
 import userStorage from '../storages/userStorage.js';
-import emitter from '../modules/eventTrigger.js';
+import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
-import navPopupAction from '../components/navPopup/navPopupHelper.js';
+import navigationPopupAction from '../components/navigationPopup/navigationPopupHelper.js';
 import popeventProcess from '../components/core/popeventProcessing.js';
 
 /**
@@ -168,13 +168,13 @@ class Boards {
             user.body.user.surname ? user.body.user.surname : ''
         }`;
 
-        const navPopup = new NavPopup(this.#root, {
+        const navigationPopup = new NavigationPopup(this.#root, {
             email: user.body.user.email,
             avatar: user.body.user.thumbnail_url,
             name: namesurname,
         });
 
-        navPopup.render();
+        navigationPopup.render();
 
         const main = new Main(this.#root);
         main.render();
@@ -207,7 +207,9 @@ class Boards {
      * Добавляет обработчики событий
      */
     addListeners() {
-        this.#root.querySelector('.avatar__button').addEventListener('click', navPopupAction);
+        this.#root
+            .querySelector('.avatar__button')
+            .addEventListener('click', navigationPopupAction);
         this.#root.addEventListener('click', popeventProcess);
 
         this.#root
@@ -232,7 +234,9 @@ class Boards {
      * Убирает обработчики событий
      */
     removeListeners() {
-        this.#root.querySelector('.avatar__button').removeEventListener('click', navPopupAction);
+        this.#root
+            .querySelector('.avatar__button')
+            .removeEventListener('click', navigationPopupAction);
         this.#root.removeEventListener('click', popeventProcess);
 
         this.#root

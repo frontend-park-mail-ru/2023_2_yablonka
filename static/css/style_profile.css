@@ -32,7 +32,7 @@ body {
     position: relative;
     align-items: center;
 }
-
+/* 
 .header {
     display: flex;
     background-color: #161a1d;
@@ -185,7 +185,7 @@ body {
 
 .search-input:focus {
     width: 500px;
-}
+} */
 
 .container-profile {
     padding: 0 3%;
