@@ -87,6 +87,24 @@ class UserStorage extends BaseStorage {
     }
 
     /**
+     * Запрос на смену имени/фамилии/описания
+     * @param {Object} user - Данные пользователя
+     */
+    async updateProfile(user) {
+        const responsePromise = await AJAX(`${apiPath + apiVersion}auth/login/`, 'POST', user);
+
+        const body = await responsePromise.json();
+        const { status } = responsePromise;
+        if (status === 200) {
+            this.changed = true;
+            this.storage.set(this.userModel.name, 'auth');
+        }
+        this.storage.set(this.userModel.body, body);
+        this.storage.set(this.userModel.status, status);
+        emitter.trigger('signin');
+    }
+
+    /**
      * Рендер страницы регистрации
      */
     getSignupPage = async () => {
