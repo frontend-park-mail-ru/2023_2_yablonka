@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import './error404.hbs';
 
 /**
  * Контейнер для досок

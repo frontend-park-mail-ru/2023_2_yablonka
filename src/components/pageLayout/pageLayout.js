@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import './pageLayout.hbs';
 
 /**
  * Контейнер для досок

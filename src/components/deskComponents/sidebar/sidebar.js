@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './sidebar.hbs';
 /**
  * Меню слева
  * @class

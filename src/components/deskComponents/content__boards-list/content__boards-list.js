@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './content__boards-list.hbs';
 /**
  * Список досок по всем пользователям
  * @class

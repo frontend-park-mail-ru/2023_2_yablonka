@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './uploadAvatarModal.hbs';
 /**
  * Попап для хедера
  * @class

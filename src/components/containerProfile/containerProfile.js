@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import './containerProfile.hbs';
 
 /**
  * Контейнер для досок

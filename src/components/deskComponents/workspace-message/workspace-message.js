@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './workspace-message.hbs';
 /**
  * Меню слева
  * @class

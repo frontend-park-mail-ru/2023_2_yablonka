@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './board-title__logo.hbs';
 /**
  * Доска с названием и картинкой
  * @class

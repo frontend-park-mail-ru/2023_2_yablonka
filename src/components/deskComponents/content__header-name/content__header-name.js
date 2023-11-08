@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './content__header-name.hbs';
 /**
  * Заголовок мои/гостевые рабочие пространства
  * @class

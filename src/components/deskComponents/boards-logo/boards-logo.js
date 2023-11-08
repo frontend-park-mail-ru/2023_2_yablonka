@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './boards-logo.hbs';
 /**
  * Все доски одного гостевого пространства
  * @class

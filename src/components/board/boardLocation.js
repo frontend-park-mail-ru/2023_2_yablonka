@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import './boardLoaction.hbs';
 
 /**
  * Контейнер для досок

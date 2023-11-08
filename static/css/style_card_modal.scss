@@ -287,7 +287,7 @@ body {
 }
 
 .card-modal__exit-wrapper:hover {
-    background-color: rgba(156, 156, 156, 0.7);
+    background-color: rgbaa(156, 156, 156, 0.7);
 }
 
 .card-modal__exit {
@@ -327,7 +327,7 @@ body {
 }
 
 .card-layout-change__wrapper:hover {
-    background-color: rgb(39, 46, 53, 20%);
+    background-color: rgba(39, 46, 53, 20%);
 }
 
 .card-layout-change__icon {
@@ -610,13 +610,13 @@ body {
     border-radius: 5px;
     font-size: 14px;
     font-weight: bold;
-    background-color: rgb(66, 76, 87, 50%);
+    background-color: rgba(66, 76, 87, 50%);
     color: #c0c9f4;
     border: none;
 }
 
 .card-information__comment-text {
-    background-color: rgb(7, 15, 23, 50%);
+    background-color: rgba(7, 15, 23, 50%);
     border-radius: 10px;
     width: 460px;
     height: 40px;
@@ -644,7 +644,7 @@ body {
 }
 
 .button-like {
-    background-color: rgb(7, 15, 23, 50%);
+    background-color: rgba(7, 15, 23, 50%);
     color: #c0c9f4;
     width: 50px;
     height: 30px;

@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './workspace-card__desctiption.hbs';
 /**
  * Показывает чьё рабочее пространство
  * @class

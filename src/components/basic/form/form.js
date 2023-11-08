@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './form.hbs';
 
 /**
  * Контейнер для досок

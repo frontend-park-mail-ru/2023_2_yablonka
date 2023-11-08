@@ -1,4 +1,6 @@
 import Component from '../../core/basicComponent.js';
+import './button.hbs';
+
 /**
  * Компонент кнопки для входа/регистрации
  * @class

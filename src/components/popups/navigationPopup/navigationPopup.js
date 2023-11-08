@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './navigationPopup.hbs';
 /**
  * Попап для хедера
  * @class

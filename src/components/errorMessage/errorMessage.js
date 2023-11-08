@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import './errorMessage.hbs';
 
 /**
  * Ошибка при неправильном логине/пароле и тп

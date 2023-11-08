@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './button__create-workspace.hbs';
 /**
  * Кнопка создания рабочего пространства
  * @class

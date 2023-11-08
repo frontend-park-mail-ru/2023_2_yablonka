@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './textArea.hbs';
 
 /**
  * Контейнер для досок

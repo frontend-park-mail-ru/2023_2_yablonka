@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import './changeAvatarPopup.hbs';
 /**
  * Попап для хедера
  * @class

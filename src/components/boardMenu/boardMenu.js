@@ -1,4 +1,6 @@
 import Component from '../core/basicComponent.js';
+import './boardMenu.hbs';
+
 /**
  * Меню доски
  * @class
