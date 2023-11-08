@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './button__create-workspace.hbs';
+import template from  './button__create-workspace.hbs';
 /**
  * Кнопка создания рабочего пространства
  * @class
@@ -8,7 +8,7 @@ import './button__create-workspace.hbs';
  */
 export default class ButtonCreateWorkspace extends Component {
     constructor(parent, config) {
-        super(parent, config, 'button__create-workspace');
+        super(parent, config);
     }
 
     /**
@@ -16,6 +16,6 @@ export default class ButtonCreateWorkspace extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += template();
     }
 }

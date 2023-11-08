@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './uploadAvatarModal.hbs';
+import template from './uploadAvatarModal.hbs';
 /**
  * Попап для хедера
  * @class
@@ -8,13 +8,13 @@ import './uploadAvatarModal.hbs';
  */
 export default class UploadAvatarModal extends Component {
     constructor(parent, config) {
-        super(parent, config, 'uploadAvatarModal');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

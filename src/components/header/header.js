@@ -1,5 +1,5 @@
 import Component from '../core/basicComponent.js';
-import './header.hbs';
+import template from  './header.hbs';
 /**
  * Хедер
  * @class
@@ -8,7 +8,7 @@ import './header.hbs';
  */
 export default class Header extends Component {
     constructor(parent, config) {
-        super(parent, config, 'header');
+        super(parent, config);
     }
 
     /**
@@ -16,7 +16,7 @@ export default class Header extends Component {
      */
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (inputs, input) => inputs + this.template(input),
+            (inputs, input) => inputs + template(input),
             '',
         );
     }

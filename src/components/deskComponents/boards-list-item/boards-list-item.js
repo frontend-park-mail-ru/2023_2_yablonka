@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './boards-list-item.hbs';
+import template from  './boards-list-item.hbs';
 /**
  * Элемент списка досок
  * @class
@@ -8,7 +8,7 @@ import './boards-list-item.hbs';
  */
 export default class BoardsListItem extends Component {
     constructor(parent, config) {
-        super(parent, config, 'boards-list-item');
+        super(parent, config);
     }
 
     /**
@@ -16,6 +16,6 @@ export default class BoardsListItem extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += template();
     }
 }

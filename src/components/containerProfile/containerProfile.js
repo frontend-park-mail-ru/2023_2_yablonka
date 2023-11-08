@@ -1,5 +1,5 @@
 import Component from '../core/basicComponent.js';
-import './containerProfile.hbs';
+import template from './containerProfile.hbs';
 
 /**
  * Контейнер для досок
@@ -9,13 +9,13 @@ import './containerProfile.hbs';
  */
 export default class ContainerProfile extends Component {
     constructor(parent, config) {
-        super(parent, config, 'containerProfile');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

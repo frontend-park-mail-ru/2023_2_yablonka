@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './button.hbs';
+import template from './button.hbs';
 
 /**
  * Компонент кнопки для входа/регистрации
@@ -9,13 +9,13 @@ import './button.hbs';
  */
 export default class Button extends Component {
     constructor(parent, config) {
-        super(parent, config, 'button');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

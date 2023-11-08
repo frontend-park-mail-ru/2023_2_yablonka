@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './formInput.hbs';
+import template from './formInput.hbs';
 
 /**
  * Контейнер для досок
@@ -9,7 +9,7 @@ import './formInput.hbs';
  */
 export default class FormInput extends Component {
     constructor(parent, config) {
-        super(parent, config, 'formInput');
+        super(parent, config);
     }
 
     get className() {
@@ -21,6 +21,6 @@ export default class FormInput extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

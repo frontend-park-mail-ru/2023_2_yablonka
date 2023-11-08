@@ -1,5 +1,5 @@
 import Component from '../core/basicComponent.js';
-import './containerSign.hbs';
+import template from './containerSign.hbs';
 
 /**
  * Контейнер для досок
@@ -9,7 +9,7 @@ import './containerSign.hbs';
  */
 export default class ContainerSign extends Component {
     constructor(parent, config) {
-        super(parent, config, 'containerSign');
+        super(parent, config,);
     }
 
     static get lastWrapperClassName() {
@@ -20,6 +20,6 @@ export default class ContainerSign extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

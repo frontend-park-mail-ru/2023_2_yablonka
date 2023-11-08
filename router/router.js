@@ -12,6 +12,8 @@ const router = express.Router();
 const createPath = (page) => path.resolve(__dirname, '../dist', `${page}.html`);
 
 router.use(express.static(path.resolve(__dirname, '../dist')));
+router.use(express.static(path.resolve(__dirname, '../dist/img')));
+router.use(express.static(path.resolve(__dirname, '../dist/svg')));
 
 /**
  * Проверяет, можно ли переходить по такому адресу

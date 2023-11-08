@@ -1,5 +1,5 @@
 import Component from '../core/basicComponent.js';
-import './boardMenu.hbs';
+import template from './boardMenu.hbs';
 
 /**
  * Меню доски
@@ -9,13 +9,13 @@ import './boardMenu.hbs';
  */
 export default class BoardMenu extends Component {
     constructor(parent, config) {
-        super(parent, config, 'boardMenu');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

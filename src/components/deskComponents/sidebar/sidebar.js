@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './sidebar.hbs';
+import template from './sidebar.hbs';
 /**
  * Меню слева
  * @class
@@ -8,7 +8,7 @@ import './sidebar.hbs';
  */
 export default class Sidebar extends Component {
     constructor(parent, config) {
-        super(parent, config, 'sidebar');
+        super(parent, config);
     }
 
     /**
@@ -16,6 +16,6 @@ export default class Sidebar extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += template();
     }
 }

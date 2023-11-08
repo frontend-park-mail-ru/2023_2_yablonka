@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './content__header-name.hbs';
+import template from  './content__header-name.hbs';
 /**
  * Заголовок мои/гостевые рабочие пространства
  * @class
@@ -8,7 +8,7 @@ import './content__header-name.hbs';
  */
 export default class ContentHeaderName extends Component {
     constructor(parent, config) {
-        super(parent, config, 'content__header-name');
+        super(parent, config);
     }
 
     /**
@@ -17,7 +17,7 @@ export default class ContentHeaderName extends Component {
 
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (inputs, input) => inputs + this.template(input),
+            (inputs, input) => inputs + template(input),
             '',
         );
     }

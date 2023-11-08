@@ -1,5 +1,5 @@
 import Component from '../core/basicComponent.js';
-import './contentHeader.hbs';
+import template from './contentHeader.hbs';
 
 /**
  * Контейнер для досок
@@ -9,7 +9,7 @@ import './contentHeader.hbs';
  */
 export default class ContentHeader extends Component {
     constructor(parent, config) {
-        super(parent, config, 'contentHeader');
+        super(parent, config);
     }
 
     get className() {
@@ -21,6 +21,6 @@ export default class ContentHeader extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

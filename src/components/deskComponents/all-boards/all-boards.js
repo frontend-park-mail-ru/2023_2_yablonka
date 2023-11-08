@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './all-boards.hbs';
+import template from  './all-boards.hbs';
 
 /**
  * Контейнер для досок
@@ -9,7 +9,7 @@ import './all-boards.hbs';
  */
 export default class AllBoards extends Component {
     constructor(parent, config) {
-        super(parent, config, 'all-boards');
+        super(parent, config);
     }
 
     /**
@@ -17,6 +17,6 @@ export default class AllBoards extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += template();
     }
 }

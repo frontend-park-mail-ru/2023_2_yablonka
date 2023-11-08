@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './boards-logo.hbs';
+import template from  './boards-logo.hbs';
 /**
  * Все доски одного гостевого пространства
  * @class
@@ -8,7 +8,7 @@ import './boards-logo.hbs';
  */
 export default class BoardsLogo extends Component {
     constructor(parent, config) {
-        super(parent, config, 'boards-logo');
+        super(parent, config);
     }
 
     /**
@@ -16,6 +16,6 @@ export default class BoardsLogo extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += template();
     }
 }

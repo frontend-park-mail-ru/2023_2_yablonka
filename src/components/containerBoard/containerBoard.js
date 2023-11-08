@@ -1,5 +1,5 @@
 import Component from '../core/basicComponent.js';
-import './containerBoard.hbs';
+import template from './containerBoard.hbs';
 
 /**
  * Контейнер для доски
@@ -9,13 +9,13 @@ import './containerBoard.hbs';
  */
 export default class ContainerBoard extends Component {
     constructor(parent, config) {
-        super(parent, config, 'containerBoard');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

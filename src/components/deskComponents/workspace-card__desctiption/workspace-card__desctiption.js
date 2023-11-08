@@ -1,5 +1,5 @@
 import Component from '../../core/basicComponent.js';
-import './workspace-card__desctiption.hbs';
+import template from './workspace-card__desctiption.hbs';
 /**
  * Показывает чьё рабочее пространство
  * @class
@@ -8,7 +8,7 @@ import './workspace-card__desctiption.hbs';
  */
 export default class WorkspaceCardDesctiption extends Component {
     constructor(parent, config) {
-        super(parent, config, 'workspace-card__desctiption');
+        super(parent, config);
     }
 
     /**
@@ -17,7 +17,7 @@ export default class WorkspaceCardDesctiption extends Component {
 
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (inputs, input) => inputs + this.template(input),
+            (inputs, input) => inputs + template(input),
             '',
         );
     }
