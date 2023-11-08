@@ -1,10 +1,10 @@
 import PageLayout from '../components/pageLayout/pageLayout.js';
 import SignDecoration from '../components/containerSign/containerSign.js';
 import ContentHeader from '../components/contentHeader/contentHeader.js';
-import Form from '../components/form/form.js';
-import FormInput from '../components/formInput/formInput.js';
-import LinkButton from '../components/linkButton/linkButton.js';
-import Button from '../components/button/button.js';
+import Form from '../components/basic/form/form.js';
+import FormInput from '../components/basic/formInput/formInput.js';
+import LinkButton from '../components/basic/linkButton/linkButton.js';
+import Button from '../components/basic/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import Validator from '../modules/validator.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
@@ -106,6 +106,7 @@ class SignUp {
                 {
                     className: 'sign',
                     errorName: input[1].dataName,
+                    success: false,
                 },
             );
             errorMessage.render();
@@ -161,8 +162,8 @@ class SignUp {
      */
     goSigninHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signin`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/signin', false));
     }
 
     /**
@@ -181,8 +182,8 @@ class SignUp {
             case 200:
                 this.removeEventListeners();
                 this.clear();
-                dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
+                dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+                dispatcher.dispatch(actionRedirect('/boards', false));
                 break;
             case 401:
                 errorMessageAnimation(

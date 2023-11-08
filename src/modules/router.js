@@ -1,6 +1,6 @@
 import userStorage from '../storages/userStorage.js';
 import { routes, signedInRoutes, actionsWithLogin } from '../configs/configs.js';
-import { hrefRegExp } from './regExp.js';
+import { hrefRegExp, validateBoardPageRegExp, validateUserPagesRegExp } from './regExp.js';
 
 /**
  * Класс, реализующий роутер
@@ -60,9 +60,8 @@ class Router {
      * @returns {string} - корневой элемент в виде строки
      */
     matchView(href) {
-        const parts = href.split('/');
-        if (parts[3]) {
-            return `/${parts[3]}`;
+        if (href.match(validateUserPagesRegExp) || href.match(validateBoardPageRegExp)) {
+            return href;
         }
         return '/signin';
     }
@@ -71,12 +70,8 @@ class Router {
      * Метод для валидации и определения текущего URL
      * @returns {string} - текущий URL
      */
-    getPath() {
-        return decodeURIComponent(
-            window.location.href.match(hrefRegExp.host)
-                ? window.location.href.replace(hrefRegExp.host, '')
-                : window.location.href.replace(hrefRegExp.localhost, ''),
-        );
+    getPath(href) {
+        return decodeURIComponent(href.replace(hrefRegExp, ''));
     }
 
     /**
@@ -88,14 +83,14 @@ class Router {
     navigate({ path, state, pushState }) {
         if (pushState) {
             if (state) {
-                window.history.pushState(state, '', path);
+                window.history.pushState(state, '', `${window.location.origin}${path}`);
             } else {
-                window.history.pushState('', '', path);
+                window.history.pushState('', '', `${window.location.origin}${path}`);
             }
         } else if (state) {
-            window.history.replaceState(state, '', path);
+            window.history.replaceState(state, '', `${window.location.origin}${path}`);
         } else {
-            window.history.replaceState('', '', path);
+            window.history.replaceState('', '', `${window.location.origin}${path}`);
         }
         this.prevURL = path;
     }
@@ -104,10 +99,10 @@ class Router {
      * Обработчик события изменения активной записи истории
      */
     onPopStateEvent = () => {
-        const redirection = this.redirect(window.location.href.replace(window.location.origin, ''));
+        const redirection = this.redirect(window.location.pathname);
         this.open(
             {
-                path: redirection === window.location.href ? redirection : this.prevURL,
+                path: redirection === window.location.pathname ? redirection : this.prevURL,
                 state: '',
             },
             false,
@@ -124,9 +119,9 @@ class Router {
         if (this.currentPage) {
             this.currentPage.clear();
         }
-
         const { path, state } = stateObject;
         const currentView = this.matchView(path);
+        console.log(path, currentView);
 
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 
@@ -144,24 +139,24 @@ class Router {
         const isAuth = userStorage.storage.get(userStorage.userModel.status) === 200;
 
         if (href === '/') {
-            return isAuth ? `${window.location.origin}/boards` : `${window.location.origin}/signin`;
+            return isAuth ? '/boards' : '/signin';
         }
         if (!isAuth) {
             if (href === '/signup') {
-                return `${window.location.origin}${href}`;
+                return href;
             }
             this.redirectUrl = href;
-            return `${window.location.origin}/signin`;
+            return '/signin';
         }
         if (href === '/signin' || href === '/signup') {
-            return `${window.location.origin}/boards`;
+            return '/boards';
         }
         if (this.redirectUrl) {
             const redirectedHref = this.redirectUrl;
             this.redirectUrl = undefined;
             return redirectedHref;
         }
-        return `${window.location.origin}${href}`;
+        return href;
     }
 
     /**
@@ -169,23 +164,22 @@ class Router {
      * после перезагрузки окна браузера
      */
     refresh(pushState) {
-        const matchedPath = this.getPath();
-        const matchedView = this.matchView(matchedPath);
-        const redirectedPath = this.redirect(matchedPath.replace(window.location.origin, ''));
-        const pageState = '';
+        const matchedView = this.matchView(window.location.pathname);
+        const redirectedPath = this.redirect(matchedView);
+        console.log(redirectedPath, matchedView, this.signedInViews.get(matchedView));
         if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
             this.open(
                 {
                     path: redirectedPath,
-                    state: pageState,
+                    state: '',
                 },
                 pushState,
             );
         } else {
             this.open(
                 {
-                    path: `${window.location.origin}/404`,
-                    state: pageState,
+                    path: '/404',
+                    state: '',
                 },
                 pushState,
             );

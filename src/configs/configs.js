@@ -3,6 +3,7 @@ import signUpPage from '../view/signup.js';
 import Boards from '../view/boards.js';
 import Profile from '../view/profile.js';
 import page404 from '../view/page404.js';
+import Board from '../view/board.js';
 
 export const apiPath = 'http://localhost:8080';
 
@@ -15,6 +16,7 @@ export const routes = [
 ];
 
 export const signedInRoutes = [
+    { path: '/board', view: Board },
     { path: '/boards', view: Boards },
     { path: '/profile', view: Profile },
     { path: '/security', view: Profile },

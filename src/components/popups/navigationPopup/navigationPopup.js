@@ -1,13 +1,13 @@
-import Component from '../core/basicComponent.js';
+import Component from '../../core/basicComponent.js';
 /**
- * Компонент кнопки для входа/регистрации
+ * Попап для хедера
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class Button extends Component {
+export default class NavigationPopup extends Component {
     constructor(parent, config) {
-        super(parent, config, 'button');
+        super(parent, config, 'navigationPopup');
     }
 
     /**

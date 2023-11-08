@@ -1,26 +1,36 @@
 import PageLayout from '../components/pageLayout/pageLayout.js';
 import Header from '../components/header/header.js';
 import ContainerProfile from '../components/containerProfile/containerProfile.js';
-import Form from '../components/form/form.js';
-import FormInput from '../components/formInput/formInput.js';
-import TextArea from '../components/textArea/textArea.js';
-import Button from '../components/button/button.js';
-import NavigationPopup from '../components/navigationPopup/navigationPopup.js';
-import ChangeAvatarPopup from '../components/changeAvatarPopup/changeAvatarPopup.js';
-import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
+import Form from '../components/basic/form/form.js';
+import FormInput from '../components/basic/formInput/formInput.js';
+import TextArea from '../components/basic/textArea/textArea.js';
+import Button from '../components/basic/button/button.js';
+import NavigationPopup from '../components/popups/navigationPopup/navigationPopup.js';
+import ChangeAvatarPopup from '../components/popups/changeAvatarPopup/changeAvatarPopup.js';
+import {
+    actionRedirect,
+    actionLogout,
+    actionNavigate,
+    actionUpdateProfile,
+    actionUpdatePassword,
+} from '../actions/userActions.js';
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import UploadAvatarModal from '../components/uploadAvatarModal/uploadAvatarModal.js';
-import navigationPopupAction from '../components/navigationPopup/navigationPopupHelper.js';
+import UploadAvatarModal from '../components/popups/uploadAvatarModal/uploadAvatarModal.js';
+import navigationPopupAction from '../components/popups/navigationPopup/navigationPopupHelper.js';
 import popoventProcess from '../components/core/popeventProcessing.js';
-import changeAvatarPopupAction from '../components/changeAvatarPopup/changeAvatarPopupHelper.js';
+import changeAvatarPopupAction from '../components/popups/changeAvatarPopup/changeAvatarPopupHelper.js';
 import {
-    uploadAvatarModalAction,
-    chooseFileAvatarModalAction,
-    previewAvatarModalAction,
-    revertChangeAvatarModalAction,
-} from '../components/uploadAvatarModal/uploadAvatarModalHelper.js';
+    uploadAvatarModal,
+    chooseFileAvatarModal,
+    previewAvatarModal,
+    revertChangeAvatarModal,
+    updateAvatarModal,
+} from '../components/popups/uploadAvatarModal/uploadAvatarModalHelper.js';
+import Validator from '../modules/validator.js';
+import ErrorMessage from '../components/errorMessage/errorMessage.js';
+import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 
 /**
  * Класс для рендера страницы профиля
@@ -32,19 +42,11 @@ class Profile {
 
     #config = {
         formInput: {
-            email: {
-                withImage: false,
-                type: 'email',
-                placeholder: 'Email',
-                inputType: 'email',
-                className: 'profile',
-                disable: true,
-            },
             name: {
                 withImage: false,
                 type: 'text',
                 placeholder: 'Имя',
-                inputType: 'name',
+                dataName: 'name',
                 className: 'profile',
                 disable: false,
             },
@@ -52,9 +54,17 @@ class Profile {
                 withImage: false,
                 type: 'text',
                 placeholder: 'Фамилия',
-                inputType: 'surname',
+                dataName: 'surname',
                 className: 'profile',
                 disable: false,
+            },
+            email: {
+                withImage: false,
+                type: 'email',
+                placeholder: 'Email',
+                dataName: 'email',
+                className: 'profile',
+                disable: true,
             },
         },
         formInputSecurity: {
@@ -62,7 +72,7 @@ class Profile {
                 withImage: false,
                 type: 'password',
                 placeholder: 'Старый пароль',
-                inputType: 'old-password',
+                dataName: 'old-password',
                 className: 'profile',
                 disable: false,
             },
@@ -70,7 +80,7 @@ class Profile {
                 withImage: false,
                 type: 'password',
                 placeholder: 'Новый пароль',
-                inputType: 'new-password',
+                dataName: 'new-password',
                 className: 'profile',
                 disable: false,
             },
@@ -78,7 +88,7 @@ class Profile {
                 withImage: false,
                 type: 'password',
                 placeholder: 'Повторите новый пароль',
-                inputType: 'repeat-new-password',
+                dataName: 'repeat-new-password',
                 className: 'profile',
                 disable: false,
             },
@@ -90,8 +100,6 @@ class Profile {
      */
     constructor() {
         this.#root = document.querySelector('.page');
-        emitter.bind('profile', this.renderProfile.bind(this));
-        emitter.bind('security', this.renderSecurity.bind(this));
     }
 
     /**
@@ -126,8 +134,8 @@ class Profile {
         });
         changeAvatarPopup.render();
 
-        const uploadAvatarModal = new UploadAvatarModal(this.#root, {});
-        uploadAvatarModal.render();
+        const uploadAvatarModalWindow = new UploadAvatarModal(this.#root, {});
+        uploadAvatarModalWindow.render();
 
         const containerProfile = new ContainerProfile(
             this.#root.querySelector(pageLayout.className),
@@ -151,7 +159,10 @@ class Profile {
      * Рендер части с профилем
      */
 
-    renderProfile() {
+    async renderProfile() {
+        document
+            .querySelector('button[data-action=update-password]')
+            ?.removeEventListener('click', this.changePasswordHandler);
         this.#root
             .querySelector('.profile-navigation__security')
             .classList.remove('profile-navigation_active');
@@ -172,21 +183,29 @@ class Profile {
                 className: input[1].className,
                 type: input[1].type,
                 placeholder: input[1].placeholder,
-                inputType: input[1].inputType,
+                dataName: input[1].dataName,
                 withImage: input[1].withImage,
                 disable: input[1].disable,
                 text: userStorage.storage.get(userStorage.userModel.body).body.user[
-                    input[1].inputType
+                    input[1].dataName
                 ],
             });
             formInput.render();
         });
 
+        const errorMessage = new ErrorMessage(this.#root.querySelector(form.className).firstChild, {
+            className: 'sign',
+            errorName: 'password-or-user-information',
+            success: false,
+        });
+        errorMessage.render();
+
         const textArea = new TextArea(this.#root.querySelector(form.className), {
             className: 'profile',
-            length: 1024,
+            maxLength: 1024,
             rows: 50,
             columns: 100,
+            dataName: 'description',
             placeholder: 'О себе...',
         });
         textArea.render();
@@ -195,24 +214,29 @@ class Profile {
             className: 'profile-save',
             type: 'submit',
             formId: 'form-profile',
-            action: 'send',
+            action: 'update-profile',
             id: 'save-profile-button',
             text: 'Сохранить',
         });
         buttonChangeData.render();
+
         this.#root
             .querySelector('.profile-navigation__user-information')
             .classList.add('profile-navigation_active');
+
+        this.#root
+            .querySelector('button[data-action=update-profile]')
+            .addEventListener('click', this.changeProfileHandler);
     }
 
     /**
      * Запись в историю части с профилем отправка события на рендер части со сменой пароля
      * @param {Event} e - событие
      */
-    goSecurityHandler(e) {
+    async goSecurityHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionNavigate(`${window.location.origin}/security`, '', false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionNavigate('/security', '', false));
         emitter.trigger('security');
     }
 
@@ -220,17 +244,20 @@ class Profile {
      * Запись в историю части со сменой пароля отправка события на рендер части с профилем
      * @param {Event} e - событие
      */
-    goProfileHandler(e) {
+    async goProfileHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionNavigate(`${window.location.origin}/profile`, '', false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionNavigate('/profile', '', false));
         emitter.trigger('profile');
     }
 
     /**
      *Рендерит части со сменой пароля
      */
-    renderSecurity() {
+    async renderSecurity() {
+        document
+            .querySelector('button[data-action=update-profile]')
+            ?.removeEventListener('click', this.changeProfileHandler);
         this.#root
             .querySelector('.profile-navigation__user-information')
             .classList.remove('profile-navigation_active');
@@ -253,18 +280,25 @@ class Profile {
                 className: input[1].className,
                 type: input[1].type,
                 placeholder: input[1].placeholder,
-                inputType: input[1].inputType,
+                dataName: input[1].dataName,
                 withImage: input[1].withImage,
                 disable: input[1].disable,
             });
             formInput.render();
         });
 
+        const errorMessage = new ErrorMessage(this.#root.querySelector(form.className).firstChild, {
+            className: 'sign',
+            errorName: 'password-or-user-information',
+            success: false,
+        });
+        errorMessage.render();
+
         const buttonChangeData = new Button(userInfoContainer, {
             className: 'profile-save',
             type: 'submit',
             formId: 'form-profile',
-            action: 'send',
+            action: 'update-password',
             id: 'save-profile-button',
             text: 'Сменить пароль',
         });
@@ -273,6 +307,10 @@ class Profile {
         this.#root
             .querySelector('.profile-navigation__security')
             .classList.add('profile-navigation_active');
+
+        document
+            .querySelector('button[data-action=update-password]')
+            .addEventListener('click', this.changePasswordHandler);
     }
 
     /**
@@ -287,19 +325,19 @@ class Profile {
             .addEventListener('click', changeAvatarPopupAction);
         this.#root
             .querySelector('.button-profile[data-action=open-upload-avatar-modal]')
-            .addEventListener('click', uploadAvatarModalAction);
+            .addEventListener('click', uploadAvatarModal);
         this.#root
             .querySelector('.button-upload-avatar')
-            .addEventListener('click', chooseFileAvatarModalAction);
+            .addEventListener('click', chooseFileAvatarModal);
         this.#root
             .querySelector('.input-upload-avatar')
-            .addEventListener('change', previewAvatarModalAction);
+            .addEventListener('change', previewAvatarModal);
         this.#root
             .querySelector('.button-revert-change-avatar')
-            .addEventListener('click', revertChangeAvatarModalAction);
+            .addEventListener('click', revertChangeAvatarModal);
         this.#root
             .querySelector('.upload-avatar-modal__button_cancel')
-            .addEventListener('click', revertChangeAvatarModalAction);
+            .addEventListener('click', revertChangeAvatarModal);
 
         this.#root.addEventListener('click', popoventProcess);
 
@@ -324,7 +362,14 @@ class Profile {
         this.#root
             .querySelector('.header-menu__logo')
             .addEventListener('click', this.toMainPageHandler);
+        this.#root
+            .querySelector('.upload-avatar-modal__button_upload')
+            .addEventListener('click', updateAvatarModal);
         emitter.bind('logout', this.close);
+        emitter.bind('profile', this.renderProfile.bind(this));
+        emitter.bind('security', this.renderSecurity.bind(this));
+        emitter.bind('changeError', this.changeError.bind(this));
+        emitter.bind('changeSuccess', this.changeSuccess.bind(this));
     }
 
     /**
@@ -339,19 +384,19 @@ class Profile {
             .removeEventListener('click', changeAvatarPopupAction);
         this.#root
             .querySelector('.button-profile[data-action=open-upload-avatar-modal]')
-            .removeEventListener('click', uploadAvatarModalAction);
+            .removeEventListener('click', uploadAvatarModal);
         this.#root
             .querySelector('.button-upload-avatar')
-            .removeEventListener('click', chooseFileAvatarModalAction);
+            .removeEventListener('click', chooseFileAvatarModal);
         this.#root
             .querySelector('.input-upload-avatar')
-            .removeEventListener('change', previewAvatarModalAction);
+            .removeEventListener('change', previewAvatarModal);
         this.#root
             .querySelector('.button-revert-change-avatar')
-            .removeEventListener('click', revertChangeAvatarModalAction);
+            .removeEventListener('click', revertChangeAvatarModal);
         this.#root
             .querySelector('.upload-avatar-modal__button_cancel')
-            .removeEventListener('click', revertChangeAvatarModalAction);
+            .removeEventListener('click', revertChangeAvatarModal);
 
         this.#root.addEventListener('click', popoventProcess);
 
@@ -376,7 +421,67 @@ class Profile {
         this.#root
             .querySelector('.header-menu__logo')
             .removeEventListener('click', this.toMainPageHandler);
+        this.#root
+            .querySelector('.upload-avatar-modal__button_upload')
+            .removeEventListener('click', updateAvatarModal);
         emitter.unbind('logout', this.close);
+        emitter.unbind('profile', this.renderProfile);
+        emitter.unbind('security', this.renderSecurity);
+        emitter.unbind('changeError', this.changeError);
+        emitter.unbind('changeSuccess', this.changeSuccess);
+    }
+
+    async changeProfileHandler(e) {
+        e.preventDefault();
+        const user = {
+            user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+            name: document.querySelector('input[data-name=name]').value,
+            surname: document.querySelector('input[data-name=surname]').value,
+            description: document.querySelector('textarea[data-name=description]').value,
+        };
+
+        dispatcher.dispatch(actionUpdateProfile(user));
+    }
+
+    async changePasswordHandler(e) {
+        e.preventDefault();
+        const newPassword = document.querySelector('input[data-name=new-password]').value;
+        const oldPassword = document.querySelector('input[data-name=old-password]').value;
+        const repeatNewPassword = document.querySelector(
+            'input[data-name=repeat-new-password]',
+        ).value;
+
+        if (!Validator.validatePassword(newPassword)) {
+            errorMessageAnimation('sign', 'password-or-user-information', 'Неверный пароль');
+        } else if (!Validator.validateRepeatPasswords(newPassword, repeatNewPassword)) {
+            errorMessageAnimation('sign', 'password-or-user-information', 'Пароли не совпадают');
+        } else {
+            const user = {
+                user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+                new_password: newPassword,
+                old_password: oldPassword,
+            };
+
+            dispatcher.dispatch(actionUpdatePassword(user));
+        }
+    }
+
+    changeError() {
+        const errorElement = document.querySelector('#form-profile').firstChild.firstChild;
+
+        errorElement.style.color = '#F46285';
+        errorMessageAnimation('sign', 'password-or-user-information', 'Не удалось изменить данные');
+
+        errorElement.style.color = '#F46285';
+    }
+
+    changeSuccess() {
+        const errorElement = document.querySelector('#form-profile').firstChild.firstChild;
+
+        errorElement.style.color = '#62F470';
+        errorMessageAnimation('sign', 'password-or-user-information', 'Данные успешно изменены');
+
+        errorElement.style.color = '#F46285';
     }
 
     /**
@@ -394,16 +499,16 @@ class Profile {
      */
     toMainPageHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/boards', false));
     }
 
     /**
      * Закрытие страницы и редирект на страницу логина
      */
     close() {
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signin`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/signin', false));
     }
 
     /**

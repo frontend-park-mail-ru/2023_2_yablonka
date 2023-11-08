@@ -1,19 +1,13 @@
-import Component from '../core/basicComponent.js';
-
+import Component from '../../core/basicComponent.js';
 /**
- * Контейнер для досок
+ * Попап для хедера
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class LinkButton extends Component {
+export default class ChangeAvatarPopup extends Component {
     constructor(parent, config) {
-        super(parent, config, 'linkButton');
-    }
-
-    get className() {
-        const { className } = this.config;
-        return `.linkButton-${className}`;
+        super(parent, config, 'changeAvatarPopup');
     }
 
     /**

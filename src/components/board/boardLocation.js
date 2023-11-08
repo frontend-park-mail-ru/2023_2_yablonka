@@ -6,9 +6,9 @@ import Component from '../core/basicComponent.js';
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class TextArea extends Component {
+export default class BoardLocation extends Component {
     constructor(parent, config) {
-        super(parent, config, 'textArea');
+        super(parent, config, 'boardLocation');
     }
 
     /**

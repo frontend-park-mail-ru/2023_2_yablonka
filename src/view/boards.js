@@ -10,14 +10,14 @@ import WorkspaceCardDesctiption from '../components/deskComponents/workspace-car
 import BoardTitleLogo from '../components/deskComponents/board-title__logo/board-title__logo.js';
 import BoardsLogo from '../components/deskComponents/boards-logo/boards-logo.js';
 import WorkspaceMessage from '../components/deskComponents/workspace-message/workspace-message.js';
-import NavigationPopup from '../components/navigationPopup/navigationPopup.js';
+import NavigationPopup from '../components/popups/navigationPopup/navigationPopup.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
-import navigationPopupAction from '../components/navigationPopup/navigationPopupHelper.js';
+import navigationPopupAction from '../components/popups/navigationPopup/navigationPopupHelper.js';
 import popeventProcess from '../components/core/popeventProcessing.js';
 
 /**
@@ -227,6 +227,10 @@ class Boards {
         this.#root
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
+        this.#root.('main').addEventListener('click', (e)=>{
+            e.preventDefault();
+            if(e.target.tagName==)
+        })
         emitter.bind('logout', this.close);
     }
 
@@ -266,8 +270,8 @@ class Boards {
      */
     toBoardsHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/boards', false));
     }
 
     /**
@@ -276,8 +280,8 @@ class Boards {
      */
     toSecurityHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/security`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/security', false));
     }
 
     /**
@@ -286,16 +290,16 @@ class Boards {
      */
     toProfileHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/profile`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/profile', false));
     }
 
     /**
      * Закрытие страницы и редирект на страницу логина
      */
     close() {
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signin`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/signin', false));
     }
 
     /**

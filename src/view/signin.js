@@ -1,9 +1,9 @@
 import PageLayout from '../components/pageLayout/pageLayout.js';
 import SignDecoration from '../components/containerSign/containerSign.js';
-import Form from '../components/form/form.js';
-import FormInput from '../components/formInput/formInput.js';
-import LinkButton from '../components/linkButton/linkButton.js';
-import Button from '../components/button/button.js';
+import Form from '../components/basic/form/form.js';
+import FormInput from '../components/basic/formInput/formInput.js';
+import LinkButton from '../components/basic/linkButton/linkButton.js';
+import Button from '../components/basic/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 import emitter from '../modules/actionTrigger.js';
@@ -95,6 +95,7 @@ class SignIn {
             {
                 className: 'sign',
                 errorName: 'login-or-password',
+                success: false,
             },
         );
         errorMessage.render();
@@ -160,8 +161,8 @@ class SignIn {
      */
     goSignupHandler(e) {
         e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect(`${window.location.origin}/signup`, false));
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/signup', false));
     }
 
     /**
@@ -180,8 +181,8 @@ class SignIn {
             case 200:
                 this.removeEventListeners();
                 this.clear();
-                dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-                dispatcher.dispatch(actionRedirect(`${window.location.origin}/boards`, false));
+                dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+                dispatcher.dispatch(actionRedirect('/boards', false));
                 break;
             case 401:
                 errorMessageAnimation('sign', 'login-or-password', 'Неверный логин или пароль');

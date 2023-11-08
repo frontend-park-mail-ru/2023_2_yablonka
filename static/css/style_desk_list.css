@@ -208,7 +208,7 @@ main {
     height: calc(100vh - 50px);
 }
 
-.sidebar {
+.sidebar-boards {
     margin: 40px 0 0;
     width: 256px;
     padding: 0 16px;
@@ -217,7 +217,7 @@ main {
     top: 40px;
 }
 
-.sidebar__menu {
+.sidebar-boards__menu {
     border-bottom: 1px solid #c4c6ca24;
     list-style: none;
 }
@@ -225,7 +225,7 @@ main {
 .menu-item {
     margin-bottom: 8px;
 }
-.menu-item a {
+.sidebar-boards__menu-item {
     outline: none;
     color: #fff;
     font-size: 16px;
@@ -241,12 +241,12 @@ main {
     align-items: center;
 }
 
-.selected a {
+.sidebar-boards__menu-item_selected {
     background-color: #092957;
     color: #7ba4f3;
 }
 
-.menu-item a span {
+.sidebar-boards__menu-item a span {
     flex: 1 1 auto;
     width: min-content;
     text-overflow: ellipsis;
@@ -254,15 +254,16 @@ main {
     margin-left: 10px;
 }
 
-.menu-item a img {
+.sidebar-boards__menu-item a img {
     width: 16px;
     height: 16px;
     margin-bottom: 2px;
 }
 
-.create-workspace ul {
+.workspaces-list {
     padding-top: 12px;
     padding-bottom: 40px;
+    list-style: none;
 }
 
 .create-workspace__title {
@@ -274,7 +275,7 @@ main {
     padding: 0 0 0 14px;
 }
 
-.create-workspace__button {
+.buttun-create-workspace {
     margin-bottom: 4px;
     color: #ffffff;
     box-shadow: none;

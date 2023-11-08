@@ -39,20 +39,19 @@ body {
 .page__image {
     position: absolute;
     bottom: 0;
+    transition: all 0.2s ease-in-out;
 }
 
 .page__image_right {
     right: 40px;
     height: 220px;
     width: 330px;
-    transition: all 0.2s ease-in-out;
 }
 
 .page__image_left {
     left: 40px;
     height: 270px;
     width: 330px;
-    transition: all 0.2s ease-in-out;
 }
 
 .authentication {
@@ -179,7 +178,6 @@ button {
 }
 
 .error-sign {
-    color: rgb(244, 98, 133);
     font-size: 16px;
     height: 20px;
     z-index: 999;

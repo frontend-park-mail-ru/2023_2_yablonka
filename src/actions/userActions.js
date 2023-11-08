@@ -74,7 +74,25 @@ export const actionLogout = () => ({
  * Действие, означающее изменение профиля пользователя
  * @param {Object} user - данные пользователя
  */
-export const actionSignup = (user) => ({
-    type: 'userSignup',
+export const actionUpdateProfile = (user) => ({
+    type: 'updateProfile',
+    value: user,
+});
+
+/**
+ * Действие, означающее изменение пароля
+ * @param {Object} user - данные пользователя
+ */
+export const actionUpdatePassword = (user) => ({
+    type: 'updatePassword',
+    value: user,
+});
+
+/**
+ * Действие, означающее изменение аватарки
+ * @param {Object} user - данные пользователя
+ */
+export const actionUpdateAvatar = (user) => ({
+    type: 'updateAvatar',
     value: user,
 });

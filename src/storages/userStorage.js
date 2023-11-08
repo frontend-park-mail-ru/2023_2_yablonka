@@ -47,7 +47,14 @@ class UserStorage extends BaseStorage {
     async signin(user) {
         const responsePromise = await AJAX(`${apiPath + apiVersion}auth/login/`, 'POST', user);
 
-        const body = await responsePromise.json();
+        let body = {};
+
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
         const { status } = responsePromise;
         if (status === 200) {
             this.changed = true;
@@ -65,7 +72,14 @@ class UserStorage extends BaseStorage {
     async signup(user) {
         const responsePromise = await AJAX(`${apiPath + apiVersion}auth/signup/`, 'POST', user);
 
-        const body = await responsePromise.json();
+        let body = {};
+
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
         const { status } = responsePromise;
 
         if (status === 200) {
@@ -93,12 +107,84 @@ class UserStorage extends BaseStorage {
     async updateProfile(user) {
         const responsePromise = await AJAX(`${apiPath + apiVersion}user/edit/`, 'POST', user);
 
-        const body = await responsePromise.json();
+        let body = {};
+
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
         const { status } = responsePromise;
         if (status === 200) {
             this.changed = true;
-            this.storage.set(this.userModel.body, body);
+            const oldUser = this.storage.get(this.userModel.body);
+            oldUser.name = body.name;
+            oldUser.surname = body.surname;
+            oldUser.description = body.description;
+            this.storage.set(this.userModel.body, oldUser);
             emitter.trigger('profile');
+            emitter.trigger('changeSuccess');
+        } else {
+            emitter.trigger('changeError');
+        }
+    }
+
+    /**
+     * Запрос на смену пароля
+     * @param {Object} user - Данные пользователя
+     */
+    async updatePassword(user) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/edit/change_password/`,
+            'POST',
+            user,
+        );
+
+        let body = {};
+
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('changeSuccess');
+        } else {
+            emitter.trigger('changeError');
+        }
+    }
+
+    /**
+     * Запрос на смену аватара
+     * @param {Object} user - Данные пользователя
+     */
+    async updateAvatar(user) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            'POST',
+            user,
+        );
+
+        let body = {};
+
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
+        const { status } = responsePromise;
+        if (status === 200) {
+            const oldUser = this.storage.get(this.userModel.body);
+            oldUser.thumbnail_url = body.thumbnail_url;
+            this.storage.set(this.userModel.body, oldUser);
+            emitter.trigger('changeSuccess');
+        } else {
+            emitter.trigger('changeError');
         }
     }
 

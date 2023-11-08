@@ -12,6 +12,10 @@ class WorkspaceStorage extends BaseStorage {
         status: 'status',
     };
 
+    currentWorkspace;
+    currentBoard;
+    currentCard;
+
     /**
      * @constructor
      */

@@ -1,0 +1,43 @@
+<div class='board__menu'>
+    <div class='board__menu_left'>
+        <div class='board-menu__board-name-wrapper'>
+            <img class='add-board-to-favourite' src='star.svg' alt='add-to-favourite' />
+            <span class='board-menu__board-name'>{{this.boardName}}<input
+                    class='input input-board-name'
+                    type='text'
+                /></span>
+        </div>
+
+        <div class='board-menu__access-settings-wrapper'>
+            <img class='access-settings__image' src='people.svg' alt='access-settings' />
+            <span class='access-settings__title'>Настройки доступа</span>
+        </div>
+        <div class='board-menu__board-actions'>
+            <div class='board-actions-wrapper'>
+                <img class='board-actions__image' src='clipboard-pulse.svg' alt='boards-action' />
+                <span class='board-actions__title'>По доске</span>
+            </div>
+            <button class='button button-board-actions'>
+                <img class='additional-action__image' src='chevron-down.svg' alt='board-actions' />
+            </button>
+        </div>
+    </div>
+    <div class='board__menu_right'>
+        <div class='board-menu__team'>
+            <div class='team_member'>
+                <button class='button button-team-member'>
+                    <img class='team-member__avatar' src='{{this.ownerAvatar}}' alt='avatar' />
+                </button>
+            </div> 
+        </div>
+        <div class='board-menu__board-actions'>
+            <div class='board-actions-wrapper'>
+                <img class='board-actions__image' src='person-plus.svg' alt='boards-action' />
+                <span class='board-actions__title'>Поделиться</span>
+            </div>
+            <button class='button button-board-actions'>
+                <img class='additional-action__image' src='three-dots.svg' alt='board-actions' />
+            </button>
+        </div>
+    </div>
+</div>
