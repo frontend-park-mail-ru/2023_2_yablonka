@@ -7,14 +7,14 @@ module.exports = {
         app: './src/index.js',
     },
     output: {
-        path: path.resolve(__dirname, './src/dist'),
+        path: path.resolve(__dirname, './dist'),
         filename: '[name].[contenthash].js',
-        publicPath: './',
+        publicPath: '/',
     },
     devServer: {
         allowedHosts: 'all',
         hot: true,
-        static: path.resolve(__dirname, './src/dist'),
+        static: path.resolve(__dirname, './dist'),
         port: 8081,
     },
     devtool: 'source-map',
@@ -30,47 +30,28 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', 'postcss-loader'],
             },
             {
-                test: /\.(png|jpg)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'img/',
-                            publicPath: 'img/',
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.(svg)$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'svg/',
-                            publicPath: 'svg/',
-                        },
-                    },
-                ],
-            },
-            {
                 test: /\.hbs$/,
                 loader: 'handlebars-loader',
                 include: path.resolve(__dirname, 'src/'),
                 options: {
                     runtime: require.resolve('handlebars/runtime'),
                 },
-            }
+            },
         ],
     },
     plugins: [
         new HTMLWebpackPlugin({
-            template: './static/html/modal.html',
+            template: './static/html/index.html',
         }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css',
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                // { from: './src/sw.js', to: './' },
+                { from: './static/img/', to: './img' },
+                { from: './static/svg/', to: './svg' },
+            ],
         }),
     ],
 };
