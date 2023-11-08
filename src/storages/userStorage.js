@@ -37,7 +37,14 @@ class UserStorage extends BaseStorage {
             this.storage.set(this.userModel.body, JSON.parse(xhr.response));
             this.storage.set(this.userModel.name, 'auth');
         };
-        xhr.send();
+
+        try{
+            xhr.send();
+        }
+        catch(err){
+            console.log(err);
+        }
+        
     }
 
     /**

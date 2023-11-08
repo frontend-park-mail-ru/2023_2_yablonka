@@ -11,6 +11,8 @@ const router = express.Router();
  */
 const createPath = (page) => path.resolve(__dirname, '../dist', `${page}.html`);
 
+router.use(express.static(path.resolve(__dirname, '../dist')));
+
 /**
  * Проверяет, можно ли переходить по такому адресу
  * @param {string} view - название страницы
