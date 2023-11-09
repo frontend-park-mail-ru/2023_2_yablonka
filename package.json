@@ -9,7 +9,7 @@
         "compile": "globstar -- npx handlebars src/**/*.hbs -f src/utils/handlebars.precompiled.js",
         "dev": "webpack-dev-server --open --mode development",
         "test": "test",
-        "build": "webpack --mode production",
+        "build": "node cleanup.js && webpack --mode production",
         "lintcheck": "eslint src router",
         "lintfix": "eslint src router --fix",
         "release": "webpack-dev-server --mode production"
