@@ -130,7 +130,6 @@ class SignIn {
                 type: 'submit',
                 formId: 'form-sign',
                 action: 'send',
-                id: 'signin',
                 text: 'Войти',
             },
         );

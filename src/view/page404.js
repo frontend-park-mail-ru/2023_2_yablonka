@@ -23,7 +23,10 @@ class Page404 {
 
         document.title = 'Tabula: Not found';
 
-        const redirectName = userStorage.storage.get(userStorage.userModel.status) === 200 ? 'На главную' : 'Авторизоваться';
+        const redirectName =
+            userStorage.storage.get(userStorage.userModel.status) === 200
+                ? 'На главную'
+                : 'Авторизоваться';
 
         const notFound = new Error404(this.#root, { redirectTargetName: redirectName });
         notFound.render();
@@ -48,11 +51,9 @@ class Page404 {
         e.preventDefault();
         dispatcher.dispatch(
             actionRedirect(
-                `${window.location.origin}/${
-                    userStorage.storage.get(userStorage.userModel.status) === 200
-                        ? 'boards'
-                        : 'signin'
-                }`,
+                userStorage.storage.get(userStorage.userModel.status) === 200
+                    ? '/boards'
+                    : '/signin',
                 false,
             ),
         );

@@ -603,7 +603,7 @@ body {
     color: #c0c9f4;
 }
 
-.button-hide-comments {
+.btn-hide-comments {
     min-width: 140px;
     height: 35px;
     padding: 5px 15px;
@@ -643,7 +643,7 @@ body {
     position: relative;
 }
 
-.button-like {
+.btn-like {
     background-color: rgba(7, 15, 23, 50%);
     color: #c0c9f4;
     width: 50px;
@@ -665,12 +665,12 @@ body {
     cursor: pointer;
 }
 
-.button-like__icon {
+.btn-like__icon {
     width: 16px;
     height: 16px;
 }
 
-.button-like__count {
+.btn-like__count {
     font-size: 16px;
 }
 
