@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import template from './error404.hbs';
 
 /**
  * Контейнер для досок
@@ -8,13 +9,13 @@ import Component from '../core/basicComponent.js';
  */
 export default class Error404 extends Component {
     constructor(parent, config) {
-        super(parent, config, 'error404');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

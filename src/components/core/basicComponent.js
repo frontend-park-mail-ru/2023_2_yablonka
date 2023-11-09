@@ -9,7 +9,6 @@ export default class Component {
     constructor(parent, config, templateName) {
         this.parent = parent;
         this.config = config;
-        this.template = Handlebars.templates[`${templateName}.hbs`];
     }
 
     /**

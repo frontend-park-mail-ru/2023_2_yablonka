@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import template from  './board-title__logo.hbs';
 /**
  * Доска с названием и картинкой
  * @class
@@ -7,7 +8,7 @@ import Component from '../../core/basicComponent.js';
  */
 export default class BoardTitleLogo extends Component {
     constructor(parent, config) {
-        super(parent, config, 'board-title__logo');
+        super(parent, config);
     }
 
     /**
@@ -16,7 +17,7 @@ export default class BoardTitleLogo extends Component {
 
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (inputs, input) => inputs + this.template(input),
+            (inputs, input) => inputs + template(input),
             '',
         );
     }

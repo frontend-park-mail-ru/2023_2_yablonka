@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import template from './main.hbs';
 /**
  * слои-обертки
  * @class
@@ -7,7 +8,7 @@ import Component from '../../core/basicComponent.js';
  */
 export default class Main extends Component {
     constructor(parent, config) {
-        super(parent, config, 'main');
+        super(parent, config);
     }
 
     /**
@@ -15,6 +16,6 @@ export default class Main extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += template();
     }
 }

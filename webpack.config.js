@@ -1,20 +1,21 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
-        app: './src/index.js',
+        app: ['./src/index.js']
     },
     output: {
-        path: path.resolve(__dirname, './dist'),
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
-        publicPath: '/',
+        publicPath: './',
     },
     devServer: {
         allowedHosts: 'all',
         hot: true,
-        static: path.resolve(__dirname, './dist'),
+        static: path.resolve(__dirname, 'dist'),
         port: 8081,
     },
     devtool: 'source-map',
@@ -32,10 +33,6 @@ module.exports = {
             {
                 test: /\.hbs$/,
                 loader: 'handlebars-loader',
-                include: path.resolve(__dirname, 'src/'),
-                options: {
-                    runtime: require.resolve('handlebars/runtime'),
-                },
             },
         ],
     },

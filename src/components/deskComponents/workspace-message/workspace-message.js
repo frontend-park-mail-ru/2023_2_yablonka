@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import template from './workspace-message.hbs';
 /**
  * Меню слева
  * @class
@@ -7,7 +8,7 @@ import Component from '../../core/basicComponent.js';
  */
 export default class WorkspaceMessage extends Component {
     constructor(parent, config) {
-        super(parent, config, 'workspace-message');
+        super(parent, config);
     }
 
     /**
@@ -16,7 +17,7 @@ export default class WorkspaceMessage extends Component {
 
     render() {
         this.parent.innerHTML += this.data.reduce(
-            (messages, message) => messages + this.template(message),
+            (messages, message) => messages + template(message),
             '',
         );
     }

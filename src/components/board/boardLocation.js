@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import template from './boardLoaction.hbs';
 
 /**
  * Контейнер для досок
@@ -8,13 +9,13 @@ import Component from '../core/basicComponent.js';
  */
 export default class BoardLocation extends Component {
     constructor(parent, config) {
-        super(parent, config, 'boardLocation');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

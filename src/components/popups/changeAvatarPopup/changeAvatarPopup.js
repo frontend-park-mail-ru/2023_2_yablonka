@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import template from './changeAvatarPopup.hbs';
 /**
  * Попап для хедера
  * @class
@@ -7,13 +8,13 @@ import Component from '../../core/basicComponent.js';
  */
 export default class ChangeAvatarPopup extends Component {
     constructor(parent, config) {
-        super(parent, config, 'changeAvatarPopup');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

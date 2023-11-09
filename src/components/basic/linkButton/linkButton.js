@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import template from './linkButton.hbs';
 
 /**
  * Контейнер для досок
@@ -8,7 +9,7 @@ import Component from '../../core/basicComponent.js';
  */
 export default class LinkButton extends Component {
     constructor(parent, config) {
-        super(parent, config, 'linkButton');
+        super(parent, config);
     }
 
     get className() {
@@ -20,6 +21,6 @@ export default class LinkButton extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

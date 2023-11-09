@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import template from './navigationPopup.hbs';
 /**
  * Попап для хедера
  * @class
@@ -7,13 +8,13 @@ import Component from '../../core/basicComponent.js';
  */
 export default class NavigationPopup extends Component {
     constructor(parent, config) {
-        super(parent, config, 'navigationPopup');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

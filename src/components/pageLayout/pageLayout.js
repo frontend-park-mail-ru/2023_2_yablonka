@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import template from './pageLayout.hbs';
 
 /**
  * Контейнер для досок
@@ -8,7 +9,7 @@ import Component from '../core/basicComponent.js';
  */
 export default class PageLayout extends Component {
     constructor(parent, config) {
-        super(parent, config, 'pageLayout');
+        super(parent, config);
     }
 
     get className() {
@@ -20,6 +21,6 @@ export default class PageLayout extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', this.template(this.config));
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }

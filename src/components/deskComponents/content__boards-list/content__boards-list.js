@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import template from  './content__boards-list.hbs';
 /**
  * Список досок по всем пользователям
  * @class
@@ -7,7 +8,7 @@ import Component from '../../core/basicComponent.js';
  */
 export default class ContentBoardsList extends Component {
     constructor(parent, config) {
-        super(parent, config, 'content__boards-list');
+        super(parent, config);
     }
 
     /**
@@ -15,6 +16,6 @@ export default class ContentBoardsList extends Component {
      */
 
     render() {
-        this.parent.innerHTML += this.template();
+        this.parent.innerHTML += template();
     }
 }

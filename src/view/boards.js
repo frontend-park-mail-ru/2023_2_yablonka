@@ -227,10 +227,6 @@ class Boards {
         this.#root
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
-        this.#root.('main').addEventListener('click', (e)=>{
-            e.preventDefault();
-            if(e.target.tagName==)
-        })
         emitter.bind('logout', this.close);
     }
 

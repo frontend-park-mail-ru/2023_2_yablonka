@@ -73,7 +73,7 @@ body {
 .authentication__header {
     font-size: 72px;
     color: #fff;
-    text-shadow: rgb(41, 41, 41, 50%) 0 15px 10px;
+    text-shadow: rgba(41, 41, 41, 50%) 0 15px 10px;
     margin-bottom: 75px;
     display: flex;
     align-items: center;
@@ -82,7 +82,7 @@ body {
 }
 
 .authentication__header img {
-    text-shadow: rgb(41, 41, 41, 50%) 0 15px 10px;
+    text-shadow: rgba(41, 41, 41, 50%) 0 15px 10px;
     padding-right: 10px;
     width: 90px;
     height: 70px;
@@ -104,7 +104,7 @@ body {
 
 .form__input-sign {
     border: 2px solid #fff;
-    box-shadow: rgb(255, 255, 255, 25%) 4px 4px 10px;
+    box-shadow: rgba(255, 255, 255, 25%) 4px 4px 10px;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -153,8 +153,8 @@ button {
 
 .button-sign {
     background-color: #000;
-    box-shadow: rgb(255, 255, 255, 15%) 4px 4px 10px;
-    border: rgb(255, 255, 255) 2px solid;
+    box-shadow: rgba(255, 255, 255, 15%) 4px 4px 10px;
+    border: rgba(255, 255, 255) 2px solid;
     height: 50px;
     width: 180px;
     border-radius: 15px;
@@ -166,7 +166,7 @@ button {
 }
 
 .forgotten-password-link {
-    color: rgb(199, 199, 199);
+    color: rgba(199, 199, 199);
     margin-top: 5px;
     font-size: 14px;
     font-weight: 400;
@@ -176,7 +176,7 @@ button {
 }
 
 .forgotten-password-link_disabled {
-    color: rgb(199, 199, 199);
+    color: rgba(199, 199, 199);
     margin-top: 8px;
     font-size: 14px;
     font-weight: 400;
@@ -197,5 +197,5 @@ button {
 }
 
 ::backdrop {
-    background-color: rgb(0, 0, 0, 50%);
+    background-color: rgba(0, 0, 0, 50%);
 }

@@ -1,3 +1,4 @@
 node_modules
 src/utils/handlebars.precompiled.js
 src/dist
+dist

@@ -9,19 +9,11 @@ const router = express.Router();
  * @param {string} page - название страницы
  * @returns {string} - адрес(в файлах) страницы
  */
-const createPath = (page) => path.resolve(__dirname, '../static/html', `${page}.html`);
+const createPath = (page) => path.resolve(__dirname, '../dist', `${page}.html`);
 
-router.use(express.static(path.resolve(__dirname, '../static/css')));
-router.use(express.static(path.resolve(__dirname, '../static/img')));
-router.use(express.static(path.resolve(__dirname, '../static/svg')));
-router.use(express.static(path.resolve(__dirname, '../src')));
-router.use('/src', express.static(path.join(__dirname, 'src'), {
-    setHeaders: (res, path) => {
-      if (path.endsWith('.js')) {
-        res.setHeader('Content-Type', 'application/javascript');
-      }
-    }
-  }));
+router.use(express.static(path.resolve(__dirname, '../dist')));
+router.use(express.static(path.resolve(__dirname, '../dist/img')));
+router.use(express.static(path.resolve(__dirname, '../dist/svg')));
 
 /**
  * Проверяет, можно ли переходить по такому адресу

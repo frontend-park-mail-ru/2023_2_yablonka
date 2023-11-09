@@ -1,4 +1,5 @@
 import Component from '../core/basicComponent.js';
+import template from './errorMessage.hbs';
 
 /**
  * Ошибка при неправильном логине/пароле и тп
@@ -8,13 +9,13 @@ import Component from '../core/basicComponent.js';
  */
 export default class ErrorMessage extends Component {
     constructor(parent, config) {
-        super(parent, config, 'errorMessage');
+        super(parent, config);
     }
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('afterbegin', this.template(this.config));
+        this.parent.insertAdjacentHTML('afterbegin', template(this.config));
     }
 }
