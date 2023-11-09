@@ -1,5 +1,222 @@
 :root {
-    --text-color-on-page: #c0c9f4;
     --text-color-in-input: #c7c7c7;
+    --text-color-on-page: #c0c9f4;
+
     --sign-page-background: #0c1116;
+    --header-background: #161a1d;
+    --column-background: #101204;
+    --card-background: #262d34;
+
+    --action-button-color: #7ba4f3;
+    --sign-button-color: #000000;
+
+    --sign-page-box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.15);
+}
+
+.flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.flex-spaced-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-column-centered {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.flex-row-centered {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.strach-layout {
+    width: 100%;
+    height: 100%;
+}
+
+.avatar-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.link {
+    outline: none;
+    text-decoration: none;
+}
+
+.link_disabled {
+    pointer-events: none;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.btn:active {
+    scale: 0.95;
+    opacity: 0.75;
+    transition: ease-in-out 0.2s ease-in-out;
+}
+
+.padding-5-10 {
+    padding: 5px 10px;
+}
+
+.padding-0-10 {
+    padding: 0px 10px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.font-size-10 {
+    font-size: 10px;
+}
+
+.font-size-11 {
+    font-size: 11px;
+}
+
+.font-size-12 {
+    font-size: 12px;
+}
+
+.font-size-13 {
+    font-size: 13px;
+}
+
+.font-size-14 {
+    font-size: 14px;
+}
+
+.font-size-15 {
+    font-size: 15px;
+}
+
+.font-size-16 {
+    font-size: 16px;
+}
+
+.font-size-17 {
+    font-size: 17px;
+}
+
+.font-size-18 {
+    font-size: 18px;
+}
+
+.font-size-19 {
+    font-size: 19px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.font-size-21 {
+    font-size: 21px;
+}
+
+.font-size-22 {
+    font-size: 22px;
+}
+
+.font-size-23 {
+    font-size: 23px;
+}
+
+.font-size-24 {
+    font-size: 24px;
+}
+
+.font-size-25 {
+    font-size: 25px;
+}
+
+.font-size-26 {
+    font-size: 26px;
+}
+
+.font-size-27 {
+    font-size: 27px;
+}
+
+.font-size-28 {
+    font-size: 28px;
+}
+
+.font-weight-100 {
+    font-weight: 100;
+}
+
+.font-weight-200 {
+    font-weight: 200;
+}
+
+.font-weight-300 {
+    font-weight: 300;
+}
+
+.font-weight-400 {
+    font-weight: 400;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+.font-weight-800 {
+    font-weight: 800;
+}
+
+.font-weight-900 {
+    font-weight: 900;
+}
+
+.border-radius-5 {
+    border-radius: 5px;
+}
+
+.border-radius-6 {
+    border-radius: 6px;
+}
+
+.border-radius-7 {
+    border-radius: 7px;
+}
+
+.border-radius-8 {
+    border-radius: 8px;
+}
+
+.border-radius-9 {
+    border-radius: 9px;
+}
+
+.border-radius-10 {
+    border-radius: 10px;
 }
