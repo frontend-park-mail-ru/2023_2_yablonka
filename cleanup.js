@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const folderPath = './dist'; // Укажите путь к папке nodejs
+const folderPath = './dist';
 
 function clearFolder(folderPath) {
   fs.readdir(folderPath, (err, files) => {
@@ -19,9 +19,9 @@ function clearFolder(folderPath) {
         }
 
         if (stats.isDirectory()) {
-          clearFolder(filePath); // Рекурсивно очищаем вложенные папки
+          clearFolder(filePath);
         } else {
-          fs.unlink(filePath, err => { // Удаляем файл
+          fs.unlink(filePath, err => { 
             if (err) {
               console.error('Error deleting file:', err);
             } else {
