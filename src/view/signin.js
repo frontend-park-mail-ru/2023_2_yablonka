@@ -143,7 +143,7 @@ class SignIn {
      */
     addEventListeners() {
         this.#root.querySelector('.sign-link').addEventListener('click', this.goSignupHandler);
-        this.#root.querySelector('.button-sign').addEventListener('click', this.onSubmitHandler);
+        this.#root.querySelector('.btn-sign').addEventListener('click', this.onSubmitHandler);
     }
 
     /**
@@ -151,7 +151,7 @@ class SignIn {
      */
     removeEventListeners() {
         this.#root.querySelector('.sign-link').removeEventListener('click', this.goSignupHandler);
-        this.#root.querySelector('.button-sign').removeEventListener('click', this.onSubmitHandler);
+        this.#root.querySelector('.btn-sign').removeEventListener('click', this.onSubmitHandler);
     }
 
     /**

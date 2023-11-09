@@ -17,17 +17,10 @@ import {
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import UploadAvatarModal from '../components/popups/uploadAvatarModal/uploadAvatarModal.js';
+import UploadAvatarModal from '../components/popups/uploadAvatar/uploadAvatar.js';
 import navigationPopupAction from '../components/popups/navigationPopup/navigationPopupHelper.js';
 import popoventProcess from '../components/core/popeventProcessing.js';
 import changeAvatarPopupAction from '../components/popups/changeAvatarPopup/changeAvatarPopupHelper.js';
-import {
-    uploadAvatarModal,
-    chooseFileAvatarModal,
-    previewAvatarModal,
-    revertChangeAvatarModal,
-    updateAvatarModal,
-} from '../components/popups/uploadAvatarModal/uploadAvatarModalHelper.js';
 import Validator from '../modules/validator.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
@@ -323,21 +316,7 @@ class Profile {
         this.#root
             .querySelector('.change-avatar__button')
             .addEventListener('click', changeAvatarPopupAction);
-        this.#root
-            .querySelector('.button-profile[data-action=open-upload-avatar-modal]')
-            .addEventListener('click', uploadAvatarModal);
-        this.#root
-            .querySelector('.button-upload-avatar')
-            .addEventListener('click', chooseFileAvatarModal);
-        this.#root
-            .querySelector('.input-upload-avatar')
-            .addEventListener('change', previewAvatarModal);
-        this.#root
-            .querySelector('.button-revert-change-avatar')
-            .addEventListener('click', revertChangeAvatarModal);
-        this.#root
-            .querySelector('.upload-avatar-modal__button_cancel')
-            .addEventListener('click', revertChangeAvatarModal);
+        UploadAvatarModal.addEventListeners();
 
         this.#root.addEventListener('click', popoventProcess);
 
@@ -362,9 +341,6 @@ class Profile {
         this.#root
             .querySelector('.header-menu__logo')
             .addEventListener('click', this.toMainPageHandler);
-        this.#root
-            .querySelector('.upload-avatar-modal__button_upload')
-            .addEventListener('click', updateAvatarModal);
         emitter.bind('logout', this.close);
         emitter.bind('profile', this.renderProfile.bind(this));
         emitter.bind('security', this.renderSecurity.bind(this));
@@ -382,21 +358,7 @@ class Profile {
         this.#root
             .querySelector('.change-avatar__button')
             .removeEventListener('click', changeAvatarPopupAction);
-        this.#root
-            .querySelector('.button-profile[data-action=open-upload-avatar-modal]')
-            .removeEventListener('click', uploadAvatarModal);
-        this.#root
-            .querySelector('.button-upload-avatar')
-            .removeEventListener('click', chooseFileAvatarModal);
-        this.#root
-            .querySelector('.input-upload-avatar')
-            .removeEventListener('change', previewAvatarModal);
-        this.#root
-            .querySelector('.button-revert-change-avatar')
-            .removeEventListener('click', revertChangeAvatarModal);
-        this.#root
-            .querySelector('.upload-avatar-modal__button_cancel')
-            .removeEventListener('click', revertChangeAvatarModal);
+        UploadAvatarModal.removeEventListeners();
 
         this.#root.addEventListener('click', popoventProcess);
 

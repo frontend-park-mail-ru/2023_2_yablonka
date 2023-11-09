@@ -121,7 +121,6 @@ class Router {
         }
         const { path, state } = stateObject;
         const currentView = this.matchView(path);
-        console.log(path, currentView);
 
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 
@@ -166,7 +165,6 @@ class Router {
     refresh(pushState) {
         const matchedView = this.matchView(window.location.pathname);
         const redirectedPath = this.redirect(matchedView);
-        console.log(redirectedPath, matchedView, this.signedInViews.get(matchedView));
         if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
             this.open(
                 {

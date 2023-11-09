@@ -9,6 +9,10 @@
 
     --action-button-color: #7ba4f3;
     --sign-button-color: #000000;
+    --search-background-color: #000000;
+    --add-new-column-background-color: #2a3066;
+    --main-btn-border-color: #c0c9f4;
+    --router-btn-border-color: #ffffff;
 
     --sign-page-box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.15);
 }
@@ -22,7 +26,13 @@
 .flex-start {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
+}
+
+.flex-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .flex-spaced-between {
@@ -52,6 +62,31 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
+}
+
+.box-16-16 {
+    width: 16px;
+    height: 16px;
+}
+
+.box-24-24 {
+    width: 24px;
+    height: 24px;
+}
+
+.box-32-32 {
+    width: 32px;
+    height: 32px;
+}
+
+.box-40-40 {
+    width: 40px;
+    height: 40px;
+}
+
+.box-48-48 {
+    width: 48px;
+    height: 48px;
 }
 
 .link {
