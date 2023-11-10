@@ -1,0 +1,52 @@
+
+.sidebar-main {
+    width: 40%;
+    padding: 40px;
+}
+
+.sidebar-boards__menu {
+    border-bottom: 1px solid #c4c6ca24;
+    width: 50%;
+    align-self: flex-end;
+}
+
+.btn-sidebar-boards-menu:active {
+    background-color: transparent;
+}
+
+.btn-sidebar-boards-menu_selected {
+    background-color: var(--action-active-button-color);
+    color: var(--text-color-on-page);
+}
+
+.workspaces-list {
+    flex: 1;
+    overflow-y: hidden;
+}
+
+.workspaces-list__title {
+    color: var(--text-color-in-main);
+}
+
+.workspaces-list__container-wrapper {
+    position: relative;
+    display: flex;
+    flex: 1;
+}
+
+.workspaces-list__container {
+    top: 10px;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    white-space: nowrap;
+}
+
+.workspace-logo {
+    color: var(--main-page-background);
+}
+
+.btn-create-workspace {
+    color: var(--text-color-in-main);
+    background-color: transparent;
+}

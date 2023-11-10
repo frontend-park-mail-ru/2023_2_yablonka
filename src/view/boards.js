@@ -1,15 +1,15 @@
 import Header from '../components/header/header.js';
-import Main from '../components/deskComponents/main/main.js';
-import Sidebar from '../components/deskComponents/sidebar/sidebar.js';
-import AllBoards from '../components/deskComponents/all-boards/all-boards.js';
-import ContentHeaderName from '../components/deskComponents/content__header-name/content__header-name.js';
-import ButtonCreateWorkspace from '../components/deskComponents/button__create-workspace/button__create-workspace.js';
-import ContentBoardsList from '../components/deskComponents/content__boards-list/content__boards-list.js';
-import BoardsListItem from '../components/deskComponents/boards-list-item/boards-list-item.js';
-import WorkspaceCardDesctiption from '../components/deskComponents/workspace-card__desctiption/workspace-card__desctiption.js';
-import BoardTitleLogo from '../components/deskComponents/board-title__logo/board-title__logo.js';
-import BoardsLogo from '../components/deskComponents/boards-logo/boards-logo.js';
-import WorkspaceMessage from '../components/deskComponents/workspace-message/workspace-message.js';
+import Main from '../components/Main/main/main.js';
+import Sidebar from '../components/Main/sidebar/sidebar.js';
+import UserWorkspaces from '../components/Main/userWorkspaces/userWorkspaces.js';
+import ContentHeaderName from '../components/Main/content__header-name/content__header-name.js';
+import ButtonCreateWorkspace from '../components/Main/button__create-workspace/button__create-workspace.js';
+import ContentBoardsList from '../components/Main/content__boards-list/content__boards-list.js';
+import BoardsListItem from '../components/Main/boards-list-item/boards-list-item.js';
+import WorkspaceCardDesctiption from '../components/Main/workspace-card__desctiption/workspace-card__desctiption.js';
+import BoardTitleLogo from '../components/Main/board-title__logo/board-title__logo.js';
+import BoardsLogo from '../components/Main/boards-logo/boards-logo.js';
+import WorkspaceMessage from '../components/Main/workspace-message/workspace-message.js';
 import Navigation from '../components/popups/navigation/navigation.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
@@ -182,8 +182,8 @@ class Boards {
         const sidebar = new Sidebar(container);
         sidebar.render();
 
-        const allBoards = new AllBoards(container);
-        allBoards.render();
+        const userWorkspaces = new UserWorkspaces(container);
+        userWorkspaces.render();
 
         const contentContainer = document.querySelector('.content-container');
 
@@ -210,9 +210,7 @@ class Boards {
 
         this.#root.addEventListener('click', popeventProcess);
 
-        this.#root
-            .querySelector('.logo-wrapper')
-            .addEventListener('click', this.toBoardsHandler);
+        this.#root.querySelector('.logo-wrapper').addEventListener('click', this.toBoardsHandler);
         this.#root
             .querySelector('.profile-link[data-action=boards]')
             .addEventListener('click', this.toBoardsHandler);
