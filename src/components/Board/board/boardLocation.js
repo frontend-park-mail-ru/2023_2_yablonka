@@ -1,13 +1,13 @@
-import Component from '../core/basicComponent.js';
-import template from './boardSidebar.hbs';
+import Component from '../../core/basicComponent.js';
+import template from './boardLoaction.hbs';
 
 /**
- * Хедер
+ * Контейнер для досок
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class BoardSidebar extends Component {
+export default class BoardLocation extends Component {
     constructor(parent, config) {
         super(parent, config);
     }

@@ -1,10 +1,10 @@
 import Header from '../components/header/header.js';
 import PageLayout from '../components/pageLayout/pageLayout.js';
-import ContainerBoard from '../components/containerBoard/containerBoard.js';
-import BoardSidebar from '../components/boardSidebar/boardSidebar.js';
-import BoardLocation from '../components/board/boardLocation.js';
-import BoardMenu from '../components/boardMenu/boardMenu.js';
-import NavigationPopup from '../components/popups/navigationPopup/navigationPopup.js';
+import ContainerBoard from '../components/Board/containerBoard/containerBoard.js';
+import BoardSidebar from '../components/Board/boardSidebar/boardSidebar.js';
+import BoardLocation from '../components/Board/board/boardLocation.js';
+import BoardMenu from '../components/Board/boardMenu/boardMenu.js';
+import NavigationPopup from '../components/popups/navigation/navigation.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
 import userStorage from '../storages/userStorage.js';
@@ -32,6 +32,57 @@ class Board {
     constructor() {
         this.#root = document.querySelector('.page');
     }
+
+    workSpaceConfig = {
+        yourWorkspaces: [
+            {
+                workspace_id: 1,
+                workspace_name: 'Best Workspace',
+                thumbnail_url: '',
+                boards: [
+                    {
+                        board_id: 1,
+                        board_name: 'Good board',
+                        description: 'Just board',
+                        lists: [
+                            {
+                                description: 'Just list',
+                                id: 1,
+                                list_position: 0,
+                                name: 'Список1',
+                                cards: [
+                                    {
+                                        description: 'Description',
+                                        id: 0,
+                                        name: 'Card',
+                                        users: [
+                                            {
+                                                avatar_url: 'avatar.jpg',
+                                                email: 'test1@email.ru',
+                                                name: 'BBB',
+                                                surname: 'ccc',
+                                                user_id: 10,
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                        users: [
+                            {
+                                avatar_url: 'avatar.jpg',
+                                email: 'test1@email.ru',
+                                name: 'BBB',
+                                surname: 'ccc',
+                                user_id: 10,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+        guestWorkspace: [],
+    };
 
     /**
      * Рендер страницы в DOM

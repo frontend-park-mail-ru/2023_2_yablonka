@@ -1,12 +1,13 @@
 import Component from '../../core/basicComponent.js';
-import template from './changeAvatarPopup.hbs';
+import template from './boardSidebar.hbs';
+
 /**
- * Попап для хедера
+ * Хедер
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class ChangeAvatarPopup extends Component {
+export default class BoardSidebar extends Component {
     constructor(parent, config) {
         super(parent, config);
     }

@@ -1,13 +1,20 @@
 :root {
     --text-color-in-input: #c7c7c7;
     --text-color-on-page: #c0c9f4;
+    --text-color-in-search: #938989;
+    --text-color-upload-avatar-title: #747474;
 
     --sign-page-background: #0c1116;
     --header-background: #161a1d;
     --column-background: #101204;
     --card-background: #262d34;
+    --pop-up-background-color: rgba(22, 26, 29, 1);
+    --modal-upload-avatar-background-color: #f4f4f6;
 
     --action-button-color: #7ba4f3;
+    --cancel-button-color: #cbcaca;
+    --action-active-button-color: #092957;
+    --undo-avatar-upload-active-button-color: #c7c7c797;
     --sign-button-color: #000000;
     --search-background-color: #000000;
     --add-new-column-background-color: #2a3066;
@@ -15,6 +22,7 @@
     --router-btn-border-color: #ffffff;
 
     --sign-page-box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.15);
+    --hover-navigation-paragraph: rgba(38, 44, 49, 1);
 }
 
 .flex-centered {
@@ -108,16 +116,85 @@
     transition: ease-in-out 0.2s ease-in-out;
 }
 
+.btn-action {
+    background-color: var(--action-button-color);
+}
+
+.btn-action:active {
+    background-color: var(--action-active-button-color);
+}
+
+.padding-10-20 {
+    padding: 10px 20px;
+}
+
+.padding-10-15 {
+    padding: 10px 15px;
+}
+
+.padding-15-10 {
+    padding: 15px 10px;
+}
+
 .padding-5-10 {
     padding: 5px 10px;
+}
+
+.padding-10-5 {
+    padding: 10px 5px;
 }
 
 .padding-0-10 {
     padding: 0px 10px;
 }
 
+.padding-0-5 {
+    padding: 0px 5px;
+}
+
+.btn-action {
+    min-width: 100px;
+    min-height: 35px;
+}
+
 .cursor-pointer {
     cursor: pointer;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.gap-25 {
+    gap: 25px;
+}
+
+.gap-30 {
+    gap: 30px;
+}
+
+.gap-35 {
+    gap: 35px;
+}
+
+.gap-40 {
+    gap: 40px;
+}
+
+.gap-45 {
+    gap: 45px;
+}
+
+.gap-50 {
+    gap: 50px;
 }
 
 .font-size-10 {
@@ -196,6 +273,38 @@
     font-size: 28px;
 }
 
+.font-size-29 {
+    font-size: 29px;
+}
+
+.font-size-30 {
+    font-size: 30px;
+}
+
+.font-size-31 {
+    font-size: 31px;
+}
+
+.font-size-32 {
+    font-size: 32px;
+}
+
+.font-size-33 {
+    font-size: 33px;
+}
+
+.font-size-34 {
+    font-size: 34px;
+}
+
+.font-size-35 {
+    font-size: 35px;
+}
+
+.font-size-36 {
+    font-size: 36px;
+}
+
 .font-weight-100 {
     font-weight: 100;
 }
@@ -230,6 +339,10 @@
 
 .font-weight-900 {
     font-weight: 900;
+}
+
+.font-weight-bold {
+    font-weight: bold;
 }
 
 .border-radius-5 {

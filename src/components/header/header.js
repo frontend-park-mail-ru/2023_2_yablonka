@@ -1,5 +1,5 @@
 import Component from '../core/basicComponent.js';
-import template from  './header.hbs';
+import template from './header.hbs';
 /**
  * Хедер
  * @class
@@ -11,13 +11,24 @@ export default class Header extends Component {
         super(parent, config);
     }
 
+    #innerConfig = {
+        menuParagraphs: [
+            {
+                title: 'Проекты',
+            },
+            {
+                title: 'Избранное',
+            },
+            {
+                title: 'Шаблоны',
+            },
+        ],
+    };
+
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.innerHTML += this.data.reduce(
-            (inputs, input) => inputs + template(input),
-            '',
-        );
+        this.parent.insertAdjacentHTML('beforeend', template(Object.assign(this.config, this.#innerConfig)));
     }
 }

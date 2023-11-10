@@ -1,15 +1,15 @@
-<header class='header'>
-    <div class='header__menu'>
-        <div class='header-menu__logo'>
-            <a class='link-button link-button-logo' href='/'>
-                <div class='logo-wrapper'>
+<header class='flex-row-centered flex-spaced-between gap-20 padding-10-20 header'>
+    <div class='flex-row-centered flex-spaced-between gap-40 header__menu'>
+        <div class='flex-centered header-menu__logo'>
+            <a class='link font-size-36 font-weight-bold link-logo' href='/'>
+                <div class='flex-centered gap-5 font-size-35 logo-wrapper'>
                     <svg
                         width='75'
                         height='75'
                         viewBox='0 0 108 88'
                         fill='none'
                         xmlns='http://www.w3.org/2000/svg'
-                        class='logo-wrapper-image'
+                        class='box-40-40 logo-wrapper__image'
                     >
                         <g filter='url(#filter0_d_113_10)'>
                             <path
@@ -55,39 +55,40 @@
                             </filter>
                         </defs>
                     </svg>
-                    <span class='logo-wrapper__title'>Tabula</span>
+                    <span class='padding-0-5 logo-wrapper__title'>Tabula</span>
                 </div>
             </a>
         </div>
-        <div class='menu__projects'>
-            <span class='projects-title'>Проекты</span>
-            <img class='projects-action-image' src='chevron-down.svg' alt='' />
+        {{#each menuParagraphs as | paragraph |}}
+        <div class='flex-centered font-size-20 font-weight-bold header-menu__paragraph'>
+            <span class='paragraph__title'>{{paragraph.title}}</span>
+            <img class='box-24-24 paragraph__image' src='/svg/chevron-down.svg' alt='btn-menu' />
         </div>
-        <div class='menu__favourites'>
-            <span class='favourites-title'>Избранное</span>
-            <img class='favourites-action-image' src='chevron-down.svg' alt='' />
-        </div>
-        <div class='menu__templates'>
-            <span class='templates-title'>Шаблоны</span>
-            <img class='templates-action-image' src='chevron-down.svg' alt='' />
-        </div>
-        <button class='button create-button'>Создать</button>
+        {{/each}}
+        <button
+            class='btn btn-action border-radius-5 font-size-16 font-weight-bold padding-0-10 menu__btn-create'
+        >Создать</button>
     </div>
-    <div class='filler'></div>
-    <div class='header__search'>
-        <div class='search-input-wrapper'>
-            <img class='search-input-image' src='search.svg' alt='' /><input
-                class='search-input'
+    <div class='flex-row-centered gap-30 header__search'>
+        <div class='flex-centered border-radius-7 padding-0-10 search-input'>
+            <img class='box-24-24 search-input__image' src='/svg/search.svg' alt='' /><input
+                class='font-weight-500 border-radius-5 font-size-18 padding-0-10 search-input__text'
                 type='text'
                 placeholder='Найти...'
             />
         </div>
-        <div class='notification'>
-            <img class='notification-image' src='bell.svg' alt='' />
+        <div class='flex-centered box-24-24 notification'>
+            <button class='btn avatar-wrapper btn-notification'>
+                <img
+                    class='avatar-wrapper btn-notification__image'
+                    src='/svg/bell.svg'
+                    alt='notification'
+                />
+            </button>
         </div>
-        <div class='avatar'>
-            <button class='avatar__button'>
-                <img class='avatar-image' src='{{this.avatar}}' alt='avatar' />
+        <div class='flex-centered box-32-32 avatar'>
+            <button class='btn avatar-wrapper btn-avatar'>
+                <img class='avatar-wrapper btn-avatar__image' src='{{this.avatar}}' alt='avatar' />
             </button>
         </div>
     </div>

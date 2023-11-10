@@ -1,0 +1,12 @@
+@import "./changeAvatar/changeAvatar.scss";
+@import "./navigation/navigation.scss";
+@import "./uploadAvatar/uploadAvatar.scss";
+
+.navigation__item {
+    height: 30px;
+    width: 100%;
+}
+
+.navigation__item:hover {
+    background-color: var(--hover-navigation-paragraph);
+}

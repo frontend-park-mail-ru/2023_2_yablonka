@@ -5,8 +5,8 @@ import Form from '../components/basic/form/form.js';
 import FormInput from '../components/basic/formInput/formInput.js';
 import TextArea from '../components/basic/textArea/textArea.js';
 import Button from '../components/basic/button/button.js';
-import NavigationPopup from '../components/popups/navigationPopup/navigationPopup.js';
-import ChangeAvatarPopup from '../components/popups/changeAvatarPopup/changeAvatarPopup.js';
+import Navigation from '../components/popups/navigation/navigation.js';
+import ChangeAvatar from '../components/popups/changeAvatar/changeAvatar.js';
 import {
     actionRedirect,
     actionLogout,
@@ -17,10 +17,8 @@ import {
 import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import UploadAvatarModal from '../components/popups/uploadAvatar/uploadAvatar.js';
-import navigationPopupAction from '../components/popups/navigationPopup/navigationPopupHelper.js';
+import UploadAvatar from '../components/popups/uploadAvatar/uploadAvatar.js';
 import popoventProcess from '../components/core/popeventProcessing.js';
-import changeAvatarPopupAction from '../components/popups/changeAvatarPopup/changeAvatarPopupHelper.js';
 import Validator from '../modules/validator.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
@@ -107,7 +105,7 @@ class Profile {
         pageLayout.render();
 
         const header = new Header(this.#root.querySelector(pageLayout.className), {
-            user: { avatar: user.body.user.thumbnail_url },
+            avatar: user.body.user.thumbnail_url,
         });
         header.render();
 
@@ -115,20 +113,20 @@ class Profile {
             user.body.user.surname ? user.body.user.surname : ''
         }`;
 
-        const navigationPopup = new NavigationPopup(this.#root, {
+        const navigationPopup = new Navigation(this.#root, {
             email: user.body.user.email,
             avatar: user.body.user.thumbnail_url,
             name: namesurname,
         });
         navigationPopup.render();
 
-        const changeAvatarPopup = new ChangeAvatarPopup(this.#root, {
+        const changeAvatarPopup = new ChangeAvatar(this.#root, {
             dialogID: 'upload-avatar',
         });
         changeAvatarPopup.render();
 
-        const uploadAvatarModalWindow = new UploadAvatarModal(this.#root, {});
-        uploadAvatarModalWindow.render();
+        const uploadAvatarModal = new UploadAvatar(this.#root, {});
+        uploadAvatarModal.render();
 
         const containerProfile = new ContainerProfile(
             this.#root.querySelector(pageLayout.className),
@@ -310,13 +308,9 @@ class Profile {
      * Добавляет общие обработчики событий
      */
     addListeners() {
-        this.#root
-            .querySelector('.avatar__button')
-            .addEventListener('click', navigationPopupAction);
-        this.#root
-            .querySelector('.change-avatar__button')
-            .addEventListener('click', changeAvatarPopupAction);
-        UploadAvatarModal.addEventListeners();
+        Navigation.addEventListeners();
+        ChangeAvatar.addEventListeners();
+        UploadAvatar.addEventListeners();
 
         this.#root.addEventListener('click', popoventProcess);
 
@@ -341,6 +335,7 @@ class Profile {
         this.#root
             .querySelector('.header-menu__logo')
             .addEventListener('click', this.toMainPageHandler);
+
         emitter.bind('logout', this.close);
         emitter.bind('profile', this.renderProfile.bind(this));
         emitter.bind('security', this.renderSecurity.bind(this));
@@ -352,13 +347,9 @@ class Profile {
      * Убирает общие обработчики событий
      */
     removeListeners() {
-        this.#root
-            .querySelector('.avatar__button')
-            .removeEventListener('click', navigationPopupAction);
-        this.#root
-            .querySelector('.change-avatar__button')
-            .removeEventListener('click', changeAvatarPopupAction);
-        UploadAvatarModal.removeEventListeners();
+        Navigation.removeEventListeners();
+        ChangeAvatar.removeEventListeners();
+        UploadAvatar.removeEventListeners();
 
         this.#root.addEventListener('click', popoventProcess);
 
@@ -383,9 +374,7 @@ class Profile {
         this.#root
             .querySelector('.header-menu__logo')
             .removeEventListener('click', this.toMainPageHandler);
-        this.#root
-            .querySelector('.upload-avatar-modal__button_upload')
-            .removeEventListener('click', updateAvatarModal);
+
         emitter.unbind('logout', this.close);
         emitter.unbind('profile', this.renderProfile);
         emitter.unbind('security', this.renderSecurity);

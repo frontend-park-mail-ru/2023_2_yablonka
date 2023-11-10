@@ -1,37 +1,11 @@
-@import "./style_fonts.scss";
-@import "./style_vars.scss";
+@import "./fonts.scss";
+@import "./vars.scss";
 @import "./style_profile.scss";
-@import "./style_popover.scss";
 @import "./style_desk_list.scss";
 @import "./style_card_modal.scss";
 @import "./style_board.scss";
 @import "./style_404.scss";
-
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
-    font-family: Ubuntu;
-}
-
-html {
-    width: 100%;
-    height: 100%;
-    --text-color-in-input: #C7C7C7;
-    --sign-page-background: #0C1116;
-    color: var(--text-color-in-input);
-}
-
-body {
-    width: 100%;
-    height: 100%;
-}
-
-.page {
-    width: 100%;
-    height: 100%;
-}
+@import "../../src/components/baseStyles.scss";
 
 .page__layout-sign {
     background-color: var(--sign-page-background);

@@ -1,12 +1,13 @@
 import Component from '../../core/basicComponent.js';
-import template from './navigationPopup.hbs';
+import template from './boardMenu.hbs';
+
 /**
- * Попап для хедера
+ * Меню доски
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class NavigationPopup extends Component {
+export default class BoardMenu extends Component {
     constructor(parent, config) {
         super(parent, config);
     }
