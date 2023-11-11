@@ -54,7 +54,7 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async signin(user) {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}auth/login/`, userStorage.storage.get(userStorage.userModel.csrf), 'POST', user);
+        const responsePromise = await AJAX(`${apiPath + apiVersion}auth/login/`, 'POST', userStorage.storage.get(userStorage.userModel.csrf), user);
 
         let body = {};
 
@@ -107,7 +107,7 @@ class UserStorage extends BaseStorage {
      * Запрос на выход из аккаунта
      */
     async logout() {
-        await AJAX(`${apiPath + apiVersion}auth/logout/`, userStorage.storage.get(userStorage.userModel.csrf), 'DELETE', {});
+        await AJAX(`${apiPath + apiVersion}auth/logout/`, 'DELETE', userStorage.storage.get(userStorage.userModel.csrf), {});
         emitter.trigger('logout');
     }
 
@@ -116,7 +116,7 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async updateProfile(user) {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}user/edit/`, userStorage.storage.get(userStorage.userModel.csrf), 'POST', user);
+        const responsePromise = await AJAX(`${apiPath + apiVersion}user/edit/`, 'POST', userStorage.storage.get(userStorage.userModel.csrf), user);
 
         let body = {};
 
@@ -147,8 +147,8 @@ class UserStorage extends BaseStorage {
      */
     async updatePassword(user) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}user/edit/change_password/`, userStorage.storage.get(userStorage.userModel.csrf),
-            'POST',
+            `${apiPath + apiVersion}user/edit/change_password/`,
+            'POST', userStorage.storage.get(userStorage.userModel.csrf),
             user,
         );
 
@@ -175,8 +175,8 @@ class UserStorage extends BaseStorage {
      */
     async updateAvatar(user) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}user/edit/change_avatar/`, userStorage.storage.get(userStorage.userModel.csrf),
-            'POST',
+            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            'POST', userStorage.storage.get(userStorage.userModel.csrf),
             user,
         );
 

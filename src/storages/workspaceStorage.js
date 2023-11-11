@@ -29,7 +29,7 @@ class WorkspaceStorage extends BaseStorage {
      * Метод для получения рабочих пространств пользователя
      */
     async getWorkspaces() {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}user/boards/`, userStorage.storage.get(userStorage.userModel.csrf), 'GET');
+        const responsePromise = await AJAX(`${apiPath + apiVersion}user/boards/`, 'GET', userStorage.storage.get(userStorage.userModel.csrf));
 
         let body;
         try {
