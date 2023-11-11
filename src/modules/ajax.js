@@ -5,12 +5,13 @@
  * @param {Object} payload - данные, которые мы отсылаем
  * @returns {Promise} - результат fetch
  */
-export default async function AJAX(url, requestMethod, requestPayload = {}) {
+export default async function AJAX(url, requestMethod, csrf, requestPayload = {}) {
     let request;
     if (requestMethod.toLowerCase() !== 'get' && requestMethod.toLowerCase() !== 'head') {
         request = new Request(url, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
+                'X-CSRFToken': csrf,
             },
             credentials: 'include',
             body: JSON.stringify(requestPayload),
@@ -20,6 +21,7 @@ export default async function AJAX(url, requestMethod, requestPayload = {}) {
         request = new Request(url, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
+                'X-CSRFToken': csrf,
             },
             credentials: 'include',
             method: requestMethod,

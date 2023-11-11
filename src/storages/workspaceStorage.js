@@ -1,6 +1,7 @@
 import BaseStorage from './baseStorage.js';
 import AJAX from '../modules/ajax.js';
 import { apiPath, apiVersion } from '../configs/configs.js';
+import userStorage from './userStorage.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -28,7 +29,7 @@ class WorkspaceStorage extends BaseStorage {
      * Метод для получения рабочих пространств пользователя
      */
     async getWorkspaces() {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}user/boards/`, 'GET');
+        const responsePromise = await AJAX(`${apiPath + apiVersion}user/boards/`, userStorage.storage.get(userStorage.userModel.csrf), 'GET');
 
         let body;
         try {
