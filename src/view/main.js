@@ -28,109 +28,6 @@ class Boards {
     }
 
     /**
-     * Рендер досок пользователя
-     * @param {Object} usersDesks - данные о досках(не своих), в которых пользователь участвует
-     */
-    #renderGuestWorspace = (usersDesks) => {
-        const guestWorkspace = this.#root.querySelector('#guest');
-
-        if (!usersDesks) {
-            const workspaceMessage = new WorkspaceMessage(guestWorkspace, {
-                workspace: {
-                    message: 'Вы пока что не добавлены ни в одно рабочее пространство.',
-                },
-            });
-            workspaceMessage.render();
-            return;
-        }
-
-        const contentBoardsList = new ContentBoardsList(guestWorkspace);
-        contentBoardsList.render();
-
-        const guestBoards = guestWorkspace.childNodes[0];
-
-        const uniqOwnersId = new Map();
-        let userWorkspaceNumber = 0;
-        usersDesks.forEach((desk) => {
-            if (!uniqOwnersId.has(desk.owner_id)) {
-                uniqOwnersId.set(desk.owner_id, userWorkspaceNumber);
-                userWorkspaceNumber += 1;
-
-                const boardsListItem = new BoardsListItem(guestBoards);
-                boardsListItem.render();
-
-                const boardsImages = guestBoards.childNodes[0];
-
-                const workspaceCardDesctiption = new WorkspaceCardDesctiption(boardsImages, {
-                    user: {
-                        name: desk.owner_email,
-                    },
-                });
-                workspaceCardDesctiption.render();
-
-                const boardsLogo = new BoardsLogo(boardsImages);
-                boardsLogo.render();
-            }
-            const guestProjects = guestBoards.childNodes[uniqOwnersId.get(desk.owner_id)];
-            const boardTitleLogo = new BoardTitleLogo(
-                guestProjects.childNodes[guestProjects.childNodes.length - 1],
-                {
-                    userDeskInform: {
-                        name: desk.board_info.board_name,
-                        image: desk.board_info.thumbnail_url,
-                    },
-                },
-            );
-            boardTitleLogo.render();
-        });
-    };
-
-    /**
-     * Рендер досок пользователя
-     * @param {Object} usersDesks - данные о досках авторизованного пользователя
-     */
-    #renderOwnerWorkspace = (usersDesks) => {
-        const yourWorkspace = this.#root.querySelector('#yours');
-
-        if (!usersDesks) {
-            const workspaceMessage = new WorkspaceMessage(yourWorkspace, {
-                workspace: {
-                    message: 'Вы пока что не создали ни одно рабочее пространство.',
-                },
-            });
-            workspaceMessage.render();
-            const buttonCreateWorkspace = new ButtonCreateWorkspace(yourWorkspace.childNodes[0]);
-            buttonCreateWorkspace.render();
-            return;
-        }
-        const contentBoardsList = new ContentBoardsList(yourWorkspace);
-        contentBoardsList.render();
-
-        const yourBoards = yourWorkspace.childNodes[0];
-
-        const boardsListItem = new BoardsListItem(yourBoards);
-        boardsListItem.render();
-
-        const boardsImages = yourBoards.childNodes[0];
-
-        const boardsLogo = new BoardsLogo(boardsImages);
-        boardsLogo.render();
-
-        usersDesks.forEach((desk) => {
-            const boardTitleLogo = new BoardTitleLogo(
-                boardsImages.childNodes[boardsImages.childNodes.length - 1],
-                {
-                    userDeskInform: {
-                        name: desk.board_name,
-                        image: desk.thumbnail_url,
-                    },
-                },
-            );
-            boardTitleLogo.render();
-        });
-    };
-
-    /**
      * Рендер страницы в DOM
      */
     async renderPage() {
@@ -229,7 +126,7 @@ class Boards {
     toBoardsHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/boards', false));
+        dispatcher.dispatch(actionRedirect('/main', false));
     }
 
     /**
@@ -269,6 +166,6 @@ class Boards {
     }
 }
 
-const desks = new Boards();
+const main = new Boards();
 
-export default desks;
+export default main;

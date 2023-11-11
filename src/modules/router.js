@@ -138,7 +138,7 @@ class Router {
         const isAuth = userStorage.storage.get(userStorage.userModel.status) === 200;
 
         if (href === '/') {
-            return isAuth ? '/boards' : '/signin';
+            return isAuth ? '/main' : '/signin';
         }
         if (!isAuth) {
             if (href === '/signup') {
@@ -148,7 +148,7 @@ class Router {
             return '/signin';
         }
         if (href === '/signin' || href === '/signup') {
-            return '/boards';
+            return '/main';
         }
         if (this.redirectUrl) {
             const redirectedHref = this.redirectUrl;

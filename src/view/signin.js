@@ -181,7 +181,7 @@ class SignIn {
                 this.removeEventListeners();
                 this.clear();
                 dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-                dispatcher.dispatch(actionRedirect('/boards', false));
+                dispatcher.dispatch(actionRedirect('/main', false));
                 break;
             case 401:
                 errorMessageAnimation('sign', 'login-or-password', 'Неверный логин или пароль');

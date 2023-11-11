@@ -1,0 +1,23 @@
+.not-found {
+    background-color: var(--sign-page-background);
+    color: var(--text-color-in-main);
+}
+
+.not-found__image {
+    height: 150px;
+    width: 150px;
+}
+.not-found__image img {
+    height: 100%;
+    width: 100%;
+}
+
+.btn-not-found {
+    background-color: #000;
+    box-shadow: var(--sign-page-box-shadow);
+    border: var(--router-btn-border-color) 2px solid;
+    height: 50px;
+    min-width: 140px;
+    margin-top: 15px;
+    color: var(--router-btn-border-color);
+}

@@ -12,39 +12,7 @@
     width: 100%;
 }
 
-.workspace {
-    align-items: flex-start;
-}
-
-.workspaces__title,
-.workspace__title {
-    color: var(--text-color-in-main);
-}
-
-.workspace__boards {
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.link-user-board {
-    position: relative;
-    width: 200px;
-    height: 100px;
-    color: var(--text-color-in-main);
-}
-
-.workspace-board__title {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-}
-
-.btn-create-board {
-    width: 200px;
-    height: 100px;
-    background-color: var(--create-workspace-board-background);
-}
-
-.workspace-board__create-title {
-    color: var(--text-color-in-main);
+.btn-create-first-workspace {
+    color: var(--action-button-color);
+    background-color: transparent;
 }

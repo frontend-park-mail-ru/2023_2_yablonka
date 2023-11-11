@@ -16,7 +16,7 @@ export default class Navigation extends Component {
             {
                 action: 'boards',
                 title: 'Доски',
-                href: '/boards',
+                href: '/main',
             },
             {
                 action: 'profile',

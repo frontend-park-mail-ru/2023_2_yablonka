@@ -39,7 +39,7 @@ class Page404 {
      */
     addEventListeners() {
         this.#root
-            .querySelector('.button-not-found')
+            .querySelector('.btn-not-found')
             .addEventListener('click', this.redirectHandler);
     }
 
@@ -51,9 +51,7 @@ class Page404 {
         e.preventDefault();
         dispatcher.dispatch(
             actionRedirect(
-                userStorage.storage.get(userStorage.userModel.status) === 200
-                    ? '/boards'
-                    : '/signin',
+                userStorage.storage.get(userStorage.userModel.status) === 200 ? '/main' : '/signin',
                 false,
             ),
         );
