@@ -5,7 +5,7 @@ import Profile from '../view/profile.js';
 import page404 from '../view/page404.js';
 import Board from '../view/board.js';
 
-export const apiPath = 'http://localhost:8080';
+export const apiPath = 'http://213.219.215.40:8080';
 
 export const apiVersion = '/api/v2/';
 
