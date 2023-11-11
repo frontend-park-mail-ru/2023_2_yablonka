@@ -11,7 +11,7 @@ export default async function AJAX(url, requestMethod, csrf, requestPayload = {}
         request = new Request(url, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'X-CSRFToken': csrf,
+                'X-CSRF-Token': csrf,
             },
             credentials: 'include',
             body: JSON.stringify(requestPayload),
@@ -21,7 +21,7 @@ export default async function AJAX(url, requestMethod, csrf, requestPayload = {}
         request = new Request(url, {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'X-CSRFToken': csrf,
+                'X-CSRF-Token': csrf,
             },
             credentials: 'include',
             method: requestMethod,
