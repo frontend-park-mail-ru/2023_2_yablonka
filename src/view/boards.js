@@ -1,15 +1,7 @@
 import Header from '../components/header/header.js';
-import Main from '../components/Main/main/main.js';
+import ContainerMain from '../components/Main/containerMain/containerMain.js';
 import Sidebar from '../components/Main/sidebar/sidebar.js';
 import UserWorkspaces from '../components/Main/userWorkspaces/userWorkspaces.js';
-import ContentHeaderName from '../components/Main/content__header-name/content__header-name.js';
-import ButtonCreateWorkspace from '../components/Main/button__create-workspace/button__create-workspace.js';
-import ContentBoardsList from '../components/Main/content__boards-list/content__boards-list.js';
-import BoardsListItem from '../components/Main/boards-list-item/boards-list-item.js';
-import WorkspaceCardDesctiption from '../components/Main/workspace-card__desctiption/workspace-card__desctiption.js';
-import BoardTitleLogo from '../components/Main/board-title__logo/board-title__logo.js';
-import BoardsLogo from '../components/Main/boards-logo/boards-logo.js';
-import WorkspaceMessage from '../components/Main/workspace-message/workspace-message.js';
 import Navigation from '../components/popups/navigation/navigation.js';
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
 import { actionGetBoards } from '../actions/workspaceActions.js';
@@ -18,6 +10,7 @@ import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
 import popeventProcess from '../components/core/popeventProcessing.js';
+import PageLayoutMain from '../components/Main/pageLayoutMain/pageLayoutMain.js';
 
 /**
  * Класс для рендера страницы досок
@@ -33,19 +26,6 @@ class Boards {
     constructor() {
         this.#root = document.querySelector('.page');
     }
-
-    yourDesksConfig = {
-        contentHeaderName: {
-            yours: {
-                title: 'ВАШИ РАБОЧИЕ ПРОСТРАНСТВА',
-                id: 'yours',
-            },
-            guest: {
-                title: 'ГОСТЕВЫЕ РАБОЧИЕ ПРОСТРАНСТВА',
-                id: 'guest',
-            },
-        },
-    };
 
     /**
      * Рендер досок пользователя
@@ -158,47 +138,28 @@ class Boards {
 
         const user = userStorage.storage.get(userStorage.userModel.body);
 
-        const header = new Header(this.#root, {
+        new PageLayoutMain(this.#root, {}).render();
+        const pageLayout = document.querySelector('.page__layout-main');
+
+        new Header(pageLayout, {
             avatar: user.body.user.thumbnail_url,
-        });
-        header.render();
+        }).render();
 
-        const namesurname = `${user.body.user.name ? user.body.user.name : ''} ${
-            user.body.user.surname ? user.body.user.surname : ''
-        }`;
+        new ContainerMain(pageLayout, {}).render();
+        const mainContainer = document.querySelector('.container-main');
 
-        const navigationPopup = new Navigation(this.#root, {
-            email: user.body.user.email,
-            avatar: user.body.user.thumbnail_url,
-            name: namesurname,
-        });
-
-        navigationPopup.render();
-
-        const main = new Main(this.#root);
-        main.render();
-
-        const container = document.querySelector('.sticky-container');
-        const sidebar = new Sidebar(container);
-        sidebar.render();
-
-        const userWorkspaces = new UserWorkspaces(container);
-        userWorkspaces.render();
-
-        const contentContainer = document.querySelector('.content-container');
-
-        const contentHeaderName = new ContentHeaderName(
-            contentContainer,
-            this.yourDesksConfig.contentHeaderName,
-        );
-        contentHeaderName.render();
+        new Sidebar(mainContainer, user).render();
+        new UserWorkspaces(mainContainer, user).render();
 
         await dispatcher.dispatch(actionGetBoards());
 
-        const boards = workspaceStorage.storage.get(workspaceStorage.workspaceModel.body);
-
-        this.#renderOwnerWorkspace(boards.body?.boards.user_owned_boards);
-        this.#renderGuestWorspace(boards.body?.boards.user_guest_boards);
+        new Navigation(this.#root, {
+            email: user.body.user.email,
+            avatar: user.body.user.thumbnail_url,
+            name: `${user.body.user.name ? user.body.user.name : ''} ${
+                user.body.user.surname ? user.body.user.surname : ''
+            }`,
+        }).render();
         this.addListeners();
     }
 

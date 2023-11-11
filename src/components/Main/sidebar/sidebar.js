@@ -16,6 +16,6 @@ export default class Sidebar extends Component {
      */
 
     render() {
-        this.parent.innerHTML += template();
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 }
