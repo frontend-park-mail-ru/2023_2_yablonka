@@ -42,11 +42,9 @@ class UserStorage extends BaseStorage {
 
         try {
             xhr.send();
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
         }
-
     }
 
     /**
@@ -54,7 +52,12 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async signin(user) {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}auth/login/`, 'POST', userStorage.storage.get(userStorage.userModel.csrf), user);
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}auth/login/`,
+            'POST',
+            this.storage.get(this.userModel.csrf),
+            user,
+        );
 
         let body = {};
 
@@ -68,7 +71,7 @@ class UserStorage extends BaseStorage {
         if (status === 200) {
             this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
-            this.storage.set(this.userModel.csrf, responsePromise['X-CSRFToken'])
+            this.storage.set(this.userModel.csrf, responsePromise['X-CSRFToken']);
         }
         this.storage.set(this.userModel.body, body);
         this.storage.set(this.userModel.status, status);
@@ -80,7 +83,12 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async signup(user) {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}auth/signup/`, userStorage.storage.get(userStorage.userModel.csrf), 'POST', user);
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}auth/signup/`,
+            'POST',
+            this.storage.get(this.userModel.csrf),
+            user,
+        );
 
         let body = {};
 
@@ -95,7 +103,7 @@ class UserStorage extends BaseStorage {
         if (status === 200) {
             this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
-            this.storage.set(this.userModel.csrf, responsePromise['X-CSRFToken'])
+            this.storage.set(this.userModel.csrf, responsePromise['X-CSRFToken']);
         }
 
         this.storage.set(this.userModel.body, body);
@@ -107,7 +115,12 @@ class UserStorage extends BaseStorage {
      * Запрос на выход из аккаунта
      */
     async logout() {
-        await AJAX(`${apiPath + apiVersion}auth/logout/`, 'DELETE', userStorage.storage.get(userStorage.userModel.csrf), {});
+        await AJAX(
+            `${apiPath + apiVersion}auth/logout/`,
+            'DELETE',
+            this.storage.get(this.userModel.csrf),
+            {},
+        );
         emitter.trigger('logout');
     }
 
@@ -116,7 +129,12 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async updateProfile(user) {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}user/edit/`, 'POST', userStorage.storage.get(userStorage.userModel.csrf), user);
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/edit/`,
+            'POST',
+            this.storage.get(this.userModel.csrf),
+            user,
+        );
 
         let body = {};
 
@@ -148,7 +166,8 @@ class UserStorage extends BaseStorage {
     async updatePassword(user) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}user/edit/change_password/`,
-            'POST', userStorage.storage.get(userStorage.userModel.csrf),
+            'POST',
+            this.storage.get(this.userModel.csrf),
             user,
         );
 
@@ -176,7 +195,8 @@ class UserStorage extends BaseStorage {
     async updateAvatar(user) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}user/edit/change_avatar/`,
-            'POST', userStorage.storage.get(userStorage.userModel.csrf),
+            'POST',
+            this.storage.get(this.userModel.csrf),
             user,
         );
 
