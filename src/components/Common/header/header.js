@@ -1,4 +1,4 @@
-import Component from '../core/basicComponent.js';
+import Component from '../../core/basicComponent';
 import template from './header.hbs';
 /**
  * Хедер
@@ -29,6 +29,9 @@ export default class Header extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', template(Object.assign(this.config, this.#innerConfig)));
+        this.parent.insertAdjacentHTML(
+            'beforeend',
+            template(Object.assign(this.config, this.#innerConfig)),
+        );
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Действие, означающее получение досок
  */
-export const actionGetBoards = () => ({
+export const actionGetWorkspaces = () => ({
     type: 'getBoards',
     value: {},
 });

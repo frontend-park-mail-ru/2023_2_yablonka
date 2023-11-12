@@ -13,10 +13,6 @@ class WorkspaceStorage extends BaseStorage {
         status: 'status',
     };
 
-    currentWorkspace;
-    currentBoard;
-    currentCard;
-
     /**
      * @constructor
      */
@@ -29,7 +25,11 @@ class WorkspaceStorage extends BaseStorage {
      * Метод для получения рабочих пространств пользователя
      */
     async getWorkspaces() {
-        const responsePromise = await AJAX(`${apiPath + apiVersion}user/boards/`, 'GET', userStorage.storage.get(userStorage.userModel.csrf));
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/workspaces/`,
+            'GET',
+            userStorage.storage.get(userStorage.userModel.csrf),
+        );
 
         let body;
         try {

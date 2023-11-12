@@ -1,7 +1,11 @@
-import dispatcher from '../modules/dispatcher.js';
-import { actionRedirect } from '../actions/userActions.js';
-import userStorage from '../storages/userStorage.js';
+// components
 import Error404 from '../components/404/error404.js';
+// storages
+import userStorage from '../storages/userStorage.js';
+// actions
+import { actionRedirect } from '../actions/userActions.js';
+// dispatcher
+import dispatcher from '../modules/dispatcher.js';
 
 class Page404 {
     #root;
@@ -38,9 +42,7 @@ class Page404 {
      * Добавляет подписки на события
      */
     addEventListeners() {
-        this.#root
-            .querySelector('.btn-not-found')
-            .addEventListener('click', this.redirectHandler);
+        this.#root.querySelector('.btn-not-found').addEventListener('click', this.redirectHandler);
     }
 
     /**

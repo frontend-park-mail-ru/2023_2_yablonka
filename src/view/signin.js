@@ -1,3 +1,4 @@
+// components
 import PageLayout from '../components/pageLayout/pageLayout.js';
 import SignDecoration from '../components/containerSign/containerSign.js';
 import Form from '../components/basic/form/form.js';
@@ -6,10 +7,13 @@ import LinkButton from '../components/basic/linkButton/linkButton.js';
 import Button from '../components/basic/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
+// storages
+import userStorage from '../storages/userStorage.js';
+// actions
+import { actionSignin, actionRedirect, actionNavigate } from '../actions/userActions.js';
+// routing
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import { actionSignin, actionRedirect, actionNavigate } from '../actions/userActions.js';
-import userStorage from '../storages/userStorage.js';
 
 /**
  * Класс для рендера страницы логина

@@ -1,3 +1,4 @@
+// components
 import PageLayout from '../components/pageLayout/pageLayout.js';
 import SignDecoration from '../components/containerSign/containerSign.js';
 import ContentHeader from '../components/contentHeader/contentHeader.js';
@@ -6,12 +7,16 @@ import FormInput from '../components/basic/formInput/formInput.js';
 import LinkButton from '../components/basic/linkButton/linkButton.js';
 import Button from '../components/basic/button/button.js';
 import ErrorMessage from '../components/errorMessage/errorMessage.js';
-import Validator from '../modules/validator.js';
 import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
+// storages
+import userStorage from '../storages/userStorage.js';
+// actions
+import { actionSignup, actionRedirect, actionNavigate } from '../actions/userActions.js';
+// utils
+import Validator from '../modules/validator.js';
+// routing
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import { actionSignup, actionRedirect, actionNavigate } from '../actions/userActions.js';
-import userStorage from '../storages/userStorage.js';
 
 /**
  * Класс для рендера страницы регистрации

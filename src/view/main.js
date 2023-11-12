@@ -1,16 +1,21 @@
-import Header from '../components/header/header.js';
+// Components
+import PageLayoutMain from '../components/Main/pageLayoutMain/pageLayoutMain.js';
 import ContainerMain from '../components/Main/containerMain/containerMain.js';
+import Header from '../components/Common/header/header.js';
 import Sidebar from '../components/Main/sidebar/sidebar.js';
 import UserWorkspaces from '../components/Main/userWorkspaces/userWorkspaces.js';
+// popups
 import Navigation from '../components/popups/navigation/navigation.js';
+import popeventProcess from '../components/core/popeventProcessing.js';
+// actions
 import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
-import { actionGetBoards } from '../actions/workspaceActions.js';
+import { actionGetWorkspaces } from '../actions/workspaceActions.js';
+// storages
 import userStorage from '../storages/userStorage.js';
+// routing
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
-import popeventProcess from '../components/core/popeventProcessing.js';
-import PageLayoutMain from '../components/Main/pageLayoutMain/pageLayoutMain.js';
 
 /**
  * Класс для рендера страницы досок
@@ -45,10 +50,13 @@ class Boards {
         new ContainerMain(pageLayout, {}).render();
         const mainContainer = document.querySelector('.container-main');
 
-        new Sidebar(mainContainer, user).render();
-        new UserWorkspaces(mainContainer, user).render();
+        await dispatcher.dispatch(actionGetWorkspaces());
 
-        await dispatcher.dispatch(actionGetBoards());
+        const workspaces = workspaceStorage.storage.get(workspaceStorage.workspaceModel.body);
+        console.log(workspaces);
+
+        new Sidebar(mainContainer, workspaces).render();
+        new UserWorkspaces(mainContainer, workspaces).render();
 
         new Navigation(this.#root, {
             email: user.body.user.email,
@@ -57,6 +65,7 @@ class Boards {
                 user.body.user.surname ? user.body.user.surname : ''
             }`,
         }).render();
+
         this.addListeners();
     }
 

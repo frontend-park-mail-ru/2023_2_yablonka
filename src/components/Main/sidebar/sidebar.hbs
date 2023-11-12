@@ -17,18 +17,8 @@
             <span class='font-size-18 font-weight-500 workspaces-list__title'>Рабочие пространства</span>
             <div class='flex-centered workspaces-list__container-wrapper'>
                 <ol class='flex-column-centered gap-10 workspaces-list__container'>
-                    {{#each workspaces as |workspace|}}
-                        <li class='workspaces-list__item-wrapper'>
-                            <div
-                                class='font-size-24 font-weight-bold flex-row-centered gap-10 padding-0-10 workspaces-list__item'
-                            ><span
-                                    class='box-32-32 border-radius-5 flex-centered workspace-logo'
-                                >Array.from(workspace.title)[0]</span>
-                                <span
-                                    class='font-size-16 font-weight-500 flex-centered workspace__title'
-                                >workspace.title</span>
-                            </div>
-                        </li>
+                    {{#each workspaceParagraphs as |workspacePargraph|}}
+                        {{{workspacePargraph}}}
                     {{/each}}
                     <li class='workspaces-list__create-item'>
                         <button

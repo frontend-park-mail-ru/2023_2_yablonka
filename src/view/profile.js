@@ -1,12 +1,21 @@
+// components
 import PageLayout from '../components/pageLayout/pageLayout.js';
-import Header from '../components/header/header.js';
+import Header from '../components/Common/header/header.js';
 import ContainerProfile from '../components/containerProfile/containerProfile.js';
 import Form from '../components/basic/form/form.js';
 import FormInput from '../components/basic/formInput/formInput.js';
 import TextArea from '../components/basic/textArea/textArea.js';
 import Button from '../components/basic/button/button.js';
+import ErrorMessage from '../components/errorMessage/errorMessage.js';
+import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
+// popurs
 import Navigation from '../components/popups/navigation/navigation.js';
 import ChangeAvatar from '../components/popups/changeAvatar/changeAvatar.js';
+import UploadAvatar from '../components/popups/uploadAvatar/uploadAvatar.js';
+import popoventProcess from '../components/core/popeventProcessing.js';
+// storages
+import userStorage from '../storages/userStorage.js';
+// actions
 import {
     actionRedirect,
     actionLogout,
@@ -14,14 +23,11 @@ import {
     actionUpdateProfile,
     actionUpdatePassword,
 } from '../actions/userActions.js';
-import userStorage from '../storages/userStorage.js';
+// routing
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
-import UploadAvatar from '../components/popups/uploadAvatar/uploadAvatar.js';
-import popoventProcess from '../components/core/popeventProcessing.js';
+// utils
 import Validator from '../modules/validator.js';
-import ErrorMessage from '../components/errorMessage/errorMessage.js';
-import errorMessageAnimation from '../components/core/errorMessageAnimation.js';
 
 /**
  * Класс для рендера страницы профиля

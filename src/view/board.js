@@ -1,4 +1,4 @@
-import Header from '../components/header/header.js';
+import Header from '../components/Common/header/header.js';
 import PageLayout from '../components/pageLayout/pageLayout.js';
 import ContainerBoard from '../components/Board/containerBoard/containerBoard.js';
 import BoardSidebar from '../components/Board/boardSidebar/boardSidebar.js';

@@ -1,4 +1,4 @@
-import Component from '../../core/basicComponent.js';
+import Component from '../../../core/basicComponent';
 import template from './board.hbs';
 /**
  * слои-обертки
