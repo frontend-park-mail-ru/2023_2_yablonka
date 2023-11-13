@@ -9,6 +9,7 @@
     --header-background: #161a1d;
     --main-page-background: #1c2127;
     --create-workspace-board-background: #a1bdd914;
+    --board-menu-background: rgba(30, 35, 36, 75%);
     --column-background: #101204;
     --card-background: #262d34;
     --pop-up-background-color: rgba(22, 26, 29, 1);
@@ -19,10 +20,15 @@
     --action-active-button-color: #092957;
     --undo-avatar-upload-active-button-color: #c7c7c797;
     --sign-button-color: #000000;
-    --search-background-color: #000000;
-    --add-new-column-background-color: #2a3066;
     --main-btn-border-color: #c0c9f4;
+    --input-background-color: #262d34;
     --router-btn-border-color: #ffffff;
+
+    --search-background-color: #000000;
+
+    --add-new-column-background-color: #2a3066;
+    --input-border-color: #38424d;
+
     --workspace--icon-gradient-bolder: #e774bb;
     --workspace--icon-gradient-subtle: #cd5a91;
 
@@ -164,6 +170,10 @@
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.gap-5 {
+    gap: 5px;
 }
 
 .gap-10 {

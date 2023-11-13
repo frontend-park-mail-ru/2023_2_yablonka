@@ -1,5 +1,6 @@
 import Component from '../../core/basicComponent.js';
 import template from './workspace.hbs';
+import './workspace.scss';
 /**
  * слои-обертки
  * @class
@@ -16,6 +17,6 @@ export default class Workspace extends Component {
      */
 
     render() {
-        this.parent.insertAdjacentHTML('beforeend', template(this.config));
+        return template(this.config);
     }
 }

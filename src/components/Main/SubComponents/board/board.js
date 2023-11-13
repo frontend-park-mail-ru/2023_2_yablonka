@@ -16,6 +16,6 @@ export default class Board extends Component {
      */
 
     render() {
-        this.parent.insertAdjacentHTML('beforeend', template(this.config));
+        return template(this.config);
     }
 }

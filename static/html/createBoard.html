@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../../dist/app.7536726951532ce3add0.css" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.7536726951532ce3add0.css.map" type="text/css" />
+        <title></title>
+    </head>
+    <body>
+        <div class="page">
+            <dialog
+                id="create-board"
+                class="flex-column-centered border-radius-10 create-board"
+                aria-modal="false"
+                popover
+                open
+            >
+                <div class="border-radius-5 flex-column-centered create-board-wrapper">
+                    <form
+                        class="flex-column-centered gap-35 form form__create-board"
+                        method="POST"
+                        action="/board/create/"
+                    >
+                        <div class="flex-column-centered gap-5 create-board__name">
+                            <span class="font-size-12 font-weight-500 create-board-name__title"
+                                >Заголовок доски</span
+                            >
+                            <input
+                                maxlength="32"
+                                class="font-size-14 font-weght-200 border-radius-5 padding-5-10 input input-board-name"
+                                type="text"
+                                placeholder="Название доски"
+                                data-name="board-name"
+                                required
+                            />
+                            <span class="font-size-11 font-weght-200 create-board-name__description"
+                                >👋 Укажите название доски.</span
+                            >
+                        </div>
+                        <div class="flex-column-centered gap-5 create-board__workspace-select">
+                            <span
+                                class="font-size-12 font-weight-500 create-board-workspace-select__title"
+                                >Рабочее простанство</span
+                            >
+                            <select form="form__create-board" class="font-size-14 font-weight-200 border-radius-5 select-workspace"  id="select-workspace">
+                                <option class=" font-size-14 font-weight-200 select-workspace__workspace" value="0">Select your workspace</option>
+                                <option class=" font-size-14 font-weight-200 select-workspace__workspace" value="1">1</option>
+                                <option class=" font-size-14 font-weight-200 select-workspace__workspace" value="2">2</option>
+                            </select>
+                        </div>
+                        <button
+                            class="border-radius-5 padding-0-10 font-size-14 font-weight-bold btn btn-create-board-pop-up"
+                        >
+                            Создать
+                        </button>
+                    </form>
+                </div>
+            </dialog>
+        </div>
+    </body>
+</html>

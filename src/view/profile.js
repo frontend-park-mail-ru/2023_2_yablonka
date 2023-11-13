@@ -97,6 +97,7 @@ class Profile {
      */
     constructor() {
         this.#root = document.querySelector('.page');
+        emitter.bind('updateProfile', this.rerender.bind(this));
     }
 
     /**
@@ -105,23 +106,19 @@ class Profile {
     async renderPage() {
         document.title = 'Tabula: Profile';
 
-        const user = userStorage.storage.get(userStorage.userModel.body);
+        const { user } = userStorage.storage.get(userStorage.userModel.body).body;
 
         const pageLayout = new PageLayout(this.#root, { className: 'profile' });
         pageLayout.render();
 
-        const header = new Header(this.#root.querySelector(pageLayout.className), {
-            avatar: user.body.user.thumbnail_url,
-        });
+        const header = new Header(this.#root.querySelector(pageLayout.className), user);
         header.render();
 
-        const namesurname = `${user.body.user.name ? user.body.user.name : ''} ${
-            user.body.user.surname ? user.body.user.surname : ''
-        }`;
+        const namesurname = `${user.name ? user.name : ''} ${user.surname ? user.surname : ''}`;
 
         const navigationPopup = new Navigation(this.#root, {
-            email: user.body.user.email,
-            avatar: user.body.user.thumbnail_url,
+            email: user.email,
+            avatar: user.avatar_url,
             name: namesurname,
         });
         navigationPopup.render();
@@ -137,7 +134,7 @@ class Profile {
         const containerProfile = new ContainerProfile(
             this.#root.querySelector(pageLayout.className),
             {
-                avatar: user.body.user.thumbnail_url,
+                avatar: user.avatar_url,
                 nameSurname: namesurname,
             },
         );
@@ -156,7 +153,7 @@ class Profile {
      * Рендер части с профилем
      */
 
-    async renderProfile() {
+    renderProfile() {
         document
             .querySelector('button[data-action=update-password]')
             ?.removeEventListener('click', this.changePasswordHandler);
@@ -226,6 +223,12 @@ class Profile {
             .addEventListener('click', this.changeProfileHandler);
     }
 
+    async rerender() {
+        this.clear();
+        this.renderPage();
+        this.addListeners();
+    }
+
     /**
      * Запись в историю части с профилем отправка события на рендер части со сменой пароля
      * @param {Event} e - событие
@@ -251,7 +254,7 @@ class Profile {
     /**
      *Рендерит части со сменой пароля
      */
-    async renderSecurity() {
+    renderSecurity() {
         document
             .querySelector('button[data-action=update-profile]')
             ?.removeEventListener('click', this.changeProfileHandler);
@@ -457,7 +460,7 @@ class Profile {
     toMainPageHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/boards', false));
+        dispatcher.dispatch(actionRedirect('/main', false));
     }
 
     /**

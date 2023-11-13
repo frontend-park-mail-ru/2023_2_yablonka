@@ -25,7 +25,7 @@ class UserStorage extends BaseStorage {
     }
 
     /**
-     * Проверка, залоигнен ли пользователь
+     * Проверка, залогинен ли пользователь
      */
     authVerify() {
         const xhr = new XMLHttpRequest();
@@ -35,7 +35,7 @@ class UserStorage extends BaseStorage {
         xhr.withCredentials = true;
         xhr.onload = () => {
             this.storage.set(this.userModel.status, xhr.status);
-            this.storage.set(this.userModel.csrf, xhr['X-CSRFToken']);
+            this.storage.set(this.userModel.csrf, xhr.getResponseHeader('X-Csrf-Token'));
             this.storage.set(this.userModel.body, JSON.parse(xhr.response));
             this.storage.set(this.userModel.name, 'auth');
         };
@@ -58,7 +58,6 @@ class UserStorage extends BaseStorage {
             this.storage.get(this.userModel.csrf),
             user,
         );
-
         let body = {};
 
         try {
@@ -71,7 +70,7 @@ class UserStorage extends BaseStorage {
         if (status === 200) {
             this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
-            this.storage.set(this.userModel.csrf, responsePromise['X-CSRFToken']);
+            this.storage.set(this.userModel.csrf, responsePromise['X-Csrf-Token']);
         }
         this.storage.set(this.userModel.body, body);
         this.storage.set(this.userModel.status, status);
@@ -103,7 +102,7 @@ class UserStorage extends BaseStorage {
         if (status === 200) {
             this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
-            this.storage.set(this.userModel.csrf, responsePromise['X-CSRFToken']);
+            this.storage.set(this.userModel.csrf, responsePromise['X-Csrf-Token']);
         }
 
         this.storage.set(this.userModel.body, body);
@@ -136,23 +135,15 @@ class UserStorage extends BaseStorage {
             user,
         );
 
-        let body = {};
-
-        try {
-            body = await responsePromise.json();
-        } catch (error) {
-            body = {};
-        }
-
         const { status } = responsePromise;
         if (status === 200) {
             this.changed = true;
             const oldUser = this.storage.get(this.userModel.body);
-            oldUser.name = body.name;
-            oldUser.surname = body.surname;
-            oldUser.description = body.description;
+            oldUser.body.user.name = user.name;
+            oldUser.body.user.surname = user.surname;
+            oldUser.body.user.description = user.description;
             this.storage.set(this.userModel.body, oldUser);
-            emitter.trigger('profile');
+            emitter.trigger('updateProfile');
             emitter.trigger('changeSuccess');
         } else {
             emitter.trigger('changeError');
@@ -171,17 +162,10 @@ class UserStorage extends BaseStorage {
             user,
         );
 
-        let body = {};
-
-        try {
-            body = await responsePromise.json();
-        } catch (error) {
-            body = {};
-        }
-
         const { status } = responsePromise;
 
         if (status === 200) {
+            emitter.trigger('updateProfile');
             emitter.trigger('changeSuccess');
         } else {
             emitter.trigger('changeError');
@@ -211,8 +195,10 @@ class UserStorage extends BaseStorage {
         const { status } = responsePromise;
         if (status === 200) {
             const oldUser = this.storage.get(this.userModel.body);
-            oldUser.thumbnail_url = body.thumbnail_url;
+            console.log(body);
+            oldUser.body.user.avatar_url = body.avatar_url;
             this.storage.set(this.userModel.body, oldUser);
+            emitter.trigger('updateProfile');
             emitter.trigger('changeSuccess');
         } else {
             emitter.trigger('changeError');

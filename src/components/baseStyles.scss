@@ -1,7 +1,5 @@
 @import './popups/popupsStyles.scss';
 @import './Common/common.scss';
-@import './Main/main.scss';
-@import './404/error404.scss';
 
 * {
     margin: 0;
@@ -24,4 +22,18 @@ body {
 .page {
     width: 100%;
     height: 100%;
+}
+
+button:active {
+    scale: 0.95;
+    opacity: 0.75;
+    transition: ease-in-out 0.2s ease-in-out;
+}
+
+button {
+    cursor: pointer;
+}
+
+::backdrop {
+    background-color: rgba(0, 0, 0, 50%);
 }

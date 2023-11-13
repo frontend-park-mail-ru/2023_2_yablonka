@@ -1,5 +1,6 @@
 import Component from '../../core/basicComponent.js';
 import template from './navigation.hbs';
+import './navigation.scss';
 /**
  * Попап для хедера
  * @class

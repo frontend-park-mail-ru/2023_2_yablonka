@@ -1,5 +1,6 @@
 import Component from '../../core/basicComponent.js';
 import template from './pageLayoutMain.hbs';
+import './pageLayoutMain.scss';
 /**
  * слои-обертки
  * @class

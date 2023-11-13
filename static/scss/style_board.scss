@@ -11,41 +11,21 @@
 .container-board {
     flex-grow: 1;
     width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    background: url('../img/main_theme.jpg');
 }
 
 .sidebar {
     width: 15%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    background-color: rgba(30, 35, 36, 75%);
+    background-color: var(--board-menu-background);
 }
 
 .sidebar__workspace-information {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     height: 64px;
     width: 100%;
-    gap: 15px;
 }
 
 .sidebar__user-avatar {
-    height: 48px;
-    width: 48px;
     border-radius: 50%;
-}
-
-.sidebar__workspace-name {
-    font-size: 18px;
-    font-weight: 500;
 }
 
 .sidebar__actions {
@@ -190,9 +170,9 @@
     font-weight: 500;
 }
 
-.input-board-name {
-    display: none;
-}
+// .input-board-name {
+//     display: none;
+// }
 
 .board-menu__access-settings-wrapper {
     display: flex;

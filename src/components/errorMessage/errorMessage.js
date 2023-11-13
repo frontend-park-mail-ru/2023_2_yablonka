@@ -16,6 +16,6 @@ export default class ErrorMessage extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('afterbegin', template(this.config));
+        this.parent.insertAdjacentHTML('beforebegin', template(this.config));
     }
 }

@@ -1,5 +1,6 @@
 import Component from '../core/basicComponent.js';
 import template from './error404.hbs';
+import './error404.scss';
 
 /**
  * Контейнер для досок

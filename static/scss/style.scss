@@ -5,6 +5,7 @@
 @import "./style_card_modal.scss";
 @import "./style_board.scss";
 @import "./style_404.scss";
+@import "./createBoard.scss";
 @import "../../src/components/baseStyles.scss";
 
 .page__layout-sign {
@@ -63,7 +64,7 @@
 }
 
 .form-sign {
-    gap: 25px;
+    gap: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,16 +116,6 @@
     cursor: pointer;
 }
 
-button:active {
-    scale: 0.95;
-    opacity: 0.75;
-    transition: ease-in-out 0.2s ease-in-out;
-}
-
-button {
-    cursor: pointer;
-}
-
 .btn-sign {
     background-color: #000;
     box-shadow: rgba(255, 255, 255, 15%) 4px 4px 10px;
@@ -150,18 +141,3 @@ button {
     align-self: flex-end;
 }
 
-
-
-.error-sign {
-    font-size: 16px;
-    height: 20px;
-    z-index: 999;
-    font-weight: 400;
-    align-self: flex-start;
-    position: absolute;
-    top: -24px;
-}
-
-::backdrop {
-    background-color: rgba(0, 0, 0, 50%);
-}

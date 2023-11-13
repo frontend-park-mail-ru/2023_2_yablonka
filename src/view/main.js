@@ -16,6 +16,7 @@ import userStorage from '../storages/userStorage.js';
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
+import CreateWorkspace from '../components/popups/createWorkspace/createWorkspace.js';
 
 /**
  * Класс для рендера страницы досок
@@ -30,6 +31,7 @@ class Boards {
      */
     constructor() {
         this.#root = document.querySelector('.page');
+        emitter.bind('renderWorkspaces', this.rerender.bind(this));
     }
 
     /**
@@ -38,33 +40,31 @@ class Boards {
     async renderPage() {
         document.title = 'Tabula: Ваши Доски';
 
-        const user = userStorage.storage.get(userStorage.userModel.body);
+        const { user } = userStorage.storage.get(userStorage.userModel.body).body;
 
         new PageLayoutMain(this.#root, {}).render();
         const pageLayout = document.querySelector('.page__layout-main');
 
-        new Header(pageLayout, {
-            avatar: user.body.user.thumbnail_url,
-        }).render();
+        new Header(pageLayout, user).render();
 
         new ContainerMain(pageLayout, {}).render();
         const mainContainer = document.querySelector('.container-main');
 
         await dispatcher.dispatch(actionGetWorkspaces());
 
-        const workspaces = workspaceStorage.storage.get(workspaceStorage.workspaceModel.body);
-        console.log(workspaces);
+        const { workspaces } = workspaceStorage.storage.get(workspaceStorage.workspaceModel.body)
+            .body;
 
         new Sidebar(mainContainer, workspaces).render();
         new UserWorkspaces(mainContainer, workspaces).render();
 
         new Navigation(this.#root, {
-            email: user.body.user.email,
-            avatar: user.body.user.thumbnail_url,
-            name: `${user.body.user.name ? user.body.user.name : ''} ${
-                user.body.user.surname ? user.body.user.surname : ''
-            }`,
+            email: user.email,
+            avatar: user.avatar_url,
+            name: `${user.name ? user.name : ''} ${user.surname ? user.surname : ''}`,
         }).render();
+
+        new CreateWorkspace(this.#root, {}).render();
 
         this.addListeners();
     }
@@ -74,6 +74,7 @@ class Boards {
      */
     addListeners() {
         Navigation.addEventListeners();
+        CreateWorkspace.addEventListeners();
 
         this.#root.addEventListener('click', popeventProcess);
 
@@ -98,6 +99,7 @@ class Boards {
      */
     removeListeners() {
         Navigation.removeEventListeners();
+        CreateWorkspace.removeEventListeners();
 
         this.#root.removeEventListener('click', popeventProcess);
 
@@ -117,6 +119,12 @@ class Boards {
             .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.toSecurityHandler);
         emitter.unbind('logout', this.close);
+    }
+
+    async rerender() {
+        this.clear();
+        this.renderPage();
+        this.addListeners();
     }
 
     /**

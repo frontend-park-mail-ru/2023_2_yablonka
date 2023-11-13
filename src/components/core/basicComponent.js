@@ -6,19 +6,8 @@
  * @param {string} templateName - Название шаблона компонента(hbs).
  */
 export default class Component {
-    constructor(parent, config, templateName) {
+    constructor(parent, config) {
         this.parent = parent;
         this.config = config;
-    }
-
-    /**
-     * Возвращает массив данных для шаблона компонента.
-     * @returns {Array} - Массив объектов с данными для шаблона компонента.
-     */
-    get data() {
-        return Object.entries(this.config).map(([key, configs]) => ({
-            key,
-            ...configs,
-        }));
     }
 }

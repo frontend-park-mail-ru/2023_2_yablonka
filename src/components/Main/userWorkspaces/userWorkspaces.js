@@ -2,6 +2,7 @@ import Component from '../../core/basicComponent.js';
 import Workspace from '../workspace/workspace.js';
 import Board from '../SubComponents/board/board.js';
 import template from './userWorkspaces.hbs';
+import './userWorkspaces.scss';
 
 /**
  * Контейнер для досок
@@ -18,30 +19,35 @@ export default class UserWorkspaces extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        const userWorkspaces = this.#getWorkspaces(this.config.yourWorkspaces);
-        const guestWorkspaces = this.#getWorkspaces(this.config.guestWorkspaces);
+        const userWorkspaces = this.#getWorkspaces(
+            this.config.yourWorkspaces ? this.config.yourWorkspaces : [],
+        );
+        const guestWorkspaces = this.#getWorkspaces(
+            this.config.guestWorkspaces ? this.config.guestWorkspaces : [],
+        );
 
         this.parent.insertAdjacentHTML('beforeend', template({ userWorkspaces, guestWorkspaces }));
     }
 
     #getWorkspaces(workspacesData) {
         const workspaces = [];
-        return workspacesData.forEach((workspace) => {
+        workspacesData.forEach((workspace) => {
             workspaces.push(
-                new Workspace({
-                    name: workspace.workspace_name,
+                new Workspace(null, {
                     workspaceId: workspace.workspace_id,
+                    workspaceName: workspace.workspace_name,
                     boards: this.#getBoards(workspace.boards ? workspace.boards : []),
-                }),
+                }).render(),
             );
         });
+        return workspaces;
     }
 
     #getBoards(boardsData, workspaceId) {
         const boards = [];
-        return boardsData.forEach((board) => {
+        boardsData.forEach((board) => {
             boards.push(
-                new Board({
+                new Board(null, {
                     workspaceId,
                     boardId: board.id,
                     boardName: board.name,
@@ -49,5 +55,6 @@ export default class UserWorkspaces extends Component {
                 }).render(),
             );
         });
+        return boards;
     }
 }

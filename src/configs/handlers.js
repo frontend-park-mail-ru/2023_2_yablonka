@@ -12,10 +12,12 @@ const handlers = [
     { type: 'userLogout', method: userStorage.logout.bind(userStorage) },
     { type: 'goSignup', method: userStorage.getSignupPage.bind(userStorage) },
     { type: 'goSignin', method: userStorage.getSigninPage.bind(userStorage) },
-    { type: 'getBoards', method: workspaceStorage.getWorkspaces.bind(workspaceStorage) },
+    { type: 'getWorkspaces', method: workspaceStorage.getWorkspaces.bind(workspaceStorage) },
     { type: 'updateProfile', method: userStorage.updateProfile.bind(userStorage) },
     { type: 'updatePassword', method: userStorage.updatePassword.bind(userStorage) },
     { type: 'updateAvatar', method: userStorage.updateAvatar.bind(userStorage) },
+    { type: 'createWorkspace', method: workspaceStorage.createWorkspace.bind(workspaceStorage) },
+    { type: 'deleteWorkspace', method: workspaceStorage.deleteWorkspace.bind(workspaceStorage) },
 ];
 
 export default handlers;

@@ -1,6 +1,7 @@
 import Component from '../../core/basicComponent.js';
 import WorkspaceParagraph from '../SubComponents/workspaceParagraph/workspaceParagraph.js';
 import template from './sidebar.hbs';
+import './sidebar.scss';
 /**
  * Меню слева
  * @class

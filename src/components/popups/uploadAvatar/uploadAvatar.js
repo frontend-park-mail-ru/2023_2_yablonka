@@ -3,6 +3,7 @@ import dispatcher from '../../../modules/dispatcher.js';
 import userStorage from '../../../storages/userStorage.js';
 import Component from '../../core/basicComponent.js';
 import template from './uploadAvatar.hbs';
+import './uploadAvatar.scss';
 /**
  * Попап для хедера
  * @class
@@ -38,6 +39,9 @@ export default class UploadAvatarModal extends Component {
             .querySelector('.upload-avatar-modal__button_cancel')
             .addEventListener('click', this.#openModal);
         document.querySelector('#upload-avatar').addEventListener('click', this.#closeModal);
+        document
+            .querySelector('.upload-avatar-modal__button_upload')
+            .addEventListener('click', this.#updateAvatar);
     }
 
     static removeEventListeners() {
@@ -129,14 +133,17 @@ export default class UploadAvatarModal extends Component {
     };
 
     static #updateAvatar = (e) => {
-        e.stopPropagation();
         e.preventDefault();
+        e.stopPropagation();
 
         const [file] = document.querySelector('.input-upload-avatar').files;
 
         const formData = new FormData();
-        formData.append('file', file);
-        formData.append('user_id', userStorage.storage.get(userStorage.userModel.body).user_id);
+        formData.append('avatar', file);
+        formData.append(
+            'user_id',
+            userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+        );
 
         dispatcher.dispatch(actionUpdateAvatar(formData));
 

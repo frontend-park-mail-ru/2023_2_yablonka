@@ -1,0 +1,56 @@
+<dialog
+    id='create-workspace'
+    class='border-radius-10 create-workspace'
+    aria-modal='true'
+    popover
+>
+    <div class='strach-layout flex-column-centered gap-50 create-workspace-wrapper'>
+        <div class='flex-column-centered gap-10 create-workspace__title'>
+            <span class='font-size-24 font-weight-500 create-workspace-title__suggest'>Создайте
+                рабочее пространство</span>
+            <span class='font-size-18 font-weight-200 create-workspace-title__description'>
+                Повысьте производительность: организуйте весь проект в виде досок.
+            </span>
+        </div>
+        <form
+            class='flex-column-centered gap-35 form form__create-workspace'
+            method='POST'
+            action='/workspace/create/'
+        >
+            <div class='flex-column-centered gap-5 create-workspace__name'>
+                <span class='font-size-12 font-weight-500 create-workspace-name__title'>Название
+                    рабочего пространства</span>
+                <input
+                    maxlength='32'
+                    class='font-size-14 font-weght-200 border-radius-5 padding-5-10 input input-workspace-name'
+                    placeholder='Проект Tabula'
+                    type='text'
+                    data-name='workspace-name'
+                    required
+                />
+                <span class='font-size-11 font-weght-200 create-workspace-name__description'>Укажите
+                    название вашей команды, компании или организации.</span>
+            </div>
+            <div class='flex-column-centered gap-5 create-workspace__description'>
+                <span
+                    class='font-size-12 font-weight-500 create-workspace-description__title'
+                >Описание рабочего пространства.&nbsp
+                    <span class='font-weight-200'>Необязательно</span></span>
+                <textarea
+                    maxlength='256'
+                    class='font-size-12 padding-5-10 border-radius-5 textarea textarea-workspace-description'
+                    placeholder='Здесь наша команда хранит всю нужную информацию.'
+                    data-name='workspace-description'
+                ></textarea>
+                <span
+                    class='font-size-11 font-weight-200 create-workspace-description__description'
+                >Расскажите участникам немного о рабочем пространстве.</span>
+            </div>
+            <button
+                class='border-radius-5 padding-0-10 font-size-14 font-weight-bold btn btn-create-workspace-pop-up'
+            >
+                Создать
+            </button>
+        </form>
+    </div>
+</dialog>

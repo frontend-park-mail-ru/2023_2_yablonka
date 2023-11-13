@@ -1,5 +1,6 @@
 import Component from '../../core/basicComponent.js';
 import template from './changeAvatar.hbs';
+import './changeAvatar.scss';
 /**
  * Попап для хедера
  * @class

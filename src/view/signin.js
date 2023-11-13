@@ -95,7 +95,7 @@ class SignIn {
         });
 
         const errorMessage = new ErrorMessage(
-            this.#root.querySelector('input[data-name=email]').parentNode,
+            this.#root.querySelectorAll('.form__input-sign')[0],
             {
                 className: 'sign',
                 errorName: 'login-or-password',

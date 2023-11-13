@@ -9,7 +9,9 @@ export default function errorMessageAnimation(errorClass, errorName, message) {
     const errorElement = document.querySelector(`.error-${errorClass}[data-name="${errorName}"]`);
     const err = errorElement.firstChild;
     err.textContent = message;
+    err.display = 'flex';
     setTimeout(() => {
         err.textContent = '';
+        err.display = 'none';
     }, 7000);
 }

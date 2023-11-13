@@ -29,9 +29,12 @@ export default class Header extends Component {
      * Рендерит компонент в DOM
      */
     render() {
+        console.log(this.config);
+        const avatar =
+            this.config.avatar_url === 'avatar.jpg' ? '/img/avatar.jpg' : this.config.avatar_url;
         this.parent.insertAdjacentHTML(
             'beforeend',
-            template(Object.assign(this.config, this.#innerConfig)),
+            template(Object.assign(avatar, this.#innerConfig)),
         );
     }
 }

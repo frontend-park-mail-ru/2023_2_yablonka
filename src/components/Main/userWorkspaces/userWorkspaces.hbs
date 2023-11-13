@@ -2,7 +2,7 @@
     <div class='flex-column-centered flex-centered gap-20 workspaces'>
         {{#if this.userWorkspaces}}
             <span class='font-size-22 font-weight-bold workspaces__title'>ВАШИ РАБОЧИЕ ПРОСТРАНСТВА</span>
-            <div class='flex-column-centered flex-centered workspaces__container'>
+            <div class='flex-column-centered flex-centered gap-20 workspaces__container'>
                 {{#each userWorkspaces as |workspace|}}
                     {{{workspace}}}
                 {{/each}}
@@ -18,7 +18,7 @@
         {{#if this.guestWorkspaces}}
             <span class='font-size-22 font-weight-bold workspaces__title'>ГОСТЕВЫЕ РАБОЧИЕ
                 ПРОСТРАНСТВА</span>
-            <div class='flex-column-centered flex-centered workspaces__container'>
+            <div class='flex-column-centered flex-centered gap-20 workspaces__container'>
                 {{#each guestWorkspaces as |workspace|}}
                     {{{workspace}}}
                 {{/each}}
