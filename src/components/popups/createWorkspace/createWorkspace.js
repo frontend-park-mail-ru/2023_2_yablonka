@@ -22,7 +22,7 @@ export default class CreateWorkspace extends Component {
         this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 
-    static addEventListeners() {
+    addEventListeners() {
         document
             .querySelector('.btn-create-workspace-pop-up')
             .addEventListener('click', this.#createWorkspace);
@@ -34,7 +34,7 @@ export default class CreateWorkspace extends Component {
             .addEventListener('click', this.#createWorkspaceClose);
     }
 
-    static removeEventListeners() {
+    removeEventListeners() {
         document
             .querySelector('.btn-create-workspace-pop-up')
             .removeEventListener('click', this.#createWorkspace);
@@ -46,7 +46,7 @@ export default class CreateWorkspace extends Component {
             .removeEventListener('click', this.#createWorkspaceClose);
     }
 
-    static #createWorkspaceOpen = (e) => {
+    #createWorkspaceOpen = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -59,7 +59,7 @@ export default class CreateWorkspace extends Component {
         }
     };
 
-    static #createWorkspaceClose = (e) => {
+    #createWorkspaceClose = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -70,7 +70,7 @@ export default class CreateWorkspace extends Component {
         }
     };
 
-    static #createWorkspace = (e) => {
+    #createWorkspace = (e) => {
         e.preventDefault();
         e.stopPropagation();
 

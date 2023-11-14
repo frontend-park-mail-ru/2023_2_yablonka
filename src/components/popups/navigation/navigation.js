@@ -1,6 +1,7 @@
 import Component from '../../core/basicComponent.js';
 import template from './navigation.hbs';
 import './navigation.scss';
+
 /**
  * Попап для хедера
  * @class
@@ -38,23 +39,30 @@ export default class Navigation extends Component {
     render() {
         this.parent.insertAdjacentHTML(
             'beforeend',
-            template(Object.assign(this.config, this.#innerConfig)),
+            template({
+                ...{
+                    avatar: this.config.avatar_url,
+                    name: this.config.name,
+                    surname: this.config.surname,
+                },
+                ...this.#innerConfig,
+            }),
         );
     }
 
-    static addEventListeners() {
+    addEventListeners() {
         document
             .querySelector('.btn-avatar')
             .addEventListener('click', this.#navigationPopupAction);
     }
 
-    static removeEventListeners() {
+    removeEventListeners() {
         document
             .querySelector('.btn-avatar')
             .removeEventListener('click', this.#navigationPopupAction);
     }
 
-    static #navigationPopupAction = (e) => {
+    #navigationPopupAction = (e) => {
         e.preventDefault();
         e.stopPropagation();
 

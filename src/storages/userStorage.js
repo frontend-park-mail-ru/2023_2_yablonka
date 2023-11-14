@@ -195,7 +195,6 @@ class UserStorage extends BaseStorage {
         const { status } = responsePromise;
         if (status === 200) {
             const oldUser = this.storage.get(this.userModel.body);
-            console.log(body);
             oldUser.body.user.avatar_url = body.avatar_url;
             this.storage.set(this.userModel.body, oldUser);
             emitter.trigger('updateProfile');

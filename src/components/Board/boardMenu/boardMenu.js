@@ -1,5 +1,6 @@
 import Component from '../../core/basicComponent.js';
 import template from './boardMenu.hbs';
+import './boardMenu.scss';
 
 /**
  * Меню доски

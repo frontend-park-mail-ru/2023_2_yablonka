@@ -29,22 +29,22 @@ export default class ChangeAvatarPopup extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', template(Object.assign(this.config, this.#innerConfig)));
+        this.parent.insertAdjacentHTML('beforeend', template(this.#innerConfig));
     }
 
-    static addEventListeners() {
+    addEventListeners() {
         document
             .querySelector('.change-avatar__button')
             .addEventListener('click', this.#changeAvatarMenu);
     }
 
-    static removeEventListeners() {
+    removeEventListeners() {
         document
             .querySelector('.change-avatar__button')
             .removeEventListener('click', this.#changeAvatarMenu);
     }
 
-    static #changeAvatarMenu = (e) => {
+    #changeAvatarMenu = (e) => {
         e.preventDefault();
         e.stopPropagation();
 

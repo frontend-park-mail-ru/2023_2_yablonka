@@ -1,0 +1,32 @@
+.page__image {
+    position: absolute;
+    bottom: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.page__image_right {
+    right: 40px;
+    height: 220px;
+    width: 330px;
+}
+
+.page__image_left {
+    left: 40px;
+    height: 270px;
+    width: 330px;
+}
+
+.conteiner-sign__header {
+    font-size: 72px;
+    color: #fff;
+    text-shadow: var(--sign-logo-shadow) 0 15px 10px;
+}
+
+.conteiner-sign-header__logo {
+    text-shadow: var(--sign-logo-shadow) 0 15px 10px;
+    padding-right: 10px;
+    width: 90px;
+    height: 70px;
+}
+
+

@@ -1,5 +1,5 @@
-@import './popups/popupsStyles.scss';
-@import './Common/common.scss';
+@import './Main/Main.scss';
+@import './Profile/Profile.scss';
 
 * {
     margin: 0;
@@ -35,5 +35,14 @@ button {
 }
 
 ::backdrop {
-    background-color: rgba(0, 0, 0, 50%);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.navigation__item {
+    height: 30px;
+    width: 100%;
+}
+
+.navigation__item:hover {
+    background-color: var(--hover-navigation-paragraph);
 }

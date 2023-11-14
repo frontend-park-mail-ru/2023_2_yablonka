@@ -1,10 +1,8 @@
 @import "./fonts.scss";
 @import "./vars.scss";
 @import "./style_profile.scss";
-@import "./style_desk_list.scss";
 @import "./style_card_modal.scss";
 @import "./style_board.scss";
-@import "./style_404.scss";
 @import "./createBoard.scss";
 @import "../../src/components/baseStyles.scss";
 
@@ -18,49 +16,6 @@
     align-items: center;
     justify-content: center;
     position: relative;
-}
-
-.page__image {
-    position: absolute;
-    bottom: 0;
-    transition: all 0.2s ease-in-out;
-}
-
-.page__image_right {
-    right: 40px;
-    height: 220px;
-    width: 330px;
-}
-
-.page__image_left {
-    left: 40px;
-    height: 270px;
-    width: 330px;
-}
-
-.authentication {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    
-}
-
-.authentication__header {
-    font-size: 72px;
-    color: #fff;
-    text-shadow: rgba(41, 41, 41, 50%) 0 15px 10px;
-    margin-bottom: 75px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-}
-
-.authentication__header img {
-    text-shadow: rgba(41, 41, 41, 50%) 0 15px 10px;
-    padding-right: 10px;
-    width: 90px;
-    height: 70px;
 }
 
 .form-sign {
@@ -79,7 +34,7 @@
 
 .form__input-sign {
     border: 2px solid #fff;
-    box-shadow: rgba(255, 255, 255, 25%) 4px 4px 10px;
+    box-shadow: var(--sign-logo-shadow) 4px 4px 10px;
     border-radius: 5px;
     display: flex;
     align-items: center;

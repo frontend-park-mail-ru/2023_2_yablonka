@@ -15,3 +15,8 @@ export const actionDeleteWorkspace = (delId) => ({
     type: 'deleteWorkspace',
     value: delId,
 });
+
+export const actionUpdateWorkspace = (newWorkspaceData) => ({
+    type: 'updateWorkspace',
+    value: newWorkspaceData,
+});

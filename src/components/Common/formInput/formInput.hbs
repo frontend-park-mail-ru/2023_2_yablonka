@@ -1,0 +1,26 @@
+ {{#if disable}}
+<div class='form__input form__input-{{this.class}} form__input_disable'>
+{{else}}
+<div class='form__input form__input-{{this.class}}'>
+{{/if}}
+    {{#if image}}
+        <img src='/svg/{{this.src}}.svg' />
+    {{/if}}
+    {{#if disable}}
+    <input
+        type='{{this.type}}'
+        data-name='{{this.dataName}}'
+        placeholder='{{this.placeholder}}'
+        class='input input-{{this.class}} input_disable'
+        value="{{this.value}}"
+    / disabled>
+    {{else}}
+    <input
+        type='{{this.type}}'
+        data-name='{{this.dataName}}'
+        placeholder='{{this.placeholder}}'
+        class='input input-{{this.class}}'
+        value="{{this.value}}"
+    / >
+    {{/if}}
+</div>

@@ -1,69 +1,25 @@
 // components
-import Error404 from '../components/404/error404.js';
+import Error404 from '../pages/404/error404.js';
 // storages
 import userStorage from '../storages/userStorage.js';
-// actions
-import { actionRedirect } from '../actions/userActions.js';
 // dispatcher
-import dispatcher from '../modules/dispatcher.js';
+import BaseView from './baseView.js';
 
-class Page404 {
-    #root;
-
-    #userStatus;
-
-    /**
-     * @constructor
-     */
-    constructor() {
-        this.#root = document.querySelector('.page');
-    }
-
+class Page404 extends BaseView {
     /**
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.clear();
-
         document.title = 'Tabula: Not found';
 
-        const redirectName =
+        const rediractionName =
             userStorage.storage.get(userStorage.userModel.status) === 200
                 ? 'На главную'
                 : 'Авторизоваться';
 
-        const notFound = new Error404(this.#root, { redirectTargetName: redirectName });
-        notFound.render();
+        this.components.push(new Error404(this.root, { rediractionName }));
 
-        this.addEventListeners();
-    }
-
-    /**
-     * Добавляет подписки на события
-     */
-    addEventListeners() {
-        this.#root.querySelector('.btn-not-found').addEventListener('click', this.redirectHandler);
-    }
-
-    /**
-     * Хендлер события нажатия на ссылку перехода на регистрацию
-     * @param {Event} e - Событие
-     */
-    redirectHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(
-            actionRedirect(
-                userStorage.storage.get(userStorage.userModel.status) === 200 ? '/main' : '/signin',
-                false,
-            ),
-        );
-    }
-
-    /**
-     * Очистка страницы
-     */
-    clear() {
-        this.#root.innerHTML = '';
+        this.addListeners();
     }
 }
 

@@ -4,6 +4,7 @@ import userStorage from '../../../storages/userStorage.js';
 import Component from '../../core/basicComponent.js';
 import template from './uploadAvatar.hbs';
 import './uploadAvatar.scss';
+
 /**
  * Попап для хедера
  * @class
@@ -15,6 +16,19 @@ export default class UploadAvatarModal extends Component {
         super(parent, config);
     }
 
+    readFileAsByteArray(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const arrayBuffer = reader.result;
+                const byteArray = new Uint8Array(arrayBuffer);
+                resolve(byteArray);
+            };
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
     /**
      * Рендерит компонент в DOM
      */
@@ -22,7 +36,7 @@ export default class UploadAvatarModal extends Component {
         this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 
-    static addEventListeners() {
+    addEventListeners() {
         document
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .addEventListener('click', this.#openModal);
@@ -44,7 +58,7 @@ export default class UploadAvatarModal extends Component {
             .addEventListener('click', this.#updateAvatar);
     }
 
-    static removeEventListeners() {
+    removeEventListeners() {
         document
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .removeEventListener('click', this.#openModal);
@@ -66,7 +80,7 @@ export default class UploadAvatarModal extends Component {
             .removeEventListener('click', this.#updateAvatar);
     }
 
-    static #changeForm = (from, to) => {
+    #changeForm = (from, to) => {
         const form = document.querySelector('.form-upload-avatar');
 
         Array.from(form.children).forEach((e, ind) => {
@@ -79,7 +93,7 @@ export default class UploadAvatarModal extends Component {
         form.reset();
     };
 
-    static #openModal = (e) => {
+    #openModal = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -94,7 +108,7 @@ export default class UploadAvatarModal extends Component {
         }
     };
 
-    static #closeModal = (e) => {
+    #closeModal = (e) => {
         const dialog = document.querySelector('#upload-avatar');
 
         if (e.target === e.currentTarget) {
@@ -103,13 +117,13 @@ export default class UploadAvatarModal extends Component {
         }
     };
 
-    static #chooseFileAction = (e) => {
+    #chooseFileAction = (e) => {
         e.stopPropagation();
 
         document.querySelector('.input-upload-avatar').click();
     };
 
-    static #previewAvatar = (e) => {
+    #previewAvatar = (e) => {
         e.stopPropagation();
 
         const [file] = document.querySelector('.input-upload-avatar').files;
@@ -123,7 +137,7 @@ export default class UploadAvatarModal extends Component {
         }
     };
 
-    static #revertChanges = (e) => {
+    #revertChanges = (e) => {
         if (e.target.tagName === 'IMG') {
             e.preventDefault();
         }
@@ -132,20 +146,20 @@ export default class UploadAvatarModal extends Component {
         this.#changeForm('none', 'flex');
     };
 
-    static #updateAvatar = (e) => {
+    #updateAvatar = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         const [file] = document.querySelector('.input-upload-avatar').files;
 
-        const formData = new FormData();
-        formData.append('avatar', file);
-        formData.append(
-            'user_id',
-            userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
-        );
+        const bytes = await this.readFileAsByteArray(file);
 
-        dispatcher.dispatch(actionUpdateAvatar(formData));
+        dispatcher.dispatch(
+            actionUpdateAvatar({
+                user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+                avatar: bytes,
+            }),
+        );
 
         this.#changeForm('none', 'flex');
     };

@@ -8,4 +8,10 @@ const popeventProcess = (e) => {
     }
 };
 
-export default popeventProcess;
+export const addPopeventProcessListener = () => {
+    document.querySelector('.page').addEventListener('click', popeventProcess);
+};
+
+export const removePopeventProcessListener = () => {
+    document.querySelector('.page').removeEventListener('click', popeventProcess);
+};

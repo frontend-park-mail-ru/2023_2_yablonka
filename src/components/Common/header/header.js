@@ -1,5 +1,7 @@
 import Component from '../../core/basicComponent';
 import template from './header.hbs';
+import './header.scss';
+
 /**
  * Хедер
  * @class
@@ -29,12 +31,6 @@ export default class Header extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        console.log(this.config);
-        const avatar =
-            this.config.avatar_url === 'avatar.jpg' ? '/img/avatar.jpg' : this.config.avatar_url;
-        this.parent.insertAdjacentHTML(
-            'beforeend',
-            template(Object.assign(avatar, this.#innerConfig)),
-        );
+        return template(Object.assign(this.config.avatar, this.#innerConfig));
     }
 }

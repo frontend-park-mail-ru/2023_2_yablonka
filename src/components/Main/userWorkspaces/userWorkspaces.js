@@ -1,6 +1,6 @@
 import Component from '../../core/basicComponent.js';
 import Workspace from '../workspace/workspace.js';
-import Board from '../SubComponents/board/board.js';
+import Board from '../atomic/board/board.js';
 import template from './userWorkspaces.hbs';
 import './userWorkspaces.scss';
 
@@ -26,7 +26,7 @@ export default class UserWorkspaces extends Component {
             this.config.guestWorkspaces ? this.config.guestWorkspaces : [],
         );
 
-        this.parent.insertAdjacentHTML('beforeend', template({ userWorkspaces, guestWorkspaces }));
+        return template({ userWorkspaces, guestWorkspaces });
     }
 
     #getWorkspaces(workspacesData) {

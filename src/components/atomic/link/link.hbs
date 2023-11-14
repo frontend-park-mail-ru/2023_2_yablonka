@@ -1,0 +1,18 @@
+{{#if disable}}
+    <a
+        class='link {{this.class}}-link link_disabled'
+        href='{{this.href}}'
+        data-action='{{this.action}}'
+        aria-disabled='true'
+    >
+        {{this.text}}
+    </a>
+{{else}}
+    <a
+        class='link {{this.class}}-link'
+        data-action='{{this.action}}'
+        href='{{this.href}}'
+    >
+        {{this.text}}
+    </a>
+{{/if}}

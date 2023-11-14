@@ -86,14 +86,7 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             this.changed = true;
-            let workspaces = this.storage.get(this.workspaceModel.body);
-            const indexToDelete = workspaces.workspaces.yourWorkspaces.findIndex(
-                (ws) => ws.workspace_id === id,
-            );
-            if (indexToDelete !== -1) {
-                workspaces.workspaces.yourWorkspaces.splice(indexToDelete, 1);
-                this.storage.set(this.workspaceModel.body, workspaces);
-            }
+            emitter.trigger('renderWorkspaces');
         } else {
         }
     }
@@ -110,14 +103,7 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             this.changed = true;
-            let workspaces = this.storage.get(this.workspaceModel.body);
-            const idToChange = newWorkspace.workspace_id;
-            const indexToDelete = workspaces.workspaces.yourWorkspaces.forEach((ws) => {
-                if (ws.workspace_id === idToChange) {
-                    ws.name = newWorkspace.workspace_name;
-                    ws.description = newWorkspace.workspace_description;
-                }
-            });
+            emitter.trigger('renderWorkspaces');
         } else {
         }
     }
@@ -143,7 +129,7 @@ class WorkspaceStorage extends BaseStorage {
             let oldWorkspaces = this.storage.get(this.workspaceModel.body);
             oldWorkspaces.body.workspaces.forEach((ws) => {
                 ws.boards.forEach((brd) => {
-                    if (brd.board_id === board.id) {
+                    if (brd.board_id === board.board_id) {
                         brd = body.board;
                     }
                 });
@@ -175,7 +161,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            let oldWorkspaces = this.storage.get(this.workspaceModel.body);
+            const oldWorkspaces = this.storage.get(this.workspaceModel.body);
             oldWorkspaces.body.workspaces.forEach((ws) => {
                 ws.boards.forEach((brd) => {
                     if (brd.board_id === board.id) {
