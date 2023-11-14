@@ -9,10 +9,6 @@ import './header.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Header extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
         menuParagraphs: [
             {

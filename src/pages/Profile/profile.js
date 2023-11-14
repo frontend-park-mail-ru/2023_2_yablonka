@@ -25,10 +25,6 @@ import './profile.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class PageLayoutMain extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */
@@ -66,31 +62,31 @@ export default class PageLayoutMain extends Component {
      * Добавляет общие обработчики событий
      */
     addEventListeners() {
-        document
+        this.parent
             .querySelector('.profile-link[data-action=profile]')
             .addEventListener('click', this.goProfileHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.goSecurityHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=boards]')
             .addEventListener('click', this.toMainPageHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=logout]')
             .addEventListener('click', this.logoutHandler);
-        document
+        this.parent
             .querySelector('.profile-navigation__security')
             .addEventListener('click', this.goSecurityHandler);
-        document
+        this.parent
             .querySelector('.profile-navigation__user-information')
             .addEventListener('click', this.goProfileHandler);
-        document
+        this.parent
             .querySelector('.header-menu__logo')
             .addEventListener('click', this.toMainPageHandler);
-        document
+        this.parent
             .querySelector('button[data-action=update-profile]')
             ?.addEventListener('click', this.changeProfileHandler);
-        document
+        this.parent
             .querySelector('button[data-action=update-password]')
             ?.addEventListener('click', this.changePasswordHandler);
 
@@ -101,31 +97,31 @@ export default class PageLayoutMain extends Component {
      * Убирает общие обработчики событий
      */
     removeEventListeners() {
-        document
+        this.parent
             .querySelector('.profile-link[data-action=profile]')
             .removeEventListener('click', this.goProfileHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.goSecurityHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=boards]')
             .removeEventListener('click', this.toMainPageHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=logout]')
             .removeEventListener('click', this.logoutHandler);
-        document
+        this.parent
             .querySelector('.profile-navigation__security')
             .removeEventListener('click', this.goSecurityHandler);
-        document
+        this.parent
             .querySelector('.profile-navigation__user-information')
             .removeEventListener('click', this.goProfileHandler);
-        document
+        this.parent
             .querySelector('.header-menu__logo')
             .removeEventListener('click', this.toMainPageHandler);
-        document
+        this.parent
             .querySelector('button[data-action=update-profile]')
             ?.removeEventListener('click', this.changeProfileHandler);
-        document
+        this.parent
             .querySelector('button[data-action=update-password]')
             ?.removeEventListener('click', this.changePasswordHandler);
 
@@ -136,18 +132,18 @@ export default class PageLayoutMain extends Component {
         e.preventDefault();
         const user = {
             user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
-            name: document.querySelector('input[data-name=name]').value,
-            surname: document.querySelector('input[data-name=surname]').value,
-            description: document.querySelector('textarea[data-name=user-description]').value,
+            name: this.parent.querySelector('input[data-name=name]').value,
+            surname: this.parent.querySelector('input[data-name=surname]').value,
+            description: this.parent.querySelector('textarea[data-name=user-description]').value,
         };
         dispatcher.dispatch(actionUpdateProfile(user));
     }
 
     async changePasswordHandler(e) {
         e.preventDefault();
-        const newPassword = document.querySelector('input[data-name=new-password]').value;
-        const oldPassword = document.querySelector('input[data-name=old-password]').value;
-        const repeatNewPassword = document.querySelector(
+        const newPassword = this.parent.querySelector('input[data-name=new-password]').value;
+        const oldPassword = this.parent.querySelector('input[data-name=old-password]').value;
+        const repeatNewPassword = this.parent.querySelector(
             'input[data-name=repeat-new-password]',
         ).value;
 

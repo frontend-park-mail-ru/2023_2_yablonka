@@ -12,10 +12,6 @@ import './uploadAvatar.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UploadAvatarModal extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     readFileAsByteArray(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();

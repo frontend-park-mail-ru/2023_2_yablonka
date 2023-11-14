@@ -9,10 +9,6 @@ import template from './userSecurity.hbs';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UserSecurity extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
         oldPassword: {
             image: false,

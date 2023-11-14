@@ -12,10 +12,6 @@ import './error404.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Error404 extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */
@@ -30,7 +26,7 @@ export default class Error404 extends Component {
      * Добавляет подписки на события
      */
     addEventListeners() {
-        document.querySelector('.btn-not-found').addEventListener('click', this.redirectHandler);
+        this.parent.querySelector('.btn-not-found').addEventListener('click', this.redirectHandler);
     }
 
     /**

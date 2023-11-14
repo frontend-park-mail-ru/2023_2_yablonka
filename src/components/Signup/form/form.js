@@ -8,10 +8,6 @@ import template from './form.hbs';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Form extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
         email: {
             image: true,

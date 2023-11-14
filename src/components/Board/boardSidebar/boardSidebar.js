@@ -8,10 +8,6 @@ import template from './boardSidebar.hbs';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class BoardSidebar extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */

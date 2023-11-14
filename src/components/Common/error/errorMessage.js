@@ -9,10 +9,6 @@ import './errorMessage.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class ErrorMessage extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */

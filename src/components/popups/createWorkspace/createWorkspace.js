@@ -11,10 +11,6 @@ import dispatcher from '../../../modules/dispatcher.js';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class CreateWorkspace extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */

@@ -1,5 +1,6 @@
 import Component from '../../core/basicComponent';
 import FormInput from '../../Common/formInput/formInput.js';
+import Link from '../../atomic/link/link.js';
 import template from './form.hbs';
 /**
  * слои-обертки
@@ -8,11 +9,14 @@ import template from './form.hbs';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Form extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
+        forgottenPasswordLink: {
+            class: 'forgotten-password',
+            href: '/remember-password',
+            action: 'to-remember-password',
+            text: 'Забыли пароль?',
+            disabled: true,
+        },
         email: {
             image: true,
             src: 'person',
@@ -37,8 +41,16 @@ export default class Form extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        const inputs = this.#renderForm(this.#innerConfig);
-        return template({ inputs });
+        const inputs = this.#renderForm({
+            email: this.#innerConfig.email,
+            password: this.#innerConfig.password,
+        });
+        const forgottenPasswordLink = new Link(
+            null,
+            this.#innerConfig.forgottenPasswordLink,
+        ).render();
+
+        return template({ inputs, forgottenPasswordLink });
     }
 
     #renderForm(inputsData) {

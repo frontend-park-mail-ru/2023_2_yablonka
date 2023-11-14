@@ -15,10 +15,6 @@ import './main.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class PageLayoutMain extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */
@@ -35,17 +31,17 @@ export default class PageLayoutMain extends Component {
      * Добавляет обработчики событий
      */
     addEventListeners() {
-        document.querySelector('.logo-wrapper').addEventListener('click', this.toBoardsHandler);
-        document
+        this.parent.querySelector('.logo-wrapper').addEventListener('click', this.toBoardsHandler);
+        this.parent
             .querySelector('.profile-link[data-action=boards]')
             .addEventListener('click', this.toBoardsHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=logout]')
             .addEventListener('click', this.logoutHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=profile]')
             .addEventListener('click', this.toProfileHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
         emitter.bind('logout', this.close);
@@ -55,17 +51,17 @@ export default class PageLayoutMain extends Component {
      * Убирает обработчики событий
      */
     removeEventListeners() {
-        document.querySelector('.logo-wrapper').removeEventListener('click', this.toBoardsHandler);
-        document
+        this.parent.querySelector('.logo-wrapper').removeEventListener('click', this.toBoardsHandler);
+        this.parent
             .querySelector('.profile-link[data-action=boards]')
             .removeEventListener('click', this.toBoardsHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=logout]')
             .removeEventListener('click', this.logoutHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=profile]')
             .removeEventListener('click', this.toProfileHandler);
-        document
+        this.parent
             .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.toSecurityHandler);
         emitter.unbind('logout', this.close);

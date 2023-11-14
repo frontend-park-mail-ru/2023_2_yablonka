@@ -10,10 +10,6 @@ import template from './userInformation.hbs';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UserInformation extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
         email: {
             image: false,

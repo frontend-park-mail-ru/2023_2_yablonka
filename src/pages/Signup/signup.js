@@ -16,18 +16,7 @@ import emitter from '../../modules/actionTrigger.js';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Signin extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
-        forgottenPasswordLink: {
-            class: 'forgotten-password',
-            href: '/remember-password',
-            action: 'to-remember-password',
-            text: 'Забыли пароль?',
-            disabled: true,
-        },
         signupLink: {
             class: 'sign',
             href: '/signin',
@@ -50,7 +39,6 @@ export default class Signin extends Component {
     render() {
         const page = template({
             form: new Form(null, {}).render(),
-            forgottenPasswordLink: new Link(null, this.#innerConfig.forgottenPasswordLink).render(),
             signupLink: new Link(null, this.#innerConfig.signupLink).render(),
             registrationBtn: new Button(null, this.#innerConfig.registrationBtn).render(),
         });
@@ -62,8 +50,8 @@ export default class Signin extends Component {
      * Добавляет подписки на события
      */
     addEventListeners() {
-        document.querySelector('.sign-link').addEventListener('click', this.goSigninHandler);
-        document.querySelector('.btn-sign').addEventListener('click', this.onSubmitHandler);
+        this.parent.querySelector('.sign-link').addEventListener('click', this.goSigninHandler);
+        this.parent.querySelector('.btn-sign').addEventListener('click', this.onSubmitHandler);
         emitter.bind('signup', this.listenSignUpAction.bind(this));
     }
 
@@ -71,8 +59,8 @@ export default class Signin extends Component {
      * Убирает подписки на события
      */
     removeEventListeners() {
-        document.querySelector('.sign-link').removeEventListener('click', this.goSigninHandler);
-        document.querySelector('.btn-sign').removeEventListener('click', this.onSubmitHandler);
+        this.parent.querySelector('.sign-link').removeEventListener('click', this.goSigninHandler);
+        this.parent.querySelector('.btn-sign').removeEventListener('click', this.onSubmitHandler);
         emitter.unbind('signup', this.listenSignUpAction.bind(this));
     }
 
@@ -93,9 +81,9 @@ export default class Signin extends Component {
     onSubmitHandler = async (e) => {
         e.preventDefault();
 
-        const loginInput = document.querySelector('input[data-name=email]');
-        const passwordInput = document.querySelector('input[data-name=password]');
-        const repeatPasswordInput = document.querySelector('input[data-name=repeat-password]');
+        const loginInput = this.parent.querySelector('input[data-name=email]');
+        const passwordInput = this.parent.querySelector('input[data-name=password]');
+        const repeatPasswordInput = this.parent.querySelector('input[data-name=repeat-password]');
 
         const user = { email: loginInput.value, password: passwordInput.value };
 

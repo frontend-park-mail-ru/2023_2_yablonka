@@ -9,10 +9,6 @@ import './boardMenu.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class BoardMenu extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */

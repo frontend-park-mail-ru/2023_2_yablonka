@@ -14,18 +14,7 @@ import './signin.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Signin extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
-        forgottenPasswordLink: {
-            class: 'forgotten-password',
-            href: '/remember-password',
-            action: 'to-remember-password',
-            text: 'Забыли пароль?',
-            disabled: true,
-        },
         signupLink: {
             class: 'sign',
             href: '/signup',
@@ -48,7 +37,6 @@ export default class Signin extends Component {
     render() {
         const page = template({
             form: new Form(null, {}).render(),
-            forgottenPasswordLink: new Link(null, this.#innerConfig.forgottenPasswordLink).render(),
             signupLink: new Link(null, this.#innerConfig.signupLink).render(),
             loginBtn: new Button(null, this.#innerConfig.loginBtn).render(),
         });
@@ -60,16 +48,16 @@ export default class Signin extends Component {
      * Добавляет подписки на события
      */
     addEventListeners() {
-        document.querySelector('.sign-link').addEventListener('click', this.goSignupHandler);
-        document.querySelector('.btn-sign').addEventListener('click', this.onSubmitHandler);
+        this.parent.querySelector('.sign-link').addEventListener('click', this.goSignupHandler);
+        this.parent.querySelector('.btn-sign').addEventListener('click', this.onSubmitHandler);
     }
 
     /**
      * Убирает подписки на события
      */
     removeEventListeners() {
-        document.querySelector('.sign-link').removeEventListener('click', this.goSignupHandler);
-        document.querySelector('.btn-sign').removeEventListener('click', this.onSubmitHandler);
+        this.parent.querySelector('.sign-link').removeEventListener('click', this.goSignupHandler);
+        this.parent.querySelector('.btn-sign').removeEventListener('click', this.onSubmitHandler);
     }
 
     /**
@@ -89,8 +77,8 @@ export default class Signin extends Component {
     onSubmitHandler = async (e) => {
         e.preventDefault();
 
-        const loginInput = document.querySelector('input[data-name=email]');
-        const passwordInput = document.querySelector('input[data-name=password]');
+        const loginInput = this.parent.querySelector('input[data-name=email]');
+        const passwordInput = this.parent.querySelector('input[data-name=password]');
 
         const user = { email: loginInput.value, password: passwordInput.value };
 

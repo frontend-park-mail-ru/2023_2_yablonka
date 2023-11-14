@@ -8,10 +8,6 @@ import template from './formInput.hbs';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class FormInput extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */

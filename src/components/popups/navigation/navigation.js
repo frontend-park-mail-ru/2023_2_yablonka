@@ -9,10 +9,6 @@ import './navigation.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Navigation extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     #innerConfig = {
         buttons: [
             {
