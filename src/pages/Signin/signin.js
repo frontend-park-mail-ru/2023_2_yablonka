@@ -4,7 +4,6 @@ import Link from '../../components/atomic/link/link.js';
 import Button from '../../components/atomic/button/button.js';
 import dispatcher from '../../modules/dispatcher.js';
 import { actionNavigate, actionRedirect, actionSignin } from '../../actions/userActions.js';
-import userStorage from '../../storages/userStorage.js';
 import template from './signin.hbs';
 import './signin.scss';
 
@@ -97,23 +96,4 @@ export default class Signin extends Component {
 
         await dispatcher.dispatch(actionSignin(user));
     };
-
-    /**
-     * Функция, реагирующая на событие renderSignup, которое прокидывается через eventEmitter
-     */
-    listenSigninAction() {
-        const status = userStorage.storage.get(userStorage.userModel.status);
-        switch (status) {
-            case 200:
-                this.removeEventListeners();
-                this.clear();
-                dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-                dispatcher.dispatch(actionRedirect('/main', false));
-                break;
-            case 401:
-                break;
-            default:
-                break;
-        }
-    }
 }

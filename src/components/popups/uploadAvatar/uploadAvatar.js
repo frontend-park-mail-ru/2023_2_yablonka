@@ -152,7 +152,7 @@ export default class UploadAvatarModal extends Component {
 
         const [file] = document.querySelector('.input-upload-avatar').files;
 
-        const bytes = await this.readFileAsByteArray(file);
+        // const bytes = await this.readFileAsByteArray(file);
 
         dispatcher.dispatch(
             actionUpdateAvatar({

@@ -5,9 +5,9 @@ import Button from '../../components/atomic/button/button.js';
 import dispatcher from '../../modules/dispatcher.js';
 import { actionNavigate, actionRedirect, actionSignup } from '../../actions/userActions.js';
 import Validator from '../../modules/validator.js';
-import userStorage from '../../storages/userStorage.js';
 import template from './signup.hbs';
 import './signup.scss';
+import emitter from '../../modules/actionTrigger.js';
 
 /**
  * Компонент страницы входа
@@ -64,6 +64,7 @@ export default class Signin extends Component {
     addEventListeners() {
         document.querySelector('.sign-link').addEventListener('click', this.goSigninHandler);
         document.querySelector('.btn-sign').addEventListener('click', this.onSubmitHandler);
+        emitter.bind('signup', this.listenSignUpAction.bind(this));
     }
 
     /**
@@ -72,6 +73,7 @@ export default class Signin extends Component {
     removeEventListeners() {
         document.querySelector('.sign-link').removeEventListener('click', this.goSigninHandler);
         document.querySelector('.btn-sign').removeEventListener('click', this.onSubmitHandler);
+        emitter.unbind('signup', this.listenSignUpAction.bind(this));
     }
 
     /**
@@ -104,23 +106,4 @@ export default class Signin extends Component {
             await dispatcher.dispatch(actionSignup(user));
         }
     };
-
-    /**
-     * Функция реагирующая на событие renderSignup, которое прокидывается через eventEmitter
-     */
-    listenSignUpAction() {
-        const status = userStorage.storage.get(userStorage.userModel.status);
-        switch (status) {
-            case 200:
-                dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-                dispatcher.dispatch(actionRedirect('/main', false));
-                break;
-            case 401:
-                break;
-            case 409:
-                break;
-            default:
-                break;
-        }
-    }
 }
