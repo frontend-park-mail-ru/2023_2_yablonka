@@ -12,11 +12,18 @@ import workspaceStorage from '../storages/workspaceStorage.js';
 // routing
 import dispatcher from '../modules/dispatcher.js';
 
+import emitter from '../modules/actionTrigger.js';
+
 /**
  * Класс для рендера страницы досок
  * @class
  */
 class Boards extends BaseView {
+    constructor() {
+        super();
+        emitter.bind('renderWorkspaces', this.reRender.bind(this));
+    }
+
     /**
      * Рендер страницы в DOM
      */
@@ -39,6 +46,11 @@ class Boards extends BaseView {
 
         this.render();
         this.addListeners();
+    }
+
+    async reRender() {
+        this.clear();
+        this.renderPage();
     }
 }
 

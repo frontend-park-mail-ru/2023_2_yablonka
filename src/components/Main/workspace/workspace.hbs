@@ -1,6 +1,8 @@
 <div class='flex-column-centered gap-10 workspace'>
-    <span class='font-size-18 font-weight-500 padding-0-10 workspace__title'>Workspace&nbsp
-        <span class='font-weight-bold'>{{this.workspaceName}}</span></span>
+    <span class='font-size-18 font-weight-500 padding-0-10 flex-row-centered workspace__title'><span
+            class='box-32-32 border-radius-5 flex-centered workspace-logo'
+        >{{this.workspaceIcon}}</span>
+        <span class='font-weight-bold padding-0-10'>{{this.workspaceName}}</span></span>
     <div class='flex-row-centered gap-10 workspace__boards'>
         {{#each boards as |board|}}
             {{{board}}}

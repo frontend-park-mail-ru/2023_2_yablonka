@@ -36,7 +36,13 @@ class WorkspaceStorage extends BaseStorage {
         try {
             body = await responsePromise.json();
         } catch (error) {
-            body = {};
+            console.log(error, responsePromise);
+            body = {
+                workspaces: {
+                    yourWorkspaces: [],
+                    guestWorkspaces: [],
+                },
+            };
         }
 
         const { status } = responsePromise;
@@ -57,13 +63,6 @@ class WorkspaceStorage extends BaseStorage {
             userStorage.storage.get(userStorage.userModel.csrf),
             newWorkspace,
         );
-
-        let body;
-        try {
-            body = await responsePromise.json();
-        } catch (error) {
-            body = {};
-        }
 
         const { status } = responsePromise;
 

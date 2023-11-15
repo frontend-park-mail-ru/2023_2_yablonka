@@ -11,19 +11,15 @@ import './userWorkspaces.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UserWorkspaces extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */
     render() {
         const userWorkspaces = this.#getWorkspaces(
-            this.config.yourWorkspaces ? this.config.yourWorkspaces : [],
+            this.config?.yourWorkspaces ? this.config.yourWorkspaces : [],
         );
         const guestWorkspaces = this.#getWorkspaces(
-            this.config.guestWorkspaces ? this.config.guestWorkspaces : [],
+            this.config?.guestWorkspaces ? this.config.guestWorkspaces : [],
         );
 
         return template({ userWorkspaces, guestWorkspaces });

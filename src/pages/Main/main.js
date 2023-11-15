@@ -21,7 +21,10 @@ export default class PageLayoutMain extends Component {
     render() {
         const page = {
             header: new Header(null, { avatar: this.config.user.avatar_url }).render(),
-            sidebar: new Sidebar(null, this.config.workspaces.yourWorkspaces).render(),
+            sidebar: new Sidebar(
+                null,
+                this.config.workspaces?.yourWorkspaces ? this.config.workspaces.yourWorkspaces : [],
+            ).render(),
             userWorkspaces: new UserWorkspaces(null, this.config.workspaces).render(),
         };
         this.parent.insertAdjacentHTML('beforeend', template(page));
@@ -51,7 +54,9 @@ export default class PageLayoutMain extends Component {
      * Убирает обработчики событий
      */
     removeEventListeners() {
-        this.parent.querySelector('.logo-wrapper').removeEventListener('click', this.toBoardsHandler);
+        this.parent
+            .querySelector('.logo-wrapper')
+            .removeEventListener('click', this.toBoardsHandler);
         this.parent
             .querySelector('.profile-link[data-action=boards]')
             .removeEventListener('click', this.toBoardsHandler);

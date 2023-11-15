@@ -27,6 +27,11 @@ export default class Header extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        return template(Object.assign(this.config.avatar, this.#innerConfig));
+        return template(
+            Object.assign(
+                this.config.avatar ? this.config.avatar : 'avatar.jpg',
+                this.#innerConfig,
+            ),
+        );
     }
 }

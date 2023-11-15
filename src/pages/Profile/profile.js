@@ -132,18 +132,18 @@ export default class PageLayoutMain extends Component {
         e.preventDefault();
         const user = {
             user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
-            name: this.parent.querySelector('input[data-name=name]').value,
-            surname: this.parent.querySelector('input[data-name=surname]').value,
-            description: this.parent.querySelector('textarea[data-name=user-description]').value,
+            name: document.querySelector('input[data-name=name]').value,
+            surname: document.querySelector('input[data-name=surname]').value,
+            description: document.querySelector('textarea[data-name=user-description]').value,
         };
         dispatcher.dispatch(actionUpdateProfile(user));
     }
 
     async changePasswordHandler(e) {
         e.preventDefault();
-        const newPassword = this.parent.querySelector('input[data-name=new-password]').value;
-        const oldPassword = this.parent.querySelector('input[data-name=old-password]').value;
-        const repeatNewPassword = this.parent.querySelector(
+        const newPassword = document.querySelector('input[data-name=new-password]').value;
+        const oldPassword = document.querySelector('input[data-name=old-password]').value;
+        const repeatNewPassword = document.querySelector(
             'input[data-name=repeat-new-password]',
         ).value;
 
@@ -151,7 +151,6 @@ export default class PageLayoutMain extends Component {
         } else if (!Validator.validateRepeatPasswords(newPassword, repeatNewPassword)) {
         } else {
             const user = {
-                user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
                 new_password: newPassword,
                 old_password: oldPassword,
             };

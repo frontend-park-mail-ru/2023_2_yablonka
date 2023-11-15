@@ -70,7 +70,7 @@ class UserStorage extends BaseStorage {
         if (status === 200) {
             this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
-            this.storage.set(this.userModel.csrf, responsePromise['X-Csrf-Token']);
+            this.storage.set(this.userModel.csrf, responsePromise.headers.get('X-Csrf-Token'));
         }
         this.storage.set(this.userModel.body, body);
         this.storage.set(this.userModel.status, status);
@@ -102,7 +102,7 @@ class UserStorage extends BaseStorage {
         if (status === 200) {
             this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
-            this.storage.set(this.userModel.csrf, responsePromise['X-Csrf-Token']);
+            this.storage.set(this.userModel.csrf, responsePromise.headers.get('X-Csrf-Token'));
         }
 
         this.storage.set(this.userModel.body, body);

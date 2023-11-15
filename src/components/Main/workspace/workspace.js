@@ -8,15 +8,13 @@ import './workspace.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Workspace extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */
 
     render() {
-        return template(this.config);
+        return template(
+            Object.assign({ workspaceIcon: Array.from(this.config.workspaceName)[0] }, this.config),
+        );
     }
 }

@@ -52,7 +52,6 @@ export default class Signin extends Component {
     addEventListeners() {
         this.parent.querySelector('.sign-link').addEventListener('click', this.goSigninHandler);
         this.parent.querySelector('.btn-sign').addEventListener('click', this.onSubmitHandler);
-        emitter.bind('signup', this.listenSignUpAction.bind(this));
     }
 
     /**
@@ -61,7 +60,6 @@ export default class Signin extends Component {
     removeEventListeners() {
         this.parent.querySelector('.sign-link').removeEventListener('click', this.goSigninHandler);
         this.parent.querySelector('.btn-sign').removeEventListener('click', this.onSubmitHandler);
-        emitter.unbind('signup', this.listenSignUpAction.bind(this));
     }
 
     /**

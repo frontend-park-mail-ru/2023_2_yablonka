@@ -47,7 +47,7 @@ class Profile extends BaseView {
         this.addListeners();
     }
 
-    reRender() {
+    async reRender() {
         this.clear();
         this.renderPage();
     }

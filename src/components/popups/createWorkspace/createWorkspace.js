@@ -19,25 +19,37 @@ export default class CreateWorkspace extends Component {
     }
 
     addEventListeners() {
-        document
+        this.parent
             .querySelector('.btn-create-workspace-pop-up')
             .addEventListener('click', this.#createWorkspace);
-        document
+        this.parent
+            .querySelector('.btn-create-first-workspace')
+            ?.addEventListener('click', this.#createWorkspaceOpen);
+        this.parent
+            .querySelector('.btn-create-workspace')
+            ?.addEventListener('click', this.#createWorkspaceOpen);
+        this.parent
             .querySelector('.menu__btn-create')
             .addEventListener('click', this.#createWorkspaceOpen);
-        document
+        this.parent
             .querySelector('#create-workspace')
             .addEventListener('click', this.#createWorkspaceClose);
     }
 
     removeEventListeners() {
-        document
+        this.parent
             .querySelector('.btn-create-workspace-pop-up')
             .removeEventListener('click', this.#createWorkspace);
-        document
+        this.parent
+            .querySelector('.btn-create-first-workspace')
+            ?.removeEventListener('click', this.#createWorkspaceOpen);
+        this.parent
+            .querySelector('.btn-create-workspace')
+            ?.removeEventListener('click', this.#createWorkspaceOpen);
+        this.parent
             .querySelector('.menu__btn-create')
             .removeEventListener('click', this.#createWorkspaceOpen);
-        document
+        this.parent
             .querySelector('#create-workspace')
             .removeEventListener('click', this.#createWorkspaceClose);
     }
@@ -46,7 +58,7 @@ export default class CreateWorkspace extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#create-workspace');
+        const dialog = this.parent.querySelector('#create-workspace');
 
         if (dialog.getAttribute('open') === '') {
             dialog.close();
@@ -59,7 +71,7 @@ export default class CreateWorkspace extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#create-workspace');
+        const dialog = this.parent.querySelector('#create-workspace');
 
         if (e.target === e.currentTarget) {
             dialog.close();
@@ -70,7 +82,7 @@ export default class CreateWorkspace extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#create-workspace');
+        const dialog = this.parent.querySelector('#create-workspace');
 
         if (dialog.getAttribute('open') === '') {
             dialog.close();
@@ -78,8 +90,8 @@ export default class CreateWorkspace extends Component {
             dialog.showModal();
         }
 
-        const workspaceName = document.querySelector('input[data-name=workspace-name').value;
-        const workspaceDescription = document.querySelector(
+        const workspaceName = this.parent.querySelector('input[data-name=workspace-name').value;
+        const workspaceDescription = this.parent.querySelector(
             'textarea[data-name=workspace-description',
         ).value;
 
