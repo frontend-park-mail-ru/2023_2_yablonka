@@ -9,6 +9,7 @@ import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 // routing
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
+import NotificationMessage from '../components/Common/notification/notificationMessage.js';
 
 /**
  * Класс для рендера страницы регистрации
@@ -34,7 +35,7 @@ class Signup extends BaseView {
     /**
      * Функция реагирующая на событие renderSignup, которое прокидывается через eventEmitter
      */
-    listenSignUpAction() {
+    listenSignUpAction = () => {
         const status = userStorage.storage.get(userStorage.userModel.status);
         switch (status) {
             case 200:
@@ -42,13 +43,25 @@ class Signup extends BaseView {
                 dispatcher.dispatch(actionRedirect('/main', false));
                 break;
             case 401:
+                NotificationMessage.showNotification(
+                    this.root.querySelector('input[data-name="email"]').parentNode,
+                    false,
+                    true,
+                    { fontSize: 14, fontWeight: 200, text: 'Неверный логин или пароль' },
+                );
                 break;
             case 409:
+                NotificationMessage.showNotification(
+                    this.root.querySelector('input[data-name="email"]').parentNode,
+                    false,
+                    true,
+                    { fontSize: 14, fontWeight: 200, text: 'Такой email уже существует' },
+                );
                 break;
             default:
                 break;
         }
-    }
+    };
 }
 
 const signUp = new Signup();

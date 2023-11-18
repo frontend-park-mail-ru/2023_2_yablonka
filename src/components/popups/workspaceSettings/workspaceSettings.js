@@ -137,9 +137,11 @@ export default class WorkspaceSettings extends Component {
 
             e.target.blur();
 
+            document.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent = textContent;
+
             dispatcher.dispatch(
                 actionUpdateWorkspace({
-                    id: workspaceID,
+                    id: parseInt(workspaceID, 10),
                     name: textContent,
                     description: workspaceDescription,
                 }),

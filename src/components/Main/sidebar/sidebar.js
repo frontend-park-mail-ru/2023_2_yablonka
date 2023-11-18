@@ -26,6 +26,7 @@ export default class Sidebar extends Component {
                 new WorkspaceParagraph(null, {
                     paragraph: Array.from(workspace.workspace_name)[0],
                     name: workspace.workspace_name,
+                    workspaceId: workspace.workspace_id,
                 }).render(),
             );
         });

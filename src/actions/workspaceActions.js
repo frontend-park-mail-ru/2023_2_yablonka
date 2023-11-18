@@ -13,7 +13,7 @@ export const actionCreateWorkspace = (workspace) => ({
 
 export const actionDeleteWorkspace = (delId) => ({
     type: 'deleteWorkspace',
-    value: { workspace_id: delId },
+    value: { workspace_id: parseInt(delId) },
 });
 
 export const actionUpdateWorkspace = (newWorkspaceData) => ({

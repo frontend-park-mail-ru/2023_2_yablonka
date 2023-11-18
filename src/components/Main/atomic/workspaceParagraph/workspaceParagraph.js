@@ -7,10 +7,6 @@ import template from './workspaceParagraph.hbs';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class ContainerMain extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */

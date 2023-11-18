@@ -9,6 +9,7 @@ import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 // routing
 import emitter from '../modules/actionTrigger.js';
 import dispatcher from '../modules/dispatcher.js';
+import NotificationMessage from '../components/Common/notification/notificationMessage.js';
 /**
  * Класс для рендера страницы логина
  * @class
@@ -33,7 +34,7 @@ class Signin extends BaseView {
     /**
      * Функция, реагирующая на событие renderSignup, которое прокидывается через eventEmitter
      */
-    listenSigninAction() {
+    listenSigninAction = () => {
         const status = userStorage.storage.get(userStorage.userModel.status);
         switch (status) {
             case 200:
@@ -41,6 +42,12 @@ class Signin extends BaseView {
                 dispatcher.dispatch(actionRedirect('/main', false));
                 break;
             case 401:
+                NotificationMessage.showNotification(
+                    this.root.querySelector('input[data-name="email"]').parentNode,
+                    false,
+                    true,
+                    { fontSize: 14, fontWeight: 200, text: 'Неверный логин или пароль' },
+                );
                 break;
             default:
                 break;
