@@ -24,6 +24,10 @@ body {
     height: 100%;
 }
 
+button:disabled {
+    pointer-events: none;
+}
+
 button:active {
     scale: 0.95;
     opacity: 0.75;

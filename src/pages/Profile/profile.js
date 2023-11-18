@@ -131,7 +131,6 @@ export default class PageLayoutMain extends Component {
     async changeProfileHandler(e) {
         e.preventDefault();
         const user = {
-            user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
             name: document.querySelector('input[data-name=name]').value,
             surname: document.querySelector('input[data-name=surname]').value,
             description: document.querySelector('textarea[data-name=user-description]').value,

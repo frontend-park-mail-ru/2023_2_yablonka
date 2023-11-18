@@ -1,18 +1,17 @@
 const CacheKey = 'cache-tabula';
 
-const initCache = () => {
-    return caches.open(CacheKey).then(
+const initCache = () =>
+    caches.open(CacheKey).then(
         (cache) => {
-            return cache.addAll(['/index.html', '/img/', '/svg/']);
+            return cache.addAll(['/index.html']);
         },
         (error) => {
             console.log(error);
         },
     );
-};
 
-const tryNetwork = (req, timeout) => {
-    return new Promise((resolve, reject) => {
+const tryNetwork = (req) =>
+    new Promise((resolve, reject) => {
         fetch(req).then(
             (res) => {
                 const responseClone = res.clone();
@@ -30,15 +29,11 @@ const tryNetwork = (req, timeout) => {
             },
         );
     });
-};
 
-const getFromCache = (req) => {
-    return caches.open(CacheKey).then((cache) => {
-        return cache.match(req).then((result) => {
-            return result || Promise.reject('no-match');
-        });
-    });
-};
+const getFromCache = (req) =>
+    caches
+        .open(CacheKey)
+        .then((cache) => cache.match(req).then((result) => result || Promise.reject('no-match')));
 
 self.addEventListener('install', (e) => {
     e.waitUntil(initCache());
@@ -46,18 +41,18 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
     e.waitUntil(
-        caches.keys().then((keyList) => {
-            return Promise.all(
+        caches.keys().then((keyList) =>
+            Promise.all(
                 keyList.map((key) => {
                     if (key !== CacheKey) {
                         return caches.delete(key);
                     }
                 }),
-            );
-        }),
+            ),
+        ),
     );
 });
 
 self.addEventListener('fetch', (e) => {
-    e.respondWith(tryNetwork(e.request, 400).catch(() => getFromCache(e.request)));
+    e.respondWith(tryNetwork(e.request).catch(() => getFromCache(e.request)));
 });

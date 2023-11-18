@@ -12,6 +12,8 @@ import './uploadAvatar.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UploadAvatarModal extends Component {
+    avatarFile;
+
     readFileAsByteArray(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -98,9 +100,11 @@ export default class UploadAvatarModal extends Component {
 
         if (dialog.getAttribute('open') === '') {
             dialog.close();
+            this.avatarFile = null;
         } else {
             dialog.showModal();
             prevDialog.close();
+            this.avatarFile = null;
         }
     };
 
@@ -110,6 +114,7 @@ export default class UploadAvatarModal extends Component {
         if (e.target === e.currentTarget) {
             this.#changeForm('none', 'flex');
             dialog.close();
+            this.avatarFile = null;
         }
     };
 
@@ -122,14 +127,14 @@ export default class UploadAvatarModal extends Component {
     #previewAvatar = (e) => {
         e.stopPropagation();
 
-        const [file] = document.querySelector('.input-upload-avatar').files;
+        const file = document.querySelector('.input-upload-avatar').files[0];
+        this.avatarFile = structuredClone(file);
         const previewImage = document.querySelector('.avatar-preview__image');
 
         if (file) {
-            this.#changeForm('flex', 'none');
-
             previewImage.style.display = 'block';
             previewImage.src = URL.createObjectURL(file);
+            this.#changeForm('flex', 'none');
         }
     };
 
@@ -146,14 +151,12 @@ export default class UploadAvatarModal extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const [file] = document.querySelector('.input-upload-avatar').files;
-
-        // const bytes = await this.readFileAsByteArray(file);
+        const avatar = await this.readFileAsByteArray(this.avatarFile);
+        console.log(avatar);
 
         dispatcher.dispatch(
             actionUpdateAvatar({
-                user_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
-                avatar: bytes,
+                avatar,
             }),
         );
 

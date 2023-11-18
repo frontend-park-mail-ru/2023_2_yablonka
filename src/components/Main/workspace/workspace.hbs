@@ -1,8 +1,26 @@
 <div class='flex-column-centered gap-10 workspace'>
-    <span class='font-size-18 font-weight-500 padding-0-10 flex-row-centered workspace__title'><span
-            class='box-32-32 border-radius-5 flex-centered workspace-logo'
-        >{{this.workspaceIcon}}</span>
-        <span class='font-weight-bold padding-0-10'>{{this.workspaceName}}</span></span>
+    <div class='flex-row-centered workspace__menu'><span
+            class='font-size-18 font-weight-500 padding-0-10 gap-10 flex-row-centered workspace__title'
+        >
+            <span
+                class='box-32-32 border-radius-5 flex-centered workspace-logo'
+            >{{this.workspaceIcon}}</span>
+            <span
+                contenteditable='true'
+                data-workspace='{{this.workspaceId}}'
+                class='font-weight-bold padding-5-10 border-radius-5 workspace__name'
+            >{{this.workspaceName}}</span>
+        </span>
+        <button
+            data-workspace='{{this.workspaceId}}'
+            class='flex-row-centered padding-5-10 gap-10 border-radius-5 btn btn-change-workspace'
+        >
+            <img src='/svg/gear.svg' class='box-24-24 flex-centered btn-change-workspace__image' />
+            <span
+                class='flex-centered font-weight-bold font-size-16 btn-change-workspace__title'
+            >Настройки</span>
+        </button></div>
+
     <div class='flex-row-centered gap-10 workspace__boards'>
         {{#each boards as |board|}}
             {{{board}}}

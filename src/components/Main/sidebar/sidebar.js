@@ -9,18 +9,14 @@ import './sidebar.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Sidebar extends Component {
-    constructor(parent, config) {
-        super(parent, config);
-    }
-
     /**
      * Рендерит компонент в DOM
      */
     render() {
         const workspaceParagraphs = this.#getWorkspaceParagraphs(
-            this.config.userWorkspaces ? this.config.userWorkspaces : [],
+            this.config?.yourWorkspaces ? this.config.yourWorkspaces : [],
         );
-        return template(workspaceParagraphs);
+        return template({ workspaceParagraphs });
     }
 
     #getWorkspaceParagraphs(workspaces) {
@@ -33,5 +29,6 @@ export default class Sidebar extends Component {
                 }).render(),
             );
         });
+        return workspaceParagraphs;
     }
 }

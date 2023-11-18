@@ -73,12 +73,12 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
-    async deleteWorkspace(id) {
+    async deleteWorkspace(workspace) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}workspace/delete/`,
             'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
-            { workspace_id: id },
+            workspace
         );
 
         const { status } = responsePromise;
@@ -87,6 +87,7 @@ class WorkspaceStorage extends BaseStorage {
             this.changed = true;
             emitter.trigger('renderWorkspaces');
         } else {
+            //Тут короче будем триггер на ошибки делать
         }
     }
 
@@ -102,7 +103,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             this.changed = true;
-            emitter.trigger('renderWorkspaces');
         } else {
         }
     }

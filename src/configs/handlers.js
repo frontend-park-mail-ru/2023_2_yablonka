@@ -18,7 +18,7 @@ const handlers = [
     { type: 'updateAvatar', method: userStorage.updateAvatar.bind(userStorage) },
     { type: 'createWorkspace', method: workspaceStorage.createWorkspace.bind(workspaceStorage) },
     { type: 'deleteWorkspace', method: workspaceStorage.deleteWorkspace.bind(workspaceStorage) },
-    { type: 'updateWorkspace', method: workspaceStorage.deleteWorkspace.bind(workspaceStorage) },
+    { type: 'updateWorkspace', method: workspaceStorage.updateWorkspace.bind(workspaceStorage) },
 ];
 
 export default handlers;

@@ -40,6 +40,7 @@ export default class Navigation extends Component {
                     avatar: this.config.avatar_url,
                     name: this.config.name,
                     surname: this.config.surname,
+                    email: this.config.email,
                 },
                 ...this.#innerConfig,
             }),

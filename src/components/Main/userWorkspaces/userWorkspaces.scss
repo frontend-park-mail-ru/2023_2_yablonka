@@ -1,18 +1,39 @@
 .user-workspaces {
     width: 60%;
-    padding: 0 40px;
+    padding: 0 0 0 40px;
     background-color: transparent;
-    flex: 1 1;
+    height: 100%;
     align-self: flex-start;
+    position: relative;
 }
 
 .workspaces {
+    position: absolute;
+    top: 0;
+    bottom: 0;
     align-self: flex-start;
     align-items: flex-start;
-    width: 100%;
+    width: 95%;
+    overflow-y: auto;
 }
 
 .btn-create-first-workspace {
     color: var(--action-button-color);
     background-color: transparent;
+}
+
+.workspaces::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.workspaces::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.workspaces::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
 }

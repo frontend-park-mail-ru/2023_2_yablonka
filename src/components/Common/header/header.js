@@ -29,7 +29,7 @@ export default class Header extends Component {
     render() {
         return template(
             Object.assign(
-                this.config.avatar ? this.config.avatar : 'avatar.jpg',
+                { avatar: this.config.avatar ? this.config.avatar : 'avatar.jpg' },
                 this.#innerConfig,
             ),
         );

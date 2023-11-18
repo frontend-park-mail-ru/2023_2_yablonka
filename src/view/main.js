@@ -13,6 +13,7 @@ import workspaceStorage from '../storages/workspaceStorage.js';
 import dispatcher from '../modules/dispatcher.js';
 
 import emitter from '../modules/actionTrigger.js';
+import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
 
 /**
  * Класс для рендера страницы досок
@@ -41,7 +42,11 @@ class Boards extends BaseView {
         this.components.push(new MainPage(this.root, { user, workspaces }));
 
         this.components.push(
-            ...[new Navigation(this.root, user), new CreateWorkspace(this.root, {})],
+            ...[
+                new Navigation(this.root, user),
+                new CreateWorkspace(this.root, {}),
+                new WorkspaceSettings(this.root, {}),
+            ],
         );
 
         this.render();

@@ -21,10 +21,7 @@ export default class PageLayoutMain extends Component {
     render() {
         const page = {
             header: new Header(null, { avatar: this.config.user.avatar_url }).render(),
-            sidebar: new Sidebar(
-                null,
-                this.config.workspaces?.yourWorkspaces ? this.config.workspaces.yourWorkspaces : [],
-            ).render(),
+            sidebar: new Sidebar(null, this.config.workspaces).render(),
             userWorkspaces: new UserWorkspaces(null, this.config.workspaces).render(),
         };
         this.parent.insertAdjacentHTML('beforeend', template(page));
@@ -47,6 +44,7 @@ export default class PageLayoutMain extends Component {
         this.parent
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
+
         emitter.bind('logout', this.close);
     }
 
@@ -69,6 +67,7 @@ export default class PageLayoutMain extends Component {
         this.parent
             .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.toSecurityHandler);
+
         emitter.unbind('logout', this.close);
     }
 

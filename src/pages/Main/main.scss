@@ -1,11 +1,12 @@
 .page__layout-main {
     min-width: 320px;
+    overflow-y: hidden;
 }
 
 .container-main {
     flex: 1 1;
     width: 100%;
-    padding: 40px;
+    padding: 40px 0px;
     background-color: var(--main-page-background);
     align-items: flex-start;
 }

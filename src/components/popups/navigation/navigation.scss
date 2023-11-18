@@ -8,7 +8,6 @@
     color: var(--text-color-on-page);
 }
 
-
 .pop-up-menu__user,
 .pop-up-menu__navigation {
     width: 100%;
@@ -27,9 +26,14 @@
 .pop-up-menu__user-information {
     width: calc(100% - 35px);
     padding-left: 10px;
+}
+
+.user-information__nickname,
+.user-information__email {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 100%;
 }
 
 .pop-up-menu__underline {
