@@ -1,0 +1,9 @@
+{{#if this.isError}}
+    <span class='notification' style='color: var(--error-text-color);'>
+        {{this.text}}
+    </span>
+{{else}}
+    <span class='notification' style='color: var(--success-text-color);'>
+        {{this.text}}
+    </span>
+{{/if}}

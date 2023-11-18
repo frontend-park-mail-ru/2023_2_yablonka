@@ -177,7 +177,6 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async updateAvatar(user) {
-        console.log(user);
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}user/edit/change_avatar/`,
             'POST',

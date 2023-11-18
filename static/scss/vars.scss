@@ -1,9 +1,14 @@
 :root {
     --text-color-in-input: #c7c7c7;
     --text-color-in-main: #ffffff;
+    --text-color-in-sign: #ffffff;
     --text-color-on-page: #c0c9f4;
     --text-color-in-search: #938989;
+    --text-color-forgotten-password:rgba(199, 199, 199);
     --text-color-upload-avatar-title: #747474;
+    --need-text-color: #f46285;
+    --error-text-color: #f46285;
+    --success-text-color: rgb(122, 244, 98);
 
     --sign-page-background: #0c1116;
     --header-background: #161a1d;
@@ -28,7 +33,7 @@
 
     --router-btn-border-color: #ffffff;
     --main-btn-border-color: #c0c9f4;
-    --need-text-color: #f46285;
+    --sign-border-color: #ffffff;
     --sign-logo-shadow: rgba(41, 41, 41, 50%);
     --sign-text-shadow: rgba(255, 255, 255, 25%);
 
@@ -40,6 +45,7 @@
 
     --sign-page-box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.15);
     --hover-navigation-paragraph: rgba(38, 44, 49, 1);
+    --shadow-sign-color: rgba(255, 255, 255, 15%);
 }
 
 .flex-centered {

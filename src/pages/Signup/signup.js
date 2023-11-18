@@ -7,7 +7,7 @@ import { actionNavigate, actionRedirect, actionSignup } from '../../actions/user
 import Validator from '../../modules/validator.js';
 import template from './signup.hbs';
 import './signup.scss';
-import emitter from '../../modules/actionTrigger.js';
+import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 
 /**
  * Компонент страницы входа
@@ -86,8 +86,34 @@ export default class Signin extends Component {
         const user = { email: loginInput.value, password: passwordInput.value };
 
         if (!Validator.validateEmail(user.email)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('.input[data-name="email"]').parentNode,
+                false,
+                true,
+                { fontSize: 14, fontWeight: 200, text: 'Неккоректный email' },
+            );
         } else if (!Validator.validatePassword(user.password)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('.input[data-name="password"]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Неккоректный пароль. Пароль должен может содержать лишь латинские буквы, цифры, спецсимволы и быть длиннее 8 символов',
+                },
+            );
         } else if (!Validator.validateRepeatPasswords(user.password, repeatPasswordInput.value)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('.input[data-name="repeat-password"]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Пароли не совпадают',
+                },
+            );
         } else {
             await dispatcher.dispatch(actionSignup(user));
         }

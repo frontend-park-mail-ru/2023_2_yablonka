@@ -152,7 +152,6 @@ export default class UploadAvatarModal extends Component {
         e.stopPropagation();
 
         const avatar = await this.readFileAsByteArray(this.avatarFile);
-        console.log(avatar);
 
         dispatcher.dispatch(
             actionUpdateAvatar({

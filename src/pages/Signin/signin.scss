@@ -1,3 +1,7 @@
+.page__layout-sign {
+    background-color: var(--sign-page-background);
+}
+
 .page__image {
     position: absolute;
     bottom: 0;
@@ -16,17 +20,75 @@
     width: 330px;
 }
 
-.conteiner-sign__header {
+.container-sign__header {
     font-size: 72px;
     color: #fff;
     text-shadow: var(--sign-logo-shadow) 0 15px 10px;
 }
 
-.conteiner-sign-header__logo {
+.container-sign-header__logo {
     text-shadow: var(--sign-logo-shadow) 0 15px 10px;
     padding-right: 10px;
     width: 90px;
     height: 70px;
 }
 
+.form__input > img {
+    height: 32px;
+    width: 32px;
+    padding-left: 3px;
+}
 
+.input-sign {
+    color: var(--text-color-in-input);
+    background: transparent;
+    font-weight: 400;
+    height: 34px;
+    width: 320px;
+    padding-left: 5px;
+    font-size: 20px;
+    outline: none;
+    position: relative;
+}
+
+.btn-sign {
+    background-color: #000;
+    box-shadow: var(--shadow-sign-color) 4px 4px 10px;
+    border: var(--sign-border-color) 2px solid;
+    height: 50px;
+    min-width: 140px;
+    border-radius: 10px;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    align-self: center;
+}
+
+.form__input-sign {
+    border: 2px solid var(--sign-border-color);
+    box-shadow: var(--sign-logo-shadow) 4px 4px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.sign-link {
+    margin-top: 40px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-color-in-sign);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.forgotten-password-link {
+    color: var(--text-color-forgotten-password);
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    display: flex;
+    align-self: flex-end;
+}

@@ -150,25 +150,9 @@ class WorkspaceStorage extends BaseStorage {
             board,
         );
 
-        let body;
-        try {
-            body = await responsePromise.json();
-        } catch (error) {
-            body = {};
-        }
-
         const { status } = responsePromise;
 
         if (status === 200) {
-            const oldWorkspaces = this.storage.get(this.workspaceModel.body);
-            oldWorkspaces.body.workspaces.forEach((ws) => {
-                ws.boards.forEach((brd) => {
-                    if (brd.board_id === board.id) {
-                        brd = body.board;
-                    }
-                });
-            });
-            this.storage.set(this.workspaceModel.body, oldWorkspaces);
             emitter.trigger('renderWorkspaces');
         } else {
         }
