@@ -1,9 +1,15 @@
+// components
 import Component from '../../components/core/basicComponent.js';
 import Form from '../../components/Signin/form/form.js';
 import Link from '../../components/atomic/link/link.js';
 import Button from '../../components/atomic/button/button.js';
+// routing
 import dispatcher from '../../modules/dispatcher.js';
 import { actionNavigate, actionRedirect, actionSignin } from '../../actions/userActions.js';
+// utils
+import Validator from '../../modules/validator.js';
+import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
+// template and styles
 import template from './signin.hbs';
 import './signin.scss';
 
@@ -82,6 +88,26 @@ export default class Signin extends Component {
 
         const user = { email: loginInput.value, password: passwordInput.value };
 
-        await dispatcher.dispatch(actionSignin(user));
+        if (!Validator.validateEmail(user.email)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('.input[data-name="email"]').parentNode,
+                false,
+                true,
+                { fontSize: 14, fontWeight: 200, text: 'Неккоректный email' },
+            );
+        } else if (!Validator.validatePassword(user.password)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('.input[data-name="password"]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Неккоректный пароль. Пароль должен может содержать лишь латинские буквы, цифры, спецсимволы и быть длиннее 8 символов',
+                },
+            );
+        } else {
+            await dispatcher.dispatch(actionSignin(user));
+        }
     };
 }

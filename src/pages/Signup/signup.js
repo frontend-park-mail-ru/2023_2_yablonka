@@ -1,13 +1,17 @@
+// components
 import Component from '../../components/core/basicComponent.js';
 import Form from '../../components/Signup/form/form.js';
 import Link from '../../components/atomic/link/link.js';
 import Button from '../../components/atomic/button/button.js';
+// routing
 import dispatcher from '../../modules/dispatcher.js';
 import { actionNavigate, actionRedirect, actionSignup } from '../../actions/userActions.js';
+// utils
 import Validator from '../../modules/validator.js';
+import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
+// template and styles
 import template from './signup.hbs';
 import './signup.scss';
-import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 
 /**
  * Компонент страницы входа
