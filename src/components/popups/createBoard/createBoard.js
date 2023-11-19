@@ -91,8 +91,6 @@ export default class CreateBoard extends Component {
 
         const boardName = document.querySelector('input[data-name=board-name]').value;
         const workspaceID = e.target.closest('dialog').dataset.workspace;
-        const ownerID = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
-        const ownerEmail = userStorage.storage.get(userStorage.userModel.body).body.user.email;
 
         dispatcher.dispatch(
             actionCreateBoard({
