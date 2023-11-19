@@ -2,9 +2,7 @@ const CacheKey = 'cache-tabula';
 
 const initCache = () =>
     caches.open(CacheKey).then(
-        (cache) => {
-            return cache.addAll(['/index.html']);
-        },
+        (cache) => cache.addAll(['/index.html']),
         (error) => {
             console.log(error);
         },

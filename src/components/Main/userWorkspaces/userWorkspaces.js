@@ -47,7 +47,7 @@ export default class UserWorkspaces extends Component {
                     workspaceId,
                     boardId: board.id,
                     boardName: board.name,
-                    boardImg: board.src,
+                    boardImg: board.thumbnail_url ? board.thumbnail_url : 'main_theme.jpg',
                 }).render(),
             );
         });

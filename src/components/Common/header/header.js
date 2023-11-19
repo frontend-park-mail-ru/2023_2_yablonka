@@ -18,7 +18,7 @@ export default class Header extends Component {
                 title: 'Избранное',
             },
             {
-                title: 'Шаблоны',
+                title: 'Диаграмма Ганта',
             },
         ],
     };
@@ -27,11 +27,9 @@ export default class Header extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        return template(
-            Object.assign(
-                { avatar: this.config.avatar ? this.config.avatar : 'avatar.jpg' },
-                this.#innerConfig,
-            ),
-        );
+        return template({
+            avatar: this.config.avatar ? this.config.avatar : 'avatar.jpg',
+            ...this.#innerConfig,
+        });
     }
 }

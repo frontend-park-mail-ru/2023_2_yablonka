@@ -74,8 +74,14 @@ export default class WorkspaceSettings extends Component {
 
         const dialog = document.querySelector('#workspace-settings');
 
-        const btnCoordinates = e.target.parentElement.getBoundingClientRect();
-        const workspaceId = e.target.parentElement.dataset.workspace;
+        console.log(e.target);
+
+        const btnCoordinates = e.target?.dataset.workspace
+            ? e.target.getBoundingClientRect()
+            : e.target.parentElement.getBoundingClientRect();
+        const workspaceId = e.target?.dataset.workspace
+            ? e.target.dataset.workspace
+            : e.target.parentElement.dataset.workspace;
 
         if (dialog.getAttribute('open') === '') {
             dialog.close();
@@ -126,7 +132,7 @@ export default class WorkspaceSettings extends Component {
         }
     };
 
-    changeNameHandler(e) {
+    changeNameHandler = (e) => {
         if (e.type === 'blur' || (e.type === 'keydown' && e.key === 'Enter')) {
             e.preventDefault();
             const { textContent } = e.target;
@@ -137,7 +143,8 @@ export default class WorkspaceSettings extends Component {
 
             e.target.blur();
 
-            document.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent = textContent;
+            this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent =
+                textContent;
 
             dispatcher.dispatch(
                 actionUpdateWorkspace({
@@ -147,5 +154,5 @@ export default class WorkspaceSettings extends Component {
                 }),
             );
         }
-    }
+    };
 }

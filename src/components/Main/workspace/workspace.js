@@ -13,8 +13,9 @@ export default class Workspace extends Component {
      */
 
     render() {
-        return template(
-            Object.assign({ workspaceIcon: Array.from(this.config.workspaceName)[0] }, this.config),
-        );
+        return template({
+            workspaceIcon: Array.from(this.config.workspaceName)[0],
+            ...this.config,
+        });
     }
 }

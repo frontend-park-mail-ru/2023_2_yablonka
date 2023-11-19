@@ -4,6 +4,9 @@ import './createWorkspace.scss';
 import userStorage from '../../../storages/userStorage.js';
 import { actionCreateWorkspace } from '../../../actions/workspaceActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
+import { actionNavigate, actionRedirect } from '../../../actions/userActions.js';
+import NotificationMessage from '../../Common/notification/notificationMessage.js';
+import Validator from '../../../modules/validator.js';
 /**
  * Попап для хедера
  * @class
@@ -101,25 +104,36 @@ export default class CreateWorkspace extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#create-workspace');
-
-        if (dialog.getAttribute('open') === '') {
-            dialog.close();
-        } else {
-            dialog.showModal();
-        }
-
-        const workspaceName = this.parent.querySelector('input[data-name=workspace-name').value;
+        const workspaceName = this.parent.querySelector('input[data-name=workspace-name]');
         const workspaceDescription = this.parent.querySelector(
-            'textarea[data-name=workspace-description',
+            'textarea[data-name=workspace-description]',
         ).value;
 
-        dispatcher.dispatch(
-            actionCreateWorkspace({
-                description: workspaceDescription,
-                name: workspaceName,
-                owner_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
-            }),
-        );
+        if (Validator.validateObjectName(workspaceName.value)) {
+            dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+            dispatcher.dispatch(actionRedirect('/main', false));
+
+            dispatcher.dispatch(
+                actionCreateWorkspace({
+                    description: workspaceDescription,
+                    name: workspaceName.value,
+                    owner_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+                }),
+            );
+
+            const dialog = this.parent.querySelector('#create-workspace');
+
+            if (dialog.getAttribute('open') === '') {
+                dialog.close();
+            } else {
+                dialog.showModal();
+            }
+        } else {
+            NotificationMessage.showNotification(workspaceName, true, true, {
+                fontSize: 12,
+                fontWeight: 200,
+                text: 'Некорректное название рабочего пространства',
+            });
+        }
     };
 }

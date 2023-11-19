@@ -23,26 +23,25 @@ export default class NotificationMessage extends Component {
 
         const parentElement = referenceElement.parentNode;
 
+        notification.innerHTML = new NotificationMessage(null, { ...message, isError }).render();
         notification.setAttribute(
             'style',
-            `width: ${parentElement.getBoundingClientRect().width}px;`,
+            `width: ${referenceElement.getBoundingClientRect().width}px;`,
         );
-
-        notification.innerHTML = new NotificationMessage(null, { ...message, isError }).render();
 
         try {
             document.querySelector(`div[data-element="${referenceElement.className}"]`).remove();
         } catch {}
 
         if (hidePrevElem) {
-            const hiddenElement = parent.previousSibling;
+            const hiddenElement = referenceElement.previousElementSibling;
             const elDisplay = hiddenElement.style.display;
 
             hiddenElement.style.display = 'none';
             parentElement.insertBefore(notification, referenceElement);
 
             setTimeout(() => {
-                hiddenElement.display = elDisplay;
+                hiddenElement.style.display = elDisplay;
                 document
                     .querySelector(`div[data-element="${referenceElement.className}"]`)
                     .remove();

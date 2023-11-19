@@ -2,6 +2,7 @@ import BaseStorage from './baseStorage.js';
 import AJAX from '../modules/ajax.js';
 import { apiPath, apiVersion } from '../configs/configs.js';
 import emitter from '../modules/actionTrigger.js';
+import NotificationMessage from '../components/Common/notification/notificationMessage.js';
 
 /**
  * Хранилище объекта "пользователь"
@@ -145,8 +146,30 @@ class UserStorage extends BaseStorage {
             this.storage.set(this.userModel.body, oldUser);
             emitter.trigger('updateProfile');
             emitter.trigger('changeSuccess');
+
+            NotificationMessage.showNotification(
+                document.querySelector('input[data-name="email"]').parentNode,
+                false,
+                false,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Данные профиля успешно изменены',
+                },
+            );
         } else {
             emitter.trigger('changeError');
+
+            NotificationMessage.showNotification(
+                document.querySelector('input[data-name="email"]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Не удалось изменить данные профиля',
+                },
+            );
         }
     }
 
@@ -167,8 +190,30 @@ class UserStorage extends BaseStorage {
         if (status === 200) {
             emitter.trigger('updateProfile');
             emitter.trigger('changeSuccess');
+
+            NotificationMessage.showNotification(
+                document.querySelector('input[data-name="old-password"]').parentNode,
+                false,
+                false,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Пароль успешно изменён',
+                },
+            );
         } else {
             emitter.trigger('changeError');
+
+            NotificationMessage.showNotification(
+                document.querySelector('input[data-name="old-password"]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Не удалось изменить пароль',
+                },
+            );
         }
     }
 

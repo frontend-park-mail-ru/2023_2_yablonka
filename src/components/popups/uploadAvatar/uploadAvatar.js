@@ -1,6 +1,5 @@
 import { actionUpdateAvatar } from '../../../actions/userActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
-import userStorage from '../../../storages/userStorage.js';
 import Component from '../../core/basicComponent.js';
 import template from './uploadAvatar.hbs';
 import './uploadAvatar.scss';

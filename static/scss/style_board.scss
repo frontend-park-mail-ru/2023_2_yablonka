@@ -1,11 +1,6 @@
 .page__layout-board {
-    width: 100%;
-    height: 100%;
     min-width: 320px;
-    display: flex;
-    flex-direction: column;
     position: relative;
-    align-items: center;
 }
 
 .container-board {
@@ -22,6 +17,7 @@
 .sidebar__workspace-information {
     height: 64px;
     width: 100%;
+    color: var(--text-color-on-page);
 }
 
 .sidebar__user-avatar {
@@ -30,96 +26,97 @@
 
 .sidebar__actions {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: start;
-    gap: 15px;
     padding: 0px 20px;
+    color: var(--text-color-on-page);
 }
 
 .sidebar__board-action {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
     width: 100%;
-}
-
-.board-action__image {
-    height: 20px;
-    width: 20px;
 }
 
 .sidebar__board-members {
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     width: 100%;
-}
-
-.board-action__main-action {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-
-.board-action__additional-action {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.sidebar__board-settings {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
 }
 
 .sidebar__boards-list {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
     width: 100%;
     padding: 0px 20px;
-    gap: 15px;
+    flex-grow: 1;
 }
 
 .sidebar-boards-list__action {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: space-between;
     width: 100%;
+    color: var(--text-color-on-page);
 }
 
-.sidebar-boards-list__action-title {
-    font-size: 18px;
-    font-weight: 500;
+.sidebar-board-list-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-board-list {
+    position: absolute;
+    top: 0;
+    bottom: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar-board-list::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.sidebar-board-list::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.sidebar-board-list::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
 }
 
 .sidebar-boards-list__board {
     width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 10px;
     padding: 0px 10px;
+    color: var(--text-color-on-page);
 }
 
 .sidebar-boards-list__board-image {
     height: 32px;
     width: 48px;
-    border-radius: 4px;
+}
+
+.sidebar-boards-list__board-name {
+    min-width: 100px;
+    max-width: 100px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-wrap: nowrap;
+}
+
+.sidebar-boards-list__board-name::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.sidebar-boards-list__board-name::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.sidebar-boards-list__board-name::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
 }
 
 .board {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 82%;
     height: 100%;
     flex-grow: 1;

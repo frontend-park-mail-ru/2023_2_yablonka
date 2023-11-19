@@ -6,6 +6,7 @@ import {
     actionUpdateProfile,
 } from '../../actions/userActions.js';
 import Header from '../../components/Common/header/header.js';
+import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 import Component from '../../components/core/basicComponent.js';
 import UserAvatar from '../../components/Profile/userAvatar/userAvatar.js';
 import UserInformation from '../../components/Profile/userInformation/userInformation.js';
@@ -136,7 +137,7 @@ export default class PageLayoutMain extends Component {
         dispatcher.dispatch(actionUpdateProfile(user));
     }
 
-    async changePasswordHandler(e) {
+    changePasswordHandler = async (e) => {
         e.preventDefault();
         const newPassword = document.querySelector('input[data-name=new-password]').value;
         const oldPassword = document.querySelector('input[data-name=old-password]').value;
@@ -145,7 +146,27 @@ export default class PageLayoutMain extends Component {
         ).value;
 
         if (!Validator.validatePassword(newPassword)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('input[data-name="new-password"]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Неккоректный пароль. Пароль должен может содержать лишь латинские буквы, цифры, спецсимволы и быть длиннее 8 символов',
+                },
+            );
         } else if (!Validator.validateRepeatPasswords(newPassword, repeatNewPassword)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('input[data-name="repeat-new-password"]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Пароли не совпадают',
+                },
+            );
         } else {
             const user = {
                 new_password: newPassword,
@@ -154,7 +175,7 @@ export default class PageLayoutMain extends Component {
 
             dispatcher.dispatch(actionUpdatePassword(user));
         }
-    }
+    };
 
     /**
      * Handler события нажатия на ссылку для перехода на страницу досок

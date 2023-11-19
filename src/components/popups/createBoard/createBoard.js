@@ -2,8 +2,9 @@ import Component from '../../core/basicComponent.js';
 import template from './createBoard.hbs';
 import dispatcher from '../../../modules/dispatcher.js';
 import { actionCreateBoard } from '../../../actions/boardActions.js';
-import userStorage from '../../../storages/userStorage.js';
 import './createBoard.scss';
+import NotificationMessage from '../../Common/notification/notificationMessage.js';
+import Validator from '../../../modules/validator.js';
 /**
  * Попап для хедера
  * @class
@@ -25,7 +26,9 @@ export default class CreateBoard extends Component {
         this.parent
             .querySelector('input[data-name=board-name]')
             .addEventListener('input', this.#blockCreateButton);
-        this.parent.querySelector('.btn-create-board-pop-up').addEventListener('click', this.#createBoard);
+        this.parent
+            .querySelector('.btn-create-board-pop-up')
+            .addEventListener('click', this.#createBoard);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -70,7 +73,8 @@ export default class CreateBoard extends Component {
                 dialog.show();
                 dialog.setAttribute(
                     'style',
-                    `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + btnCoordinates.width + 20
+                    `top: ${btnCoordinates.top - 120}px; left: ${
+                        btnCoordinates.left + btnCoordinates.width + 20
                     }px`,
                 );
                 dialog.dataset.workspace = workspaceId;
@@ -79,7 +83,8 @@ export default class CreateBoard extends Component {
             dialog.show();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + btnCoordinates.width + 20
+                `top: ${btnCoordinates.top - 120}px; left: ${
+                    btnCoordinates.left + btnCoordinates.width + 20
                 }px`,
             );
             dialog.setAttribute('data-workspace', workspaceId);
@@ -89,15 +94,23 @@ export default class CreateBoard extends Component {
     #createBoard = (e) => {
         e.preventDefault();
 
-        const boardName = document.querySelector('input[data-name=board-name]').value;
+        const boardName = this.parent.querySelector('input[data-name=board-name]');
         const workspaceID = e.target.closest('dialog').dataset.workspace;
 
-        dispatcher.dispatch(
-            actionCreateBoard({
-                name: boardName,
-                workspace_id: workspaceID,
-            }),
-        );
+        if (Validator.validateObjectName(boardName.value)) {
+            dispatcher.dispatch(
+                actionCreateBoard({
+                    name: boardName.value,
+                    workspace_id: parseInt(workspaceID, 10),
+                }),
+            );
+        } else {
+            NotificationMessage.showNotification(boardName, true, true, {
+                fontSize: 14,
+                fontWeight: 200,
+                text: 'Некорректное название доски',
+            });
+        }
     };
 
     #resize = () => {
@@ -109,7 +122,8 @@ export default class CreateBoard extends Component {
                 .getBoundingClientRect();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + btnCoordinates.width + 20
+                `top: ${btnCoordinates.top - 10}px; left: ${
+                    btnCoordinates.left + btnCoordinates.width + 20
                 }px`,
             );
         }

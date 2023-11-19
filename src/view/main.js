@@ -6,6 +6,7 @@ import Navigation from '../components/popups/navigation/navigation.js';
 import CreateWorkspace from '../components/popups/createWorkspace/createWorkspace.js';
 // actions
 import { actionGetWorkspaces } from '../actions/workspaceActions.js';
+import { actionGetBoard } from '../actions/boardActions.js';
 // storages
 import userStorage from '../storages/userStorage.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
@@ -53,6 +54,8 @@ class Boards extends BaseView {
 
         this.render();
         this.addListeners();
+
+        dispatcher.dispatch(actionGetBoard(12));
     }
 
     async reRender() {

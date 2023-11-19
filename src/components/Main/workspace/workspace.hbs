@@ -11,14 +11,17 @@
                 class='font-weight-bold padding-5-10 border-radius-5 workspace__name'
             >{{this.workspaceName}}</span>
         </span>
-        <button
-            data-workspace='{{this.workspaceId}}'
-            class='flex-row-centered padding-5-10 gap-10 border-radius-5 btn btn-change-workspace'
-        >
-            <img src='/svg/gear.svg' class='box-24-24 flex-centered btn-change-workspace__image' />
-            <span
-                class='flex-centered font-weight-bold font-size-16 btn-change-workspace__title'
-            >Настройки</span>
+        <button data-workspace='{{this.workspaceId}}' class='border-radius-5 btn btn-change-workspace'><div
+                class='strach-layout flex-row-centered padding-5-10 gap-10 border-radius-5 btn-change-workspace__contant-wrapper'
+            >
+                <img
+                    src='/svg/gear.svg'
+                    class='box-24-24 flex-centered btn-change-workspace__image'
+                />
+                <span
+                    class='flex-centered font-weight-bold font-size-16 btn-change-workspace__title'
+                >Настройки</span>
+            </div>
         </button></div>
 
     <div class='flex-row-centered gap-10 workspace__boards'>

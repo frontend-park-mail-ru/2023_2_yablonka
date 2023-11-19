@@ -10,11 +10,15 @@
 .workspaces {
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 40px;
     align-self: flex-start;
     align-items: flex-start;
     width: 95%;
     overflow-y: auto;
+}
+
+.workspaces__container {
+    width: 80%;
 }
 
 .btn-create-first-workspace {

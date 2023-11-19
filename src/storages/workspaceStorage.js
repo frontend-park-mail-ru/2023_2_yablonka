@@ -67,7 +67,6 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            this.changed = true;
             emitter.trigger('renderWorkspaces');
         } else {
         }
@@ -87,7 +86,7 @@ class WorkspaceStorage extends BaseStorage {
             this.changed = true;
             emitter.trigger('renderWorkspaces');
         } else {
-            //Тут короче будем триггер на ошибки делать
+            // Тут короче будем триггер на ошибки делать
         }
     }
 
@@ -122,10 +121,12 @@ class WorkspaceStorage extends BaseStorage {
             body = {};
         }
 
+        console.log(body);
+
         const { status } = responsePromise;
 
         if (status === 200) {
-            let oldWorkspaces = this.storage.get(this.workspaceModel.body);
+            const oldWorkspaces = this.storage.get(this.workspaceModel.body);
             oldWorkspaces.body.workspaces.forEach((ws) => {
                 ws.boards.forEach((brd) => {
                     if (brd.board_id === board.board_id) {
@@ -134,6 +135,7 @@ class WorkspaceStorage extends BaseStorage {
                 });
             });
             this.storage.set(this.workspaceModel.body, oldWorkspaces);
+            console.log(this.storage.get(this.workspaceModel.body));
             emitter.trigger('renderWorkspaces');
         } else {
         }
