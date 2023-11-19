@@ -15,6 +15,7 @@ export default class UserAvatar extends Component {
             avatar: this.config.avatar,
             name: this.config.name,
             surname: this.config.surname,
+            email: this.config.email,
         });
     }
 }

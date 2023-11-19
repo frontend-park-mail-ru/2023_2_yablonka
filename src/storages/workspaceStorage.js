@@ -78,7 +78,7 @@ class WorkspaceStorage extends BaseStorage {
             `${apiPath + apiVersion}workspace/delete/`,
             'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
-            workspace
+            workspace,
         );
 
         const { status } = responsePromise;
@@ -140,15 +140,14 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     async createBoard(board) {
-        board.owner_id = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
-        board.email = userStorage.storage.get(userStorage.userModel.body).body.user.email;
-
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/create/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             board,
         );
+
+        console.log(await responsePromise.json());
 
         const { status } = responsePromise;
 

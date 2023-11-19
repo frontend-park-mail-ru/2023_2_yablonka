@@ -14,6 +14,7 @@ import dispatcher from '../modules/dispatcher.js';
 
 import emitter from '../modules/actionTrigger.js';
 import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
+import CreateBoard from '../components/popups/createBoard/createBoard.js';
 
 /**
  * Класс для рендера страницы досок
@@ -46,6 +47,7 @@ class Boards extends BaseView {
                 new Navigation(this.root, user),
                 new CreateWorkspace(this.root, {}),
                 new WorkspaceSettings(this.root, {}),
+                new CreateBoard(this.root, {}),
             ],
         );
 

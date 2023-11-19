@@ -29,6 +29,11 @@ export default class NotificationMessage extends Component {
         );
 
         notification.innerHTML = new NotificationMessage(null, { ...message, isError }).render();
+
+        try {
+            document.querySelector(`div[data-element="${referenceElement.className}"]`).remove();
+        } catch {}
+
         if (hidePrevElem) {
             const hiddenElement = parent.previousSibling;
             const elDisplay = hiddenElement.style.display;

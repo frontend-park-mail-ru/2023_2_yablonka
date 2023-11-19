@@ -13,8 +13,6 @@ import UserSecurity from '../../components/Profile/userSecurity/userSecurity.js'
 import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
 import Validator from '../../modules/validator.js';
-import userStorage from '../../storages/userStorage.js';
-
 import template from './profile.hbs';
 import './profile.scss';
 
