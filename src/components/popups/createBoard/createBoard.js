@@ -70,8 +70,7 @@ export default class CreateBoard extends Component {
                 dialog.show();
                 dialog.setAttribute(
                     'style',
-                    `top: ${btnCoordinates.top - 10}px; left: ${
-                        btnCoordinates.left + btnCoordinates.width + 20
+                    `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + btnCoordinates.width + 20
                     }px`,
                 );
                 dialog.dataset.workspace = workspaceId;
@@ -80,8 +79,7 @@ export default class CreateBoard extends Component {
             dialog.show();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
+                `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + btnCoordinates.width + 20
                 }px`,
             );
             dialog.setAttribute('data-workspace', workspaceId);
@@ -99,10 +97,7 @@ export default class CreateBoard extends Component {
         dispatcher.dispatch(
             actionCreateBoard({
                 name: boardName,
-                description: '',
                 workspace_id: workspaceID,
-                owner_id: ownerID,
-                owner_email: ownerEmail,
             }),
         );
     };
@@ -116,8 +111,7 @@ export default class CreateBoard extends Component {
                 .getBoundingClientRect();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
+                `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + btnCoordinates.width + 20
                 }px`,
             );
         }
