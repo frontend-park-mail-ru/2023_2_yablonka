@@ -74,14 +74,8 @@ export default class WorkspaceSettings extends Component {
 
         const dialog = document.querySelector('#workspace-settings');
 
-        console.log(e.target);
-
-        const btnCoordinates = e.target?.dataset.workspace
-            ? e.target.getBoundingClientRect()
-            : e.target.parentElement.getBoundingClientRect();
-        const workspaceId = e.target?.dataset.workspace
-            ? e.target.dataset.workspace
-            : e.target.parentElement.dataset.workspace;
+        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
+        const workspaceId = e.target.closest('button').dataset.workspace;
 
         if (dialog.getAttribute('open') === '') {
             dialog.close();
@@ -93,7 +87,6 @@ export default class WorkspaceSettings extends Component {
                         btnCoordinates.left + btnCoordinates.width + 20
                     }px`,
                 );
-                dialog.dataset.workspace = workspaceId;
             }
         } else {
             dialog.show();
@@ -103,7 +96,7 @@ export default class WorkspaceSettings extends Component {
                     btnCoordinates.left + btnCoordinates.width + 20
                 }px`,
             );
-            dialog.setAttribute('data-workspace', workspaceId);
+            dialog.dataset.workspace = workspaceId;
         }
     };
 
@@ -112,7 +105,9 @@ export default class WorkspaceSettings extends Component {
 
         if (dialog.dataset.workspace) {
             const btnCoordinates = document
-                .querySelector(`button[data-workspace="${dialog.dataset.workspace}"]`)
+                .querySelector(
+                    `.btn-change-workspace[data-workspace="${dialog.dataset.workspace}"]`,
+                )
                 .getBoundingClientRect();
             dialog.setAttribute(
                 'style',

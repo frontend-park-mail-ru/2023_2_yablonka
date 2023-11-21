@@ -2,3 +2,9 @@
     color: var(--text-color-in-sign);
     text-shadow: var(--sign-logo-shadow) 0 15px 10px;
 }
+
+@media screen and (max-width: 576px), (max-height: 576px) {
+    .sign-header-title {
+        display: none;
+    }
+}

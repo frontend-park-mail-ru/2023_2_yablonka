@@ -12,6 +12,7 @@ class WorkspaceStorage extends BaseStorage {
     workspaceModel = {
         body: 'body',
         status: 'status',
+        boards: 'boards',
     };
 
     /**
@@ -20,6 +21,7 @@ class WorkspaceStorage extends BaseStorage {
     constructor() {
         super();
         this.storage.set(this.workspaceModel.body, undefined);
+        this.storage.set(this.workspaceModel.boards, []);
     }
 
     /**
@@ -126,17 +128,19 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            const oldWorkspaces = this.storage.get(this.workspaceModel.body);
-            oldWorkspaces.body.workspaces.forEach((ws) => {
-                ws.boards.forEach((brd) => {
-                    if (brd.board_id === board.board_id) {
-                        brd = body.board;
-                    }
-                });
-            });
-            this.storage.set(this.workspaceModel.body, oldWorkspaces);
+            console.log(oldWorkspaces.body.workspaces.yourWorkspaces);
+
+            const idx = this.storage
+                .get(this.workspaceModel.boards)
+                .findIndex((brd) => brd.board_id === board.board_id);
+            let boards = this.storage.get(this.workspaceModel.boards);
+            if (idx !== -1) {
+                boards.splice(idx, 1);
+            }
+            boards.push(body.body.board);
+            this.storage.set(this.workspaceModel.boards, boards);
             console.log(this.storage.get(this.workspaceModel.body));
-            emitter.trigger('renderWorkspaces');
+            //emitter.trigger('renderWorkspaces');
         } else {
         }
     }
@@ -155,6 +159,55 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    async deleteBoard(board) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}board/delete/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            board,
+        );
+
+        console.log(await responsePromise.json());
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            const idx = this.storage
+                .get(this.workspaceModel.boards)
+                .findIndex((brd) => brd.board_id === board.id);
+            const boards = this.storage.get(this.workspaceModel.boards);
+            boards.splice(idx,1);
+            this.storage.set(this.workspaceModel.boards, boards);
+            //emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    async updateBoard(board) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}board/update/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            board,
+        );
+
+        console.log(await responsePromise.json());
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            let boards = this.storage.get(this.userModel.boards);
+            const idx = this.storage
+                .get(this.workspaceModel.boards)
+                .findIndex((brd) => brd.board_id === board.id);
+            boards[idx].name = board.name;
+            boards[idx].description = board.description;
+            this.storage.set(this.workspaceModel.body, boards);
+            //emitter.trigger('renderWorkspaces');
         } else {
         }
     }

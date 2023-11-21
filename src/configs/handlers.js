@@ -20,6 +20,7 @@ const handlers = [
     { type: 'deleteWorkspace', method: workspaceStorage.deleteWorkspace.bind(workspaceStorage) },
     { type: 'updateWorkspace', method: workspaceStorage.updateWorkspace.bind(workspaceStorage) },
     { type: 'createBoard', method: workspaceStorage.createBoard.bind(workspaceStorage) },
+    { type: 'getBoard', method: workspaceStorage.getBoard.bind(workspaceStorage) },
 ];
 
 export default handlers;

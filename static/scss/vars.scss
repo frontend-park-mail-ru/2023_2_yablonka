@@ -6,6 +6,7 @@
     --text-color-in-search: #938989;
     --text-color-forgotten-password:rgba(199, 199, 199);
     --text-color-upload-avatar-title: #747474;
+    --text-color-action-page-button: #000000;
     --need-text-color: #f46285;
     --error-text-color: #f46285;
     --success-text-color: rgb(122, 244, 98);
@@ -19,6 +20,8 @@
     --card-background: #262d34;
     --pop-up-background-color: rgba(22, 26, 29, 1);
     --modal-upload-avatar-background-color: #f4f4f6;
+    --list-background-color: #101204;
+    --card-item-background-color: #262d34;
 
     --action-button-color: #7ba4f3;
     --cancel-button-color: #cbcaca;
@@ -30,12 +33,14 @@
     --change-workspace-button-hover-background-color: #293a5aad;
     --change-workspace-button-active-background-color: #273b5cad;
     --search-background-color: #000000;
+    --add-new-list-background-color: #2a3066;
 
     --router-btn-border-color: #ffffff;
     --main-btn-border-color: #c0c9f4;
     --sign-border-color: #ffffff;
     --sign-logo-shadow: rgba(41, 41, 41, 50%);
     --sign-text-shadow: rgba(255, 255, 255, 25%);
+    --add-new-list-border-color: #c0c9f4;
 
     --add-new-column-background-color: #2a3066;
     --input-border-color: #38424d;
