@@ -30,6 +30,15 @@ export default class Error404 extends Component {
     }
 
     /**
+     * Добавляет подписки на события
+     */
+    removeEventListeners() {
+        this.parent
+            .querySelector('.btn-not-found')
+            .removeEventListener('click', this.redirectHandler);
+    }
+
+    /**
      * Хендлер события нажатия на ссылку перехода на регистрацию
      * @param {Event} e - Событие
      */

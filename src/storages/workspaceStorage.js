@@ -128,8 +128,6 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            console.log(oldWorkspaces.body.workspaces.yourWorkspaces);
-
             const idx = this.storage
                 .get(this.workspaceModel.boards)
                 .findIndex((brd) => brd.board_id === board.board_id);
@@ -180,7 +178,7 @@ class WorkspaceStorage extends BaseStorage {
                 .get(this.workspaceModel.boards)
                 .findIndex((brd) => brd.board_id === board.id);
             const boards = this.storage.get(this.workspaceModel.boards);
-            boards.splice(idx,1);
+            boards.splice(idx, 1);
             this.storage.set(this.workspaceModel.boards, boards);
             //emitter.trigger('renderWorkspaces');
         } else {
