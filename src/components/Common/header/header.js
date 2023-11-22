@@ -15,9 +15,6 @@ export default class Header extends Component {
                 title: 'Проекты',
             },
             {
-                title: 'Избранное',
-            },
-            {
                 title: 'Диаграмма Ганта',
             },
         ],

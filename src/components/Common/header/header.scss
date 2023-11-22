@@ -1,3 +1,34 @@
+@media screen and (min-width: 1350px) {
+    .search-input__text:focus-within {
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .search-input {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    /*Я хз почему это так работает*/
+    .header-menu__paragraph:nth-of-type(3) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .header-menu__paragraph {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .header-menu__logo {
+        display: none;
+    }
+}
+
 .header {
     background-color: var(--header-background);
     width: 100%;
@@ -67,8 +98,4 @@
     border: none;
     color: var(--text-color-in-search);
     transition: ease-in 0.15s;
-}
-
-.search-input__text:focus-within {
-    width: 500px;
 }

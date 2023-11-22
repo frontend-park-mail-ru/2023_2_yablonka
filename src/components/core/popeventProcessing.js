@@ -1,11 +1,37 @@
-const popeventProcess = (e) => {
-    if (e.target.closest('dialog')) {
-        e.stopPropagation();
-    } else {
-        document.querySelectorAll('dialog').forEach((el) => {
-            el.close();
-        });
+class PopupEvent {
+    constructor() {
+        this.components = [];
     }
-};
 
-export default popeventProcess;
+    addPopup = (popup) => {
+        this.components.push(popup);
+    };
+
+    deletePopup = (popup) => {
+        this.components.splice(this.components.indexOf(popup), 1);
+    };
+
+    clearPopups = () => {
+        this.components = [];
+    };
+
+    closeOtherPopups = (popup) => {
+        document.querySelectorAll('dialog').forEach((el) => {
+            if (el !== popup) {
+                el.close();
+            }
+        });
+    };
+
+    closeAllPopups = (e) => {
+        document.querySelectorAll('dialog').forEach((el) => {
+            if (!e.target.closest('dialog')) {
+                el.close();
+            }
+        });
+    };
+}
+
+const popupEvent = new PopupEvent();
+
+export default popupEvent;

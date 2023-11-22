@@ -1,4 +1,4 @@
-import popeventProcess from '../components/core/popeventProcessing';
+import popupEvent from '../components/core/popeventProcessing';
 
 export default class BaseView {
     components = [];
@@ -17,12 +17,12 @@ export default class BaseView {
     }
 
     addListeners() {
-        this.root.addEventListener('click', popeventProcess);
+        this.root.addEventListener('click', popupEvent.closeAllPopups);
         this.components.forEach((cmp) => cmp.addEventListeners());
     }
 
     removeListeners() {
-        this.root.addEventListener('click', popeventProcess);
+        this.root.removeEventListener('click', popupEvent.closeAllPopups);
         this.components.forEach((cmp) => cmp.removeEventListeners());
     }
 

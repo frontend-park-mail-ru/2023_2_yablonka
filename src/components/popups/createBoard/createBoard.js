@@ -5,6 +5,7 @@ import { actionCreateBoard } from '../../../actions/boardActions.js';
 import './createBoard.scss';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Validator from '../../../modules/validator.js';
+import popupEvent from '../../core/popeventProcessing.js';
 /**
  * Попап для хедера
  * @class
@@ -67,10 +68,13 @@ export default class CreateBoard extends Component {
         const btnCoordinates = e.target.parentElement.getBoundingClientRect();
         const workspaceId = e.target.parentElement.dataset.workspace;
 
-        if (dialog.getAttribute('open') === '') {
+        if (dialog.getAttribute('open') !== null) {
+            popupEvent.deletePopup(dialog);
             dialog.close();
             if (workspaceId !== dialog.dataset.workspace) {
+                popupEvent.addPopup(dialog);
                 dialog.show();
+                popupEvent.closeOtherPopups(dialog);
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top - 120}px; left: ${
@@ -80,7 +84,9 @@ export default class CreateBoard extends Component {
                 dialog.dataset.workspace = workspaceId;
             }
         } else {
+            popupEvent.addPopup(dialog);
             dialog.show();
+            popupEvent.closeOtherPopups(dialog);
             dialog.setAttribute(
                 'style',
                 `top: ${btnCoordinates.top - 120}px; left: ${
@@ -94,10 +100,15 @@ export default class CreateBoard extends Component {
     #createBoard = (e) => {
         e.preventDefault();
 
+        const dialog = document.querySelector('#create-board');
+
         const boardName = this.parent.querySelector('input[data-name=board-name]');
         const workspaceID = e.target.closest('dialog').dataset.workspace;
 
         if (Validator.validateObjectName(boardName.value)) {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
+
             dispatcher.dispatch(
                 actionCreateBoard({
                     name: boardName.value,

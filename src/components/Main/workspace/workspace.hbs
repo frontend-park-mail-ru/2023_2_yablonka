@@ -11,7 +11,11 @@
                 class='font-weight-bold padding-5-10 border-radius-5 workspace__name'
             >{{this.workspaceName}}</span>
         </span>
-        <button data-workspace='{{this.workspaceId}}' class='border-radius-5 btn btn-change-workspace'><div
+        <button
+            data-open='true'
+            data-workspace='{{this.workspaceId}}'
+            class='border-radius-5 btn btn-change-workspace'
+        ><div
                 class='strach-layout flex-row-centered padding-5-10 gap-10 border-radius-5 btn-change-workspace__contant-wrapper'
             >
                 <img
@@ -29,6 +33,7 @@
             {{{board}}}
         {{/each}}
         <button
+            data-open='true'
             data-workspace='{{this.workspaceId}}'
             class='strach-layout border-radius-5 flex-centered btn btn-create-board'
         >

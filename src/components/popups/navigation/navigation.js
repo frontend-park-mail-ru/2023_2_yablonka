@@ -1,4 +1,5 @@
 import Component from '../../core/basicComponent.js';
+import popupEvent from '../../core/popeventProcessing.js';
 import template from './navigation.hbs';
 import './navigation.scss';
 
@@ -65,10 +66,13 @@ export default class Navigation extends Component {
 
         const dialog = document.querySelector('#navigation-menu');
 
-        if (dialog.getAttribute('open') === '') {
+        if (dialog.getAttribute('open') !== null) {
+            popupEvent.deletePopup(dialog);
             dialog.close();
         } else {
+            popupEvent.addPopup(dialog);
             dialog.show();
+            popupEvent.closeOtherPopups(dialog);
         }
     };
 }

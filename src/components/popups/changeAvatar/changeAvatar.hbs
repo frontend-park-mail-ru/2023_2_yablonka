@@ -4,7 +4,7 @@
     >
         {{#each buttons as |button|}}
             <div class='font-size-15 flex-start border-radius-5 padding-0-10 navigation__item'>
-                <button class='btn font-size-15 btn-profile' data-action='{{button.action}}'><span
+                <button data-open="true" class='btn font-size-15 btn-profile' data-action='{{button.action}}'><span
                     >{{button.title}}</span></button>
             </div>
         {{/each}}

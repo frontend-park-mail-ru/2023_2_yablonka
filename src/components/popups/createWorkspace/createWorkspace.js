@@ -7,6 +7,7 @@ import dispatcher from '../../../modules/dispatcher.js';
 import { actionNavigate, actionRedirect } from '../../../actions/userActions.js';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Validator from '../../../modules/validator.js';
+import popupEvent from '../../core/popeventProcessing.js';
 /**
  * Попап для хедера
  * @class
@@ -82,10 +83,13 @@ export default class CreateWorkspace extends Component {
 
         const dialog = this.parent.querySelector('#create-workspace');
 
-        if (dialog.getAttribute('open') === '') {
+        if (dialog.getAttribute('open') !== null) {
+            popupEvent.deletePopup(dialog);
             dialog.close();
         } else {
+            popupEvent.addPopup(dialog);
             dialog.showModal();
+            popupEvent.closeOtherPopups(dialog);
         }
     };
 
@@ -96,6 +100,7 @@ export default class CreateWorkspace extends Component {
         const dialog = this.parent.querySelector('#create-workspace');
 
         if (e.target === e.currentTarget) {
+            popupEvent.deletePopup(dialog);
             dialog.close();
         }
     };
@@ -110,6 +115,8 @@ export default class CreateWorkspace extends Component {
         ).value;
 
         if (Validator.validateObjectName(workspaceName.value)) {
+            this.#createWorkspaceOpen(e);
+
             dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
             dispatcher.dispatch(actionRedirect('/main', false));
 
@@ -120,14 +127,6 @@ export default class CreateWorkspace extends Component {
                     owner_id: userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
                 }),
             );
-
-            const dialog = this.parent.querySelector('#create-workspace');
-
-            if (dialog.getAttribute('open') === '') {
-                dialog.close();
-            } else {
-                dialog.showModal();
-            }
         } else {
             NotificationMessage.showNotification(workspaceName, true, true, {
                 fontSize: 12,

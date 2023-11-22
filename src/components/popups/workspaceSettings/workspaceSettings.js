@@ -2,6 +2,7 @@ import { actionDeleteWorkspace, actionUpdateWorkspace } from '../../../actions/w
 import dispatcher from '../../../modules/dispatcher.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import Component from '../../core/basicComponent.js';
+import popupEvent from '../../core/popeventProcessing.js';
 import template from './workspaceSettings.hbs';
 import './workspaceSettings.scss';
 /**
@@ -64,6 +65,7 @@ export default class WorkspaceSettings extends Component {
                 `span[data-workspace="${dialog.dataset.workspace}"]`,
             );
             workspaceName.focus();
+            popupEvent.deletePopup(dialog);
             dialog.close();
         }
     };
@@ -77,10 +79,13 @@ export default class WorkspaceSettings extends Component {
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
         const workspaceId = e.target.closest('button').dataset.workspace;
 
-        if (dialog.getAttribute('open') === '') {
+        if (dialog.getAttribute('open') !== null) {
+            popupEvent.deletePopup(dialog);
             dialog.close();
             if (workspaceId !== dialog.dataset.workspace) {
+                popupEvent.addPopup(dialog);
                 dialog.show();
+                popupEvent.closeOtherPopups(dialog);
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top - 10}px; left: ${
@@ -89,7 +94,9 @@ export default class WorkspaceSettings extends Component {
                 );
             }
         } else {
+            popupEvent.addPopup(dialog);
             dialog.show();
+            popupEvent.closeOtherPopups(dialog);
             dialog.setAttribute(
                 'style',
                 `top: ${btnCoordinates.top - 10}px; left: ${
@@ -122,8 +129,9 @@ export default class WorkspaceSettings extends Component {
         const dialog = e.target.closest('dialog');
         if (dialog.dataset.workspace) {
             const workspaceId = e.target.closest('dialog').dataset.workspace;
-            dispatcher.dispatch(actionDeleteWorkspace(workspaceId));
+            popupEvent.deletePopup(dialog);
             dialog.close();
+            dispatcher.dispatch(actionDeleteWorkspace(workspaceId));
         }
     };
 

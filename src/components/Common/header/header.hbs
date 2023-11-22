@@ -59,13 +59,18 @@
                 </div>
             </a>
         </div>
-        {{#each menuParagraphs as | paragraph |}}
-        <div class='flex-centered font-size-20 font-weight-bold header-menu__paragraph'>
-            <span class='paragraph__title'>{{paragraph.title}}</span>
-            <img class='box-24-24 paragraph__image' src='/svg/chevron-down.svg' alt='btn-menu' />
-        </div>
+        {{#each menuParagraphs as |paragraph|}}
+            <div class='flex-centered font-size-20 font-weight-bold header-menu__paragraph'>
+                <span class='paragraph__title'>{{paragraph.title}}</span>
+                <img
+                    class='box-24-24 paragraph__image'
+                    src='/svg/chevron-down.svg'
+                    alt='btn-menu'
+                />
+            </div>
         {{/each}}
         <button
+            data-open='true'
             class='btn btn-action border-radius-5 font-size-16 font-weight-bold padding-0-10 menu__btn-create'
         >Создать</button>
     </div>
@@ -87,8 +92,12 @@
             </button>
         </div>
         <div class='flex-centered box-32-32 avatar'>
-            <button class='btn avatar-wrapper btn-avatar'>
-                <img class='avatar-wrapper btn-avatar__image' src='/img/{{this.avatar}}' alt='avatar' />
+            <button data-open='true' class='btn avatar-wrapper btn-avatar'>
+                <img
+                    class='avatar-wrapper btn-avatar__image'
+                    src='/img/{{this.avatar}}'
+                    alt='avatar'
+                />
             </button>
         </div>
     </div>

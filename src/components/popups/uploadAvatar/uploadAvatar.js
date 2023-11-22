@@ -1,6 +1,7 @@
 import { actionUpdateAvatar } from '../../../actions/userActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
 import Component from '../../core/basicComponent.js';
+import popupEvent from '../../core/popeventProcessing.js';
 import template from './uploadAvatar.hbs';
 import './uploadAvatar.scss';
 
@@ -95,14 +96,15 @@ export default class UploadAvatarModal extends Component {
         e.stopPropagation();
 
         const dialog = document.querySelector('#upload-avatar');
-        const prevDialog = document.querySelector('#change-avatar');
 
-        if (dialog.getAttribute('open') === '') {
+        if (dialog.getAttribute('open') !== null) {
+            popupEvent.deletePopup(dialog);
             dialog.close();
             this.avatarFile = null;
         } else {
+            popupEvent.addPopup(dialog);
             dialog.showModal();
-            prevDialog.close();
+            popupEvent.closeOtherPopups(dialog);
             this.avatarFile = null;
         }
     };
@@ -112,6 +114,7 @@ export default class UploadAvatarModal extends Component {
 
         if (e.target === e.currentTarget) {
             this.#changeForm('none', 'flex');
+            popupEvent.deletePopup(dialog);
             dialog.close();
             this.avatarFile = null;
         }
