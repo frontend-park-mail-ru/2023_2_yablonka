@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="../../dist/app.03a6319f640e885332f9.css" type="text/css" />
-        <link rel="stylesheet" href="../../dist/app.03a6319f640e885332f9.css.map" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.e8be3b65193c97f7c5d5.css" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.e8be3b65193c97f7c5d5.css.map" type="text/css" />
         <link rel="icon" type="image/svg+xml" sizes="32x32" href="logo_favicon.svg" />
 
         <title></title>
@@ -23,23 +23,12 @@
                         <div
                             class="flex-row-centered flex-centered gap-15 padding-5-10 sidebar__workspace-information"
                         >
-                            <img
-                                class="box-48-48 sidebar__user-avatar"
-                                src="../img/avatar.jpg"
-                                alt="avatar"
-                            />
-                            <span class="font-size-18 font-weight-500 sidebar__workspace-name"
+                        <span class='box-32-32 font-size-22 font-weight-bold border-radius-5 flex-centered workspace-logo'>U</span>
+                            <span class="font-size-22 font-weight-500 sidebar__workspace-name"
                                 >User workspace</span
                             >
                         </div>
                         <div class="flex-column-centered gap-15 sidebar__actions">
-                            <div class="flex-row-centered gap-10 sidebar__board-action">
-                                <img
-                                    class="box-24-24 board-action__image"
-                                    src="../svg/clipboard.svg"
-                                    alt="board-action-image"
-                                /><span class="board-action__name">Доски</span>
-                            </div>
                             <div class="flex-row-centered sidebar__board-members">
                                 <div class="flex-row-centered gap-10 board-action__main-action">
                                     <img
@@ -96,9 +85,9 @@
                     </div>
                     <div class="flex-column-centered board">
                         <div class="flex-row-centered board__menu">
-                            <div class="flex-row-centered gap-20 board__menu_left">
+                            <div class="flex-row-centered gap-50 board__menu_left">
                                 <div
-                                    class="flex-row-centered gap-10 board-menu__board-name-wrapper"
+                                    class="flex-row-centered gap-5 board-menu__board-name-wrapper"
                                 >
                                     <img
                                         class="box-24-24 add-board-to-favourite"
@@ -106,22 +95,9 @@
                                         alt="add-to-favourite"
                                     />
                                     <span
-                                        class="font-size-18 font-weight-500 padding-5-10 border-radius-5 board-menu__board-name"
+                                        class="font-size-22 font-weight-500 padding-5-10 border-radius-5 board-menu__board-name"
                                         contenteditable="true"
                                         >Best desk</span
-                                    >
-                                </div>
-                                <div
-                                    class="flex-row-centered gap-10 board-menu__access-settings-wrapper"
-                                >
-                                    <img
-                                        class="box-24-24 access-settings__image"
-                                        src="../svg/people.svg"
-                                        alt="access-settings"
-                                    />
-                                    <span
-                                        class="font-size-16 font-weight-500 access-settings__title"
-                                        >Настройки доступа</span
                                     >
                                 </div>
                                 <div class="flex-row-centered gap-5 board-menu__board-actions">
@@ -192,27 +168,22 @@
                                         class="flex-column-centered border-radius-10 gap-10 list__container"
                                     >
                                         <div class="flex-row-centered list__title-wrapper">
-                                            <div class="list-title-change-wrapper">
                                                 <span
                                                     contenteditable="true"
-                                                    class="font-size-18 font-weight-500 padding-5-10 list__title"
+                                                    class="font-size-20 font-weight-500 border-radius-5 padding-5-10 list__title"
                                                     >Column</span
                                                 >
-                                            </div>
-                                            <div class="flex-centered box-24-24 list__action">
-                                                <img
-                                                    class="strach-layout list-action__image"
-                                                    src="../svg/three-dots.svg"
-                                                    alt="list-action"
-                                                />
-                                            </div>
+                                                <button class="box-24-24 flex-centered btn btn-list-settings"
+                                                ><img class="strach-layout list-action__image"
+                                                src="../svg/three-dots.svg"
+                                                alt="list-action"></button>
                                         </div>
                                         <ol class="flex-column-centered gap-10 list__content">
                                             <li class="list__card-wrapper">
                                                 <div
                                                     class="border-radius-8 padding-10-15 list__card"
                                                 >
-                                                    <span class="card-name">Card name</span>
+                                                    <span class="font-size-16 font-weight-500 card-name">Card name</span>
                                                 </div>
                                             </li>
                                         </ol>
@@ -221,7 +192,7 @@
                                                 class="flex-row-centered gap-10 btn btn-add-card"
                                             >
                                                 <img
-                                                    class="box-24-24 add-card__image"
+                                                    class="box-16-16 add-card__image"
                                                     src="../svg/plus.svg"
                                                     alt="add-card"
                                                 />
@@ -234,12 +205,12 @@
                                     </div>
                                 </li>
                                 <li class="border-radius-10 add-new-list">
-                                    <div class="flex-start add-new-list__container">
+                                    <div class="flex-start border-radius-10 add-new-list__container">
                                         <button
                                             class="strach-layout flex-start padding-0-10 gap-10 btn btn-add-new-list"
                                         >
                                             <img
-                                                class="box-24-24 add-list__image"
+                                                class="box-16-16 add-list__image"
                                                 src="../svg/plus.svg"
                                                 alt="add-card"
                                             />

@@ -1,6 +1,6 @@
 import userStorage from '../storages/userStorage.js';
-import { routes, signedInRoutes, actionsWithLogin } from '../configs/configs.js';
-import { hrefRegExp, validateBoardPageRegExp, validateUserPagesRegExp } from './regExp.js';
+import { routes, signedInRoutes } from '../configs/configs.js';
+import { boardHrefRegExp, hrefRegExp, navigationPagesHrefRegExp } from './regExp.js';
 
 /**
  * Класс, реализующий роутер
@@ -13,7 +13,6 @@ class Router {
     constructor() {
         this.views = new Map();
         this.signedInViews = new Map();
-        this.actionsWithLogin = new Map();
 
         routes.forEach((route) => {
             this.registerView(route);
@@ -21,10 +20,6 @@ class Router {
 
         signedInRoutes.forEach((route) => {
             this.registerView(route, true);
-        });
-
-        actionsWithLogin.forEach((action) => {
-            this.registerActions(action, true);
         });
     }
 
@@ -46,12 +41,8 @@ class Router {
      * @param {string} route.path - path, по которому будет происходить вызов action
      * @param {string} route.action - action, которое вызывается через path
      */
-    registerActions({ path, action }, privateAction = false) {
-        if (privateAction) {
-            this.actionsWithLogin.set(path, action);
-        } else {
-            this.actions.set(path, action);
-        }
+    registerActions({ path, action }) {
+        this.actions.set(path, action);
     }
 
     /**
@@ -60,7 +51,7 @@ class Router {
      * @returns {string} - корневой элемент в виде строки
      */
     matchView(href) {
-        if (href.match(validateUserPagesRegExp) || href.match(validateBoardPageRegExp)) {
+        if (href.match(boardHrefRegExp) || href.match(navigationPagesHrefRegExp)) {
             return href;
         }
         return '/signin';
@@ -136,8 +127,7 @@ class Router {
     redirect(href) {
         userStorage.authVerify();
         const isAuth = userStorage.storage.get(userStorage.userModel.status) === 200;
-
-        if (href === '/') {
+        if (href === '/' || href === '') {
             return isAuth ? '/main' : '/signin';
         }
         if (!isAuth) {

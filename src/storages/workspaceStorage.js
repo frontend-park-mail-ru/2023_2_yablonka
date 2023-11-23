@@ -13,6 +13,8 @@ class WorkspaceStorage extends BaseStorage {
         body: 'body',
         status: 'status',
         boards: 'boards',
+        lists: 'lists',
+        cards: 'cards',
     };
 
     /**
@@ -22,6 +24,8 @@ class WorkspaceStorage extends BaseStorage {
         super();
         this.storage.set(this.workspaceModel.body, undefined);
         this.storage.set(this.workspaceModel.boards, []);
+        this.storage.set(this.workspaceModel.lists, []);
+        this.storage.set(this.workspaceModel.cards, []);
     }
 
     /**
@@ -128,16 +132,12 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            const idx = this.storage
-                .get(this.workspaceModel.boards)
-                .findIndex((brd) => brd.board_id === board.board_id);
-            let boards = this.storage.get(this.workspaceModel.boards);
-            if (idx !== -1) {
-                boards.splice(idx, 1);
-            }
-            boards.push(body.body.board);
-            this.storage.set(this.workspaceModel.boards, boards);
-            console.log(this.storage.get(this.workspaceModel.body));
+            this.addBoard(body.body.board);
+            this.addLists(body.body.lists);
+            this.addCards(body.body.cards);
+            console.log(this.storage.get(this.workspaceModel.boards));
+            console.log(this.storage.get(this.workspaceModel.lists));
+            console.log(this.storage.get(this.workspaceModel.cards));
             //emitter.trigger('renderWorkspaces');
         } else {
         }
@@ -151,8 +151,6 @@ class WorkspaceStorage extends BaseStorage {
             board,
         );
 
-        console.log(await responsePromise.json());
-
         const { status } = responsePromise;
 
         if (status === 200) {
@@ -164,22 +162,14 @@ class WorkspaceStorage extends BaseStorage {
     async deleteBoard(board) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/delete/`,
-            'POST',
+            'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
             board,
         );
 
-        console.log(await responsePromise.json());
-
         const { status } = responsePromise;
 
         if (status === 200) {
-            const idx = this.storage
-                .get(this.workspaceModel.boards)
-                .findIndex((brd) => brd.board_id === board.id);
-            const boards = this.storage.get(this.workspaceModel.boards);
-            boards.splice(idx, 1);
-            this.storage.set(this.workspaceModel.boards, boards);
             //emitter.trigger('renderWorkspaces');
         } else {
         }
@@ -193,21 +183,227 @@ class WorkspaceStorage extends BaseStorage {
             board,
         );
 
-        console.log(await responsePromise.json());
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            //emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    async createList(list) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}list/create/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            list,
+        );
 
         const { status } = responsePromise;
 
         if (status === 200) {
-            let boards = this.storage.get(this.userModel.boards);
-            const idx = this.storage
-                .get(this.workspaceModel.boards)
-                .findIndex((brd) => brd.board_id === board.id);
-            boards[idx].name = board.name;
-            boards[idx].description = board.description;
-            this.storage.set(this.workspaceModel.body, boards);
             //emitter.trigger('renderWorkspaces');
         } else {
         }
+    }
+
+    async updateList(list) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}list/update/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            list,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            //emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    async deleteList(list) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}list/delete/`,
+            'DELETE',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            list,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            //emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    async createCard(card) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}card/create/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            card,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            //emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    async updateCard(card) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}card/update/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            card,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            //emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    async deleteCard(card) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}card/delete/`,
+            'DELETE',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            card,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            //emitter.trigger('renderWorkspaces');
+        } else {
+        }
+    }
+
+    addBoard(board) {
+        const idx = this.storage
+            .get(this.workspaceModel.boards)
+            .findIndex((brd) => brd.board_id === board.board_id);
+        let boards = this.storage.get(this.workspaceModel.boards);
+        if (idx !== -1) {
+            boards.splice(idx, 1);
+        }
+        boards.push(board);
+        this.storage.set(this.workspaceModel.boards, boards);
+    }
+
+    addLists(lists) {
+        const lsts = this.storage.get(this.workspaceModel.lists);
+        if (!lsts.length) {
+            lists.forEach((l) => {
+                lsts.push(l);
+            });
+            this.storage.set(this.workspaceModel.lists, lsts);
+            return;
+        }
+
+        lists.forEach((lst) => {
+            lsts.forEach((l) => {
+                if (l.id === lst.id) {
+                    l = lst;
+                }
+            });
+        });
+    }
+
+    addCards(cards) {
+        const crds = this.storage.get(this.workspaceModel.cards);
+        if (!crds.length) {
+            cards.forEach((c) => {
+                crds.push(c);
+            });
+            this.storage.set(this.workspaceModel.lists, cards);
+            return;
+        }
+
+        cards.forEach((crd) => {
+            crds.forEach((c) => {
+                if (c.id === crd.id) {
+                    c = crd;
+                }
+            });
+        });
+    }
+
+    /**
+     * Получение workspace по его id
+     * @param {Number} id - id рабочего пространства
+     * @returns {Object} - объект рабочего пространства
+     */
+    getWorkspaceById(id) {
+        const workspaces = this.storage.get(this.workspaceModel.body);
+        let workspace = workspaces.body.workspaces.yourWorkspaces.find(
+            (ws) => ws.workspace_id === id,
+        );
+        if (workspace) return workspace;
+
+        workspace = workspaces.body.workspaces.guestWorkspaces.find((ws) => ws.workspace_id === id);
+
+        return workspace;
+    }
+
+    /**
+     * Получение доски по её id
+     * @param {Number} id - id доски
+     * @returns {Object} - объект доски
+     */
+    getBoardById(id) {
+        const boards = this.storage.get(this.workspaceModel.boards);
+        const board = boards.find((brd) => brd.board_id === id);
+
+        return board;
+    }
+
+    /**
+     * Получение массива списков карточек
+     * @param {Number} id - id доски
+     * @returns {Array} - массив списков
+     */
+    getBoardLists(id) {
+        const boardLists = this.storage
+            .get(this.workspaceModel.boards)
+            .find((brd) => brd.board_id === id).lists;
+
+        const lists = [];
+        this.storage.get(this.workspaceModel.lists).forEach((lst) => {
+            if (boardLists.find((l) => l === lst.id)) {
+                lists.push(lst);
+            }
+        });
+
+        return [...lists];
+    }
+
+    /**
+     * Получение массива карточек у списка
+     * @param {Number} id - id списка
+     * @returns {Array} - массив карточек
+     */
+    getListCards(id) {
+        const listCards = this.storage
+            .get(this.workspaceModel.lists)
+            .find((lst) => lst.id === id).cards;
+
+        const cards = [];
+        this.storage.get(this.workspaceModel.cards).forEach((crd) => {
+            if (listCards.find((c) => c === crd.id)) {
+                cards.push(crd);
+            }
+        });
+
+        return [...cards];
     }
 }
 

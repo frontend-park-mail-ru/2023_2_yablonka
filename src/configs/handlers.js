@@ -21,6 +21,12 @@ const handlers = [
     { type: 'updateWorkspace', method: workspaceStorage.updateWorkspace.bind(workspaceStorage) },
     { type: 'createBoard', method: workspaceStorage.createBoard.bind(workspaceStorage) },
     { type: 'getBoard', method: workspaceStorage.getBoard.bind(workspaceStorage) },
+    { type: 'createList', method: workspaceStorage.createList.bind(workspaceStorage) },
+    { type: 'updateList', method: workspaceStorage.updateList.bind(workspaceStorage) },
+    { type: 'deleteList', method: workspaceStorage.deleteList.bind(workspaceStorage) },
+    { type: 'createCard', method: workspaceStorage.createCard.bind(workspaceStorage) },
+    { type: 'updateCard', method: workspaceStorage.updateCard.bind(workspaceStorage) },
+    { type: 'deleteCard', method: workspaceStorage.deleteCard.bind(workspaceStorage) },
 ];
 
 export default handlers;

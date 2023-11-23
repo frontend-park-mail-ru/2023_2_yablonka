@@ -32,7 +32,10 @@ export default class UserWorkspaces extends Component {
                 new Workspace(null, {
                     workspaceId: workspace.workspace_id,
                     workspaceName: workspace.workspace_name,
-                    boards: this.#getBoards(workspace.boards ? workspace.boards : []),
+                    boards: this.#getBoards(
+                        workspace.boards ? workspace.boards : [],
+                        workspace.workspace_id,
+                    ),
                 }).render(),
             );
         });

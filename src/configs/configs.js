@@ -21,7 +21,3 @@ export const signedInRoutes = [
     { path: '/profile', view: Profile },
     { path: '/security', view: Profile },
 ];
-
-export const actionsWithLogin = [
-    // { path: '/main', action: actionGetBoards },
-];

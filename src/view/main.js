@@ -55,7 +55,7 @@ class Boards extends BaseView {
         this.render();
         this.addListeners();
 
-        dispatcher.dispatch(actionGetBoard(22));
+        await dispatcher.dispatch(actionGetBoard(22));
     }
 
     async reRender() {
