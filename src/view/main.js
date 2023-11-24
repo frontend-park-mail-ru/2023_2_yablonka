@@ -53,8 +53,6 @@ class Main extends BaseView {
 
         this.render();
         this.addListeners();
-
-        await dispatcher.dispatch(actionGetBoard(22));
     }
 
     async reRender() {
