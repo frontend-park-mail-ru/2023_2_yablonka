@@ -23,7 +23,10 @@ class Board extends BaseView {
      */
     async renderPage() {
         const boardData = [];
-        window.location.pathname.matchAll(/\d+/g).forEach((el) => boardData.push(el[0]));
+        const linkData = window.location.pathname.matchAll(/\d+/g);
+        for (let data of linkData) {
+            boardData.push(data[0]);
+        }
         const [wsID, bID, cID] = boardData;
 
         this.workspaceID = wsID;
