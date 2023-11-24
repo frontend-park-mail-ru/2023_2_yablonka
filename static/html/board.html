@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="../../dist/app.e8be3b65193c97f7c5d5.css" type="text/css" />
-        <link rel="stylesheet" href="../../dist/app.e8be3b65193c97f7c5d5.css.map" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.9baa4e4a6093bffee7d8.css" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.9baa4e4a6093bffee7d8.css.map" type="text/css" />
         <link rel="icon" type="image/svg+xml" sizes="32x32" href="logo_favicon.svg" />
 
         <title></title>
@@ -16,14 +16,17 @@
         <div class="page">
             <div class="strach-layout flex-column-centered page__layout page__layout-board">
                 <div
-                    style="background: url('../img/main_theme.jpg')"
+                    style="background: url('../img/main_theme.jpg'); background-size: cover"
                     class="flex-row-centered container-board"
                 >
                     <div class="flex-column-centered gap-20 sidebar">
                         <div
                             class="flex-row-centered flex-centered gap-15 padding-5-10 sidebar__workspace-information"
                         >
-                        <span class='box-32-32 font-size-22 font-weight-bold border-radius-5 flex-centered workspace-logo'>U</span>
+                            <span
+                                class="box-32-32 font-size-22 font-weight-bold border-radius-5 flex-centered workspace-logo"
+                                >U</span
+                            >
                             <span class="font-size-22 font-weight-500 sidebar__workspace-name"
                                 >User workspace</span
                             >
@@ -86,9 +89,7 @@
                     <div class="flex-column-centered board">
                         <div class="flex-row-centered board__menu">
                             <div class="flex-row-centered gap-50 board__menu_left">
-                                <div
-                                    class="flex-row-centered gap-5 board-menu__board-name-wrapper"
-                                >
+                                <div class="flex-row-centered gap-5 board-menu__board-name-wrapper">
                                     <img
                                         class="box-24-24 add-board-to-favourite"
                                         src="../svg/star.svg"
@@ -124,16 +125,12 @@
                                 </div>
                             </div>
                             <div class="flex-row-centered gap-20 board__menu_right">
-                                <div class="board-menu__team">
-                                    <div class="box-32-32 flex-row-centered team-member">
+                                <div class="flex-row-centered board-menu__team">
+                                    <div class="box-32-32 flex-row-centered team-member__remain">
                                         <button
-                                            class="strach-layout flex-centered btn btn-team-member"
+                                            class="font-size-18 font-weight-500 strach-layout flex-centered btn btn-team-member__remain"
                                         >
-                                            <img
-                                                class="strach-layout team-member__avatar"
-                                                src="../img/avatar.jpg"
-                                                alt="avatar"
-                                            />
+                                            +1
                                         </button>
                                     </div>
                                 </div>
@@ -148,7 +145,7 @@
                                         />
                                         <span
                                             class="font-size-16 font-weight-500 board-actions__title"
-                                            >Поделиться</span
+                                            >Добавить участника</span
                                         >
                                     </button>
                                     <button class="btn btn-board-actions">
@@ -168,22 +165,30 @@
                                         class="flex-column-centered border-radius-10 gap-10 list__container"
                                     >
                                         <div class="flex-row-centered list__title-wrapper">
-                                                <span
-                                                    contenteditable="true"
-                                                    class="font-size-20 font-weight-500 border-radius-5 padding-5-10 list__title"
-                                                    >Column</span
-                                                >
-                                                <button class="box-24-24 flex-centered btn btn-list-settings"
-                                                ><img class="strach-layout list-action__image"
-                                                src="../svg/three-dots.svg"
-                                                alt="list-action"></button>
+                                            <span
+                                                contenteditable="true"
+                                                class="font-size-20 font-weight-500 border-radius-5 padding-5-10 list__title"
+                                                >Column</span
+                                            >
+                                            <button
+                                                class="box-24-24 flex-centered btn btn-list-settings"
+                                            >
+                                                <img
+                                                    class="strach-layout list-action__image"
+                                                    src="../svg/three-dots.svg"
+                                                    alt="list-action"
+                                                />
+                                            </button>
                                         </div>
                                         <ol class="flex-column-centered gap-10 list__content">
                                             <li class="list__card-wrapper">
                                                 <div
                                                     class="border-radius-8 padding-10-15 list__card"
                                                 >
-                                                    <span class="font-size-16 font-weight-500 card-name">Card name</span>
+                                                    <span
+                                                        class="font-size-16 font-weight-500 card-name"
+                                                        >Card name</span
+                                                    >
                                                 </div>
                                             </li>
                                         </ol>
@@ -205,7 +210,9 @@
                                     </div>
                                 </li>
                                 <li class="border-radius-10 add-new-list">
-                                    <div class="flex-start border-radius-10 add-new-list__container">
+                                    <div
+                                        class="flex-start border-radius-10 add-new-list__container"
+                                    >
                                         <button
                                             class="strach-layout flex-start padding-0-10 gap-10 btn btn-add-new-list"
                                         >

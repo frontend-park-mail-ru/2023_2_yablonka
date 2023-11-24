@@ -1,0 +1,88 @@
+.board__menu {
+    justify-content: space-between;
+    min-height: 64px;
+    width: 100%;
+    background-color: var(--board-menu-background);
+    padding: 12px 20px 12px 12px;
+}
+
+.board__menu_left,
+.board__menu_right {
+    width: fit-content;
+}
+
+.board__menu_left {
+    justify-content: flex-start;
+}
+
+.board__menu_right {
+    justify-content: flex-end;
+}
+
+.board-menu__board-name {
+    color: var(--text-color-on-page);
+    overflow-y: hidden;
+    overflow-x: auto;
+    max-width: 150px;
+    text-wrap: nowrap;
+}
+
+.board-menu__board-name:focus {
+    outline: 2px solid var(--text-color-on-page);
+    max-width: 180px;
+}
+
+.board-menu__board-name::-webkit-scrollbar {
+    height: 5px;
+    width: 6px;
+}
+
+.board-menu__board-name::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0 10px;
+}
+
+.board-menu__board-name::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}
+
+.access-settings__title {
+    color: var(--text-color-on-page);
+}
+
+.board-actions-wrapper {
+    background-color: var(--action-button-color);
+    color: var(--text-color-action-page-button);
+    min-height: 35px;
+    min-width: 80px;
+}
+
+.btn-board-actions {
+    background-color: transparent;
+    min-height: 100%;
+    width: 35px;
+}
+
+.team-member__remain {
+    border-radius: 100%;
+}
+
+.btn-team-member__remain {
+    background: transparent;
+    color: var(--text-color-on-page);
+    border-radius: 100%;
+}
+
+.btn-team-member__remain:hover,
+.btn-team-member__remain:active {
+    background-color: var(--team-member-btn-hover);
+}
+
+.btn-share-action {
+    background-color: var(--action-button-color);
+    color: var(--text-color-action-page-button);
+    min-height: 35px;
+    min-width: 80px;
+}

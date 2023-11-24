@@ -1,6 +1,7 @@
 import signInPage from '../view/signin.js';
 import signUpPage from '../view/signup.js';
-import Boards from '../view/main.js';
+import Main from '../view/main.js';
+import Board from '../view/board.js';
 import Profile from '../view/profile.js';
 import page404 from '../view/page404.js';
 // import Board from '../view/board.js';
@@ -16,8 +17,8 @@ export const routes = [
 ];
 
 export const signedInRoutes = [
-    // { path: '/board', view: Board },
-    { path: '/main', view: Boards },
+    { path: '/board', view: Board },
+    { path: '/main', view: Main },
     { path: '/profile', view: Profile },
     { path: '/security', view: Profile },
 ];

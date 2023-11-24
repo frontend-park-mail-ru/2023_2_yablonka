@@ -51,8 +51,11 @@ class Router {
      * @returns {string} - корневой элемент в виде строки
      */
     matchView(href) {
-        if (href.match(boardHrefRegExp) || href.match(navigationPagesHrefRegExp)) {
+        if (href.match(navigationPagesHrefRegExp)) {
             return href;
+        }
+        if (href.match(boardHrefRegExp)) {
+            return '/board';
         }
         return '/signin';
     }

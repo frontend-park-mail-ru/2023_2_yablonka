@@ -1,0 +1,48 @@
+<div class='flex-column-centered gap-20 sidebar'>
+    <div class='flex-row-centered flex-centered gap-15 padding-5-10 sidebar__workspace-information'>
+        <span
+            class='box-32-32 font-size-22 font-weight-bold border-radius-5 flex-centered workspace-logo'
+        >{{this.workspaceIcon}}</span>
+        <span
+            class='font-size-22 font-weight-500 sidebar__workspace-name'
+        >{{this.workspaceName}}</span>
+    </div>
+    <div class='flex-column-centered gap-15 sidebar__actions'>
+        <div class='flex-row-centered sidebar__board-members'>
+            <div class='flex-row-centered gap-10 board-action__main-action'>
+                <img
+                    class='box-24-24 board-action__image'
+                    src='/svg/person.svg'
+                    alt='board-action-image'
+                /><span class='board-action__name'>Участники</span>
+            </div>
+            <div class='flex-centered board-action__additional-action'>
+                <img class='additional-action__image' src='/svg/plus.svg' alt='additional-action' />
+            </div>
+        </div>
+        <div class='flex-row-centered gap-10 sidebar__board-settings'>
+            <img
+                class='box-24-24 board-action__image'
+                src='/svg/gear.svg'
+                alt='board-action-image'
+            /><span class='board-action__name'>Настройки проекта</span>
+        </div>
+    </div>
+    <div class='flex-column-centered gap-15 sidebar__boards-list'>
+        <div class='flex-row-centered sidebar-boards-list__action'>
+            <span class='font-size-18 font-weight-500 gap-10 sidebar-boards-list__action-title'>Мои
+                доски</span><img
+                class='sidebar-boards-list__action-image'
+                src='/svg/plus.svg'
+                alt='additional-action'
+            />
+        </div>
+        <div class='sidebar-board-list-wrapper'>
+            <div class='flex-column-centered gap-10 sidebar-board-list'>
+                {{#each boards as |board|}}
+                    {{{board}}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

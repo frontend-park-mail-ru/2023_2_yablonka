@@ -1,0 +1,54 @@
+.board__main-content {
+    position: relative;
+    max-height: calc(100%-64px);
+    width: 100%;
+    flex: 1;
+}
+
+.board__lists {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 20px;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    padding: 0 10px 10px 10px;
+    user-select: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    list-style-type: none;
+    white-space: nowrap;
+}
+
+.add-new-list {
+    height: 100%;
+}
+
+.add-new-list__container {
+    width: 250px;
+    padding: 10px 0px;
+    background-color: var(--add-new-list-background-color);
+    border: 2px solid var(--add-new-list-border-color);
+}
+
+.btn-add-new-list {
+    color: var(--text-color-on-page);
+    background-color: transparent;
+}
+
+ol::-webkit-scrollbar {
+    height: 14px;
+    width: 6px;
+}
+
+ol::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0 10px;
+}
+
+ol::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}

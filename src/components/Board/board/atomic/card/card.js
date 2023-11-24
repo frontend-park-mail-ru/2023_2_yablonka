@@ -1,17 +1,21 @@
-import Component from '../../core/basicComponent.js';
-import template from './boardSidebar.hbs';
+import Component from '../../../../core/basicComponent';
+import template from './card.hbs';
+import './card.scss';
 
 /**
- * Хедер
+ * слои-обертки
  * @class
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class BoardSidebar extends Component {
+export default class Card extends Component {
     /**
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', template(this.config));
+        return template({
+            name: this.config.name,
+            ID: this.config.id,
+        });
     }
 }

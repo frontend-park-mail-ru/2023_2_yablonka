@@ -23,7 +23,7 @@ import './profile.scss';
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class PageLayoutMain extends Component {
+export default class Profile extends Component {
     /**
      * Рендерит компонент в DOM
      */

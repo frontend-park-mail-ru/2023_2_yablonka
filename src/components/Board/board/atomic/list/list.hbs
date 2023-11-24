@@ -1,0 +1,28 @@
+<li class='list' data-listID='{{this.ID}}'>
+    <div class='flex-column-centered border-radius-10 gap-10 list__container'>
+        <div class='flex-row-centered list__title-wrapper'>
+            <span
+                contenteditable='true'
+                class='font-size-20 font-weight-500 border-radius-5 padding-5-10 list__title'
+            >{{{this.name}}}</span>
+            <button class='box-24-24 flex-centered btn btn-list-settings'>
+                <img
+                    class='strach-layout list-action__image'
+                    src='/svg/three-dots.svg'
+                    alt='list-action'
+                />
+            </button>
+        </div>
+        <ol class='flex-column-centered gap-10 list__content'>
+            {{#each cards as |card|}}
+                {{{card}}}
+            {{/each}}
+        </ol>
+        <div class='padding-10-15 list__add-card'>
+            <button class='flex-row-centered gap-10 btn btn-add-card'>
+                <img class='box-16-16 add-card__image' src='/svg/plus.svg' alt='add-card' />
+                <span class='font-size-16 font-weight-500 add-card__title'>Добавить карточку</span>
+            </button>
+        </div>
+    </div>
+</li>

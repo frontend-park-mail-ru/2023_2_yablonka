@@ -367,6 +367,25 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     /**
+     * Получение массива досок рабочего пространства
+     * @param {Number} id - id рабочего пространства
+     * @returns {Array} - массив досок
+     */
+    getWorkspaceBoards(id) {
+        let workspaceBoards = this.storage
+            .get(this.workspaceModel.body)
+            .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === id).boards;
+
+        if (!workspaceBoards) {
+            workspaceBoards = this.storage
+                .get(this.workspaceModel.body)
+                .body.workspaces.guestWorkspaces.find((ws) => ws.workspace_id === id).boards;
+        }
+
+        return [...workspaceBoards];
+    }
+
+    /**
      * Получение массива списков карточек
      * @param {Number} id - id доски
      * @returns {Array} - массив списков
@@ -404,6 +423,19 @@ class WorkspaceStorage extends BaseStorage {
         });
 
         return [...cards];
+    }
+
+    /**
+     * Получение пользователей на доске
+     * @param {Number} id - id доски
+     * @returns {Array} - массив пользователей
+     */
+    getBoardUsers(id) {
+        const users = this.storage
+            .get(this.workspaceModel.boards)
+            .find((brd) => brd.board_id === id).users;
+
+        return [...users];
     }
 }
 

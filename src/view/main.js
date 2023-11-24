@@ -4,6 +4,8 @@ import BaseView from './baseView.js';
 import MainPage from '../pages/Main/main.js';
 import Navigation from '../components/popups/navigation/navigation.js';
 import CreateWorkspace from '../components/popups/createWorkspace/createWorkspace.js';
+import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
+import CreateBoard from '../components/popups/createBoard/createBoard.js';
 // actions
 import { actionGetWorkspaces } from '../actions/workspaceActions.js';
 import { actionGetBoard } from '../actions/boardActions.js';
@@ -12,16 +14,13 @@ import userStorage from '../storages/userStorage.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
 // routing
 import dispatcher from '../modules/dispatcher.js';
-
 import emitter from '../modules/actionTrigger.js';
-import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
-import CreateBoard from '../components/popups/createBoard/createBoard.js';
 
 /**
  * Класс для рендера страницы досок
  * @class
  */
-class Boards extends BaseView {
+class Main extends BaseView {
     constructor() {
         super();
         emitter.bind('renderWorkspaces', this.reRender.bind(this));
@@ -64,6 +63,6 @@ class Boards extends BaseView {
     }
 }
 
-const main = new Boards();
+const main = new Main();
 
 export default main;
