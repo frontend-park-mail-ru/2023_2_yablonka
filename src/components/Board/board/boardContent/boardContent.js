@@ -22,24 +22,16 @@ export default class BoardContent extends Component {
     }
 
     #getLists(lists) {
-        const listCards = [];
+        const boardLists = [];
         lists.forEach((list) => {
-            listCards.push(
+            boardLists.push(
                 new List(null, {
                     name: this.config.name,
-                    ID: this.config.id,
-                    cards: this.#getList(workspaceStorage.getListCards(list.id)),
+                    id: this.config.id,
+                    cards: workspaceStorage.getListCards(list.id),
                 }).render(),
             );
         });
-        return listCards;
-    }
-
-    #getList(cards) {
-        const boardList = [];
-        cards.forEach((card) => {
-            boardList.push(new Card(null, card).render());
-        });
-        return boardList;
+        return boardLists;
     }
 }

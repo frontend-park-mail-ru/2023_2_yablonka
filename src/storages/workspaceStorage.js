@@ -127,17 +127,12 @@ class WorkspaceStorage extends BaseStorage {
             body = {};
         }
 
-        console.log(body);
-
         const { status } = responsePromise;
 
         if (status === 200) {
             this.addBoard(body.body.board);
             this.addLists(body.body.lists);
             this.addCards(body.body.cards);
-            console.log(this.storage.get(this.workspaceModel.boards));
-            console.log(this.storage.get(this.workspaceModel.lists));
-            console.log(this.storage.get(this.workspaceModel.cards));
             //emitter.trigger('renderWorkspaces');
         } else {
         }

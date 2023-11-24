@@ -44,7 +44,9 @@ export default class MainPage extends Component {
         this.parent
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
-
+        this.parent.querySelectorAll('.link-user-board').forEach((link) => {
+            link.addEventListener('click', this.toBoardHandler);
+        });
         emitter.bind('logout', this.close);
     }
 
@@ -67,7 +69,9 @@ export default class MainPage extends Component {
         this.parent
             .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.toSecurityHandler);
-
+        this.parent.querySelectorAll('.link-user-board').forEach((link) => {
+            link.removeEventListener('click', this.toBoardHandler);
+        });
         emitter.unbind('logout', this.close);
     }
 
@@ -108,6 +112,18 @@ export default class MainPage extends Component {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
         dispatcher.dispatch(actionRedirect('/profile', false));
+    }
+
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу доски
+     * @param {Event} e - Событие
+     */
+    toBoardHandler(e) {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(
+            actionRedirect(e.target.closest('.link-user-board').getAttribute('href'), false),
+        );
     }
 
     /**

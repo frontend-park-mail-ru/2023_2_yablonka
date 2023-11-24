@@ -1,20 +1,17 @@
-import Header from '../components/Common/header/header.js';
-import BoardMenu from '../components/Board/boardMenu/boardMenu.js';
 import userStorage from '../storages/userStorage.js';
 import workspaceStorage from '../storages/workspaceStorage.js';
 import BoardPage from '../pages/Board/board.js';
 import Navigation from '../components/popups/navigation/navigation.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionGetBoard } from '../actions/boardActions.js';
+import BaseView from './baseView.js';
 
 /**
  * Класс для рендера страницы доски
  * @class
  * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
  */
-class Board {
-    #root;
-
+class Board extends BaseView {
     workspaceID;
 
     boardID;
@@ -22,17 +19,12 @@ class Board {
     cardID;
 
     /**
-     * @constructor
-     */
-    constructor() {
-        this.#root = document.querySelector('.page');
-    }
-
-    /**
      * Рендер страницы в DOM
      */
     async renderPage() {
-        const [w, wsID, b, bID, c, cID] = window.location.pathname.split('/');
+        const boardData = [];
+        window.location.pathname.matchAll(/\d+/g).forEach((el) => boardData.push(el[0]));
+        const [wsID, bID, cID] = boardData;
 
         this.workspaceID = wsID;
         this.boardID = bID;

@@ -14,7 +14,7 @@ export default class BoardUser extends Component {
      */
     render() {
         return template({
-            avatar: this.config.avatar,
+            avatar_url: this.config.avatar_url,
             ID: this.config.user_id,
         });
     }

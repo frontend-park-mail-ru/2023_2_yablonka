@@ -1,0 +1,17 @@
+.sidebar-boards-list__board {
+    width: 100%;
+    color: var(--text-color-on-page);
+}
+
+.sidebar-boards-list__board-image {
+    height: 32px;
+    width: 48px;
+}
+
+.sidebar-boards-list__board-name {
+    min-width: 100px;
+    max-width: 150px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-wrap: nowrap;
+}

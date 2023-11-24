@@ -5,10 +5,10 @@ import Sidebar from '../../components/Board/sidebar/sidebar.js';
 import Component from '../../components/core/basicComponent.js';
 import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
-import template from './board.hbs';
-import './board.scss';
 import workspaceStorage from '../../storages/workspaceStorage.js';
 import BoardMenu from '../../components/Board/board/boardMenu/boardMenu.js';
+import template from './board.hbs';
+import './board.scss';
 
 /**
  * слои-обертки
@@ -30,12 +30,12 @@ export default class BoardPage extends Component {
                 workspace_id: this.config.board.workspace_id,
             }).render(),
             boardMenu: new BoardMenu(null, {
-                name: this.config.name,
+                name: this.config.board.name,
                 users: workspaceStorage.getBoardUsers(this.config.board.board_id),
             }).render(),
             boardContent: new BoardContent(null, {
                 lists: workspaceStorage.getBoardLists(this.config.board.board_id),
-            }),
+            }).render(),
         };
         this.parent.insertAdjacentHTML('beforeend', template(page));
     }

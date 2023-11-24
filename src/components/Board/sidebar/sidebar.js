@@ -1,8 +1,8 @@
 import workspaceStorage from '../../../storages/workspaceStorage';
 import WorkspaceBoard from './atomic/workspaceBoard/workspaceBoard';
 import Component from '../../core/basicComponent';
-import template from './Sidebar.hbs';
-import './Sidebar.scss';
+import template from './sidebar.hbs';
+import './sidebar.scss';
 
 /**
  * слои-обертки
@@ -16,7 +16,7 @@ export default class Sidebar extends Component {
      */
     render() {
         return template({
-            workspaceIcon: Array.prototype(this.config.workspaceName)[0],
+            workspaceIcon: Array.from(this.config.workspaceName)[0],
             workspaceName: this.config.workspaceName,
             boards: this.#getWorkspaceBoards(this.config.workspace_id),
         });

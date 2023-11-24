@@ -11,14 +11,14 @@
 }
 
 .sidebar__user-avatar {
-    border-radius: 50%;
+    border-radius: 100%;
 }
 
 .sidebar__workspace-name {
     overflow-x: auto;
     overflow-y: hidden;
     text-wrap: nowrap;
-    max-width: 100%;
+    max-width: 80%;
 }
 
 .sidebar__workspace-name::-webkit-scrollbar {
@@ -39,7 +39,7 @@
 
 .sidebar__actions {
     width: 100%;
-    padding: 0px 20px;
+    padding: 0px 20px 0 10px;
     color: var(--text-color-on-page);
 }
 
@@ -96,24 +96,6 @@
 .sidebar-board-list::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
-}
-
-.sidebar-boards-list__board {
-    width: 100%;
-    color: var(--text-color-on-page);
-}
-
-.sidebar-boards-list__board-image {
-    height: 32px;
-    width: 48px;
-}
-
-.sidebar-boards-list__board-name {
-    min-width: 100px;
-    max-width: 100px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    text-wrap: nowrap;
 }
 
 .sidebar-boards-list__board-name::-webkit-scrollbar {

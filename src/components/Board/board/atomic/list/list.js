@@ -24,7 +24,7 @@ export default class List extends Component {
     #getListCards(cards) {
         const listCards = [];
         cards.forEach((card) => {
-            listCards.push(new Card(null, card).render());
+            listCards.push(new Card(null, { id: card.id, name: card.name }).render());
         });
         return listCards;
     }
