@@ -4,7 +4,7 @@
     --text-color-in-sign: #ffffff;
     --text-color-on-page: #c0c9f4;
     --text-color-in-search: #938989;
-    --text-color-forgotten-password:rgba(199, 199, 199);
+    --text-color-forgotten-password: rgba(199, 199, 199);
     --text-color-upload-avatar-title: #747474;
     --text-color-action-page-button: #000000;
     --need-text-color: #f46285;
@@ -52,6 +52,21 @@
     --hover-navigation-paragraph: rgba(38, 44, 49, 1);
     --team-member-btn-hover: rgba(38, 44, 49, 1);
     --shadow-sign-color: rgba(255, 255, 255, 15%);
+
+    --questionnaire-inactive: #dde0ec;
+    --questionnaire-active: rgb(232, 178, 42);
+    --questionnaire-background: #262d34;
+    --questionnaire-text-color: #c0c9f4;
+    --questionnaire-rating-text-color: #c0c9f4;
+    --questionnaire-rating-background-color: #7c7d8465;
+    --questionnaire-background-btn-next: #7ba4f3;
+    --questionnaire-background-btn-next-active: #092957;
+    --questionnaire-text-btn-next-active: #c0c9f4;
+    --questionnaire-background-btn-skip: #373e45;
+    --questionnaire-text-color-btn-next: #000000;
+    --questionnaire-text-color-btn-skip: #747474;
+    --questionnaire-text-color-btn-next-active: #092957;
+    --questionnaire-text-color-btn-skip-active: #95999f;
 }
 
 .flex-centered {

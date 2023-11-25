@@ -1,0 +1,70 @@
+.questionnaire {
+    width: 450px;
+    background-color: var(--questionnaire-background);
+    padding: 10px 20px;
+}
+
+.questionnaire__rating {
+    justify-content: space-around;
+    width: 100%;
+    color: var(--questionnaire-text-color);
+}
+
+.btn-rating {
+    background-color: transparent;
+    height: 32px;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.btn-rating_NSP {
+    width: 32px;
+}
+
+.btn-rating_CSI {
+    width: 32px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: var(--questionnaire-rating-background-color);
+    color: var(--questionnaire-rating-text-color);
+}
+
+.questionnaire__title {
+    color: var(--questionnaire-text-color);
+}
+
+.bi-star-fill {
+    width: 100%;
+    height: 100%;
+    color: var(--questionnaire-inactive);
+}
+
+.questionnaire__navigation {
+    justify-content: space-around;
+    width: 100%;
+}
+
+.btn-questionnaire-navigation {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0 10px;
+    min-height: 35px;
+    border-radius: 5px;
+    min-width: 120px;
+}
+
+.btn-questionnaire-navigation_next {
+    background-color: var(--questionnaire-background-btn-next);
+}
+.btn-questionnaire-navigation_next:active {
+    background-color: var(--questionnaire-background-btn-next-active);
+    color: var(--questionnaire-text-btn-next-active);
+}
+
+.btn-questionnaire-navigation_skip {
+    background-color: var(--questionnaire-background-btn-skip);
+    color: var(--questionnaire-text-color-btn-skip-active);
+}
+.btn-questionnaire-navigation_skip:active {
+    background-color: var(--questionnaire-background-btn-skip-active);
+}
