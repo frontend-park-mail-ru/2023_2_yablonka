@@ -3,5 +3,12 @@
 }
 
 .btn-close-iframe {
-    
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    background-color: transparent;
+}
+
+.btn-close-iframe__image {
+    filter: blur(5px);
 }

@@ -1,0 +1,21 @@
+<div class='page page__layout-questionnaire'>
+    <div
+        class='border-radius-10 flex-column-centered gap-30 questionnaire'
+        data-question='{{this.questionNumber}}'
+    >
+        <div class='flex-column-centered gap-30 questionnaire__content'>{{{questionnaire}}}</div>
+
+        <div class='flex-row-centered questionnaire__navigation'>
+            <button
+                class='font-size-16 font-weight-500 flex-centered btn btn-questionnaire-navigation btn-questionnaire-navigation_next'
+            >
+                Далее
+            </button>
+            <button
+                class='font-size-16 font-weight-500 flex-centered btn btn-questionnaire-navigation btn-questionnaire-navigation_skip'
+            >
+                Пропустить
+            </button>
+        </div>
+    </div>
+</div>

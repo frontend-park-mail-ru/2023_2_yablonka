@@ -1,25 +1,8 @@
-<div class='border-radius-10 flex-column-centered gap-30 questionnaire'>
-    <span class='font-size-20 font-weight-500 questionnaire__title'>
-        {{this.title}}
-    </span>
-    <div
-        class='flex-row-centered flex-centered questionnaire__rating'
-        data-metric='{{this.metric}}'
-    >
-        {{#each buttons as |button|}}
-            {{button}}
-        {{/each}}
-    </div>
-    <div class='flex-row-centered questionnaire__navigation'>
-        <button
-            class='font-size-16 font-weight-500 flex-centered btn btn-questionnaire-navigation btn-questionnaire-navigation_next'
-        >
-            Далее
-        </button>
-        <button
-            class='font-size-16 font-weight-500 flex-centered btn btn-questionnaire-navigation btn-questionnaire-navigation_skip'
-        >
-            Пропустить
-        </button>
-    </div>
+<span class='font-size-20 font-weight-500 questionnaire__title'>
+    {{this.title}}
+</span>
+<div class='flex-row-centered flex-centered questionnaire__rating' data-metric='{{this.metric}}'>
+    {{#each buttons as |button|}}
+        {{button}}
+    {{/each}}
 </div>

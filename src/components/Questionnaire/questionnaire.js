@@ -19,7 +19,7 @@ export default class Questionnaire extends Component {
      */
     render() {
         return template({
-            ...this.config,
+            title: this.config.content,
             rating: this.#innerConfig[this.config.metric],
             buttons: this.#getButtons(this.metric),
         });
