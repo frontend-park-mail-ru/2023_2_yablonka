@@ -1,4 +1,5 @@
-import BaseView from "./baseView";
+import QuestionnairePage from '../pages/Questionnaire/questionnaire';
+import BaseView from './baseView';
 
 /**
  * Класс для рендера iframe опросов
@@ -6,14 +7,11 @@ import BaseView from "./baseView";
  * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
  */
 class Questionnaire extends BaseView {
-    constructor() {
-        super();
-    }
-
     /**
      * Рендер страницы в DOM
      */
     async renderPage() {
+        this.components.push(new QuestionnairePage(this.root, {questions}));
 
         this.render();
         this.addListeners();
