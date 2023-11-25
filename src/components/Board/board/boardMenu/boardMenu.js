@@ -15,6 +15,7 @@ export default class BoardMenu extends Component {
      */
     render() {
         return template({
+            boardID: this.config.board_id,
             name: this.config.name,
             users: this.#getBoardUsers(this.config.users),
             usersOverflow: {

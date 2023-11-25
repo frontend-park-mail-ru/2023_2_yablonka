@@ -7,6 +7,9 @@ import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
 import workspaceStorage from '../../storages/workspaceStorage.js';
 import BoardMenu from '../../components/Board/board/boardMenu/boardMenu.js';
+import { actionCreateList } from '../../actions/boardActions.js';
+import Validator from '../../modules/validator.js';
+import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 import template from './board.hbs';
 import './board.scss';
 
@@ -30,6 +33,7 @@ export default class BoardPage extends Component {
                 workspace_id: this.config.board.workspace_id,
             }).render(),
             boardMenu: new BoardMenu(null, {
+                board_id: this.config.board.board_id,
                 name: this.config.board.name,
                 users: workspaceStorage.getBoardUsers(this.config.board.board_id),
             }).render(),
@@ -58,6 +62,18 @@ export default class BoardPage extends Component {
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
 
+        this.parent.querySelector('.btn-add-new-list').addEventListener('click', this.#addNewList);
+        this.parent
+            .querySelector('.input-new-list-name')
+            .addEventListener('input', this.#blockCreateNewListBtn);
+        this.parent
+            .querySelector('.btn-create-list_cancel')
+            .addEventListener('click', this.#cancelCreateNewListBtn);
+        this.parent.addEventListener('click', this.#cancelCreateNewListBtn);
+        this.parent
+            .querySelector('.btn-create-list_confirm')
+            .addEventListener('click', this.#createList);
+
         emitter.bind('logout', this.close);
     }
 
@@ -80,6 +96,20 @@ export default class BoardPage extends Component {
         this.parent
             .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.toSecurityHandler);
+
+        this.parent
+            .querySelector('.btn-add-new-list')
+            .removeEventListener('click', this.#addNewList);
+        this.parent
+            .querySelector('.input-new-list-name')
+            .removeEventListener('input', this.#blockCreateNewListBtn);
+        this.parent
+            .querySelector('.btn-create-list_cancel')
+            .removeEventListener('click', this.#cancelCreateNewListBtn);
+        this.parent.addEventListener('click', this.#cancelCreateNewListBtn);
+        this.parent
+            .querySelector('.btn-create-list_confirm')
+            .removeEventListener('click', this.#createList);
 
         emitter.unbind('logout', this.close);
     }
@@ -122,6 +152,89 @@ export default class BoardPage extends Component {
         dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
         dispatcher.dispatch(actionRedirect('/profile', false));
     }
+
+    #addNewList = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const addListBtn = this.parent.querySelector('.add-new-list');
+        const addListForm = this.parent.querySelector('.new-list');
+
+        addListBtn.style.display = 'none';
+        addListForm.style.display = 'block';
+
+        const input = this.parent.querySelector('.input-new-list-name');
+        input.blur();
+    };
+
+    #closeNewList = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.parent.querySelector('.form-new-list__container').reset();
+
+        const addListBtn = this.parent.querySelector('.add-new-list');
+        const addListForm = this.parent.querySelector('.new-list');
+
+        addListBtn.style.display = 'block';
+        addListForm.style.display = 'none';
+    };
+
+    #blockCreateNewListBtn = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const btn = this.parent.querySelector('.btn-create-list_confirm');
+        const input = this.parent.querySelector('.input-new-list-name');
+
+        if (input.value.length === 0) {
+            btn.disabled = true;
+            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
+        } else {
+            btn.disabled = false;
+            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
+        }
+    };
+
+    #cancelCreateNewListBtn = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (
+            this.parent.querySelector('.new-list').style.display === 'block' &&
+            (!e.target.closest('.new-list') || e.target.closest('.btn-create-list_cancel'))
+        ) {
+            this.#closeNewList(e);
+            this.#blockCreateNewListBtn(e);
+        }
+    };
+
+    #createList = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const input = this.parent.querySelector('.input-new-list-name');
+        if (Validator.validateObjectName(input.value)) {
+            const boardId = this.parent.querySelector('.board-menu__board-name').dataset.board;
+
+            this.#closeNewList(e);
+            this.#blockCreateNewListBtn(e);
+
+            dispatcher.dispatch(
+                actionCreateList({
+                    board_id: boardId,
+                    name: input.value,
+                    list_position: workspaceStorage.getBoardLists(boardId).length,
+                }),
+            );
+        } else {
+            NotificationMessage.showNotification(input, false, true, {
+                fontSize: 12,
+                fontWeight: 200,
+                text: 'Некорректное название списка',
+            });
+        }
+    };
 
     /**
      * Закрытие страницы и редирект на страницу логина

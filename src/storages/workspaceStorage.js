@@ -73,7 +73,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -90,7 +90,7 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             this.changed = true;
-            emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
             // Тут короче будем триггер на ошибки делать
         }
@@ -133,7 +133,6 @@ class WorkspaceStorage extends BaseStorage {
             this.addBoard(body.body.board);
             this.addLists(body.body.lists);
             this.addCards(body.body.cards);
-            //emitter.trigger('renderWorkspaces');
         } else {
         }
     }
@@ -149,7 +148,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -165,7 +164,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -181,7 +180,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -197,7 +196,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -213,7 +212,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -229,7 +228,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -245,7 +244,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -261,7 +260,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -277,7 +276,39 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            //emitter.trigger('renderWorkspaces');
+            emitter.trigger('rerender');
+        } else {
+        }
+    }
+
+    async addUser(user) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}board/user/add/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            user,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        } else {
+        }
+    }
+
+    async removeUser(user) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}board/user/remove/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            user,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
         } else {
         }
     }
@@ -286,7 +317,7 @@ class WorkspaceStorage extends BaseStorage {
         const idx = this.storage
             .get(this.workspaceModel.boards)
             .findIndex((brd) => brd.board_id === board.board_id);
-        let boards = this.storage.get(this.workspaceModel.boards);
+        const boards = this.storage.get(this.workspaceModel.boards);
         if (idx !== -1) {
             boards.splice(idx, 1);
         }
@@ -357,7 +388,6 @@ class WorkspaceStorage extends BaseStorage {
     getBoardById(id) {
         const boards = this.storage.get(this.workspaceModel.boards);
         const board = boards.find((brd) => brd.board_id === id);
-
         return board;
     }
 
@@ -388,7 +418,7 @@ class WorkspaceStorage extends BaseStorage {
     getBoardLists(id) {
         const boardLists = this.storage
             .get(this.workspaceModel.boards)
-            .find((brd) => brd.board_id === id).lists;
+            .find((brd) => brd.board_id === id)?.lists;
 
         const lists = [];
         this.storage.get(this.workspaceModel.lists).forEach((lst) => {

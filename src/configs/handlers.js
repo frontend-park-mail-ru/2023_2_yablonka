@@ -13,13 +13,14 @@ const handlers = [
     { type: 'goSignup', method: userStorage.getSignupPage.bind(userStorage) },
     { type: 'goSignin', method: userStorage.getSigninPage.bind(userStorage) },
     { type: 'getWorkspaces', method: workspaceStorage.getWorkspaces.bind(workspaceStorage) },
-    { type: 'updateProfile', method: userStorage.updateProfile.bind(userStorage) },
     { type: 'updatePassword', method: userStorage.updatePassword.bind(userStorage) },
     { type: 'updateAvatar', method: userStorage.updateAvatar.bind(userStorage) },
     { type: 'createWorkspace', method: workspaceStorage.createWorkspace.bind(workspaceStorage) },
     { type: 'deleteWorkspace', method: workspaceStorage.deleteWorkspace.bind(workspaceStorage) },
     { type: 'updateWorkspace', method: workspaceStorage.updateWorkspace.bind(workspaceStorage) },
     { type: 'createBoard', method: workspaceStorage.createBoard.bind(workspaceStorage) },
+    { type: 'updateBoard', method: workspaceStorage.updateBoard.bind(workspaceStorage) },
+    { type: 'deleteBoard', method: workspaceStorage.deleteBoard.bind(workspaceStorage) },
     { type: 'getBoard', method: workspaceStorage.getBoard.bind(workspaceStorage) },
     { type: 'createList', method: workspaceStorage.createList.bind(workspaceStorage) },
     { type: 'updateList', method: workspaceStorage.updateList.bind(workspaceStorage) },
@@ -27,6 +28,8 @@ const handlers = [
     { type: 'createCard', method: workspaceStorage.createCard.bind(workspaceStorage) },
     { type: 'updateCard', method: workspaceStorage.updateCard.bind(workspaceStorage) },
     { type: 'deleteCard', method: workspaceStorage.deleteCard.bind(workspaceStorage) },
+    { type: 'addUserBoard', method: workspaceStorage.addUser.bind(workspaceStorage) },
+    { type: 'removeUserBoard', method: workspaceStorage.removeUser.bind(workspaceStorage) },
 ];
 
 export default handlers;

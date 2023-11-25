@@ -22,6 +22,11 @@ class Page404 extends BaseView {
         this.render();
         this.addListeners();
     }
+
+    async reRender() {
+        this.clear();
+        this.renderPage();
+    }
 }
 
 const page404 = new Page404();

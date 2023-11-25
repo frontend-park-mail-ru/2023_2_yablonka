@@ -16,6 +16,7 @@ export default class Sidebar extends Component {
      */
     render() {
         return template({
+            workspaceID: this.config.workspace_id,
             workspaceIcon: Array.from(this.config.workspaceName)[0],
             workspaceName: this.config.workspaceName,
             boards: this.#getWorkspaceBoards(this.config.workspace_id),
@@ -25,8 +26,10 @@ export default class Sidebar extends Component {
     #getWorkspaceBoards(workspaceID) {
         const workspaceBoards = [];
         const boards = workspaceStorage.getWorkspaceBoards(workspaceID);
-        boards.forEach((user) => {
-            workspaceBoards.push(new WorkspaceBoard(null, user).render());
+        boards.forEach((board) => {
+            workspaceBoards.push(
+                new WorkspaceBoard(null, { workspace_id: workspaceID, ...board }).render(),
+            );
         });
         return workspaceBoards;
     }

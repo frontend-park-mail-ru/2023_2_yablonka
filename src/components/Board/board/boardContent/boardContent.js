@@ -1,6 +1,5 @@
 import workspaceStorage from '../../../../storages/workspaceStorage';
 import Component from '../../../core/basicComponent';
-import Card from '../atomic/card/card';
 import List from '../atomic/list/list';
 import template from './boardContent.hbs';
 import './boardContent.scss';

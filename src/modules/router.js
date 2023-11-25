@@ -1,6 +1,7 @@
 import userStorage from '../storages/userStorage.js';
 import { routes, signedInRoutes } from '../configs/configs.js';
 import { boardHrefRegExp, hrefRegExp, navigationPagesHrefRegExp } from './regExp.js';
+import emitter from './actionTrigger.js';
 
 /**
  * Класс, реализующий роутер
@@ -14,6 +15,8 @@ class Router {
         this.views = new Map();
         this.signedInViews = new Map();
 
+        emitter.bind('rerender', this.reRenderPage.bind(this));
+
         routes.forEach((route) => {
             this.registerView(route);
         });
@@ -21,6 +24,10 @@ class Router {
         signedInRoutes.forEach((route) => {
             this.registerView(route, true);
         });
+    }
+
+    reRenderPage() {
+        this.currentPage.reRender();
     }
 
     /**
@@ -157,7 +164,7 @@ class Router {
      */
     refresh(pushState) {
         const matchedView = this.matchView(window.location.pathname);
-        const redirectedPath = this.redirect(matchedView);
+        const redirectedPath = this.redirect(window.location.pathname);
         if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
             this.open(
                 {

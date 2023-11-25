@@ -8,6 +8,16 @@ export const actionCreateBoard = (newBoard) => ({
     value: newBoard,
 });
 
+export const actionUpdateBoard = (newBoard) => ({
+    type: 'updateBoard',
+    value: newBoard,
+});
+
+export const actionDeleteBoard = (id) => ({
+    type: 'deleteBoard',
+    value: { board_id: id },
+});
+
 export const actionCreateList = (newList) => ({
     type: 'createList',
     value: newList,

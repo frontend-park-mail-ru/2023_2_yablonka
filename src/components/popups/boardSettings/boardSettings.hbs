@@ -1,0 +1,21 @@
+<dialog
+    id='board-settings'
+    class='border-radius-10 board-settings'
+    aria-modal='false'
+    data-board='{{this.boardID}}'
+    style='top: 0px; left: 0px'
+    popover
+>
+    <div class='flex-column-centered gap-5 padding-10-15 board-settings-wrapper'>
+        <button
+            class='border-radius-5 flex-centered font-size-16 font-weight-bold border-radius-5 padding-5-10 btn btn-change-board-name'
+        >
+            Изменить название доски
+        </button>
+        <button
+            class='border-radius-5 flex-centered font-size-16 font-weight-bold padding-5-10 btn btn-delete-board'
+        >
+            Удалить доску
+        </button>
+    </div>
+</dialog>

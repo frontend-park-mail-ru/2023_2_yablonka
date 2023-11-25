@@ -28,6 +28,7 @@ export default class BaseView {
 
     clear() {
         this.removeListeners();
+        popupEvent.clearPopups();
         this.root.innerHTML = '';
         this.components = [];
     }

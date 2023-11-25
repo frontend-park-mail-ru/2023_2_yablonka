@@ -1,6 +1,12 @@
-.sidebar-boards-list__board {
+.link-sidebar-boards-list__board {
     width: 100%;
     color: var(--text-color-on-page);
+    text-decoration: none;
+}
+
+.link-sidebar-boards-list__board:hover,
+.link-sidebar-boards-list__board:active {
+    background-color: var(--hover-navigation-paragraph);
 }
 
 .sidebar-boards-list__board-image {

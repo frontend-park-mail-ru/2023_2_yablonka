@@ -8,7 +8,7 @@
             />
             <span
                 class='font-size-22 font-weight-500 padding-5-10 border-radius-5 board-menu__board-name'
-                contenteditable='true'
+                contenteditable='true' data-board="{{this.boardID}}"
             >{{this.name}}</span>
         </div>
         <div class='flex-row-centered gap-5 board-menu__board-actions'>
@@ -55,7 +55,7 @@
                 />
                 <span class='font-size-16 font-weight-500 board-actions__title'>Добавить участника</span>
             </button>
-            <button class='btn btn-board-actions'>
+            <button class='btn btn-board-settings'>
                 <img
                     class='box-24-24 strach-layout additional-action__image'
                     src='/svg/three-dots.svg'

@@ -4,7 +4,11 @@ import BoardPage from '../pages/Board/board.js';
 import Navigation from '../components/popups/navigation/navigation.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionGetBoard } from '../actions/boardActions.js';
+import { actionGetWorkspaces } from '../actions/workspaceActions.js';
 import BaseView from './baseView.js';
+import CreateBoard from '../components/popups/createBoard/createBoard.js';
+import BoardSettings from '../components/popups/boardSettings/boardSettings.js';
+import CreateWorkspace from '../components/popups/createWorkspace/createWorkspace.js';
 
 /**
  * Класс для рендера страницы доски
@@ -24,15 +28,17 @@ class Board extends BaseView {
     async renderPage() {
         const boardData = [];
         const linkData = window.location.pathname.matchAll(/\d+/g);
-        for (let data of linkData) {
+        for (const data of linkData) {
             boardData.push(data[0]);
         }
+
         const [wsID, bID, cID] = boardData;
 
         this.workspaceID = wsID;
         this.boardID = bID;
         this.cardID = cID;
 
+        await dispatcher.dispatch(actionGetWorkspaces());
         await dispatcher.dispatch(actionGetBoard(parseInt(this.boardID, 10)));
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
@@ -40,10 +46,22 @@ class Board extends BaseView {
 
         this.components.push(new BoardPage(this.root, { user, board }));
 
-        this.components.push(...[new Navigation(this.root, user)]);
+        this.components.push(
+            ...[
+                new Navigation(this.root, user),
+                new CreateWorkspace(this.root, {}),
+                new CreateBoard(this.root, {}),
+                new BoardSettings(this.root, { board_id: this.boardID }),
+            ],
+        );
 
         this.render();
         this.addListeners();
+    }
+
+    async reRender() {
+        this.clear();
+        this.renderPage();
     }
 }
 

@@ -37,6 +37,44 @@
     background-color: transparent;
 }
 
+.new-list {
+    height: 100%;
+}
+
+.form-new-list__container {
+    background-color: var(--list-background-color);
+    width: 250px;
+    padding: 10px;
+    align-items: flex-start;
+}
+
+.input-new-list-name {
+    width: 100%;
+    height: 32px;
+    color: #c0c9f4;
+    outline: none;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--need-text-color);
+}
+
+.input-new-list-name:focus {
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--need-text-color);
+}
+
+.btn-create-list_confirm {
+    background-color: var(--action-button-color);
+    min-height: 35px;
+}
+
+.btn-create-list_cancel {
+    background: transparent;
+}
+
+.btn-create-list_cancel:hover {
+    background-color: var(--hover-navigation-paragraph);
+}
+
 ol::-webkit-scrollbar {
     height: 14px;
     width: 6px;

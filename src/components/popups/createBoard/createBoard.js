@@ -78,7 +78,7 @@ export default class CreateBoard extends Component {
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top - 120}px; left: ${
-                        btnCoordinates.left + btnCoordinates.width + 20
+                        btnCoordinates.left + btnCoordinates.width + 30
                     }px`,
                 );
                 dialog.dataset.workspace = workspaceId;
@@ -90,7 +90,7 @@ export default class CreateBoard extends Component {
             dialog.setAttribute(
                 'style',
                 `top: ${btnCoordinates.top - 120}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
+                    btnCoordinates.left + btnCoordinates.width + 30
                 }px`,
             );
             dialog.setAttribute('data-workspace', workspaceId);
@@ -134,7 +134,7 @@ export default class CreateBoard extends Component {
             dialog.setAttribute(
                 'style',
                 `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
+                    btnCoordinates.left + btnCoordinates.width + 30
                 }px`,
             );
         }

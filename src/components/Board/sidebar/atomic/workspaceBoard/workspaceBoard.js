@@ -16,6 +16,8 @@ export default class WorkspaceBoard extends Component {
         return template({
             thumbnail_url: this.config.thumbnail_url,
             name: this.config.name,
+            workspaceID: this.config.workspace_id,
+            boardID: this.config.id,
         });
     }
 }

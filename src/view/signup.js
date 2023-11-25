@@ -62,6 +62,11 @@ class Signup extends BaseView {
                 break;
         }
     };
+
+    async reRender() {
+        this.clear();
+        this.renderPage();
+    }
 }
 
 const signUp = new Signup();

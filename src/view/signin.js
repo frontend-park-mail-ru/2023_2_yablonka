@@ -53,6 +53,11 @@ class Signin extends BaseView {
                 break;
         }
     };
+
+    async reRender() {
+        this.clear();
+        this.renderPage();
+    }
 }
 
 const signin = new Signin();

@@ -125,10 +125,10 @@ export default class WorkspaceSettings extends Component {
         }
     };
 
-    deleteWorkspaceHandler = (e) => {
-        const dialog = e.target.closest('dialog');
+    deleteWorkspaceHandler = () => {
+        const dialog = this.parent.querySelector('#workspace-settings');
         if (dialog.dataset.workspace) {
-            const workspaceId = e.target.closest('dialog').dataset.workspace;
+            const workspaceId = dialog.dataset.workspace;
             popupEvent.deletePopup(dialog);
             dialog.close();
             dispatcher.dispatch(actionDeleteWorkspace(workspaceId));

@@ -144,7 +144,7 @@ class UserStorage extends BaseStorage {
             oldUser.body.user.surname = user.surname;
             oldUser.body.user.description = user.description;
             this.storage.set(this.userModel.body, oldUser);
-            emitter.trigger('updateProfile');
+            emitter.trigger('rerender');
             emitter.trigger('changeSuccess');
 
             NotificationMessage.showNotification(
@@ -188,7 +188,7 @@ class UserStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('updateProfile');
+            emitter.trigger('rerender');
             emitter.trigger('changeSuccess');
 
             NotificationMessage.showNotification(
@@ -242,7 +242,7 @@ class UserStorage extends BaseStorage {
             const oldUser = this.storage.get(this.userModel.body);
             oldUser.body.user.avatar_url = body.avatar_url;
             this.storage.set(this.userModel.body, oldUser);
-            emitter.trigger('updateProfile');
+            emitter.trigger('rerender');
             emitter.trigger('changeSuccess');
         } else {
             emitter.trigger('changeError');
