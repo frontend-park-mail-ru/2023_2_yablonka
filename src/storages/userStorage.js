@@ -313,6 +313,8 @@ class UserStorage extends BaseStorage {
             this.storage.get(this.userModel.csrf),
         );
 
+        console.log(await responsePromise.body);
+
         const { status } = responsePromise;
         if (status === 200) {
             this.storage.set(this.userModel.questions, responsePromise.body.questions);
