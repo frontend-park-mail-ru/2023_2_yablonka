@@ -294,7 +294,7 @@ class UserStorage extends BaseStorage {
     async getQuestions() {
         //get questions endpoint
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}csat/question`,
+            `${apiPath + apiVersion}csat/question/all`,
             'GET',
             this.storage.get(this.userModel.csrf),
         );
