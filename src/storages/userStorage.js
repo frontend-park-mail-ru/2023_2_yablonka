@@ -270,12 +270,31 @@ class UserStorage extends BaseStorage {
     }
 
     /**
+* Обновить список вопросов
+* @param {Object} questions - СПисок вопросов
+*/
+    async updateQuestios(questions) {
+        //answer endpoint
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            'POST',
+            this.storage.get(this.userModel.csrf),
+            questions,
+        );
+
+        const { status } = responsePromise;
+        if (status !== 200) {
+            emitter.trigger('rerender');
+        } else { }
+    }
+
+    /**
 * Запрос на получение опросника
 */
     async getQuestions() {
         //get questions endpoint
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            `${apiPath + apiVersion}csat/question`,
             'GET',
             this.storage.get(this.userModel.csrf),
         );
