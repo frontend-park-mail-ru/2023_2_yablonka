@@ -14,11 +14,6 @@ class Questionnaire extends BaseView {
      * Рендер страницы в DOM
      */
     async renderPage() {
-        const factor = Math.floor(Math.random() * 100 + 1);
-
-        if (factor >= 0) {
-            //page
-        }
 
         this.render();
         this.addListeners();

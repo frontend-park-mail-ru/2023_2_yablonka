@@ -28,6 +28,9 @@ class Board extends BaseView {
     async renderPage() {
         const boardData = [];
         const linkData = window.location.pathname.matchAll(/\d+/g);
+
+        const factor = Math.floor(Math.random() * 100 + 1);
+
         for (const data of linkData) {
             boardData.push(data[0]);
         }

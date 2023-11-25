@@ -26,6 +26,7 @@ class Profile extends BaseView {
      */
     async renderPage() {
         document.title = 'Tabula: Profile';
+        const factor = Math.floor(Math.random() * 100 + 1);
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
 
