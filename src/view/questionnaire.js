@@ -1,5 +1,7 @@
 import QuestionnairePage from '../pages/Questionnaire/questionnaire';
 import BaseView from './baseView';
+import { actionGetQuestions } from '../actions/userActions';
+import dispatcher from '../modules/dispatcher';
 
 /**
  * Класс для рендера iframe опросов
@@ -11,7 +13,9 @@ class Questionnaire extends BaseView {
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.components.push(new QuestionnairePage(this.root, {questions}));
+        this.components.push(new QuestionnairePage(this.root, { questions }));
+
+        await dispatcher.dispatch(actionGetQuestions());
 
         this.render();
         this.addListeners();
