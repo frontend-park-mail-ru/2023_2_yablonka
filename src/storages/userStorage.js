@@ -14,7 +14,8 @@ class UserStorage extends BaseStorage {
         body: 'body',
         status: 'status',
         csrf: 'csrf',
-        questions: 'questions'
+        questions: 'questions',
+        stats: 'stats'
     };
 
     /**
@@ -252,7 +253,7 @@ class UserStorage extends BaseStorage {
  * @param {Object} answer - Ответ на вопрос
  */
     async answerQuestion(answer) {
-        const responsePromise = await AJAX(
+        await AJAX(
             `${apiPath + apiVersion}csat/answer/`,
             'POST',
             this.storage.get(this.userModel.csrf),
@@ -268,7 +269,7 @@ class UserStorage extends BaseStorage {
     async updateQuestios(questions) {
         //answer endpoint
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            `${apiPath + apiVersion}csat/question/edit/`,
             'POST',
             this.storage.get(this.userModel.csrf),
             questions,
@@ -278,6 +279,27 @@ class UserStorage extends BaseStorage {
         if (status !== 200) {
             emitter.trigger('rerender');
         } else { }
+    }
+
+    /**
+* Получение статистики
+*/
+    async getStat(questions) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}csat/question/edit/`,
+            'POST',
+            this.storage.get(this.userModel.csrf),
+            questions,
+        );
+
+        const { status } = responsePromise;
+        if (status !== 200) {
+            this.storage.set(this.userModel.stats, responsePromise.body);
+        } else { }
+    }
+
+    getStoredStat() {
+        return this.storage.get(this.userModel.stats);
     }
 
     /**
