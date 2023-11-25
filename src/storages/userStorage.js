@@ -14,6 +14,7 @@ class UserStorage extends BaseStorage {
         body: 'body',
         status: 'status',
         csrf: 'csrf',
+        questions: 'questions'
     };
 
     /**
@@ -246,6 +247,42 @@ class UserStorage extends BaseStorage {
             emitter.trigger('changeSuccess');
         } else {
             emitter.trigger('changeError');
+        }
+    }
+
+    /**
+ * Запрос на ответ на вопрос
+ * @param {Object} answer - Ответ на вопрос
+ */
+    async answerQuestion(answer) {
+        //answer endpoint
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            'POST',
+            this.storage.get(this.userModel.csrf),
+            answer,
+        );
+
+        // const { status } = responsePromise;
+        // if (status !== 200) {
+
+        // } 
+    }
+
+    /**
+* Запрос на получение опросника
+*/
+    async getQuestions() {
+        //get questions endpoint
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            'GET',
+            this.storage.get(this.userModel.csrf),
+        );
+
+        const { status } = responsePromise;
+        if (status === 200) {
+            this.storage.set(this.userModel.questions, responsePromise.body.questions);
         }
     }
 
