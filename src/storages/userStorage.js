@@ -257,7 +257,7 @@ class UserStorage extends BaseStorage {
     async answerQuestion(answer) {
         //answer endpoint
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}user/edit/change_avatar/`,
+            `${apiPath + apiVersion}csat/answer/`,
             'POST',
             this.storage.get(this.userModel.csrf),
             answer,
