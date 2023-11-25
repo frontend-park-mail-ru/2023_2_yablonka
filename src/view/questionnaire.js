@@ -27,6 +27,6 @@ class Questionnaire extends BaseView {
     }
 }
 
-const profile = new Questionnaire();
+const questionnaire = new Questionnaire();
 
-export default profile;
+export default questionnaire;
