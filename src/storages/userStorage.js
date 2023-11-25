@@ -306,7 +306,7 @@ class UserStorage extends BaseStorage {
     }
 
     getStoredQuestions() {
-        return this.storage.get(this.userModel.questions);
+        return [{ id: 1, content: "Любите анекдоты?", type: 'CSI' }, { id: 2, content: "Любите раков", type: 'CSI' }, { id: 3, content: "А жену?", type: 'NSP' }]
     }
 
     /**
