@@ -11,7 +11,6 @@ export default class BaseStorage {
      * @constructor
      */
     constructor() {
-        this.changed = false;
         this.storage = new Map();
     }
 
@@ -22,13 +21,5 @@ export default class BaseStorage {
      */
     getState(field) {
         return field ? this.storage.get(field) : this.storage;
-    }
-
-    /**
-     * Метод, проверяющий, изменилось ли хранилище
-     * @returns результат проверки
-     */
-    onChange() {
-        return this.changed;
     }
 }

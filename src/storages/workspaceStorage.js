@@ -53,10 +53,6 @@ class WorkspaceStorage extends BaseStorage {
 
         const { status } = responsePromise;
 
-        if (status === 200) {
-            this.changed = true;
-        }
-
         this.storage.set(this.workspaceModel.body, body);
 
         this.storage.set(this.workspaceModel.status, status);
@@ -89,7 +85,6 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            this.changed = true;
             emitter.trigger('rerender');
         } else {
             // Тут короче будем триггер на ошибки делать
@@ -105,11 +100,6 @@ class WorkspaceStorage extends BaseStorage {
         );
 
         const { status } = responsePromise;
-
-        if (status === 200) {
-            this.changed = true;
-        } else {
-        }
     }
 
     async getBoard(board) {

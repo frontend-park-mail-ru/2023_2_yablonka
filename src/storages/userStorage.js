@@ -70,7 +70,6 @@ class UserStorage extends BaseStorage {
 
         const { status } = responsePromise;
         if (status === 200) {
-            this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
             this.storage.set(this.userModel.csrf, responsePromise.headers.get('X-Csrf-Token'));
         }
@@ -102,7 +101,6 @@ class UserStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            this.changed = true;
             this.storage.set(this.userModel.name, 'auth');
             this.storage.set(this.userModel.csrf, responsePromise.headers.get('X-Csrf-Token'));
         }
@@ -139,7 +137,6 @@ class UserStorage extends BaseStorage {
 
         const { status } = responsePromise;
         if (status === 200) {
-            this.changed = true;
             const oldUser = this.storage.get(this.userModel.body);
             oldUser.body.user.name = user.name;
             oldUser.body.user.surname = user.surname;
@@ -255,7 +252,6 @@ class UserStorage extends BaseStorage {
  * @param {Object} answer - Ответ на вопрос
  */
     async answerQuestion(answer) {
-        //answer endpoint
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}csat/answer/`,
             'POST',
@@ -263,10 +259,6 @@ class UserStorage extends BaseStorage {
             answer,
         );
 
-        // const { status } = responsePromise;
-        // if (status !== 200) {
-
-        // } 
     }
 
     /**
