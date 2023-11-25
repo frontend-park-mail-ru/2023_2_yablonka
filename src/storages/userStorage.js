@@ -305,6 +305,10 @@ class UserStorage extends BaseStorage {
         }
     }
 
+    getStoredQuestions() {
+        return this.storage.get(this.userModel.questions);
+    }
+
     /**
      * Рендер страницы регистрации
      */
