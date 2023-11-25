@@ -30,6 +30,8 @@ const handlers = [
     { type: 'deleteCard', method: workspaceStorage.deleteCard.bind(workspaceStorage) },
     { type: 'addUserBoard', method: workspaceStorage.addUser.bind(workspaceStorage) },
     { type: 'removeUserBoard', method: workspaceStorage.removeUser.bind(workspaceStorage) },
+    { type: 'getQuestions', method: userStorage.getQuestions.bind(userStorage) },
+    { type: 'answerQuestion', method: userStorage.answerQuestion.bind(userStorage) },
 ];
 
 export default handlers;

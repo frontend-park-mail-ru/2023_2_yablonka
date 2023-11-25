@@ -96,3 +96,13 @@ export const actionUpdateAvatar = (user) => ({
     type: 'updateAvatar',
     value: user,
 });
+
+export const actionAnswerQuestion = (answer) => ({
+    type: 'answerQuestion',
+    value: answer
+});
+
+export const actionGetQuestions = () => ({
+    type: 'getQuestions',
+    value: {}
+});
