@@ -49,9 +49,9 @@ export default class BoardPage extends Component {
      */
     addEventListeners() {
         this.parent.querySelector('.logo-wrapper').addEventListener('click', this.toBoardsHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .addEventListener('click', this.toBoardsHandler);
+        this.parent.querySelectorAll('.link-sidebar-boards-list__board').forEach((link) => {
+            link.addEventListener('click', this.toBoardsHandler);
+        });
         this.parent
             .querySelector('.profile-link[data-action=logout]')
             .addEventListener('click', this.logoutHandler);
@@ -84,9 +84,9 @@ export default class BoardPage extends Component {
         this.parent
             .querySelector('.logo-wrapper')
             .removeEventListener('click', this.toBoardsHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .removeEventListener('click', this.toBoardsHandler);
+        this.parent.querySelectorAll('.link-sidebar-boards-list__board').forEach((link) => {
+            link.removeEventListener('click', this.toBoardsHandler);
+        });
         this.parent
             .querySelector('.profile-link[data-action=logout]')
             .removeEventListener('click', this.logoutHandler);
@@ -130,7 +130,9 @@ export default class BoardPage extends Component {
     toBoardsHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/main', false));
+        dispatcher.dispatch(
+            actionRedirect(e.target.closest('a').href.replace(window.location.origin, ''), false),
+        );
     }
 
     /**
@@ -201,7 +203,7 @@ export default class BoardPage extends Component {
         e.stopPropagation();
 
         if (
-            this.parent.querySelector('.new-list').style.display === 'block' &&
+            this.parent.querySelector('.new-list')?.style.display === 'block' &&
             e.target.closest('.btn-create-list_cancel')
         ) {
             this.#closeNewList(e);

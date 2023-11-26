@@ -17,7 +17,7 @@ export default class BoardSettings extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', template({ boardID: this.config.board_id }));
+        this.parent.insertAdjacentHTML('beforeend', template({ ID: this.config.board_id }));
     }
 
     addEventListeners() {
@@ -102,7 +102,7 @@ export default class BoardSettings extends Component {
             const boardId = parseInt(dialog.dataset.board, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
-            dispatcher.dispatch(actionDeleteBoard(boardId));
+            dispatcher.dispatch(actionDeleteBoard(parseInt(boardId, 10)));
             dispatcher.dispatch(actionRedirect('/main', true));
         }
     };
