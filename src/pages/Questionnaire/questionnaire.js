@@ -1,6 +1,12 @@
-import { actionLogout, actionNavigate, actionRedirect } from '../../actions/userActions.js';
-import Questionnaire from '../../components/Questionnaire/questionnaire.js';
+import {
+    actionAnswerQuestion,
+    actionLogout,
+    actionNavigate,
+    actionRedirect,
+} from '../../actions/userActions.js';
+import QuestionnaireContent from '../../components/Questionnaire/questionnaireContent/questionnaireContent.js';
 import Component from '../../components/core/basicComponent.js';
+import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
 import template from './questionnaire.hbs';
 import './questionnaire.scss';
@@ -12,17 +18,19 @@ import './questionnaire.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class QuestionnairePage extends Component {
-    constructor() {
-        super();
-        this.questionNumber = 0;
+    constructor(parent, config) {
+        super(parent, config);
+        this.id = config.id;
     }
+
+    questionNumber = 0;
 
     /**
      * Рендерит компонент в DOM
      */
     render() {
         const page = {
-            questionnaire: new Questionnaire(null, this.config.questions[0]),
+            content: new QuestionnaireContent(null, this.config.questions[0]).render(),
         };
         this.parent.insertAdjacentHTML('beforeend', template(page));
     }
@@ -33,13 +41,25 @@ export default class QuestionnairePage extends Component {
     addEventListeners() {
         this.parent
             .querySelector('.btn-questionnaire-navigation_next')
-            .addEventListener('click', this.#nextQuestion);
-        this.parent
-            .querySelector('.btn-questionnaire-navigation_skip')
-            .addEventListener('click', this.#skipQuestion);
-        this.parent
-            .querySelectorAll('.btn-rating')
-            .forEach((el) => el.addEventListener('click', this.#activateRating));
+            .addEventListener('click', this.#nextQuestion.bind(this, this.#sendRating));
+        this.parent.querySelector('.btn-close-iframe').addEventListener('click', this.#closeIframe);
+        this.parent.querySelector('.btn-questionnaire-navigation_skip').addEventListener(
+            'click',
+            this.#nextQuestion.bind(this, () => {}),
+        );
+        this.addButtonEventListeners();
+    }
+
+    addButtonEventListeners() {
+        this.parent.querySelectorAll('.btn-rating').forEach((el) => {
+            el.addEventListener('click', this.#activateRating);
+        });
+    }
+
+    removeButtonEventListeners() {
+        this.parent.querySelectorAll('.btn-rating').forEach((el) => {
+            el.removeEventListener('click', this.#activateRating);
+        });
     }
 
     /**
@@ -48,70 +68,62 @@ export default class QuestionnairePage extends Component {
     removeEventListeners() {
         this.parent
             .querySelector('.btn-questionnaire-navigation_next')
-            .addEventListener('click', this.#nextQuestion);
+            .addEventListener('click', this.#nextQuestion());
+        this.parent
+            .querySelector('.btn-close-iframe')
+            .removeEventListener('click', this.#closeIframe);
         this.parent
             .querySelector('.btn-questionnaire-navigation_skip')
-            .addEventListener('click', this.#skipQuestion);
-        this.parent
-            .querySelectorAll('.btn-rating')
-            .forEach((el) => el.removeEventListener('click', this.#activateRating));
+            .addEventListener('click', this.#nextQuestion);
+        this.removeButtonEventListeners();
     }
 
     #activateRating = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        this.parent.querySelectorAll('.btn-rating').array.forEach((el) => {
-            if (el.dataset.metric === 'NSP') {
-                el.style.fill = 'currentFill';
+        const { metric, rating } = e.target.closest('.btn-rating').dataset;
+
+        this.parent.querySelectorAll('.btn-rating').forEach((el) => {
+            if (metric === 'NSP') {
+                el.querySelector('.bi-star-fill').setAttribute('fill', 'currentColor');
             } else {
                 el.setAttribute(
                     'style',
-                    'backgroung-color: var(--questionnaire-rating-background-color)',
+                    'background-color: var(--questionnaire-rating-background-color)',
                 );
             }
-            el.dataset.isActive = false;
+            el.setAttribute('data-isActive', false);
         });
-
-        this.parent.querySelectorAll('.btn-rating').array.forEach((el, ind) => {
-            if (ind < e.target.closest('.btn-rating').dataset.rating) {
-                if (el.dataset.metric === 'NSP') {
-                    el.style.fill = 'rgb(232, 178, 42)';
+        this.parent.querySelectorAll('.btn-rating').forEach((el, ind) => {
+            if (ind < rating) {
+                if (metric === 'NSP') {
+                    el.querySelector('.bi-star-fill').setAttribute('fill', 'rgb(232, 178, 42)');
                 } else {
-                    el.setAttribute('style', 'backgroung-color: var(--questionnaire-active)');
+                    el.setAttribute('style', 'background-color: var(--questionnaire-active)');
                 }
-                el.dataset.isActive = true;
+                el.setAttribute('data-isActive', true);
             } else {
-                el.dataset.isActive = false;
+                el.setAttribute('data-isActive', false);
             }
         });
     };
 
-    #nextQuestion = () => {
+    #nextQuestion = (callback) => {
         this.questionNumber += 1;
-        if (this.questionNumber < this.config.questions.lenght) {
-            const newQuestionnaire = new Questionnaire(
+        if (this.questionNumber < this.config.questions.length) {
+            const newQuestionnaire = new QuestionnaireContent(
                 null,
                 this.config.questions[this.questionNumber],
             ).render();
 
-            const questionnaire = this.parent.querySelector('.questionnaire__content');
-            questionnaire.innerHTML = newQuestionnaire;
-        } else {
-            this.#lastPage();
-        }
-    };
-
-    #skipQuestion = () => {
-        this.questionNumber += 1;
-        if (this.questionNumber < this.config.questions.lenght) {
-            const newQuestionnaire = new Questionnaire(
-                null,
-                this.config[this.questionNumber],
-            ).render();
+            this.removeButtonEventListeners();
+            callback();
 
             const questionnaire = this.parent.querySelector('.questionnaire__content');
-            questionnaire.innerHTML = newQuestionnaire;
+            questionnaire.innerHTML = '';
+            questionnaire.insertAdjacentHTML('beforeend', newQuestionnaire);
+            this.addButtonEventListeners();
         } else {
             this.#lastPage();
         }
@@ -122,16 +134,39 @@ export default class QuestionnairePage extends Component {
 
         this.parent.querySelector('.questionnaire__rating').style.display = 'none';
         this.parent.querySelector('.questionnaire__navigation').style.display = 'none';
+
+        this.#closeIframeTimeout();
     };
 
     #calculateRating = () => {
         let rating = 0;
-        this.parent.querySelectorAll('.btn-rating').array.forEach((el) => {
+        this.parent.querySelectorAll('.btn-rating').forEach((el) => {
             if (el.dataset.isActive) {
                 rating += 1;
             }
         });
         return rating;
+    };
+
+    #sendRating = () => {
+        dispatcher.dispatch(
+            actionAnswerQuestion({
+                question_id: this.config.questions[this.questionNumber - 1].id,
+                rating: this.#calculateRating,
+            }),
+        );
+    };
+
+    #closeIframeTimeout = () => {
+        setTimeout(() => {
+            parent.document.querySelector(`#${this.id}`).setAttribute('style', 'display: none');
+        }, 1000);
+    };
+
+    #closeIframe = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        parent.document.querySelector(`#${this.id}`).setAttribute('style', 'display: none');
     };
 
     /**
@@ -184,6 +219,4 @@ export default class QuestionnairePage extends Component {
             actionRedirect(e.target.closest('.link-user-board').getAttribute('href'), false),
         );
     }
-
-    clear() {}
 }

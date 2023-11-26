@@ -15,7 +15,8 @@ class UserStorage extends BaseStorage {
         status: 'status',
         csrf: 'csrf',
         questions: 'questions',
-        stats: 'stats'
+        stats: 'stats',
+        isShown: 'isShown',
     };
 
     /**
@@ -249,9 +250,9 @@ class UserStorage extends BaseStorage {
     }
 
     /**
- * Запрос на ответ на вопрос
- * @param {Object} answer - Ответ на вопрос
- */
+     * Запрос на ответ на вопрос
+     * @param {Object} answer - Ответ на вопрос
+     */
     async answerQuestion(answer) {
         await AJAX(
             `${apiPath + apiVersion}csat/answer/`,
@@ -259,15 +260,14 @@ class UserStorage extends BaseStorage {
             this.storage.get(this.userModel.csrf),
             answer,
         );
-
     }
 
     /**
-* Обновить список вопросов
-* @param {Object} questions - СПисок вопросов
-*/
+     * Обновить список вопросов
+     * @param {Object} questions - СПисок вопросов
+     */
     async updateQuestios(questions) {
-        //answer endpoint
+        // answer endpoint
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}csat/question/edit/`,
             'POST',
@@ -278,12 +278,12 @@ class UserStorage extends BaseStorage {
         const { status } = responsePromise;
         if (status !== 200) {
             emitter.trigger('rerender');
-        } else { }
+        }
     }
 
     /**
-* Получение статистики
-*/
+     * Получение статистики
+     */
     async getStat(questions) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}csat/question/edit/`,
@@ -295,7 +295,7 @@ class UserStorage extends BaseStorage {
         const { status } = responsePromise;
         if (status !== 200) {
             this.storage.set(this.userModel.stats, responsePromise.body);
-        } else { }
+        }
     }
 
     getStoredStat() {
@@ -303,8 +303,8 @@ class UserStorage extends BaseStorage {
     }
 
     /**
-* Запрос на получение опросника
-*/
+     * Запрос на получение опросника
+     */
     async getQuestions() {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}csat/question/all`,
@@ -315,13 +315,10 @@ class UserStorage extends BaseStorage {
         let body;
 
         try {
-            console.log(await responsePromise.json().body);
-            const body = await responsePromise.json();
+            body = await responsePromise.json();
         } catch (error) {
             console.log(error);
         }
-
-
 
         const { status } = responsePromise;
         if (status === 200) {
@@ -330,7 +327,15 @@ class UserStorage extends BaseStorage {
     }
 
     getStoredQuestions() {
-        return [{ id: 1, content: 'Вы любите розы?', type: 'CSI' }, { id: 2, content: 'Вы любите раков?', type: 'NSP' }, { id: 3, content: 'Вы любите жену?', type: 'CSI' }]
+        return [
+            { id: 1, content: 'Вы любите розы?', type: 'CSI' },
+            { id: 2, content: 'Вы любите раков?', type: 'NSP' },
+            { id: 3, content: 'Вы любите жену?', type: 'CSI' },
+        ];
+    }
+
+    isShown() {
+        return this.storage.get(this.userModel.isShown);
     }
 
     /**

@@ -202,7 +202,7 @@ export default class BoardPage extends Component {
 
         if (
             this.parent.querySelector('.new-list').style.display === 'block' &&
-            (!e.target.closest('.new-list') || e.target.closest('.btn-create-list_cancel'))
+            e.target.closest('.btn-create-list_cancel')
         ) {
             this.#closeNewList(e);
             this.#blockCreateNewListBtn(e);

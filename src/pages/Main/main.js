@@ -47,6 +47,7 @@ export default class MainPage extends Component {
         this.parent.querySelectorAll('.link-user-board').forEach((link) => {
             link.addEventListener('click', this.toBoardHandler);
         });
+
         emitter.bind('logout', this.close);
     }
 

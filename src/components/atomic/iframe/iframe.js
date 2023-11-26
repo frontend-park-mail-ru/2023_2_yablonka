@@ -1,5 +1,7 @@
+import emitter from '../../../modules/actionTrigger.js';
 import Component from '../../core/basicComponent.js';
 import template from './iframe.hbs';
+import './iframe.scss';
 
 /**
  * Контейнер для досок
@@ -12,6 +14,21 @@ export default class IFrame extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        return template(this.config);
+        this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
+
+    addEventListeners() {
+        this.parent.querySelector('.iframe').addEventListener('load', this.#resiseQuestionnaire);
+    }
+
+    removeEventListeners() {
+        this.parent.querySelector('.iframe').removeEventListener('load', this.#resiseQuestionnaire);
+    }
+
+    #resiseQuestionnaire = () => {
+        const iframe = document.querySelector('#questionner-iframe');
+        const size = iframe.contentDocument.querySelector('.questionnaire').getBoundingClientRect();
+        iframe.setAttribute('style', `width: 450px; height: ${size.height}px`);
+    };
+
 }

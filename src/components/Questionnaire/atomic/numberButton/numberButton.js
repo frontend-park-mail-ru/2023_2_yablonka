@@ -11,6 +11,6 @@ export default class NumberButton extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        return template({ rating: this.config });
+        return template({ rating: this.config.rating });
     }
 }

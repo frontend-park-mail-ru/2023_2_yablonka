@@ -42,7 +42,6 @@ class WorkspaceStorage extends BaseStorage {
         try {
             body = await responsePromise.json();
         } catch (error) {
-            console.log(error, responsePromise);
             body = {
                 workspaces: {
                     yourWorkspaces: [],
@@ -70,7 +69,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -99,7 +97,7 @@ class WorkspaceStorage extends BaseStorage {
             newWorkspace,
         );
 
-        const { status } = responsePromise;
+        const { status } = responsePromise; // дописать
     }
 
     async getBoard(board) {
@@ -123,7 +121,6 @@ class WorkspaceStorage extends BaseStorage {
             this.addBoard(body.body.board);
             this.addLists(body.body.lists);
             this.addCards(body.body.cards);
-        } else {
         }
     }
 
@@ -139,7 +136,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -155,7 +151,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -171,7 +166,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -187,7 +181,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -203,7 +196,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -219,7 +211,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -235,7 +226,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -251,7 +241,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -267,7 +256,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -283,7 +271,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -299,7 +286,6 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
-        } else {
         }
     }
 
@@ -316,41 +302,21 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     addLists(lists) {
-        const lsts = this.storage.get(this.workspaceModel.lists);
-        if (!lsts.length) {
-            lists.forEach((l) => {
-                lsts.push(l);
-            });
-            this.storage.set(this.workspaceModel.lists, lsts);
-            return;
-        }
-
-        lists.forEach((lst) => {
-            lsts.forEach((l) => {
-                if (l.id === lst.id) {
-                    l = lst;
-                }
-            });
+        const lsts = [];
+        lists.forEach((l) => {
+            lsts.push(l);
         });
+        this.storage.set(this.workspaceModel.lists, lsts);
+        return;
     }
 
     addCards(cards) {
-        const crds = this.storage.get(this.workspaceModel.cards);
-        if (!crds.length) {
-            cards.forEach((c) => {
-                crds.push(c);
-            });
-            this.storage.set(this.workspaceModel.lists, cards);
-            return;
-        }
-
-        cards.forEach((crd) => {
-            crds.forEach((c) => {
-                if (c.id === crd.id) {
-                    c = crd;
-                }
-            });
+        const crds = [];
+        cards.forEach((c) => {
+            crds.push(c);
         });
+        this.storage.set(this.workspaceModel.lists, crds);
+        return;
     }
 
     /**
@@ -406,19 +372,17 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Array} - массив списков
      */
     getBoardLists(id) {
-        const lists = [{ id: 1, board_id: 18, name: 'list1', description: '', list_position: 0, cards: [3] },
-        { id: 2, board_id: 19, name: 'list2', description: '', list_position: 1, cards: [1] },
-        { id: 3, board_id: 19, name: 'лист 1', description: '', list_position: 2, cards: [2] }];
+        const lists = [
+            { id: 1, board_id: 18, name: 'list1', description: '', list_position: 0, cards: [3] },
+            { id: 2, board_id: 19, name: 'list2', description: '', list_position: 1, cards: [1] },
+            { id: 3, board_id: 19, name: 'лист 1', description: '', list_position: 2, cards: [2] },
+        ];
         // const boardLists = this.storage
         //     .get(this.workspaceModel.boards)
         //     .find((brd) => brd.board_id === id)?.lists;
 
         // const lists = [];
-        // this.storage.get(this.workspaceModel.lists).forEach((lst) => {
-        //     if (boardLists.find((l) => l === lst.id)) {
-        //         lists.push(lst);
-        //     }
-        // });
+        // lists = this.storage.get(this.workspaceModel.lists).filter(lst=>list.board_id===id);
 
         return [...lists];
     }
@@ -429,19 +393,53 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Array} - массив карточек
      */
     getListCards(id) {
-        const cards = [{ id: 1, list_id: 3, date_created: '2023-11-25T01:10:36.436655Z', name: 'task1', description: 'some dsc', list_position: 1, start: null, end: null, users: null, checklists: null, comments: null },
-        { id: 2, list_id: 2, date_created: '2023-11-25T01:10:36.436655Z', name: 'Задача 2', description: '', list_position: 3, start: null, end: null, users: null, checklists: null, comments: null },
-        { id: 3, list_id: 1, date_created: '2023-11-25T01:10:36.436655Z', name: 'TASача', description: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD', list_position: 2, start: null, end: null, users: null, checklists: null, comments: null }];
+        const cards = [
+            {
+                id: 1,
+                list_id: 3,
+                date_created: '2023-11-25T01:10:36.436655Z',
+                name: 'task1',
+                description: 'some dsc',
+                list_position: 1,
+                start: null,
+                end: null,
+                users: null,
+                checklists: null,
+                comments: null,
+            },
+            {
+                id: 2,
+                list_id: 2,
+                date_created: '2023-11-25T01:10:36.436655Z',
+                name: 'Задача 2',
+                description: '',
+                list_position: 3,
+                start: null,
+                end: null,
+                users: null,
+                checklists: null,
+                comments: null,
+            },
+            {
+                id: 3,
+                list_id: 1,
+                date_created: '2023-11-25T01:10:36.436655Z',
+                name: 'TASача',
+                description: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+                list_position: 2,
+                start: null,
+                end: null,
+                users: null,
+                checklists: null,
+                comments: null,
+            },
+        ];
         // const listCards = this.storage
         //     .get(this.workspaceModel.lists)
         //     .find((lst) => lst.id === id).cards;
 
         // const cards = [];
-        // this.storage.get(this.workspaceModel.cards).forEach((crd) => {
-        //     if (listCards.find((c) => c === crd.id)) {
-        //         cards.push(crd);
-        //     }
-        // });
+        // lists = this.storage.get(this.workspaceModel.cards).filter(card=>card.id===id);
 
         return [...cards];
     }
@@ -452,9 +450,9 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Array} - массив пользователей
      */
     getBoardUsers(id) {
-        const users = this.storage
+        const { users } = this.storage
             .get(this.workspaceModel.boards)
-            .find((brd) => brd.board_id === id).users;
+            .find((brd) => brd.board_id === id);
 
         return [...users];
     }

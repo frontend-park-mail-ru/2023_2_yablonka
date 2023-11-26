@@ -1,4 +1,5 @@
 import popupEvent from '../components/core/popeventProcessing';
+import emitter from '../modules/actionTrigger';
 
 export default class BaseView {
     components = [];

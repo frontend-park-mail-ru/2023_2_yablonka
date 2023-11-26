@@ -29,13 +29,13 @@ export default class BoardSettings extends Component {
             .addEventListener('click', this.#renameBoard);
         this.parent
             .querySelector('.btn-delete-board')
-            .addEventListener('click', this.deleteBoardHandler);
+            .addEventListener('click', this.#deleteBoardHandler);
         this.parent
             .querySelector('.board-menu__board-name')
-            .addEventListener('blur', this.changeNameHandler);
+            .addEventListener('blur', this.#changeNameHandler);
         this.parent
             .querySelector('.board-menu__board-name')
-            .addEventListener('keydown', this.changeNameHandler);
+            .addEventListener('keydown', this.#changeNameHandler);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -48,10 +48,10 @@ export default class BoardSettings extends Component {
             .removeEventListener('click', this.#renameBoard);
         this.parent
             .querySelector('.btn-delete-board')
-            .removeEventListener('click', this.deleteBoardHandler);
+            .removeEventListener('click', this.#deleteBoardHandler);
         this.parent
             .querySelector('.board-menu__board-name')
-            .removeEventListener('blur', this.changeNameHandler);
+            .removeEventListener('blur', this.#changeNameHandler);
         this.parent
             .querySelector('.board-menu__board-name')
             .removeEventListener('keydown', this.changeNameHandler);
@@ -102,7 +102,7 @@ export default class BoardSettings extends Component {
         );
     };
 
-    deleteBoardHandler = () => {
+    #deleteBoardHandler = () => {
         const dialog = this.parent.querySelector('#board-settings');
         if (dialog.dataset.board) {
             const boardId = dialog.dataset.board;
@@ -113,7 +113,7 @@ export default class BoardSettings extends Component {
         }
     };
 
-    changeNameHandler = (e) => {
+    #changeNameHandler = (e) => {
         e.stopPropagation();
 
         const { textContent } = e.target;

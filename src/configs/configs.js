@@ -4,7 +4,7 @@ import Main from '../view/main.js';
 import Board from '../view/board.js';
 import Profile from '../view/profile.js';
 import page404 from '../view/page404.js';
-import questionnaire from '../view/page404.js';
+import Questionnaire from '../view/questionnaire.js';
 // import Board from '../view/board.js';
 
 export const apiPath = 'http://localhost:8080';
@@ -22,5 +22,5 @@ export const signedInRoutes = [
     { path: '/main', view: Main },
     { path: '/profile', view: Profile },
     { path: '/security', view: Profile },
-    { path: '/questionnaire', view: questionnaire },
+    { path: '/questionnaire', view: Questionnaire },
 ];

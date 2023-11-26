@@ -15,6 +15,7 @@ import workspaceStorage from '../storages/workspaceStorage.js';
 // routing
 import dispatcher from '../modules/dispatcher.js';
 import emitter from '../modules/actionTrigger.js';
+import IFrame from '../components/atomic/iframe/iframe.js';
 
 /**
  * Класс для рендера страницы досок
@@ -32,7 +33,7 @@ class Main extends BaseView {
     async renderPage() {
         document.title = 'Tabula: Ваши Доски';
 
-        const factor = Math.floor(Math.random() * 100 + 1);
+        const factor = Math.floor(Math.random() * 100) + 1;
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
 
@@ -43,6 +44,16 @@ class Main extends BaseView {
         ).body;
 
         this.components.push(new MainPage(this.root, { user, workspaces }));
+
+        if (factor === 100 && !userStorage.storage.get(userStorage.userModel.isShown)) {
+            this.components.push(
+                new IFrame(this.root, {
+                    url: `${window.location.origin}/questionnaire`,
+                    id: 'questionner-iframe',
+                }),
+            );
+            userStorage.storage.set(userStorage.userModel.isShown, true);
+        }
 
         this.components.push(
             ...[

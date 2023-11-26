@@ -146,8 +146,7 @@ export default class WorkspaceSettings extends Component {
 
             e.target.blur();
 
-            this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent =
-                textContent;
+            this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent = textContent;
 
             dispatcher.dispatch(
                 actionUpdateWorkspace({

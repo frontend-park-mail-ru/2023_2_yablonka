@@ -1,6 +1,6 @@
 @import './Main/Main.scss';
 @import './Profile/Profile.scss';
-@import './Questionnaire/questionnaire.scss';
+@import './Questionnaire/Questionnaire.scss';
 
 * {
     margin: 0;
@@ -23,6 +23,7 @@ body {
 .page {
     width: 100%;
     height: 100%;
+    display: flex;
 }
 
 button:disabled {

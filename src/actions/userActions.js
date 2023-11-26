@@ -99,10 +99,10 @@ export const actionUpdateAvatar = (user) => ({
 
 export const actionAnswerQuestion = (answer) => ({
     type: 'answerQuestion',
-    value: answer
+    value: answer,
 });
 
 export const actionGetQuestions = () => ({
     type: 'getQuestions',
-    value: {}
+    value: {},
 });

@@ -10,33 +10,8 @@
     color: var(--questionnaire-text-color);
 }
 
-.btn-rating {
-    background-color: transparent;
-    height: 32px;
-    border-radius: 5px;
-    padding: 2px;
-}
-
-.btn-rating_NSP {
-    width: 32px;
-}
-
-.btn-rating_CSI {
-    width: 32px;
-    font-size: 16px;
-    font-weight: 500;
-    background-color: var(--questionnaire-rating-background-color);
-    color: var(--questionnaire-rating-text-color);
-}
-
 .questionnaire__title {
     color: var(--questionnaire-text-color);
-}
-
-.bi-star-fill {
-    width: 100%;
-    height: 100%;
-    color: var(--questionnaire-inactive);
 }
 
 .questionnaire__navigation {

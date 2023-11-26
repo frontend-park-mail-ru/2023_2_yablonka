@@ -1,10 +1,11 @@
-<div class='page page__layout-questionnaire'>
-    <div
-        class='border-radius-10 flex-column-centered gap-30 questionnaire'
-        data-question='{{this.questionNumber}}'
-    >
-        <div class='flex-column-centered gap-30 questionnaire__content'>{{{questionnaire}}}</div>
-
+<div class='page page__layout-questionnaire flex-centered'>
+    <div class='border-radius-10 flex-column-centered gap-30 questionnaire'>
+        <button class='box-16-16 border-radius-5 btn btn-close-iframe'><img
+                class='strach-layout btn-close-iframe__image'
+                src='/svg/close.svg'
+                alt='close'
+            /></button>
+        <div class='flex-column-centered gap-30 questionnaire__content'>{{{content}}}</div>
         <div class='flex-row-centered questionnaire__navigation'>
             <button
                 class='font-size-16 font-weight-500 flex-centered btn btn-questionnaire-navigation btn-questionnaire-navigation_next'

@@ -1,7 +1,8 @@
-import QuestionnairePage from '../pages/Questionnaire/questionnaire';
-import BaseView from './baseView';
-import { actionGetQuestions } from '../actions/userActions';
-import dispatcher from '../modules/dispatcher';
+import QuestionnairePage from '../pages/Questionnaire/questionnaire.js';
+import BaseView from './baseView.js';
+import { actionGetQuestions } from '../actions/userActions.js';
+import dispatcher from '../modules/dispatcher.js';
+import userStorage from '../storages/userStorage.js';
 
 /**
  * Класс для рендера iframe опросов
@@ -13,17 +14,16 @@ class Questionnaire extends BaseView {
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.components.push(new QuestionnairePage(this.root, { questions }));
-
-        await dispatcher.dispatch(actionGetQuestions());
+        // await dispatcher.dispatch(actionGetQuestions());
+        this.components.push(
+            new QuestionnairePage(this.root, {
+                questions: userStorage.getStoredQuestions(),
+                id: 'questionner-iframe',
+            }),
+        );
 
         this.render();
         this.addListeners();
-    }
-
-    async reRender() {
-        this.clear();
-        this.renderPage();
     }
 }
 
