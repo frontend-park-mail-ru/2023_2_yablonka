@@ -118,7 +118,7 @@ export default class ListSettings extends Component {
     #deleteListHandler = () => {
         const dialog = this.parent.querySelector('#list-settings');
         if (dialog.dataset.list) {
-            const listId = dialog.dataset.list;
+            const listId = parseInt(dialog.dataset.list, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
             dispatcher.dispatch(actionDeleteList(listId));

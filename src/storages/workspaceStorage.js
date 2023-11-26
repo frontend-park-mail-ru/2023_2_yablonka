@@ -463,6 +463,18 @@ class WorkspaceStorage extends BaseStorage {
 
         return [...users];
     }
+
+    getCardUsers(id) {
+        // const currentCardUserIds = this.storage
+        //     .get(this.workspaceModel.cards)
+        //     .find((crd) => crd.id === id).users;
+
+        // const cardUsers = this.storage
+        //     .get(this.workspaceModel.users)
+        //     .filter((usr) => currentCardUserIds.includes(usr.user_id));
+
+        return [...cardUsers];
+    }
 }
 
 const workspaceStorage = new WorkspaceStorage();

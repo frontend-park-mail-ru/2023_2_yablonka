@@ -99,7 +99,7 @@ export default class BoardSettings extends Component {
     #deleteBoardHandler = () => {
         const dialog = this.parent.querySelector('#board-settings');
         if (dialog.dataset.board) {
-            const boardId = dialog.dataset.board;
+            const boardId = parseInt(dialog.dataset.board, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
             dispatcher.dispatch(actionDeleteBoard(boardId));
