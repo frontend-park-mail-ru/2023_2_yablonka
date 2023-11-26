@@ -33,7 +33,7 @@ export default class Signin extends Component {
             action: 'login',
             class: 'sign',
             formId: 'form-sign',
-            text: 'Войти',
+            text: 'Регистрация',
         },
     };
 

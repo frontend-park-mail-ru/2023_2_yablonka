@@ -35,10 +35,10 @@ export default class BoardPage extends Component {
             boardMenu: new BoardMenu(null, {
                 board_id: this.config.board.board_id,
                 name: this.config.board.name,
-                users: workspaceStorage.getBoardUsers(this.config.board.board_id),
+                users: workspaceStorage.getBoardUsers(),
             }).render(),
             boardContent: new BoardContent(null, {
-                lists: workspaceStorage.getBoardLists(this.config.board.board_id),
+                lists: workspaceStorage.getBoardLists(),
             }).render(),
         };
         this.parent.insertAdjacentHTML('beforeend', template(page));

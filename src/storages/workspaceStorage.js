@@ -15,6 +15,7 @@ class WorkspaceStorage extends BaseStorage {
         boards: 'boards',
         lists: 'lists',
         cards: 'cards',
+        users: 'users',
     };
 
     /**
@@ -26,6 +27,7 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.boards, []);
         this.storage.set(this.workspaceModel.lists, []);
         this.storage.set(this.workspaceModel.cards, []);
+        this.storage.set(this.workspaceModel.users, []);
     }
 
     /**
@@ -127,6 +129,7 @@ class WorkspaceStorage extends BaseStorage {
             this.addBoard(body.body.board);
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
+            this.storage.set(this.workspaceModel.users, body.body.users);
         }
     }
 
@@ -307,24 +310,6 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.boards, boards);
     }
 
-    addLists(lists) {
-        const lsts = [];
-        lists.forEach((l) => {
-            lsts.push(l);
-        });
-        this.storage.set(this.workspaceModel.lists, lsts);
-        return;
-    }
-
-    addCards(cards) {
-        const crds = [];
-        cards.forEach((c) => {
-            crds.push(c);
-        });
-        this.storage.set(this.workspaceModel.lists, crds);
-        return;
-    }
-
     /**
      * Получение workspace по его id
      * @param {Number} id - id рабочего пространства
@@ -377,10 +362,9 @@ class WorkspaceStorage extends BaseStorage {
      * @param {Number} id  id доски
      * @returns {Array}  массив списков
      */
-    getBoardLists(id) {
+    getBoardLists() {
         const lists = this.storage
             .get(this.workspaceModel.lists)
-            .filter((lst) => lst.board_id === id)
             .sort((x, y) => x.list_position < y.list_position);
         return [...lists];
     }
@@ -456,12 +440,8 @@ class WorkspaceStorage extends BaseStorage {
      * @param {Number} id - id доски
      * @returns {Array} - массив пользователей
      */
-    getBoardUsers(id) {
-        const { users } = this.storage
-            .get(this.workspaceModel.boards)
-            .find((brd) => brd.board_id === id);
-
-        return [...users];
+    getBoardUsers() {
+        return [...this.storage.get(this.workspaceModel.users)];
     }
 
     getCardUsers(id) {
