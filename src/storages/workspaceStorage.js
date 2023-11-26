@@ -189,7 +189,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async updateList(list) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}list/update/`,
+            `${apiPath + apiVersion}list/edit/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             list,

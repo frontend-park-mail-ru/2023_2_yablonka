@@ -24,22 +24,24 @@ export default class ListSettings extends Component {
         this.parent.querySelectorAll('.btn-change-list').forEach((btn) => {
             btn.addEventListener('click', this.#openSettings);
         });
-        // this.parent
-        //     .querySelector('.btn-change-workspace-name')
-        //     .addEventListener('click', this.#renameWorkspace);
+        this.parent
+            .querySelector('.btn-change-list-name')
+            .addEventListener('click', this.#renameList);
         this.parent
             .querySelector('.btn-delete-list')
             .addEventListener('click', this.#deleteListHandler);
         this.parent.querySelectorAll('.list__title').forEach((name) => {
             name.addEventListener('keydown', this.#changeNameHandler);
         });
-        // window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
         this.parent.querySelectorAll('.btn-change-list').forEach((btn) => {
             btn.removeEventListener('click', this.#openSettings);
         });
+        this.parent
+            .querySelector('.btn-change-list-name')
+            .removeEventListener('click', this.#renameList);
         this.parent.querySelectorAll('.list__title').forEach((name) => {
             name.addEventListener('keydown', this.#changeNameHandler);
         });
@@ -53,7 +55,7 @@ export default class ListSettings extends Component {
 
         if (dialog.dataset.list) {
             const listName = document.querySelector(
-                `.list-title[data-list="${dialog.dataset.list}"]`,
+                `.list__title[data-list="${dialog.dataset.list}"]`,
             );
             listName.focus();
             popupEvent.deletePopup(dialog);
