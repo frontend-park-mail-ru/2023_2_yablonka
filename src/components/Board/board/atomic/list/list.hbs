@@ -1,4 +1,4 @@
-<li class='list' data-list='{{this.ID}}' data-list_position="{{this.position}}">
+<li class='list' data-list='{{this.ID}}' data-list_position='{{this.position}}'>
     <div class='flex-column-centered border-radius-10 gap-10 list__container'>
         <div class='flex-row-centered list__title-wrapper'>
             <span
@@ -25,5 +25,45 @@
                 <span class='font-size-16 font-weight-500 add-card__title'>Добавить карточку</span>
             </button>
         </div>
+        <div class='new-card'>
+            <form
+                class='flex-column-centered gap-10 border-radius-10 padding-5-10 form form-new-card__container'
+                id='create-card__list-{{this.ID}}'
+                action='/card/create/'
+                method='POST'
+            >
+                <input
+                    maxlength='32'
+                    type='text'
+                    class='font-size-16 font-weght-200 border-radius-5 padding-5-10 input input-new-card-name'
+                    placeholder='Название списка'
+                    value=''
+                    required
+                />
+                <div class='flex-row-centered gap-10 new-card__buttons'>
+                    <button
+                        class='border-radius-5 font-size-16 font-weight-500 flex-centered gap-10 padding-0-10 btn btn-create-card btn-create-card_confirm'
+                        disabled
+                    >
+                        Добавить карточку
+                    </button>
+                    <button
+                        class='box-32-32 flex-centered border-radius-5 gap-10 btn btn-create-card btn-create-card_cancel'
+                    >
+                        <svg
+                            class='btn-add-card-cancel__image border-radius-5 box-16-16'
+                            fill='#c0c9f4'
+                            width='800px'
+                            height='800px'
+                            viewBox='0 0 16 16'
+                            xmlns='http://www.w3.org/2000/svg'
+                        >
+                            <path
+                                d='M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z'
+                                fill-rule='evenodd'
+                            />
+                        </svg></button>
+                </div>
+            </form></div>
     </div>
 </li>

@@ -30,8 +30,8 @@ export default class NotificationMessage extends Component {
         );
 
         try {
-            document.querySelector(`div[data-element="${referenceElement.className}"]`).remove();
-
+            document.querySelector(`div[data-element="${referenceElement.className}"]`)?.remove();
+        } finally {
             if (hidePrevElem) {
                 const hiddenElement = referenceElement.previousElementSibling;
                 const elDisplay = hiddenElement.style.display;
@@ -51,9 +51,9 @@ export default class NotificationMessage extends Component {
                 setTimeout(() => {
                     document
                         .querySelector(`div[data-element="${referenceElement.className}"]`)
-                        .remove();
+                        ?.remove();
                 }, 5000);
             }
-        } catch {}
+        }
     }
 }

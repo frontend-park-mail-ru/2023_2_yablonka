@@ -13,6 +13,7 @@ const handlers = [
     { type: 'goSignup', method: userStorage.getSignupPage.bind(userStorage) },
     { type: 'goSignin', method: userStorage.getSigninPage.bind(userStorage) },
     { type: 'getWorkspaces', method: workspaceStorage.getWorkspaces.bind(workspaceStorage) },
+    { type: 'updateProfile', method: userStorage.updateProfile.bind(userStorage) },
     { type: 'updatePassword', method: userStorage.updatePassword.bind(userStorage) },
     { type: 'updateAvatar', method: userStorage.updateAvatar.bind(userStorage) },
     { type: 'createWorkspace', method: workspaceStorage.createWorkspace.bind(workspaceStorage) },

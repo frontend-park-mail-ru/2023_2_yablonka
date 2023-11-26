@@ -84,10 +84,10 @@ export default class Profile extends Component {
             .addEventListener('click', this.toMainPageHandler);
         this.parent
             .querySelector('button[data-action=update-profile]')
-            ?.addEventListener('click', this.changeProfileHandler);
+            ?.addEventListener('click', this.#changeProfileHandler);
         this.parent
             .querySelector('button[data-action=update-password]')
-            ?.addEventListener('click', this.changePasswordHandler);
+            ?.addEventListener('click', this.#changePasswordHandler);
 
         emitter.bind('logout', this.close);
     }
@@ -127,27 +127,58 @@ export default class Profile extends Component {
         emitter.unbind('logout', this.close);
     }
 
-    async changeProfileHandler(e) {
+    #changeProfileHandler = async (e) => {
         e.preventDefault();
-        const user = {
-            name: document.querySelector('input[data-name=name]').value,
-            surname: document.querySelector('input[data-name=surname]').value,
-            description: document.querySelector('textarea[data-name=user-description]').value,
-        };
-        dispatcher.dispatch(actionUpdateProfile(user));
-    }
+        const name = this.parent.querySelector('input[data-name=name]').value;
+        const surname = this.parent.querySelector('input[data-name=surname]').value;
 
-    changePasswordHandler = async (e) => {
+        if (!Validator.validateObjectName(name)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('input[data-name=name]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Имя должно может содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                },
+            );
+        } else if (!Validator.validateObjectName(surname)) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('input[data-name=surname]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Имя должно может содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                },
+            );
+        } else {
+            const user = {
+                name,
+                surname,
+                description: this.parent.querySelector('textarea[data-name=user-description]')
+                    .value,
+            };
+            dispatcher.dispatch(actionUpdateProfile(user));
+        }
+    };
+
+    #changePasswordHandler = async (e) => {
         e.preventDefault();
-        const newPassword = document.querySelector('input[data-name=new-password]').value;
-        const oldPassword = document.querySelector('input[data-name=old-password]').value;
-        const repeatNewPassword = document.querySelector(
+        console.log(123);
+
+        const newPassword = this.parent.querySelector('input[data-name=new-password]').value;
+        const oldPassword = this.parent.querySelector('input[data-name=old-password]').value;
+        const repeatNewPassword = this.parent.querySelector(
             'input[data-name=repeat-new-password]',
         ).value;
 
         if (!Validator.validatePassword(newPassword)) {
+            console.log(1);
             NotificationMessage.showNotification(
-                this.parent.querySelector('input[data-name="new-password"]').parentNode,
+                this.parent.querySelector('input[data-name=new-password]').parentNode,
                 false,
                 true,
                 {
@@ -158,7 +189,7 @@ export default class Profile extends Component {
             );
         } else if (!Validator.validateRepeatPasswords(newPassword, repeatNewPassword)) {
             NotificationMessage.showNotification(
-                this.parent.querySelector('input[data-name="repeat-new-password"]').parentNode,
+                this.parent.querySelector('input[data-name=repeat-new-password]').parentNode,
                 false,
                 true,
                 {
@@ -168,6 +199,7 @@ export default class Profile extends Component {
                 },
             );
         } else {
+            console.log(1122);
             const user = {
                 new_password: newPassword,
                 old_password: oldPassword,
