@@ -49,6 +49,7 @@ class ActionTrigger {
         if (!(event in this.#events)) {
             return;
         }
+
         this.#events[event].forEach((ev) => {
             ev.apply(this, Array.prototype.slice.call(event, 1));
         });

@@ -22,10 +22,6 @@ import IFrame from '../components/atomic/iframe/iframe.js';
  * @class
  */
 class Main extends BaseView {
-    constructor() {
-        super();
-        emitter.bind('renderWorkspaces', this.reRender.bind(this));
-    }
 
     /**
      * Рендер страницы в DOM
@@ -68,7 +64,7 @@ class Main extends BaseView {
         this.addListeners();
     }
 
-    async reRender() {
+    reRender() {
         this.clear();
         this.renderPage();
     }

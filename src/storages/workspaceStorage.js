@@ -97,7 +97,11 @@ class WorkspaceStorage extends BaseStorage {
             newWorkspace,
         );
 
-        const { status } = responsePromise; // дописать
+        const { status } = responsePromise;
+
+        if (status !== 200) {
+            emitter.trigger('rerender');
+        }
     }
 
     async getBoard(board) {
@@ -115,12 +119,14 @@ class WorkspaceStorage extends BaseStorage {
             body = {};
         }
 
+        console.log(body);
+
         const { status } = responsePromise;
 
         if (status === 200) {
             this.addBoard(body.body.board);
-            this.addLists(body.body.lists);
-            this.addCards(body.body.cards);
+            this.storage.set(this.workspaceModel.lists, body.body.lists);
+            this.storage.set(this.workspaceModel.cards, body.body.cards);
         }
     }
 
@@ -368,23 +374,24 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Получение массива списков карточек
-     * @param {Number} id - id доски
-     * @returns {Array} - массив списков
+     * @param {Number} id  id доски
+     * @returns {Array}  массив списков
      */
     getBoardLists(id) {
-        const lists = [
-            { id: 1, board_id: 18, name: 'list1', description: '', list_position: 0, cards: [3] },
-            { id: 2, board_id: 19, name: 'list2', description: '', list_position: 1, cards: [1] },
-            { id: 3, board_id: 19, name: 'лист 1', description: '', list_position: 2, cards: [2] },
-        ];
-        // const boardLists = this.storage
-        //     .get(this.workspaceModel.boards)
-        //     .find((brd) => brd.board_id === id)?.lists;
-
-        // const lists = [];
-        // lists = this.storage.get(this.workspaceModel.lists).filter(lst=>list.board_id===id);
-
+        const lists = this.storage
+            .get(this.workspaceModel.lists)
+            .filter((lst) => lst.board_id === id)
+            .sort((x, y) => x.list_position < y.list_position);
         return [...lists];
+    }
+
+    /**
+     * Получение списка карточек по его id
+     * @param {Number} id - id списка
+     * @returns {Object} - объект списка
+     */
+    getListById(id) {
+        return this.storage.get(this.workspaceModel.lists).find((lst) => lst.id === id);
     }
 
     /**

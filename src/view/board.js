@@ -9,6 +9,7 @@ import BaseView from './baseView.js';
 import CreateBoard from '../components/popups/createBoard/createBoard.js';
 import BoardSettings from '../components/popups/boardSettings/boardSettings.js';
 import CreateWorkspace from '../components/popups/createWorkspace/createWorkspace.js';
+import ListSettings from '../components/popups/listSettings/listSettings.js';
 
 /**
  * Класс для рендера страницы доски
@@ -55,14 +56,19 @@ class Board extends BaseView {
                 new CreateWorkspace(this.root, {}),
                 new CreateBoard(this.root, {}),
                 new BoardSettings(this.root, { board_id: this.boardID }),
+                new ListSettings(this.root, {}),
             ],
         );
+
+        if (cID) {
+            this.renderCard();
+        }
 
         this.render();
         this.addListeners();
     }
 
-    async reRender() {
+    reRender() {
         this.clear();
         this.renderPage();
     }

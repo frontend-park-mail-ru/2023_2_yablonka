@@ -31,29 +31,29 @@ export default class NotificationMessage extends Component {
 
         try {
             document.querySelector(`div[data-element="${referenceElement.className}"]`).remove();
+
+            if (hidePrevElem) {
+                const hiddenElement = referenceElement.previousElementSibling;
+                const elDisplay = hiddenElement.style.display;
+
+                hiddenElement.style.display = 'none';
+                parentElement.insertBefore(notification, referenceElement);
+
+                setTimeout(() => {
+                    hiddenElement.style.display = elDisplay;
+                    document
+                        .querySelector(`div[data-element="${referenceElement.className}"]`)
+                        .remove();
+                }, 5000);
+            } else {
+                parentElement.insertBefore(notification, referenceElement);
+
+                setTimeout(() => {
+                    document
+                        .querySelector(`div[data-element="${referenceElement.className}"]`)
+                        .remove();
+                }, 5000);
+            }
         } catch {}
-
-        if (hidePrevElem) {
-            const hiddenElement = referenceElement.previousElementSibling;
-            const elDisplay = hiddenElement.style.display;
-
-            hiddenElement.style.display = 'none';
-            parentElement.insertBefore(notification, referenceElement);
-
-            setTimeout(() => {
-                hiddenElement.style.display = elDisplay;
-                document
-                    .querySelector(`div[data-element="${referenceElement.className}"]`)
-                    .remove();
-            }, 5000);
-        } else {
-            parentElement.insertBefore(notification, referenceElement);
-
-            setTimeout(() => {
-                document
-                    .querySelector(`div[data-element="${referenceElement.className}"]`)
-                    .remove();
-            }, 5000);
-        }
     }
 }

@@ -30,10 +30,7 @@ export default class WorkspaceSettings extends Component {
             .querySelector('.btn-delete-workspace')
             .addEventListener('click', this.deleteWorkspaceHandler);
         this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.addEventListener('blur', this.changeNameHandler);
-        });
-        this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.addEventListener('keydown', this.changeNameHandler);
+            name.addEventListener('blur', this.#changeNameHandler);
         });
         window.addEventListener('resize', this.#resize);
     }
@@ -49,10 +46,7 @@ export default class WorkspaceSettings extends Component {
             .querySelector('.btn-delete-workspace')
             .removeEventListener('click', this.deleteWorkspaceHandler);
         this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.removeEventListener('blur', this.changeNameHandler);
-        });
-        this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.removeEventListener('keydown', this.changeNameHandler);
+            name.removeEventListener('blur', this.#changeNameHandler);
         });
         window.removeEventListener('resize', this.#resize);
     }
@@ -103,8 +97,8 @@ export default class WorkspaceSettings extends Component {
                     btnCoordinates.left + btnCoordinates.width + 20
                 }px`,
             );
-            dialog.dataset.workspace = workspaceId;
         }
+        dialog.dataset.workspace = workspaceId;
     };
 
     #resize = () => {
@@ -135,8 +129,10 @@ export default class WorkspaceSettings extends Component {
         }
     };
 
-    changeNameHandler = (e) => {
-        if (e.type === 'blur' || (e.type === 'keydown' && e.key === 'Enter')) {
+    #changeNameHandler = (e) => {
+        e.stopPropagation();
+
+        if (e.key === 'Enter') {
             e.preventDefault();
             const { textContent } = e.target;
             const workspaceID = e.target.dataset.workspace;
@@ -146,7 +142,8 @@ export default class WorkspaceSettings extends Component {
 
             e.target.blur();
 
-            this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent = textContent;
+            this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent =
+                textContent;
 
             dispatcher.dispatch(
                 actionUpdateWorkspace({

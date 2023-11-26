@@ -32,9 +32,6 @@ export default class BoardSettings extends Component {
             .addEventListener('click', this.#deleteBoardHandler);
         this.parent
             .querySelector('.board-menu__board-name')
-            .addEventListener('blur', this.#changeNameHandler);
-        this.parent
-            .querySelector('.board-menu__board-name')
             .addEventListener('keydown', this.#changeNameHandler);
         window.addEventListener('resize', this.#resize);
     }
@@ -51,10 +48,7 @@ export default class BoardSettings extends Component {
             .removeEventListener('click', this.#deleteBoardHandler);
         this.parent
             .querySelector('.board-menu__board-name')
-            .removeEventListener('blur', this.#changeNameHandler);
-        this.parent
-            .querySelector('.board-menu__board-name')
-            .removeEventListener('keydown', this.changeNameHandler);
+            .removeEventListener('keydown', this.#changeNameHandler);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -113,19 +107,18 @@ export default class BoardSettings extends Component {
         }
     };
 
-    #changeNameHandler = (e) => {
+    #changeNameHandler = async (e) => {
         e.stopPropagation();
 
-        const { textContent } = e.target;
-
-        if (e.type === 'blur' || (e.type === 'keydown' && e.key === 'Enter')) {
-            const boardId = this.parent.querySelector('#board-settings').dataset.board;
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const boardId = this.parent.querySelector('.board-menu__board-name').dataset.board;
             const { name } = workspaceStorage.getBoardById(parseInt(boardId, 10));
 
-            e.target.blur();
+            const { textContent } = e.target;
 
             if (textContent !== '' && textContent !== name) {
-                dispatcher.dispatch(
+                await dispatcher.dispatch(
                     actionUpdateBoard({
                         id: parseInt(boardId, 10),
                         name: textContent,

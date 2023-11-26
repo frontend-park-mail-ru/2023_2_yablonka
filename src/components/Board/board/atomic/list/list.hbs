@@ -1,11 +1,12 @@
-<li class='list' data-listID='{{this.ID}}'>
+<li class='list' data-list='{{this.ID}}' data-list_position="{{this.position}}">
     <div class='flex-column-centered border-radius-10 gap-10 list__container'>
         <div class='flex-row-centered list__title-wrapper'>
             <span
+                data-list='{{this.ID}}'
                 contenteditable='true'
                 class='font-size-20 font-weight-500 border-radius-5 padding-5-10 list__title'
             >{{this.name}}</span>
-            <button class='box-24-24 flex-centered btn btn-list-settings'>
+            <button class='box-24-24 flex-centered btn btn-change-list' data-list='{{this.ID}}'>
                 <img
                     class='strach-layout list-action__image'
                     src='/svg/three-dots.svg'

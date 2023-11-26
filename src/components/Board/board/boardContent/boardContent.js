@@ -25,8 +25,9 @@ export default class BoardContent extends Component {
         lists.forEach((list) => {
             boardLists.push(
                 new List(null, {
-                    name: this.config.name,
-                    id: this.config.id,
+                    name: list.name,
+                    id: list.id,
+                    position: list.list_position,
                     cards: workspaceStorage.getListCards(list.id),
                 }).render(),
             );

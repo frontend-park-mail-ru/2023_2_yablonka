@@ -214,7 +214,9 @@ export default class BoardPage extends Component {
         e.stopPropagation();
 
         const input = this.parent.querySelector('.input-new-list-name');
-        if (Validator.validateObjectName(input.value)) {
+        const { value } = input;
+
+        if (Validator.validateObjectName(value)) {
             const boardId = this.parent.querySelector('.board-menu__board-name').dataset.board;
 
             this.#closeNewList(e);
@@ -222,9 +224,9 @@ export default class BoardPage extends Component {
 
             dispatcher.dispatch(
                 actionCreateList({
-                    board_id: boardId,
-                    name: input.value,
-                    list_position: workspaceStorage.getBoardLists(boardId).length,
+                    board_id: parseInt(boardId, 10),
+                    name: value,
+                    list_position: workspaceStorage.getBoardLists(parseInt(boardId, 10)).length,
                 }),
             );
         } else {

@@ -8,7 +8,10 @@ class PopupEvent {
     };
 
     deletePopup = (popup) => {
+        console.log(this.components);
         this.components.splice(this.components.indexOf(popup), 1);
+        console.log(this.components);
+
     };
 
     clearPopups = () => {
