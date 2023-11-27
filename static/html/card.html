@@ -3,16 +3,116 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="../../dist/app.32ab6f82f31e4acf779c.css" type="text/css" />
-        <link rel="stylesheet" href="../../dist/app.32ab6f82f31e4acf779c.css.map" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.1b9ee4c6c63c3ab4227f.css" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.1b9ee4c6c63c3ab4227f.css.map" type="text/css" />
         <link rel="icon" type="image/svg+xml" sizes="32x32" href="logo_favicon.svg" />
-
-        <title></title>
-        <script src="/utils/handlebars.runtime.js"></script>
-        <script src="/utils/handlebars.precompiled.js"></script>
-        <script type="module" src="index.js"></script>
     </head>
     <body>
-        <div class="page"></div>
+        <div class="page">
+            <dialog class="card-modal" popover open>
+                <div class="card-modal__exit-wrapper">
+                    <img class="box-24-24 border-radius-10 card-modal__exit" src="../svg/close.svg" alt="exit" />
+                </div>
+                <div class="strach-layout flex-row-centered card-modal__card-data">
+                    <div class="flex-column-centered gap-40 card-data__card-information">
+                        <div class="flex-row-centered gap-50 card-information__name-and-tags-wrapper">
+                            <div class="flex-column-centered gap-10 card-information__name-wrapper">
+                                <img class="box-24-24 card-information__icon" src="../svg/card-name.svg" />
+                                <span class="font-size-20 font-weight-500 card-information__card-name">Card name</span>
+                                <span class="font-size-16 card-information__list-name"
+                                    >в колонке&nbsp<u>List name</u></span
+                                >
+                            </div>
+                        </div>
+                        <div class="flex-column-centered gap-10 card-information__description-wrapper">
+                            <img class="box-24-24 card-information__icon" src="../svg/card-description.svg" />
+                            <span class="font-size-20 card-information__card-description-title"
+                                >Описание карточки Card Name</span
+                            >
+                            <span contenteditable="true"
+                                class="border-radius-10 font-size-14 font-weight-200 padding-5-10 card-information__card-description"
+                                maxlength="1024"
+                                placeholder="Описание карточки..."
+                            ></span>
+                        </div>
+                        <div class="flex-column-centered gap-20 card-information__files-wrapper">
+                            <div class="card-information__files-title">
+                                <img class="box-24-24 card-information__icon" src="../svg/paperclip.svg" />
+                                <span class="font-size-20 font-weight-500 card-information__card-description-title"
+                                    >Вложения</span
+                                >
+                            </div>
+                            <div class="flex-row-centered gap-20 card-information__file-wrapper">
+                                <img
+                                    class="box-24-24 border-radius-5 card-information__file-image"
+                                    src="../img/Design.png"
+                                    alt="file"
+                                />
+                                <div class="flex-column-centered gap-15 card-information__file-description-wrapper">
+                                    <span class="font-size-14 font-weight-500 card-information__file-name">background.jpg</span>
+                                    <span class="font-size-14 font-weight-200 card-information__file-added-date">
+                                        Добавлено 11.11.2011
+                                    </span>
+                                    <div class="flex-row-centered gap-20 card-information__file-actions">
+                                        <button class="padding-5-10 font-size-16 font-weight-500 border-radius-5 btn btn-file-actions__update">Изменить</button>
+                                        <button class="padding-5-10 font-size-16 font-weight-500 border-radius-5 btn btn-file-actions__delete">Удалить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-column-centered gap-20 card-information__comments-wrapper">
+                            <div class="card-information__comments-title">
+                                <img class="card-information__icon" src="../svg/comments.svg" />
+                                <span class="card-information__card-description-title"
+                                    >Действия</span
+                                >
+                            </div>
+                            <div class="card-information__comment-wrapper">
+                                <div class="card-information__comment">
+                                    <img
+                                        src="../img/avatar.jpg"
+                                        alt="avatar"
+                                        class="card-inforamtion__comments-avatar"
+                                    />
+                                    <textarea
+                                        class="card-information__comment-text"
+                                        maxlength="1024"
+                                        placeholder="Добавить комментарий..."
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-data__card-actions">
+                        <div class="card-actions__card-settings">
+                            <span class="card-settings__title">Настройка карточки</span>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/person.svg" />
+                                <span class="action-name">Участники</span>
+                            </div>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/clock.svg" />
+                                <span class="action-name">Даты</span>
+                            </div>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/checklist.svg" />
+                                <span class="action-name">Чеклист</span>
+                            </div>
+                            <div class="card-settings__action">
+                                <img class="action-logo" src="../svg/paperclip.svg" />
+                                <span class="action-name">Вложения</span>
+                            </div>
+                        </div>
+                        <div class="card-actions__user-actions">
+                            <span class="user-actions__title">Действия с карточкой</span>
+                            <div class="user-actions__action">
+                                <img class="action-logo" src="../svg/trash.svg" />
+                                <span class="action-name">Удалить</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </dialog>
+        </div>
     </body>
 </html>

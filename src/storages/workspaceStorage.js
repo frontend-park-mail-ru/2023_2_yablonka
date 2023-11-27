@@ -359,7 +359,7 @@ class WorkspaceStorage extends BaseStorage {
     getBoardLists() {
         const lists = this.storage
             .get(this.workspaceModel.lists)
-            .sort((x, y) => x.list_position < y.list_position);
+            .sort((x, y) => x.list_position > y.list_position);
         return [...lists];
     }
 
@@ -420,13 +420,16 @@ class WorkspaceStorage extends BaseStorage {
         //     },
         // ];
 
-        const cards = this.storage.get(this.workspaceModel.cards).filter(card => card.list_id === id).sort((x, y) => x.list_position < y.list_position);
+        const cards = this.storage
+            .get(this.workspaceModel.cards)
+            .filter((card) => card.list_id === id)
+            .sort((x, y) => x.list_position > y.list_position);
 
         return [...cards];
     }
 
     getCardById(id) {
-        return this.storage.get(this.workspaceModel.cards).find(card => card.id === id);
+        return this.storage.get(this.workspaceModel.cards).find((card) => card.id === id);
     }
 
     /**
@@ -449,6 +452,31 @@ class WorkspaceStorage extends BaseStorage {
         //     .filter((usr) => currentCardUserIds.includes(usr.user_id));
 
         return [...cardUsers];
+    }
+
+    getCardById(id) {
+        // return this.storage.get(this.workspaceModel.cards).find((crd) => crd.id === id);
+        return {
+            id: 1,
+            list_id: 3,
+            date_created: '2023-11-25T01:10:36.436655Z',
+            name: 'task1',
+            description: 'some dsc',
+            list_position: 1,
+            start: '2023-11-21T03:10:36.436655Z',
+            end: '2023-11-29T11:10:36.436655Z',
+            users: [],
+            checklists: [],
+            comments: [
+                {
+                    date_created: '2023-11-25T01:10:36.436655Z',
+                    id: 0,
+                    task_id: 0,
+                    text: 'SHIIIIT',
+                    user_id: 1,
+                },
+            ],
+        };
     }
 }
 
