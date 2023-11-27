@@ -254,12 +254,6 @@ class WorkspaceStorage extends BaseStorage {
             userStorage.storage.get(userStorage.userModel.csrf),
             card,
         );
-
-        const { status } = responsePromise;
-
-        if (status === 200) {
-            emitter.trigger('rerender');
-        }
     }
 
     async commentCard(comment) {
@@ -486,6 +480,10 @@ class WorkspaceStorage extends BaseStorage {
                 },
             ],
         };
+    }
+
+    getUserById(id) {
+        return this.storage.get(this.workspaceModel.users).find(usr => usr.user_id === id);
     }
 }
 
