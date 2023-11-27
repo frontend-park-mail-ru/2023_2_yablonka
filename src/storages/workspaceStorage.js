@@ -262,6 +262,15 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    async commentCard(comment) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}comment/create/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            comment,
+        );
+    }
+
     async addUser(user) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/user/add/`,

@@ -33,6 +33,7 @@ const handlers = [
     { type: 'removeUserBoard', method: workspaceStorage.removeUser.bind(workspaceStorage) },
     { type: 'getQuestions', method: userStorage.getQuestions.bind(userStorage) },
     { type: 'answerQuestion', method: userStorage.answerQuestion.bind(userStorage) },
+    { type: 'commentCard', method: workspaceStorage.commentCard.bind(workspaceStorage) },
 ];
 
 export default handlers;

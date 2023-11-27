@@ -47,3 +47,8 @@ export const actionDeleteCard = (card) => ({
     type: 'deleteCard',
     value: card,
 });
+
+export const actionCommentCard = (comment) => ({
+    type: 'commentCard',
+    value: comment
+});
