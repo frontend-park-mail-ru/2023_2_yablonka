@@ -3,7 +3,7 @@
         {{#each lists as |list|}}
             {{{list}}}
         {{/each}}
-        <li class='border-radius-10 add-new-list'>
+        <li data-entity='list' class='border-radius-10 add-new-list'>
             <div class='flex-start border-radius-10 add-new-list__container'>
                 <button class='strach-layout flex-start padding-0-10 gap-10 btn btn-add-new-list'>
                     <img class='box-16-16 add-list__image' src='/svg/plus.svg' alt='add-card' />
@@ -11,7 +11,7 @@
                 </button>
             </div>
         </li>
-        <li class='border-radius-10 new-list' style='display: none'>
+        <li data-entity='list' class='border-radius-10 new-list' style='display: none'>
             <form
                 class='flex-column-centered gap-10 border-radius-10 padding-5-10 form form-new-list__container'
                 id='create-list'

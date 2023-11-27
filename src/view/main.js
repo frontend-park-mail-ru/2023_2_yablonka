@@ -22,7 +22,6 @@ import IFrame from '../components/atomic/iframe/iframe.js';
  * @class
  */
 class Main extends BaseView {
-
     /**
      * Рендер страницы в DOM
      */

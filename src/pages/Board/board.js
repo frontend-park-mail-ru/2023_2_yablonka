@@ -7,7 +7,7 @@ import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
 import workspaceStorage from '../../storages/workspaceStorage.js';
 import BoardMenu from '../../components/Board/board/boardMenu/boardMenu.js';
-import { actionCreateList } from '../../actions/boardActions.js';
+import { actionCreateCard, actionCreateList } from '../../actions/boardActions.js';
 import Validator from '../../modules/validator.js';
 import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 import template from './board.hbs';
@@ -62,17 +62,31 @@ export default class BoardPage extends Component {
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
 
-        this.parent.querySelector('.btn-add-new-list').addEventListener('click', this.#addNewList);
+        this.parent
+            .querySelector('.btn-add-new-list')
+            .addEventListener('click', this.#addNewEntity);
+        this.parent.querySelectorAll('.btn-add-new-card').forEach((btn) => {
+            btn.addEventListener('click', this.#addNewEntity);
+        });
         this.parent
             .querySelector('.input-new-list-name')
-            .addEventListener('input', this.#blockCreateNewListBtn);
+            .addEventListener('input', this.#blockCreateNewEntityBtn);
+        this.parent.querySelectorAll('.input-new-card-name').forEach((btn) => {
+            btn.addEventListener('input', this.#blockCreateNewEntityBtn);
+        });
         this.parent
             .querySelector('.btn-create-list_cancel')
-            .addEventListener('click', this.#cancelCreateNewListBtn);
-        this.parent.addEventListener('click', this.#cancelCreateNewListBtn);
+            .addEventListener('click', this.#cancelCreateNewEntityBtn);
+        this.parent.querySelectorAll('.btn-create-card').forEach((btn) => {
+            btn.addEventListener('click', this.#cancelCreateNewEntityBtn);
+        });
+        this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent
             .querySelector('.btn-create-list_confirm')
-            .addEventListener('click', this.#createList);
+            .addEventListener('click', this.#createEntity);
+        this.parent.querySelectorAll('.btn-create-card_confirm').forEach((btn) => {
+            btn.addEventListener('click', this.#createEntity);
+        });
 
         emitter.bind('logout', this.close);
     }
@@ -99,17 +113,29 @@ export default class BoardPage extends Component {
 
         this.parent
             .querySelector('.btn-add-new-list')
-            .removeEventListener('click', this.#addNewList);
+            .addEventListener('click', this.#addNewEntity);
+        this.parent.querySelectorAll('.btn-add-new-card').forEach((btn) => {
+            btn.addEventListener('click', this.#addNewEntity);
+        });
         this.parent
             .querySelector('.input-new-list-name')
-            .removeEventListener('input', this.#blockCreateNewListBtn);
+            .removeEventListener('input', this.#blockCreateNewEntityBtn);
+        this.parent.querySelectorAll('.input-new-card-name').forEach((btn) => {
+            btn.removeEventListener('input', this.#blockCreateNewEntityBtn);
+        });
         this.parent
             .querySelector('.btn-create-list_cancel')
-            .removeEventListener('click', this.#cancelCreateNewListBtn);
-        this.parent.addEventListener('click', this.#cancelCreateNewListBtn);
+            .removeEventListener('click', this.#cancelCreateNewEntityBtn);
+        this.parent.querySelectorAll('.btn-create-card').forEach((btn) => {
+            btn.removeEventListener('click', this.#cancelCreateNewEntityBtn);
+        });
+        this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent
             .querySelector('.btn-create-list_confirm')
-            .removeEventListener('click', this.#createList);
+            .removeEventListener('click', this.#createEntity);
+        this.parent.querySelectorAll('.btn-create-card_confirm').forEach((btn) => {
+            btn.removeEventListener('click', this.#createEntity);
+        });
 
         emitter.unbind('logout', this.close);
     }
@@ -155,39 +181,53 @@ export default class BoardPage extends Component {
         dispatcher.dispatch(actionRedirect('/profile', false));
     }
 
-    #addNewList = (e) => {
+    #addNewEntity = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const addListBtn = this.parent.querySelector('.add-new-list');
-        const addListForm = this.parent.querySelector('.new-list');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const { entity } = entityNode.dataset;
 
-        addListBtn.style.display = 'none';
-        addListForm.style.display = 'block';
+        const addEntityBtn = entityNode.parentNode.querySelector(`.add-new-${entity}`);
+        const addEntityForm = entityNode.parentNode.querySelector(`.new-${entity}`);
 
-        const input = this.parent.querySelector('.input-new-list-name');
+        addEntityBtn.style.display = 'none';
+        addEntityForm.style.display = 'block';
+
+        const input = entityNode.parentNode.querySelector(`.input-new-${entity}-name`);
         input.blur();
     };
 
-    #closeNewList = (e) => {
+    #closeNewEntity = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        this.parent.querySelector('.form-new-list__container').reset();
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
-        const addListBtn = this.parent.querySelector('.add-new-list');
-        const addListForm = this.parent.querySelector('.new-list');
+        const { entity } = entityNode.dataset;
 
-        addListBtn.style.display = 'block';
-        addListForm.style.display = 'none';
+        entityNode.parentNode.querySelector(`.form-new-${entity}__container`).reset();
+
+        const addEntityBtn = entityNode.parentNode.querySelector(`.add-new-${entity}`);
+        const addEntityForm = entityNode.parentNode.querySelector(`.new-${entity}`);
+
+        addEntityBtn.style.display = 'block';
+        addEntityForm.style.display = 'none';
     };
 
-    #blockCreateNewListBtn = (e) => {
+    #blockCreateNewEntityBtn = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const btn = this.parent.querySelector('.btn-create-list_confirm');
-        const input = this.parent.querySelector('.input-new-list-name');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+
+        const { entity } = entityNode.dataset;
+
+        const btn = entityNode.parentNode.querySelector(`.btn-create-${entity}_confirm`);
+        const input = entityNode.parentNode.querySelector(`.input-new-${entity}-name`);
 
         if (input.value.length === 0) {
             btn.disabled = true;
@@ -198,44 +238,66 @@ export default class BoardPage extends Component {
         }
     };
 
-    #cancelCreateNewListBtn = (e) => {
+    #cancelCreateNewEntityBtn = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+
+        const { entity } = entityNode.dataset;
         if (
-            this.parent.querySelector('.new-list')?.style.display === 'block' &&
-            e.target.closest('.btn-create-list_cancel')
+            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' &&
+            e.target.closest(`.btn-create-${entity}_cancel`)
         ) {
-            this.#closeNewList(e);
-            this.#blockCreateNewListBtn(e);
+            this.#closeNewEntity(e);
+            this.#blockCreateNewEntityBtn(e);
         }
     };
 
-    #createList = (e) => {
+    #createEntity = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const input = this.parent.querySelector('.input-new-list-name');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+
+        const { entity } = entityNode.dataset;
+
+        const input = entityNode.parentNode.querySelector(`.input-new-${entity}-name`);
         const { value } = input;
 
         if (Validator.validateObjectName(value)) {
-            const boardId = this.parent.querySelector('.board-menu__board-name').dataset.board;
+            this.#closeNewEntity(e);
+            this.#blockCreateNewEntityBtn(e);
 
-            this.#closeNewList(e);
-            this.#blockCreateNewListBtn(e);
+            if (entity === 'list') {
+                const boardId = this.parent.querySelector('.board-menu__board-name').dataset.board;
 
-            dispatcher.dispatch(
-                actionCreateList({
-                    board_id: parseInt(boardId, 10),
-                    name: value,
-                    list_position: workspaceStorage.getBoardLists(parseInt(boardId, 10)).length,
-                }),
-            );
+                dispatcher.dispatch(
+                    actionCreateList({
+                        board_id: parseInt(boardId, 10),
+                        name: value,
+                        list_position: workspaceStorage.getBoardLists(parseInt(boardId, 10)).length,
+                    }),
+                );
+            } else {
+                const listId = e.target.closest('.list').dataset.list;
+
+                dispatcher.dispatch(
+                    actionCreateCard({
+                        list_id: parseInt(listId, 10),
+                        name: value,
+                        list_position: workspaceStorage.getListById(parseInt(listId, 10))
+                            .list_position,
+                    }),
+                );
+            }
         } else {
             NotificationMessage.showNotification(input, false, true, {
                 fontSize: 12,
                 fontWeight: 200,
-                text: 'Некорректное название списка',
+                text: 'Некорректное название',
             });
         }
     };

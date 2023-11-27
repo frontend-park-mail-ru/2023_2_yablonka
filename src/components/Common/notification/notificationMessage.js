@@ -29,31 +29,29 @@ export default class NotificationMessage extends Component {
             `width: ${referenceElement.getBoundingClientRect().width}px;`,
         );
 
-        try {
-            document.querySelector(`div[data-element="${referenceElement.className}"]`)?.remove();
-        } finally {
-            if (hidePrevElem) {
-                const hiddenElement = referenceElement.previousElementSibling;
-                const elDisplay = hiddenElement.style.display;
+        document.querySelector(`div[data-element="${referenceElement.className}"]`)?.remove();
 
-                hiddenElement.style.display = 'none';
-                parentElement.insertBefore(notification, referenceElement);
+        if (hidePrevElem) {
+            const hiddenElement = referenceElement.previousElementSibling;
+            const elDisplay = hiddenElement.style.display;
 
-                setTimeout(() => {
-                    hiddenElement.style.display = elDisplay;
-                    document
-                        .querySelector(`div[data-element="${referenceElement.className}"]`)
-                        .remove();
-                }, 5000);
-            } else {
-                parentElement.insertBefore(notification, referenceElement);
+            hiddenElement.style.display = 'none';
+            parentElement.insertBefore(notification, referenceElement);
 
-                setTimeout(() => {
-                    document
-                        .querySelector(`div[data-element="${referenceElement.className}"]`)
-                        ?.remove();
-                }, 5000);
-            }
+            setTimeout(() => {
+                hiddenElement.style.display = elDisplay;
+                document
+                    .querySelector(`div[data-element="${referenceElement.className}"]`)
+                    .remove();
+            }, 5000);
+        } else {
+            parentElement.insertBefore(notification, referenceElement);
+
+            setTimeout(() => {
+                document
+                    .querySelector(`div[data-element="${referenceElement.className}"]`)
+                    ?.remove();
+            }, 5000);
         }
     }
 }

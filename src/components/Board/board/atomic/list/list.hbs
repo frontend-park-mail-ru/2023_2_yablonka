@@ -19,13 +19,13 @@
                 {{{card}}}
             {{/each}}
         </ol>
-        <div class='padding-10-15 list__add-card'>
-            <button class='flex-row-centered gap-10 btn btn-add-card'>
+        <div data-entity='card' class='padding-10-15 add-new-card'>
+            <button class='flex-row-centered gap-10 btn btn-add-new-card'>
                 <img class='box-16-16 add-card__image' src='/svg/plus.svg' alt='add-card' />
                 <span class='font-size-16 font-weight-500 add-card__title'>Добавить карточку</span>
             </button>
         </div>
-        <div class='new-card'>
+        <div data-entity='card' class='new-card' style="display: none">
             <form
                 class='flex-column-centered gap-10 border-radius-10 padding-5-10 form form-new-card__container'
                 id='create-card__list-{{this.ID}}'
@@ -36,7 +36,7 @@
                     maxlength='32'
                     type='text'
                     class='font-size-16 font-weght-200 border-radius-5 padding-5-10 input input-new-card-name'
-                    placeholder='Название списка'
+                    placeholder='Название карточки'
                     value=''
                     required
                 />

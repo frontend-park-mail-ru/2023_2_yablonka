@@ -30,5 +30,4 @@ export default class IFrame extends Component {
         const size = iframe.contentDocument.querySelector('.questionnaire').getBoundingClientRect();
         iframe.setAttribute('style', `width: 450px; height: ${size.height}px`);
     };
-
 }

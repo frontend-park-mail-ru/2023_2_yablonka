@@ -178,7 +178,6 @@ class UserStorage extends BaseStorage {
      * @param {Object} user - Данные пользователя
      */
     async updatePassword(user) {
-        console.log(11111111);
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}user/edit/change_password/`,
             'POST',
