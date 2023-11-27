@@ -80,7 +80,6 @@ export default class BoardPage extends Component {
         this.parent.querySelectorAll('.btn-create-card').forEach((btn) => {
             btn.addEventListener('click', this.#cancelCreateNewEntityBtn);
         });
-        this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent
             .querySelector('.btn-create-list_confirm')
             .addEventListener('click', this.#createEntity);
@@ -129,7 +128,6 @@ export default class BoardPage extends Component {
         this.parent.querySelectorAll('.btn-create-card').forEach((btn) => {
             btn.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         });
-        this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent
             .querySelector('.btn-create-list_confirm')
             .removeEventListener('click', this.#createEntity);

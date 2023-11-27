@@ -10,6 +10,7 @@ import CreateBoard from '../components/popups/createBoard/createBoard.js';
 import BoardSettings from '../components/popups/boardSettings/boardSettings.js';
 import CreateWorkspace from '../components/popups/createWorkspace/createWorkspace.js';
 import ListSettings from '../components/popups/listSettings/listSettings.js';
+import Card from '../components/Card/card.js';
 
 /**
  * Класс для рендера страницы доски
@@ -29,8 +30,6 @@ class Board extends BaseView {
     async renderPage() {
         const boardData = [];
         const linkData = window.location.pathname.matchAll(/\d+/g);
-
-        const factor = Math.floor(Math.random() * 100 + 1);
 
         for (const data of linkData) {
             boardData.push(data[0]);
@@ -57,6 +56,7 @@ class Board extends BaseView {
                 new CreateBoard(this.root, {}),
                 new BoardSettings(this.root, { board_id: this.boardID }),
                 new ListSettings(this.root, {}),
+                new Card(this.root, {avatar: user.avatar_url}),
             ],
         );
 
