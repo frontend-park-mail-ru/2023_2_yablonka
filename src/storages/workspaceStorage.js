@@ -378,53 +378,49 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Array} - массив карточек
      */
     getListCards(id) {
-        const cards = [
-            {
-                id: 1,
-                list_id: 3,
-                date_created: '2023-11-25T01:10:36.436655Z',
-                name: 'task1',
-                description: 'some dsc',
-                list_position: 1,
-                start: null,
-                end: null,
-                users: null,
-                checklists: null,
-                comments: null,
-            },
-            {
-                id: 2,
-                list_id: 2,
-                date_created: '2023-11-25T01:10:36.436655Z',
-                name: 'Задача 2',
-                description: '',
-                list_position: 3,
-                start: null,
-                end: null,
-                users: null,
-                checklists: null,
-                comments: null,
-            },
-            {
-                id: 3,
-                list_id: 1,
-                date_created: '2023-11-25T01:10:36.436655Z',
-                name: 'TASача',
-                description: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-                list_position: 2,
-                start: null,
-                end: null,
-                users: null,
-                checklists: null,
-                comments: null,
-            },
-        ];
-        // const listCards = this.storage
-        //     .get(this.workspaceModel.lists)
-        //     .find((lst) => lst.id === id).cards;
+        // const cards = [
+        //     {
+        //         id: 1,
+        //         list_id: 3,
+        //         date_created: '2023-11-25T01:10:36.436655Z',
+        //         name: 'task1',
+        //         description: 'some dsc',
+        //         list_position: 1,
+        //         start: null,
+        //         end: null,
+        //         users: null,
+        //         checklists: null,
+        //         comments: null,
+        //     },
+        //     {
+        //         id: 2,
+        //         list_id: 2,
+        //         date_created: '2023-11-25T01:10:36.436655Z',
+        //         name: 'Задача 2',
+        //         description: '',
+        //         list_position: 3,
+        //         start: null,
+        //         end: null,
+        //         users: null,
+        //         checklists: null,
+        //         comments: null,
+        //     },
+        //     {
+        //         id: 3,
+        //         list_id: 1,
+        //         date_created: '2023-11-25T01:10:36.436655Z',
+        //         name: 'TASача',
+        //         description: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+        //         list_position: 2,
+        //         start: null,
+        //         end: null,
+        //         users: null,
+        //         checklists: null,
+        //         comments: null,
+        //     },
+        // ];
 
-        // const cards = [];
-        // lists = this.storage.get(this.workspaceModel.cards).filter(card=>card.id===id);
+        const cards = this.storage.get(this.workspaceModel.cards).filter(card => card.id === id);
 
         return [...cards];
     }
