@@ -420,7 +420,7 @@ class WorkspaceStorage extends BaseStorage {
         //     },
         // ];
 
-        const cards = this.storage.get(this.workspaceModel.cards).filter(card => card.id === id);
+        const cards = this.storage.get(this.workspaceModel.cards).filter(card => card.list_id === id);
 
         return [...cards];
     }
