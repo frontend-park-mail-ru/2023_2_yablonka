@@ -219,7 +219,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async createCard(card) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}card/create/`,
+            `${apiPath + apiVersion}task/create/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             card,
@@ -234,7 +234,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async updateCard(card) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}card/update/`,
+            `${apiPath + apiVersion}task/update/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             card,
@@ -249,7 +249,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async deleteCard(card) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}card/delete/`,
+            `${apiPath + apiVersion}task/delete/`,
             'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
             card,
