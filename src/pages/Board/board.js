@@ -288,8 +288,8 @@ export default class BoardPage extends Component {
                     actionCreateCard({
                         list_id: parseInt(listId, 10),
                         name: value,
-                        list_position: workspaceStorage.getListById(parseInt(listId, 10))
-                            .list_position,
+                        list_position: workspaceStorage.getListCards(parseInt(listId, 10))
+                            .length,
                     }),
                 );
             }
