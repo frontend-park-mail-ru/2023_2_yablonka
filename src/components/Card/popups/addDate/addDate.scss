@@ -1,3 +1,16 @@
 .card-date::backdrop {
     background: transparent;
 }
+
+.card-date__content {
+    height: 300px;
+    width: 250px;
+}
+
+.card-date__title {
+    color: var(--text-color-card-popop-actions);
+}
+
+.end-date__title {
+    align-self: flex-start;
+}

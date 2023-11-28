@@ -51,7 +51,7 @@ export default class BoardPage extends Component {
     addEventListeners() {
         this.parent.querySelector('.logo-wrapper').addEventListener('click', this.toBoardsHandler);
         this.parent.querySelectorAll('.link-sidebar-boards-list__board').forEach((link) => {
-            link.addEventListener('click', this.toBoardsHandler);
+            link.addEventListener('click', this.toBoardHandler);
         });
         this.parent
             .querySelector('.profile-link[data-action=logout]')
@@ -100,7 +100,7 @@ export default class BoardPage extends Component {
             .querySelector('.logo-wrapper')
             .removeEventListener('click', this.toBoardsHandler);
         this.parent.querySelectorAll('.link-sidebar-boards-list__board').forEach((link) => {
-            link.removeEventListener('click', this.toBoardsHandler);
+            link.removeEventListener('click', this.toBoardHandler);
         });
         this.parent
             .querySelector('.profile-link[data-action=logout]')
@@ -151,10 +151,20 @@ export default class BoardPage extends Component {
     }
 
     /**
-     * Handler события нажатия на ссылку для перехода на страницу досок
+     * Handler события нажатия на ссылку для перехода на страницу доски
      * @param {Event} e - Событие
      */
     toBoardsHandler(e) {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/main', false));
+    }
+
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу досок
+     * @param {Event} e - Событие
+     */
+    toBoardHandler(e) {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
         dispatcher.dispatch(

@@ -97,10 +97,10 @@ export default class Card extends Component {
         dialog.querySelector('.card-description-title__card-name').textContent = card.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
 
+        console.log(card);
+
         if (dialog.getAttribute('open') === null) {
             popupEvent.addPopup(dialog);
-            popupEvent.closeOtherPopups();
-
             dialog.showModal();
 
             const dialogSizes = dialog.getBoundingClientRect();
@@ -214,6 +214,7 @@ export default class Card extends Component {
 
             const dialog = this.parent.querySelector('#card');
             const comment = dialog.querySelector('.card-information__add-comment-text').value;
+            dialog.querySelector('.card-information__add-comment-text').value = '';
             const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
             dispatcher.dispatch(
                 actionCommentCard({
@@ -254,9 +255,7 @@ export default class Card extends Component {
         const commentsLocation = this.parent.querySelector('.card-information__users-comments');
         commentsLocation.innerHTML = '';
 
-        const newComments = this.#getComments(cardId);
-
-        newComments.forEach((cmt) => {
+        this.#getComments(cardId).forEach((cmt) => {
             commentsLocation.insertAdjacentHTML('afterend', cmt);
         });
     };
@@ -264,6 +263,7 @@ export default class Card extends Component {
     #getComments = (cardId) => {
         const cardComments = workspaceStorage.getCardById(parseInt(cardId, 10)).comments || [];
         const comments = [];
+        console.log(workspaceStorage.getCardById(parseInt(cardId, 10)));
 
         cardComments.forEach((comment) => {
             const user = workspaceStorage.getUserById(comment.user_id);
