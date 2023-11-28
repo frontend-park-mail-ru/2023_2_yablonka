@@ -46,7 +46,10 @@ export default class Card extends Component {
             .addEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
-            .addEventListener('keydown', this.#changeDescription);
+            .addEventListener('keydown', this.#changeNameAndDescription);
+        this.parent
+            .querySelector('.card-information__card-name')
+            .addEventListener('keydown', this.#changeNameAndDescription);
     }
 
     removeEventListeners() {
@@ -65,7 +68,10 @@ export default class Card extends Component {
             .removeEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
-            .removeEventListener('keydown', this.#changeDescription);
+            .removeEventListener('keydown', this.#changeNameAndDescription);
+        this.parent
+            .querySelector('.card-information__card-name')
+            .removeEventListener('keydown', this.#changeNameAndDescription);
     }
 
     static openByRedirect = (id) => {
@@ -153,6 +159,9 @@ export default class Card extends Component {
     };
 
     #deleteCard = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         const cardId = e.target.closest('dialog')?.dataset.card;
 
         if (cardId) {
@@ -160,12 +169,18 @@ export default class Card extends Component {
         }
     };
 
-    #changeDescription = (e) => {
-        const description = e.target.closest('textarea').value;
+    #changeNameAndDescription = (e) => {
+        e.stopPropagation();
+
+        const dialog = this.parent.querySelector('#card');
+
+        const name = dialog.querySelector('.card-information__card-name').textContent;
+        const description = dialog.querySelector('.card-information__card-description').value;
         const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
         const card = workspaceStorage.getCardById(cardId, 10);
 
         if (cardId && e.key === 'Enter') {
+            e.preventDefault();
             dispatcher.dispatch(
                 actionNavigate(
                     `${
@@ -178,7 +193,7 @@ export default class Card extends Component {
             dispatcher.dispatch(
                 actionUpdateCard({
                     id: cardId,
-                    name: card.name,
+                    name,
                     description,
                     start: '',
                     end: '',

@@ -1,7 +1,7 @@
 .card-data__card-information {
     width: 70%;
     align-items: flex-start;
-    padding: 0 20px 10px 40px;
+    padding: 5px 20px 10px 40px;
     max-height: 700px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -17,6 +17,20 @@
     color: var(--text-color-in-card);
     position: relative;
     align-items: flex-start;
+}
+
+.card-information__card-name {
+    max-width: 300px;
+    padding-bottom: 2px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    outline: none;
+    text-wrap: nowrap;
+}
+
+.card-information__card-name:focus {
+    outline: 2px solid var(--text-color-on-page);
+    max-width: 350px;
 }
 
 .card-information__icon {
@@ -156,6 +170,22 @@
 }
 
 .card-data__card-information::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}
+
+.card-information__card-name::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+}
+
+.card-information__card-name::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 10px;
+}
+
+.card-information__card-name::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
 }
