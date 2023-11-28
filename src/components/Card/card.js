@@ -46,7 +46,7 @@ export default class Card extends Component {
             .addEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
-            .addEventListener('click', this.#changeDescription);
+            .addEventListener('keydown', this.#changeDescription);
     }
 
     removeEventListeners() {
@@ -65,7 +65,7 @@ export default class Card extends Component {
             .removeEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
-            .removeEventListener('click', this.#changeDescription);
+            .removeEventListener('keydown', this.#changeDescription);
     }
 
     static openByRedirect = (id) => {
@@ -98,6 +98,7 @@ export default class Card extends Component {
                 )}px; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
             );
         }
+        Card.updateHistory();
     };
 
     #openCard = (e) => {
@@ -136,7 +137,6 @@ export default class Card extends Component {
         popupEvent.deletePopup(dialog);
         popupEvent.closeAllPopups();
         popupEvent.clearPopups();
-        this.#updateHistory();
     };
 
     #closeCardByBackground = (e) => {
@@ -149,7 +149,6 @@ export default class Card extends Component {
             popupEvent.deletePopup(dialog);
             popupEvent.closeAllPopups();
             popupEvent.clearPopups();
-            this.#updateHistory();
         }
     };
 
@@ -163,10 +162,19 @@ export default class Card extends Component {
 
     #changeDescription = (e) => {
         const description = e.target.closest('textarea').value;
-        const cardId = e.target.closest('dialog')?.dataset.card;
-        const card = workspaceStorage.getCardById(cardId);
+        const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
+        const card = workspaceStorage.getCardById(cardId, 10);
 
-        if (cardId) {
+        if (cardId && e.key === 'Enter') {
+            dispatcher.dispatch(
+                actionNavigate(
+                    `${
+                        window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0]
+                    }_card_${cardId}`,
+                    '',
+                    false,
+                ),
+            );
             dispatcher.dispatch(
                 actionUpdateCard({
                     id: cardId,
@@ -194,7 +202,7 @@ export default class Card extends Component {
         );
     };
 
-    #updateHistory = () => {
+    static updateHistory = () => {
         dispatcher.dispatch(
             actionNavigate(
                 window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0],
