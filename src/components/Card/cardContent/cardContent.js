@@ -19,22 +19,4 @@ export default class CardContent extends Component {
             avatar: this.config.avatar,
         });
     }
-
-    #getComments = (cardId) => {
-        const cardComments = workspaceStorage.getCardById(cardId).comments;
-        const comments = [];
-
-        cardComments.forEach((comment) => {
-            const user = workspaceStorage.getUserById(comment.user_id);
-            comments.push(
-                new Comments(null, {
-                    avatar: user.avatar,
-                    email: user.email,
-                    comment: comment.text,
-                }).render(),
-            );
-        });
-
-        return comments;
-    };
 }

@@ -5,9 +5,15 @@ import './Card.scss';
 import popupEvent from '../core/popeventProcessing.js';
 import Sidebar from './sidebar/sidebar.js';
 import CardContent from './cardContent/cardContent.js';
-import { actionDeleteCard, actionUpdateCard } from '../../actions/boardActions.js';
+import {
+    actionCommentCard,
+    actionDeleteCard,
+    actionUpdateCard,
+} from '../../actions/boardActions.js';
 import dispatcher from '../../modules/dispatcher.js';
 import { actionNavigate } from '../../actions/userActions.js';
+import Comments from './atomic/comments/comments.js';
+import userStorage from '../../storages/userStorage.js';
 
 /**
  * Попап для хедера
@@ -50,6 +56,9 @@ export default class Card extends Component {
         this.parent
             .querySelector('.card-information__card-name')
             .addEventListener('keydown', this.#changeNameAndDescription);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .addEventListener('keydown', this.#addComment);
     }
 
     removeEventListeners() {
@@ -195,11 +204,37 @@ export default class Card extends Component {
                     id: cardId,
                     name,
                     description,
-                    start: '',
-                    end: '',
-                    list_position: card.list_position,
+                    list_position: parseInt(card.list_position, 10),
                 }),
             );
+        }
+    };
+
+    #addComment = (e) => {
+        e.stopPropagation();
+
+        if (e.key === 'Enter') {
+            e.preventDefault();
+
+            const dialog = this.parent.querySelector('#card');
+            const comment = dialog.querySelector('.card-information__add-comment-text').value;
+            const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
+            dispatcher.dispatch(
+                actionCommentCard({
+                    task_id: parseInt(dialog.dataset.card, 10),
+                    user_id: userId,
+                    text: comment,
+                }),
+            );
+            const newComments = this.#getComments(parseInt(dialog.dataset.card, 10));
+            dialog.querySelectorAll('.card-information__comment').forEach((cmt) => {
+                cmt?.remove();
+            });
+            const commentsLocation = dialog.querySelector('.card-information__comments-wrapper');
+
+            newComments.forEach((cmt) => {
+                commentsLocation.insertAdjacentHTML('afterend', cmt);
+            });
         }
     };
 
@@ -225,5 +260,23 @@ export default class Card extends Component {
                 false,
             ),
         );
+    };
+
+    #getComments = (cardId) => {
+        const cardComments = workspaceStorage.getCardById(parseInt(cardId, 10)).comments;
+        const comments = [];
+
+        cardComments.forEach((comment) => {
+            const user = workspaceStorage.getUserById(comment.user_id);
+            comments.push(
+                new Comments(null, {
+                    avatar: user.avatar,
+                    email: user.email,
+                    comment: comment.text,
+                }).render(),
+            );
+        });
+
+        return comments;
     };
 }
