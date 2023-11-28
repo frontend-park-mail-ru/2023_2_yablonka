@@ -48,13 +48,13 @@ export default class CreateBoard extends Component {
 
     #blockCreateButton = (e) => {
         e.preventDefault();
-        const input = document.querySelector('input[data-name="board-name"');
+        const input = this.parent.querySelector('input[data-name="board-name"');
 
         if (e.target.value.length === 0) {
-            document.querySelector('.btn-create-board-pop-up').disabled = true;
+            this.parent.querySelector('.btn-create-board-pop-up').disabled = true;
             input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color');
         } else {
-            document.querySelector('.btn-create-board-pop-up').disabled = false;
+            this.parent.querySelector('.btn-create-board-pop-up').disabled = false;
             input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color');
         }
     };
@@ -63,7 +63,7 @@ export default class CreateBoard extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#create-board');
+        const dialog = this.parent.querySelector('#create-board');
 
         const btnCoordinates = e.target.parentElement.getBoundingClientRect();
         const workspaceId = e.target.parentElement.dataset.workspace;
@@ -101,7 +101,7 @@ export default class CreateBoard extends Component {
         e.stopPropagation();
         e.preventDefault();
 
-        const dialog = document.querySelector('#create-board');
+        const dialog = this.parent.querySelector('#create-board');
 
         const boardName = this.parent.querySelector('input[data-name=board-name]');
         const workspaceID = e.target.closest('dialog').dataset.workspace;
@@ -126,10 +126,10 @@ export default class CreateBoard extends Component {
     };
 
     #resize = () => {
-        const dialog = document.querySelector('#create-board');
+        const dialog = this.parent.querySelector('#create-board');
 
         if (dialog.dataset.workspace) {
-            const btnCoordinates = document
+            const btnCoordinates = this.parent
                 .querySelector(`.btn-create-board[data-workspace="${dialog.dataset.workspace}"]`)
                 .getBoundingClientRect();
             dialog.setAttribute(

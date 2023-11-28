@@ -51,10 +51,10 @@ export default class ListSettings extends Component {
     }
 
     #renameList = () => {
-        const dialog = document.querySelector('#list-settings');
+        const dialog = this.parent.querySelector('#list-settings');
 
         if (dialog.dataset.list) {
-            const listName = document.querySelector(
+            const listName = this.parent.querySelector(
                 `.list__title[data-list="${dialog.dataset.list}"]`,
             );
             listName.focus();
@@ -68,7 +68,7 @@ export default class ListSettings extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#list-settings');
+        const dialog = this.parent.querySelector('#list-settings');
 
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
         const listId = e.target.closest('button').dataset.list;
@@ -103,10 +103,10 @@ export default class ListSettings extends Component {
     };
 
     #resize = () => {
-        const dialog = document.querySelector('#list-settings');
+        const dialog = this.parent.querySelector('#list-settings');
 
         if (dialog.dataset.workspace) {
-            const btnCoordinates = document
+            const btnCoordinates = this.parent
                 .querySelector(`.btn-change-list[data-list="${dialog.dataset.workspace}"]`)
                 .getBoundingClientRect();
             dialog.setAttribute(

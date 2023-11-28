@@ -57,7 +57,7 @@ class Board extends BaseView {
                 new CreateBoard(this.root, {}),
                 new BoardSettings(this.root, { board_id: this.boardID }),
                 new ListSettings(this.root, {}),
-                new Card(this.root, { avatar: user.avatar_url }),
+                new Card(this.root, { avatar: user.avatar_url, id: cID }),
                 new AddDate(this.root, {}),
             ],
         );

@@ -4,37 +4,52 @@
 
 .card-date {
     background-color: var(--card-background-popups);
-    height: 280px;
+    min-height: 280px;
     width: 250px;
 }
 
 .card-date__content {
     width: 100%;
+    align-items: flex-start;
 }
 
 .card-date__title {
-    color: var(--text-color-card-popop-actions);
+    color: var(--text-color-on-page);
+    align-self: center;
 }
 
-.start-date, .end-date {
+.start-date,
+.end-date {
     align-items: flex-start;
 }
 
 .start-date__title,
 .end-date__title {
     align-items: flex-start;
-    color: var(--text-color-card-popop-actions);
+    color: var(--text-color-on-page);
     margin-left: 8px;
+}
+
+.start-date__checkbox,
+.end-date__checkbox {
+    border-radius: 2px;
 }
 
 .start-date__date,
 .end-date__date {
-    color: var(--text-color-card-popop-actions);
+    background-color: var(--date-field-background);
+    outline: none;
+}
+
+.start-date__date:focus,
+.end-date__date:focus {
+    border: 2px solid var(--new-date-border-color);
 }
 
 .card-date__buttons {
     margin-top: 10px;
-    width: 90%;
+    width: 70%;
+    align-self: center;
 }
 
 .btn-card-date_save,

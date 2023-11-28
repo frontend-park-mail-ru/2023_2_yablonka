@@ -3,6 +3,7 @@
     --text-color-in-main: #ffffff;
     --text-color-in-sign: #ffffff;
     --text-color-on-page: #c0c9f4;
+    --text-color-on-page-inactive: #c0c9f44f;
     --text-color-in-card: #c0c9f4;
     --text-color-in-search: #938989;
     --text-color-forgotten-password: rgba(199, 199, 199);
@@ -22,12 +23,13 @@
     --board-menu-background: rgba(30, 35, 36, 75%);
     --column-background: #101204;
     --card-background: #262d34;
-    --card-background-popups: #2f363d;
+    --card-background-popups: #1f2429;
     --pop-up-background-color: rgba(22, 26, 29, 1);
     --modal-upload-avatar-background-color: #f4f4f6;
     --list-background-color: #101204;
-    --card-item-background-color: #262d34;
+    --card-item-background-color: #16191d;
     --comment-background-color: rgba(7, 15, 23, 50%);
+    --date-field-background: rgba(45, 60, 75, 0.5);
 
     --action-button-color: #7ba4f3;
     --cancel-button-color: #cbcaca;
@@ -57,6 +59,7 @@
 
     --add-new-column-background-color: #2a3066;
     --input-border-color: #38424d;
+    --new-date-border-color: #c0c9f4;
 
     --workspace--icon-gradient-bolder: #e774bb;
     --workspace--icon-gradient-subtle: #cd5a91;

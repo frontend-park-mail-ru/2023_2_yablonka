@@ -54,6 +54,9 @@ export default class BoardPage extends Component {
             link.addEventListener('click', this.toBoardHandler);
         });
         this.parent
+            .querySelector('.profile-link[data-action=boards]')
+            .addEventListener('click', this.toBoardsHandler);
+        this.parent
             .querySelector('.profile-link[data-action=logout]')
             .addEventListener('click', this.logoutHandler);
         this.parent
@@ -105,6 +108,9 @@ export default class BoardPage extends Component {
         this.parent
             .querySelector('.profile-link[data-action=logout]')
             .removeEventListener('click', this.logoutHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=boards]')
+            .removeEventListener('click', this.toBoardsHandler);
         this.parent
             .querySelector('.profile-link[data-action=profile]')
             .removeEventListener('click', this.toProfileHandler);
