@@ -98,6 +98,7 @@ export default class CreateBoard extends Component {
     };
 
     #createBoard = (e) => {
+        e.stopPropagation();
         e.preventDefault();
 
         const dialog = document.querySelector('#create-board');

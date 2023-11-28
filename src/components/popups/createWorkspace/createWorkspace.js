@@ -121,8 +121,6 @@ export default class CreateWorkspace extends Component {
             this.#openCreateWorkspace(e);
 
             dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-            dispatcher.dispatch(actionRedirect('/main', false));
-
             dispatcher.dispatch(
                 actionCreateWorkspace({
                     description: workspaceDescription,

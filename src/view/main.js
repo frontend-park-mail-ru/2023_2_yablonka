@@ -33,6 +33,7 @@ class Main extends BaseView {
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
 
         await dispatcher.dispatch(actionGetWorkspaces());
+        console.log(1);
 
         const { workspaces } = workspaceStorage.storage.get(
             workspaceStorage.workspaceModel.body,

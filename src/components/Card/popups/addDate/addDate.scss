@@ -4,26 +4,37 @@
 
 .card-date {
     background-color: var(--card-background-popups);
+    height: 280px;
+    width: 250px;
 }
 
 .card-date__content {
-    height: 250px;
-    width: 200px;
+    width: 100%;
 }
 
 .card-date__title {
     color: var(--text-color-card-popop-actions);
 }
 
+.start-date, .end-date {
+    align-items: flex-start;
+}
+
 .start-date__title,
 .end-date__title {
     align-items: flex-start;
-    color: var(--text-color-card-popop-action);
+    color: var(--text-color-card-popop-actions);
+    margin-left: 8px;
 }
 
 .start-date__date,
 .end-date__date {
     color: var(--text-color-card-popop-actions);
+}
+
+.card-date__buttons {
+    margin-top: 10px;
+    width: 90%;
 }
 
 .btn-card-date_save,

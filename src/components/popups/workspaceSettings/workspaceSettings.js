@@ -30,7 +30,7 @@ export default class WorkspaceSettings extends Component {
             .querySelector('.btn-delete-workspace')
             .addEventListener('click', this.deleteWorkspaceHandler);
         this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.addEventListener('blur', this.#changeNameHandler);
+            name.addEventListener('keydown', this.#changeNameHandler);
         });
         window.addEventListener('resize', this.#resize);
     }
@@ -46,7 +46,7 @@ export default class WorkspaceSettings extends Component {
             .querySelector('.btn-delete-workspace')
             .removeEventListener('click', this.deleteWorkspaceHandler);
         this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.removeEventListener('blur', this.#changeNameHandler);
+            name.removeEventListener('keydown', this.#changeNameHandler);
         });
         window.removeEventListener('resize', this.#resize);
     }
@@ -133,6 +133,7 @@ export default class WorkspaceSettings extends Component {
 
     #changeNameHandler = (e) => {
         e.stopPropagation();
+        console.log(1);
 
         if (e.key === 'Enter') {
             e.preventDefault();
