@@ -94,7 +94,6 @@ export default class Card extends Component {
 
         dialog.querySelector('.card-information__card-name').textContent = card.name;
         dialog.querySelector('.card-information-list-name__title').textContent = list.name;
-        dialog.querySelector('.card-description-title__card-name').textContent = card.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
 
         if (dialog.getAttribute('open') === null) {
@@ -111,7 +110,6 @@ export default class Card extends Component {
                 )}px; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
             );
         }
-        Card.updateHistory();
     };
 
     #openCard = (e) => {
@@ -131,7 +129,6 @@ export default class Card extends Component {
 
         dialog.querySelector('.card-information__card-name').textContent = card.name;
         dialog.querySelector('.card-information-list-name__title').textContent = list.name;
-        dialog.querySelector('.card-description-title__card-name').textContent = card.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
 
         this.#addComments(parseInt(dialog.dataset.card, 10));
@@ -140,6 +137,7 @@ export default class Card extends Component {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.showModal();
+            Card.updateHistory(card.id);
         }
     };
 
@@ -148,6 +146,7 @@ export default class Card extends Component {
         e.stopPropagation();
 
         popupEvent.closeAllPopups();
+        Card.updateHistory();
     };
 
     #closeCardByBackground = (e) => {
@@ -156,8 +155,8 @@ export default class Card extends Component {
 
         if (e.target === e.currentTarget) {
             popupEvent.closeAllPopups();
+            Card.updateHistory();
         }
-
         popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
     };
 
@@ -239,14 +238,26 @@ export default class Card extends Component {
         );
     };
 
-    static updateHistory = () => {
-        dispatcher.dispatch(
-            actionNavigate(
-                window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0],
-                '',
-                false,
-            ),
-        );
+    static updateHistory = (cardId) => {
+        if (cardId) {
+            dispatcher.dispatch(
+                actionNavigate(
+                    `${
+                        window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0]
+                    }_card_${cardId}`,
+                    '',
+                    false,
+                ),
+            );
+        } else {
+            dispatcher.dispatch(
+                actionNavigate(
+                    window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0],
+                    '',
+                    false,
+                ),
+            );
+        }
     };
 
     #addComments = (cardId) => {
@@ -261,7 +272,6 @@ export default class Card extends Component {
     #getComments = (cardId) => {
         const cardComments = workspaceStorage.getCardById(parseInt(cardId, 10)).comments || [];
         const comments = [];
-        console.log(workspaceStorage.getCardById(parseInt(cardId, 10)));
 
         cardComments.forEach((comment) => {
             const user = workspaceStorage.getUserById(comment.user_id);
