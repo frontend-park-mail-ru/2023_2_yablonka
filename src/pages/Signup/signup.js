@@ -104,7 +104,7 @@ export default class Signin extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Неккоректный пароль. Пароль должен может содержать лишь латинские буквы, цифры, спецсимволы и быть длиннее 8 символов',
+                    text: 'Пароль должен содержать лишь латинские буквы, цифры, спецсимволы и быть длиннее 8 символов',
                 },
             );
         } else if (!Validator.validateRepeatPasswords(user.password, repeatPasswordInput.value)) {

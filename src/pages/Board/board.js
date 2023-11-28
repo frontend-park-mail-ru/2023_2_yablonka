@@ -307,7 +307,7 @@ export default class BoardPage extends Component {
             NotificationMessage.showNotification(input, false, true, {
                 fontSize: 12,
                 fontWeight: 200,
-                text: 'Некорректное название',
+                text: 'Неккоректное название',
             });
         }
     };

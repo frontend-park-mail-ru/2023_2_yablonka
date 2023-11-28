@@ -132,7 +132,7 @@ export default class CreateWorkspace extends Component {
             NotificationMessage.showNotification(workspaceName, true, true, {
                 fontSize: 12,
                 fontWeight: 200,
-                text: 'Некорректное название рабочего пространства',
+                text: 'Неккоректное название рабочего пространства',
             });
         }
     };

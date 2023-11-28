@@ -16,7 +16,7 @@ export default class NotificationMessage extends Component {
         return template(this.config);
     }
 
-    static showNotification(referenceElement, hidePrevElem, isError, message) {
+    static showNotification(referenceElement, hideNextElem, isError, message) {
         const notification = document.createElement('div');
         notification.className = `flex-start font-size-${message.fontSize} font-weight-${message.fontWeight} notification-wrapper`;
         notification.dataset.element = referenceElement.className;
@@ -31,27 +31,27 @@ export default class NotificationMessage extends Component {
 
         document.querySelector(`div[data-element="${referenceElement.className}"]`)?.remove();
 
-        if (hidePrevElem) {
-            const hiddenElement = referenceElement.previousElementSibling;
+        if (hideNextElem) {
+            const hiddenElement = referenceElement.nextElementSibling;
             const elDisplay = hiddenElement.style.display;
 
             hiddenElement.style.display = 'none';
-            parentElement.insertBefore(notification, referenceElement);
+            parentElement.insertBefore(notification, referenceElement.nextElementSibling);
 
             setTimeout(() => {
                 hiddenElement.style.display = elDisplay;
                 document
                     .querySelector(`div[data-element="${referenceElement.className}"]`)
                     .remove();
-            }, 5000);
+            }, 7000);
         } else {
-            parentElement.insertBefore(notification, referenceElement);
+            parentElement.insertBefore(notification, referenceElement.nextElementSibling);
 
             setTimeout(() => {
                 document
                     .querySelector(`div[data-element="${referenceElement.className}"]`)
                     ?.remove();
-            }, 5000);
+            }, 7000);
         }
     }
 }
