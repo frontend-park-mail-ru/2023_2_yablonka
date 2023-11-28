@@ -1,23 +1,28 @@
 <div class='flex-column-centered gap-40 card-data__card-information'>
     <div class='flex-row-centered gap-50 card-information__name-and-tags-wrapper'>
         <div class='flex-column-centered gap-10 card-information__name-wrapper'>
-            <img class='box-24-24 card-information__icon' src='/svg/card-name.svg' />
-            <span
-                contenteditable='true'
-                class='border-radius-5 padding-0-10 font-size-20 font-weight-500 card-information__card-name'
-            ></span>
+            <div class='flex-row-centered name-wrapper__title'>
+                <img class='box-24-24 card-information__icon' src='/svg/card-name.svg' />
+                <span
+                    contenteditable='true'
+                    class='border-radius-5 padding-0-10 font-size-20 font-weight-500 card-information__card-name'
+                ></span>
+            </div>
             <span class='font-size-14 font-weight-200 card-information__list-name'>в колонке&nbsp<u
                     class='font-size-14 font-weight-500 card-information-list-name__title'
                 ></u></span>
         </div>
     </div>
     <div class='flex-column-centered gap-15 card-information__description-wrapper'>
-        <img class='box-24-24 card-information__icon' src='/svg/card-description.svg' />
-        <span class='font-size-16 font-weight-500 card-information__card-description-title'>Описание
-            карточки
+        <div class='flex-row-centered description-wrapper__title'>
+            <img class='box-24-24 card-information__icon' src='/svg/card-description.svg' />
+            <span
+                class='font-size-16 font-weight-500 card-information__card-description-title'
+            >Описание карточки
             </span>
+        </div>
         <textarea
-            class='border-radius-10 font-size-14 font-weight-200 padding-5-10 card-information__card-description'
+            class='border-radius-5 font-size-12 font-weight-300 padding-5-10 card-information__card-description'
             maxlength='1024'
             placeholder='Описание карточки...'
         ></textarea>
@@ -63,10 +68,12 @@
             </div> }}
     <div class='flex-column-centered gap-20 card-information__comments-wrapper'>
         <div class='flex-row-centered card-information__comments-title'>
-            <img class='box-24-24 card-information__icon' src='/svg/comments.svg' />
-            <span
-                class='font-size-20 font-weight-500 card-information__card-description-title'
-            >Действия</span>
+            <div class='flex-row-centered comments-wrapper__title'>
+                <img class='box-24-24 card-information__icon' src='/svg/comments.svg' />
+                <span
+                    class='font-size-16 font-weight-500 card-information__card-description-title'
+                >Действия</span>
+            </div>
         </div>
         <div class='card-information__add-comment'>
             <img
@@ -75,7 +82,7 @@
                 class='box-32-32 card-information__add-comment-avatar'
             />
             <textarea
-                class='font-size-12-font-weight-200 padding-5-10 border-radius-10 card-information__add-comment-text'
+                class='font-size-12 font-weight-300 padding-5-10 border-radius-5 card-information__add-comment-text'
                 maxlength='256'
                 placeholder='Добавить комментарий...'
             ></textarea>
