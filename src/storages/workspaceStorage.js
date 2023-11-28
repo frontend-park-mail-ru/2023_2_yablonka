@@ -143,6 +143,8 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             emitter.trigger('rerender');
+        } else if (status === 403) {
+            emitter.trigger('noaccess');
         }
     }
 
