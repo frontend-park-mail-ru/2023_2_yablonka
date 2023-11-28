@@ -50,5 +50,5 @@ export const actionDeleteCard = (card) => ({
 
 export const actionCommentCard = (comment) => ({
     type: 'commentCard',
-    value: comment
+    value: comment,
 });

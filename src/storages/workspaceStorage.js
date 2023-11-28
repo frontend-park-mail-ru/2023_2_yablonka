@@ -469,7 +469,7 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     getUserById(id) {
-        return this.storage.get(this.workspaceModel.users).find(usr => usr.user_id === id);
+        return this.storage.get(this.workspaceModel.users).find((usr) => usr.user_id === id);
     }
 }
 
