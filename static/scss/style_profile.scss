@@ -1,4 +1,4 @@
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
     .input-profile {
         background: #070f17;
         color: #b0b0b0;
@@ -67,6 +67,14 @@
         flex-direction: column;
         gap: 5px;
     }
+
+    .container-profile__avatar {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 @media screen and (min-width: 400px) {
@@ -130,6 +138,64 @@
         color: var(--text-color-on-page);
         outline: none;
     }
+
+    .container-profile__avatar {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container-profile__navigation {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 25px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-height: 650px) {
+    .profile-avatar__image {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        position: relative;
+        z-index: 0;
+    }
+
+    .container-profile__navigation {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 25px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .user-reference__name-and-surname {
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--text-color-on-page);
+    }
+
+    .user-reference__email {
+        font-size: 14px;
+        font-weight: 200;
+        color: var(--text-color-on-page);
+    }
+
+    .container-profile__avatar {
+        height: 20%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top:20px;
+    }
 }
 
 .profile-link {
@@ -163,14 +229,6 @@
     flex-direction: column;
     overflow-y: scroll;
     overflow-x: hidden;
-}
-
-.container-profile__avatar {
-    height: 20%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .profile-avatar__change-avatar {
