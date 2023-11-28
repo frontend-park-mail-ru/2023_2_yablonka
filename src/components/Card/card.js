@@ -29,6 +29,7 @@ export default class Card extends Component {
         const page = {
             cardContent: new CardContent(null, {
                 avatar: this.config.avatar,
+                id: this.config.id,
             }).render(),
             sidebar: new Sidebar(null, {}).render(),
         };

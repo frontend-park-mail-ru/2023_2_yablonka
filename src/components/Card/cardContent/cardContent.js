@@ -1,8 +1,7 @@
-import workspaceStorage from '../../../storages/workspaceStorage.js';
-import Comments from '../atomic/comments/comments.js';
 import Component from '../../core/basicComponent.js';
 import template from './cardContent.hbs';
 import './cardContent.scss';
+import CardDate from '../atomic/date/cardDate.js';
 
 /**
  * Попап для хедера
@@ -17,6 +16,7 @@ export default class CardContent extends Component {
     render() {
         return template({
             avatar: this.config.avatar,
+            date: new CardDate({ id: this.config.id }).render(),
         });
     }
 }
