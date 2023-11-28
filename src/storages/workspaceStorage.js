@@ -16,6 +16,7 @@ class WorkspaceStorage extends BaseStorage {
         lists: 'lists',
         cards: 'cards',
         users: 'users',
+        comments: 'comments'
     };
 
     /**
@@ -28,6 +29,7 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.lists, []);
         this.storage.set(this.workspaceModel.cards, []);
         this.storage.set(this.workspaceModel.users, []);
+        this.storage.set(this.workspaceModel.comments, []);
     }
 
     /**
@@ -129,6 +131,7 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
             this.storage.set(this.workspaceModel.users, body.body.users);
+            this.storage.set(this.workspaceModel.comments, body.body.comments);
         }
     }
 
@@ -468,6 +471,14 @@ class WorkspaceStorage extends BaseStorage {
     getUserById(id) {
         const usr = this.storage.get(this.workspaceModel.users).find((usr) => usr.user_id === id);
         return usr;
+    }
+
+    getCardComments(id) {
+        const commIDs = this.storage.get(this.workspaceModel.cards).find(crd => crd.id == id).comments;
+
+        const comms = this.storage.get(this.workspaceModel.comments).filter(cmt => commIDs.includes(parseInt(cmt.id, 10)));
+
+        return comms;
     }
 }
 

@@ -52,3 +52,8 @@ export const actionCommentCard = (comment) => ({
     type: 'commentCard',
     value: comment,
 });
+
+export const actionAddUserBoard = (user) => ({
+    type: 'addUserBoard',
+    value: user,
+})
