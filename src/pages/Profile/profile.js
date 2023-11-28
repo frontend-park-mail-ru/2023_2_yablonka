@@ -8,6 +8,7 @@ import {
 import Header from '../../components/Common/header/header.js';
 import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 import Component from '../../components/core/basicComponent.js';
+import popupEvent from '../../components/core/popeventProcessing.js';
 import UserAvatar from '../../components/Profile/userAvatar/userAvatar.js';
 import UserInformation from '../../components/Profile/userInformation/userInformation.js';
 import UserSecurity from '../../components/Profile/userSecurity/userSecurity.js';
@@ -88,6 +89,7 @@ export default class Profile extends Component {
         this.parent
             .querySelector('button[data-action=update-password]')
             ?.addEventListener('click', this.#changePasswordHandler);
+        this.parent.addEventListener('click', popupEvent.closeAllPopups);
 
         emitter.bind('logout', this.close);
     }
@@ -123,6 +125,8 @@ export default class Profile extends Component {
         this.parent
             .querySelector('button[data-action=update-password]')
             ?.removeEventListener('click', this.changePasswordHandler);
+        this.parent.removeEventListener('click', popupEvent.closeAllPopups);
+
 
         emitter.unbind('logout', this.close);
     }
