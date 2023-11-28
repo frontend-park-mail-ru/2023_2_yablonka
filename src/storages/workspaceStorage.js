@@ -441,6 +441,11 @@ class WorkspaceStorage extends BaseStorage {
         return [...cards];
     }
 
+    getCardById(id) {
+        console.log(this.storage.get(this.workspaceModel.cards));
+        return this.storage.get(this.workspaceModel.cards).find((card) => card.id === id);
+    }
+
     /**
      * Получение пользователей на доске
      * @param {Number} id - id доски
