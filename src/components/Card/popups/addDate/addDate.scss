@@ -2,15 +2,39 @@
     background: transparent;
 }
 
+.card-date {
+    background-color: var(--card-background-popups);
+}
+
 .card-date__content {
-    height: 300px;
-    width: 250px;
+    height: 250px;
+    width: 200px;
 }
 
 .card-date__title {
     color: var(--text-color-card-popop-actions);
 }
 
+.start-date__title,
 .end-date__title {
-    align-self: flex-start;
+    align-items: flex-start;
+    color: var(--text-color-card-popop-action);
+}
+
+.start-date__date,
+.end-date__date {
+    color: var(--text-color-card-popop-actions);
+}
+
+.btn-card-date_save,
+.btn-card-date_delete {
+    width: 100%;
+    color: var(--text-color-card-action-buttons);
+}
+
+.btn-card-date_save {
+    background-color: var(--action-button-color);
+}
+.btn-card-date_delete {
+    background-color: var(--btn-delete-background);
 }

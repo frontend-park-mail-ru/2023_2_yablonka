@@ -97,8 +97,6 @@ export default class Card extends Component {
         dialog.querySelector('.card-description-title__card-name').textContent = card.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
 
-        console.log(card);
-
         if (dialog.getAttribute('open') === null) {
             popupEvent.addPopup(dialog);
             dialog.showModal();
