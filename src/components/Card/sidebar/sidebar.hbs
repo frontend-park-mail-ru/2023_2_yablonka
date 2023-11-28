@@ -3,13 +3,11 @@
         <span class='font-size-18 font-weight-500 card-settings__title'>Настройка карточки</span>
         {{#each settings as |setting|}}
             <button
+                data-action='{{this.action}}'
                 class='padding-0-10 gap-5 border-radius-10 flex-row-centered flex-start btn btn-card-settings__action'
             >
                 <img class='box-24-24 action-logo' src='/svg/{{setting.icon}}' />
-                <span
-                    data-action='{{this.action}}'
-                    class='font-size-16 font-weight-500 action-name'
-                >{{setting.name}}</span>
+                <span class='font-size-16 font-weight-500 action-name'>{{setting.name}}</span>
             </button>
         {{/each}}
 
@@ -18,13 +16,11 @@
         <span class='font-size-18 font-weight-500 user-actions__title'>Действия с карточкой</span>
         {{#each actions as |action|}}
             <button
+                data-action='{{this.action}}'
                 class='padding-0-10 gap-5 border-radius-10 flex-row-centered flex-start btn btn-user-actions__action'
             >
                 <img class='box-24-24 action-logo' src='/svg/{{action.icon}}' />
-                <span
-                    data-action='{{this.action}}'
-                    class='font-size-16 font-weight-500 action-name'
-                >{{action.name}}</span>
+                <span class='font-size-16 font-weight-500 action-name'>{{action.name}}</span>
             </button>
         {{/each}}
     </div>

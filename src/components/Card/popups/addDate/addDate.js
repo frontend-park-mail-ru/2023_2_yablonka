@@ -9,7 +9,7 @@ import './addDate.scss';
  * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
  * @param {Object} config - Объект с конфигурацией компонента.
  */
-export default class WorkspaceSettings extends Component {
+export default class AddDate extends Component {
     /**
      * Рендерит компонент в DOM
      */
@@ -19,26 +19,27 @@ export default class WorkspaceSettings extends Component {
 
     addEventListeners() {
         this.parent
-            .querySelector('span[data-action=manage-card-data]')
+            .querySelector('button[data-action=manage-card-data]')
             .addEventListener('click', this.#openPopup);
-        this.parent.querySelector('#card-date').addEventListener('click', this.#closePopup);
+        this.parent
+            .querySelector('#card-date')
+            .addEventListener('click', this.#closePopupByBackground);
     }
 
     removeEventListeners() {
+        this.parent.querySelector('#card-date').removeEventListener('click', this.#openPopup);
         this.parent
-            .querySelector('span[data-action=manage-card-data]')
-            .removeEventListener('click', this.#openPopup);
-        this.parent.querySelector('#card-date').removeEventListener('click', this.#closePopup);
+            .querySelector('#card-date')
+            .removeEventListener('click', this.#closePopupByBackground);
     }
 
     #openPopup = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const cardId = parseInt(this.root.querySelector('#card').dataset.card, 10);
-        const dialog = this.root.querySelector('#card-date');
+        const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
+        const dialog = this.parent.querySelector('#card-date');
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
-        const dialogSizes = dialog.getBoundingClientRect();
 
         if (cardId) {
             const card = workspaceStorage.getCardById(cardId);
@@ -50,26 +51,28 @@ export default class WorkspaceSettings extends Component {
         }
 
         if (dialog.getAttribute('open') === null) {
+            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
             popupEvent.addPopup(dialog);
-            dialog.show();
+            dialog.showModal();
+            const dialogSizes = dialog.getBoundingClientRect();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.y + Math.floor(dialogSizes.height / 2)}px; left: ${
+                `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
                     btnCoordinates.x + btnCoordinates.width + 20
                 }px`,
             );
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     };
 
-    #closePopup = (e) => {
+    #closePopupByBackground = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = this.root.querySelector('#card-date');
-
-        if (dialog.getAttribute('open') !== null && !e.target.closest(dialog)) {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+        if (e.target === e.currentTarget) {
+            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
         }
     };
 }

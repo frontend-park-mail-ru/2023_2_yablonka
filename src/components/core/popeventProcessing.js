@@ -16,7 +16,7 @@ class PopupEvent {
     };
 
     closeOtherPopups = (popups) => {
-        this.components.forEach((el) => {
+        document.querySelectorAll('dialog').forEach((el) => {
             if (!popups.includes(el)) {
                 el.close();
                 this.deletePopup(el);

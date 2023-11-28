@@ -48,7 +48,7 @@ export default class Card extends Component {
             card.addEventListener('click', this.#openCard);
         });
         this.parent
-            .querySelector('span[data-action=delete-card]')
+            .querySelector('button[data-action=delete-card]')
             .addEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
@@ -73,7 +73,7 @@ export default class Card extends Component {
             .querySelector('#card')
             .removeEventListener('click', this.#closeCardByBackground);
         this.parent
-            .querySelector('span[data-action=delete-card]')
+            .querySelector('button[data-action=delete-card]')
             .removeEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
