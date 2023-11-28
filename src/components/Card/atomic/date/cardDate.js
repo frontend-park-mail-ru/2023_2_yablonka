@@ -20,22 +20,20 @@ export default class CardDate extends Component {
     #getCardTimeInformation = (cardId) => {
         const cardTimeInformation = {};
 
-        if (cardId) {
-            const card = workspaceStorage.getCardById(parseInt(cardId, 10));
-            const start = card.start ? card.start : null;
-            const end = card.end ? card.end : null;
+        const card = workspaceStorage.getCardById(parseInt(cardId, 10));
+        const start = card.start ? card.start : null;
+        const end = card.end ? card.end : null;
 
-            if (start) {
-                [cardTimeInformation.start] = start.split('T');
-            } else {
-                [cardTimeInformation.start] = card.date_created.split('T');
-            }
-            if (end) {
-                [cardTimeInformation.end] = end.split('T');
-                cardTimeInformation.isDate = true;
-            } else {
-                cardTimeInformation.isDate = false;
-            }
+        if (start) {
+            [cardTimeInformation.start] = start.split('T');
+        } else {
+            [cardTimeInformation.start] = `${card.date_created.split('T')} (Дата создания карточки)`;
+        }
+        if (end) {
+            [cardTimeInformation.end] = end.split('T');
+            cardTimeInformation.isDate = true;
+        } else {
+            cardTimeInformation.isDate = false;
         }
 
         return cardTimeInformation;

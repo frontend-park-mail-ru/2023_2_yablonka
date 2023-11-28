@@ -29,6 +29,10 @@ export default class AddDate extends Component {
         this.parent
             .querySelector('.end-date__checkbox')
             .addEventListener('click', this.#blockDateInput);
+        this.parent.querySelector('.btn-card-date_save').addEventListener('click', this.#sendTime);
+        this.parent
+            .querySelector('.btn-card-date_delete')
+            .addEventListener('click', this.#deleteTime);
         this.parent
             .querySelector('#card-date')
             .addEventListener('click', this.#closePopupByBackground);
@@ -42,6 +46,9 @@ export default class AddDate extends Component {
         this.parent
             .querySelector('.end-date__checkbox')
             .removeEventListener('click', this.#blockDateInput);
+        this.parent
+            .querySelector('.btn-card-date_save')
+            .removeEventListener('click', this.#sendTime);
         this.parent
             .querySelector('#card-date')
             .removeEventListener('click', this.#closePopupByBackground);
@@ -72,17 +79,40 @@ export default class AddDate extends Component {
         if (catdId) {
             const dialog = this.parent.querySelector('#card-date');
             const card = workspaceStorage.getCardById(catdId);
-            const start = dialog.querySelector('.start-date__checkbox').value;
-            const end = dialog.querySelector('.end-date__checkbox').value;
+            const start = dialog.querySelector('.start-date__date').value;
+            const end = dialog.querySelector('.end-date__date').value;
+
+            console.log(end === '' ? null : end);
 
             dispatcher.dispatch(
                 actionUpdateCard({
                     description: card.description,
-                    end: end === '' ? null : new Date(end).toISOString().split('T')[0],
+                    end: end === '' ? null : new Date(end).toISOString(),
                     id: catdId,
                     list_position: card.list_position,
                     name: card.name,
-                    start: start === '' ? null : new Date(end).toISOString().split('T')[0],
+                    start: start === '' ? null : new Date(start).toISOString(),
+                }),
+            );
+        }
+    };
+
+    #deleteTime = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const catdId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
+        if (catdId) {
+            const card = workspaceStorage.getCardById(catdId);
+
+            dispatcher.dispatch(
+                actionUpdateCard({
+                    description: card.description,
+                    end: null,
+                    id: catdId,
+                    list_position: card.list_position,
+                    name: card.name,
+                    start: null,
                 }),
             );
         }

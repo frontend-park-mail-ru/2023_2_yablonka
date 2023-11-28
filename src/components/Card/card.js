@@ -14,6 +14,7 @@ import dispatcher from '../../modules/dispatcher.js';
 import { actionNavigate } from '../../actions/userActions.js';
 import Comments from './atomic/comments/comments.js';
 import userStorage from '../../storages/userStorage.js';
+import CardDate from './atomic/date/cardDate.js';
 
 /**
  * Попап для хедера
@@ -29,7 +30,6 @@ export default class Card extends Component {
         const page = {
             cardContent: new CardContent(null, {
                 avatar: this.config.avatar,
-                id: this.config.id,
             }).render(),
             sidebar: new Sidebar(null, {}).render(),
         };
@@ -133,6 +133,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__card-description').value = card.description;
 
         this.#addComments(parseInt(dialog.dataset.card, 10));
+        this.#addDate(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
@@ -261,15 +262,6 @@ export default class Card extends Component {
         }
     };
 
-    #addComments = (cardId) => {
-        const commentsLocation = this.parent.querySelector('.card-information__users-comments');
-        commentsLocation.innerHTML = '';
-
-        this.#getComments(cardId).forEach((cmt) => {
-            commentsLocation.insertAdjacentHTML('afterend', cmt);
-        });
-    };
-
     #getComments = (cardId) => {
         const cardComments = workspaceStorage.getCardById(parseInt(cardId, 10)).comments || [];
         const comments = [];
@@ -286,5 +278,23 @@ export default class Card extends Component {
         });
 
         return comments;
+    };
+
+    #addComments = (cardId) => {
+        const commentsLocation = this.parent.querySelector('.card-information__users-comments');
+        commentsLocation.innerHTML = '';
+
+        this.#getComments(cardId).forEach((cmt) => {
+            commentsLocation.insertAdjacentHTML('afterend', cmt);
+        });
+    };
+
+    #addDate = (cardId) => {
+        const dateLocation = this.parent.querySelector('.card-information__date-wrapper');
+        dateLocation.innerHTML = '';
+        console.log(cardId);
+        const date = new CardDate(null, { id: cardId }).render();
+
+        dateLocation.insertAdjacentHTML('afterend', date);
     };
 }
