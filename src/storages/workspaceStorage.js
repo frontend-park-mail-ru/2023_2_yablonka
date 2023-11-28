@@ -234,7 +234,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async updateCard(card) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}task/update/`,
+            `${apiPath + apiVersion}task/edit/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             card,
