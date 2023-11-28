@@ -121,8 +121,6 @@ class WorkspaceStorage extends BaseStorage {
             body = {};
         }
 
-        console.log(body);
-
         const { status } = responsePromise;
 
         if (status === 200) {

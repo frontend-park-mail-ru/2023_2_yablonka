@@ -58,7 +58,7 @@ export default class Card extends Component {
             .addEventListener('keydown', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__add-comment-text')
-            .addEventListener('keydown', this.#addComment);
+            .addEventListener('keydown', this.#createComment);
     }
 
     removeEventListeners() {
@@ -136,9 +136,11 @@ export default class Card extends Component {
         dialog.querySelector('.card-description-title__card-name').textContent = card.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
 
+        this.#addComments(parseInt(dialog.dataset.card, 10));
+
         if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
-            popupEvent.closeOtherPopups();
             dialog.showModal();
         }
     };
@@ -147,24 +149,18 @@ export default class Card extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#card');
-
-        popupEvent.deletePopup(dialog);
         popupEvent.closeAllPopups();
-        popupEvent.clearPopups();
     };
 
     #closeCardByBackground = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#card');
-
         if (e.target === e.currentTarget) {
-            popupEvent.deletePopup(dialog);
             popupEvent.closeAllPopups();
-            popupEvent.clearPopups();
         }
+
+        popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
     };
 
     #deleteCard = (e) => {
@@ -210,7 +206,7 @@ export default class Card extends Component {
         }
     };
 
-    #addComment = (e) => {
+    #createComment = (e) => {
         e.stopPropagation();
 
         if (e.key === 'Enter') {
@@ -226,15 +222,7 @@ export default class Card extends Component {
                     text: comment,
                 }),
             );
-            const newComments = this.#getComments(parseInt(dialog.dataset.card, 10));
-            dialog.querySelectorAll('.card-information__comment').forEach((cmt) => {
-                cmt?.remove();
-            });
-            const commentsLocation = dialog.querySelector('.card-information__comments-wrapper');
-
-            newComments.forEach((cmt) => {
-                commentsLocation.insertAdjacentHTML('afterend', cmt);
-            });
+            this.#addComments(parseInt(dialog.dataset.card, 10));
         }
     };
 
@@ -262,8 +250,19 @@ export default class Card extends Component {
         );
     };
 
+    #addComments = (cardId) => {
+        const commentsLocation = this.parent.querySelector('.card-information__users-comments');
+        commentsLocation.innerHTML = '';
+
+        const newComments = this.#getComments(cardId);
+
+        newComments.forEach((cmt) => {
+            commentsLocation.insertAdjacentHTML('afterend', cmt);
+        });
+    };
+
     #getComments = (cardId) => {
-        const cardComments = workspaceStorage.getCardById(parseInt(cardId, 10)).comments;
+        const cardComments = workspaceStorage.getCardById(parseInt(cardId, 10)).comments || [];
         const comments = [];
 
         cardComments.forEach((comment) => {

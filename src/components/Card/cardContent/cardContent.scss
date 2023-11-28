@@ -2,7 +2,7 @@
     width: 70%;
     align-items: flex-start;
     padding: 5px 20px 10px 40px;
-    max-height: 700px;
+    max-height: 500px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -151,6 +151,10 @@
     background: #00000026;
     border-radius: 6px;
     margin: 10px;
+}
+
+.card-information__users-comments {
+    width: 100%;
 }
 
 .card-information__comment-text::-webkit-scrollbar-thumb {

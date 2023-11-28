@@ -127,7 +127,6 @@ export default class Profile extends Component {
             ?.removeEventListener('click', this.changePasswordHandler);
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
 
-
         emitter.unbind('logout', this.close);
     }
 
@@ -171,7 +170,6 @@ export default class Profile extends Component {
 
     #changePasswordHandler = async (e) => {
         e.preventDefault();
-        console.log(123);
 
         const newPassword = this.parent.querySelector('input[data-name=new-password]').value;
         const oldPassword = this.parent.querySelector('input[data-name=old-password]').value;
@@ -180,7 +178,6 @@ export default class Profile extends Component {
         ).value;
 
         if (!Validator.validatePassword(newPassword)) {
-            console.log(1);
             NotificationMessage.showNotification(
                 this.parent.querySelector('input[data-name=new-password]').parentNode,
                 false,
@@ -203,7 +200,6 @@ export default class Profile extends Component {
                 },
             );
         } else {
-            console.log(1122);
             const user = {
                 new_password: newPassword,
                 old_password: oldPassword,
