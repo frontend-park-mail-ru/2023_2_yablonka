@@ -124,6 +124,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            console.log(body.body);
             this.addBoard(body.body.board);
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
