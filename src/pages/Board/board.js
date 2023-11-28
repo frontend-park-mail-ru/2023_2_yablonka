@@ -12,6 +12,7 @@ import Validator from '../../modules/validator.js';
 import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 import template from './board.hbs';
 import './board.scss';
+import popupEvent from '../../components/core/popeventProcessing.js';
 
 /**
  * слои-обертки
@@ -86,6 +87,7 @@ export default class BoardPage extends Component {
         this.parent.querySelectorAll('.btn-create-card_confirm').forEach((btn) => {
             btn.addEventListener('click', this.#createEntity);
         });
+        this.parent.addEventListener('click', popupEvent.closeAllPopups);
 
         emitter.bind('logout', this.close);
     }
@@ -134,6 +136,7 @@ export default class BoardPage extends Component {
         this.parent.querySelectorAll('.btn-create-card_confirm').forEach((btn) => {
             btn.removeEventListener('click', this.#createEntity);
         });
+        this.parent.removeEventListener('click', popupEvent.closeAllPopups);
 
         emitter.unbind('logout', this.close);
     }
@@ -286,8 +289,7 @@ export default class BoardPage extends Component {
                     actionCreateCard({
                         list_id: parseInt(listId, 10),
                         name: value,
-                        list_position: workspaceStorage.getListCards(parseInt(listId, 10))
-                            .length,
+                        list_position: workspaceStorage.getListCards(parseInt(listId, 10)).length,
                     }),
                 );
             }

@@ -28,16 +28,16 @@ export default class CreateWorkspace extends Component {
             .addEventListener('click', this.#createWorkspace);
         this.parent
             .querySelector('.btn-create-first-workspace')
-            ?.addEventListener('click', this.#createWorkspaceOpen);
+            ?.addEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('.btn-create-workspace')
-            ?.addEventListener('click', this.#createWorkspaceOpen);
+            ?.addEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('.menu__btn-create')
-            .addEventListener('click', this.#createWorkspaceOpen);
+            .addEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('#create-workspace')
-            .addEventListener('click', this.#createWorkspaceClose);
+            .addEventListener('click', this.#closeCreateWorkspace);
         this.parent
             .querySelector('input[data-name=workspace-name]')
             .addEventListener('input', this.#blockCreateButton);
@@ -49,16 +49,16 @@ export default class CreateWorkspace extends Component {
             .removeEventListener('click', this.#createWorkspace);
         this.parent
             .querySelector('.btn-create-first-workspace')
-            ?.removeEventListener('click', this.#createWorkspaceOpen);
+            ?.removeEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('.btn-create-workspace')
-            ?.removeEventListener('click', this.#createWorkspaceOpen);
+            ?.removeEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('.menu__btn-create')
-            .removeEventListener('click', this.#createWorkspaceOpen);
+            .removeEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('#create-workspace')
-            .removeEventListener('click', this.#createWorkspaceClose);
+            .removeEventListener('click', this.#closeCreateWorkspace);
         this.parent
             .querySelector('input[data-name=workspace-name]')
             .removeEventListener('input', this.#blockCreateButton);
@@ -78,31 +78,33 @@ export default class CreateWorkspace extends Component {
         }
     };
 
-    #createWorkspaceOpen = (e) => {
+    #openCreateWorkspace = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         const dialog = this.parent.querySelector('#create-workspace');
 
-        if (dialog.getAttribute('open') !== null) {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-        } else {
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.showModal();
-            popupEvent.closeOtherPopups(dialog);
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     };
 
-    #createWorkspaceClose = (e) => {
+    #closeCreateWorkspace = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#create-workspace');
+        // const dialog = this.parent.querySelector('#create-workspace');
 
         if (e.target === e.currentTarget) {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+            // popupEvent.deletePopup(dialog);
+            // dialog.close();
+
+            popupEvent.closeAllPopups();
         }
     };
 
@@ -116,7 +118,7 @@ export default class CreateWorkspace extends Component {
         ).value;
 
         if (Validator.validateObjectName(workspaceName.value)) {
-            this.#createWorkspaceOpen(e);
+            this.#openCreateWorkspace(e);
 
             dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
             dispatcher.dispatch(actionRedirect('/main', false));

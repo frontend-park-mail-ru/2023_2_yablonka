@@ -49,13 +49,13 @@ export default class Navigation extends Component {
     }
 
     addEventListeners() {
-        document
+        this.parent
             .querySelector('.btn-avatar')
             .addEventListener('click', this.#navigationPopupAction);
     }
 
     removeEventListeners() {
-        document
+        this.parent
             .querySelector('.btn-avatar')
             .removeEventListener('click', this.#navigationPopupAction);
     }
@@ -66,13 +66,13 @@ export default class Navigation extends Component {
 
         const dialog = document.querySelector('#navigation-menu');
 
-        if (dialog.getAttribute('open') !== null) {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-        } else {
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
-            popupEvent.closeOtherPopups(dialog);
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     };
 }

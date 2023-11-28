@@ -1,0 +1,33 @@
+<dialog id='card-date' class='card-date' popover>
+    <div class='flex-column-centered card-date__content'>
+        <span class='font-size-18 font-weight-500 card-date__title'>Даты</span>
+        <div class='flex-column-centered gap-10 start-date'>
+            <span class='font-size-12 font-weight-500 end-date__title'>Начало</span>
+            <div class='flex-row-centered start-date__input-wrapper'>
+                <input class='start-date__checkbox' type='checkbox' /><input
+                    class='start-date__date'
+                    type='date'
+                    value=''
+                />
+            </div>
+        </div>
+        <div class='flex-column-centered gap-10 end-date'>
+            <span class='font-size-12 font-weight-500 end-date__title'>Срок</span>
+            <div class='flex-row-centered end-date__input-wrapper'>
+                <input class='end-date__checkbox' type='checkbox' /><input
+                    class='end-date__date'
+                    type='date'
+                    value=''
+                />
+            </div>
+        </div>
+        <div class='flex-column-centered gap-10 card-date__buttons'>
+            <button
+                class='border-radius-5 padding-5-10 font-size-16 font-weight-500 btn btn-card-date_save'
+            >Сохранить</button>
+            <button
+                class='border-radius-5 padding-5-10 font-size-16 font-weight-500 btn btn-card-date_delete'
+            >Удалить</button>
+        </div>
+    </div>
+</dialog>

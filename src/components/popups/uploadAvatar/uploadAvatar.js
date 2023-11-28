@@ -97,25 +97,24 @@ export default class UploadAvatarModal extends Component {
 
         const dialog = document.querySelector('#upload-avatar');
 
-        if (dialog.getAttribute('open') !== null) {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-            this.avatarFile = null;
-        } else {
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.showModal();
-            popupEvent.closeOtherPopups(dialog);
+            this.avatarFile = null;
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
             this.avatarFile = null;
         }
     };
 
     #closeModal = (e) => {
-        const dialog = document.querySelector('#upload-avatar');
+        // const dialog = document.querySelector('#upload-avatar');
 
         if (e.target === e.currentTarget) {
             this.#changeForm('none', 'flex');
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+            popupEvent.closeAllPopups();
             this.avatarFile = null;
         }
     };

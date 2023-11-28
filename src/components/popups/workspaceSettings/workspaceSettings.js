@@ -59,6 +59,7 @@ export default class WorkspaceSettings extends Component {
                 `span[data-workspace="${dialog.dataset.workspace}"]`,
             );
             workspaceName.focus();
+
             popupEvent.deletePopup(dialog);
             dialog.close();
         }
@@ -73,13 +74,23 @@ export default class WorkspaceSettings extends Component {
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
         const workspaceId = e.target.closest('button').dataset.workspace;
 
-        if (dialog.getAttribute('open') !== null) {
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
+            popupEvent.addPopup(dialog);
+            dialog.show();
+            dialog.setAttribute(
+                'style',
+                `top: ${btnCoordinates.top - 10}px; left: ${
+                    btnCoordinates.left + btnCoordinates.width + 20
+                }px`,
+            );
+        } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
             if (workspaceId !== dialog.dataset.workspace) {
+                popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
-                popupEvent.closeOtherPopups(dialog);
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top - 10}px; left: ${
@@ -87,16 +98,6 @@ export default class WorkspaceSettings extends Component {
                     }px`,
                 );
             }
-        } else {
-            popupEvent.addPopup(dialog);
-            dialog.show();
-            popupEvent.closeOtherPopups(dialog);
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
-                }px`,
-            );
         }
         dialog.dataset.workspace = workspaceId;
     };
@@ -125,6 +126,7 @@ export default class WorkspaceSettings extends Component {
             const workspaceId = dialog.dataset.workspace;
             popupEvent.deletePopup(dialog);
             dialog.close();
+
             dispatcher.dispatch(actionDeleteWorkspace(workspaceId));
         }
     };

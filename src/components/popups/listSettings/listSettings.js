@@ -58,6 +58,7 @@ export default class ListSettings extends Component {
                 `.list__title[data-list="${dialog.dataset.list}"]`,
             );
             listName.focus();
+
             popupEvent.deletePopup(dialog);
             dialog.close();
         }
@@ -72,14 +73,24 @@ export default class ListSettings extends Component {
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
         const listId = e.target.closest('button').dataset.list;
 
-        if (dialog.getAttribute('open') !== null) {
+        popupEvent.closeAllPopups();
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
+            popupEvent.addPopup(dialog);
+            dialog.show();
+            dialog.setAttribute(
+                'style',
+                `top: ${btnCoordinates.top - 10}px; left: ${
+                    btnCoordinates.left + btnCoordinates.width + 20
+                }px`,
+            );
+        } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
-            console.log(popupEvent);
             if (listId !== dialog.dataset.list) {
+                popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
-                popupEvent.closeOtherPopups(dialog);
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top - 10}px; left: ${
@@ -87,16 +98,6 @@ export default class ListSettings extends Component {
                     }px`,
                 );
             }
-        } else {
-            popupEvent.addPopup(dialog);
-            dialog.show();
-            popupEvent.closeOtherPopups(dialog);
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
-                }px`,
-            );
         }
         dialog.dataset.list = listId;
     };
@@ -123,6 +124,7 @@ export default class ListSettings extends Component {
             const listId = parseInt(dialog.dataset.list, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
+
             dispatcher.dispatch(actionDeleteList(listId));
         }
     };

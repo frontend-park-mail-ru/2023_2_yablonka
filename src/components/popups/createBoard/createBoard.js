@@ -68,13 +68,24 @@ export default class CreateBoard extends Component {
         const btnCoordinates = e.target.parentElement.getBoundingClientRect();
         const workspaceId = e.target.parentElement.dataset.workspace;
 
-        if (dialog.getAttribute('open') !== null) {
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
+            popupEvent.addPopup(dialog);
+            dialog.show();
+            dialog.setAttribute(
+                'style',
+                `top: ${btnCoordinates.top - 120}px; left: ${
+                    btnCoordinates.left + btnCoordinates.width + 30
+                }px`,
+            );
+            dialog.setAttribute('data-workspace', workspaceId);
+        } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
             if (workspaceId !== dialog.dataset.workspace) {
+                popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
-                popupEvent.closeOtherPopups(dialog);
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top - 120}px; left: ${
@@ -83,17 +94,6 @@ export default class CreateBoard extends Component {
                 );
                 dialog.dataset.workspace = workspaceId;
             }
-        } else {
-            popupEvent.addPopup(dialog);
-            dialog.show();
-            popupEvent.closeOtherPopups(dialog);
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 120}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 30
-                }px`,
-            );
-            dialog.setAttribute('data-workspace', workspaceId);
         }
     };
 

@@ -15,18 +15,25 @@ class PopupEvent {
         this.components = [];
     };
 
-    closeOtherPopups = (popup) => {
+    closeOtherPopups = () => {
         document.querySelectorAll('dialog').forEach((el) => {
-            if (el !== popup) {
+            if (!this.components.includes(el)) {
                 el.close();
+                this.deletePopup(el);
             }
         });
     };
 
-    closeAllPopups = () => {
+    closeAllPopups = (e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
         document.querySelectorAll('dialog').forEach((el) => {
             el.close();
         });
+        this.clearPopups();
     };
 }
 

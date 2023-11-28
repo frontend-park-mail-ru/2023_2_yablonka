@@ -30,13 +30,13 @@ export default class ChangeAvatarPopup extends Component {
     }
 
     addEventListeners() {
-        document
+        this.parent
             .querySelector('.change-avatar__button')
             .addEventListener('click', this.#changeAvatarMenu);
     }
 
     removeEventListeners() {
-        document
+        this.parent
             .querySelector('.change-avatar__button')
             .removeEventListener('click', this.#changeAvatarMenu);
     }
@@ -47,13 +47,13 @@ export default class ChangeAvatarPopup extends Component {
 
         const dialog = document.querySelector('#change-avatar');
 
-        if (dialog.getAttribute('open') !== null) {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-        } else {
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
-            popupEvent.closeOtherPopups(dialog);
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     };
 }

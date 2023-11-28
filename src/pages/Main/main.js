@@ -3,6 +3,7 @@ import Header from '../../components/Common/header/header.js';
 import Sidebar from '../../components/Main/sidebar/sidebar.js';
 import UserWorkspaces from '../../components/Main/userWorkspaces/userWorkspaces.js';
 import Component from '../../components/core/basicComponent.js';
+import popupEvent from '../../components/core/popeventProcessing.js';
 import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
 import template from './main.hbs';
@@ -47,6 +48,7 @@ export default class MainPage extends Component {
         this.parent.querySelectorAll('.link-user-board').forEach((link) => {
             link.addEventListener('click', this.toBoardHandler);
         });
+        this.parent.addEventListener('click', popupEvent.closeAllPopups);
 
         emitter.bind('logout', this.close);
     }
@@ -73,6 +75,8 @@ export default class MainPage extends Component {
         this.parent.querySelectorAll('.link-user-board').forEach((link) => {
             link.removeEventListener('click', this.toBoardHandler);
         });
+        this.parent.removeEventListener('click', popupEvent.closeAllPopups);
+
         emitter.unbind('logout', this.close);
     }
 

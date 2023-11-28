@@ -70,17 +70,17 @@ export default class BoardSettings extends Component {
 
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
 
-        if (dialog.getAttribute('open') !== null) {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-        } else {
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
-            popupEvent.closeOtherPopups(dialog);
             dialog.setAttribute(
                 'style',
                 `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.right - 200}px`,
             );
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     };
 
@@ -98,10 +98,12 @@ export default class BoardSettings extends Component {
 
     #deleteBoardHandler = () => {
         const dialog = this.parent.querySelector('#board-settings');
+
         if (dialog.dataset.board) {
             const boardId = parseInt(dialog.dataset.board, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
+
             dispatcher.dispatch(actionDeleteBoard(parseInt(boardId, 10)));
             dispatcher.dispatch(actionRedirect('/main', true));
         }
