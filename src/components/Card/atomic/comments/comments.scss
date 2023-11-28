@@ -1,0 +1,24 @@
+.card-information__comment {
+    position: relative;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.card-information__comment-avatar {
+    border-radius: 100%;
+    position: absolute;
+    top: 5px;
+    left: -40px;
+}
+
+.card-information__user-information {
+    color: var(--text-color-in-card);
+    margin-left: 10px;
+}
+
+.card-information__comment-text {
+    background-color: var(--comment-background-color);
+    width: 100%;
+    color: var(--text-color-in-card);
+    overflow: auto;
+}

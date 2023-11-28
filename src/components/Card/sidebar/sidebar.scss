@@ -1,0 +1,30 @@
+.card-data__card-action {
+    padding-left: 20px;
+}
+
+.card-actions__card-settings,
+.card-actions__user-action {
+    width: 100%;
+}
+
+.card-settings__title,
+.user-actions__title {
+    color: var(--text-color-in-card);
+    align-self: flex-start;
+}
+
+.btn-card-settings__action,
+.btn-user-actions__action {
+    width: 90%;
+    height: 40px;
+    background-color: var(--btn-card-action-background);
+}
+
+.btn-card-settings__action:hover,
+.btn-user-actions__action:hover {
+    background-color: var(--btn-card-action-background-hover);
+}
+
+.action-name {
+    color: var(--text-color-in-card);
+}

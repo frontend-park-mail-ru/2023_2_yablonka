@@ -23,11 +23,9 @@ class PopupEvent {
         });
     };
 
-    closeAllPopups = (e) => {
+    closeAllPopups = () => {
         document.querySelectorAll('dialog').forEach((el) => {
-            if (!e.target.closest('dialog')) {
-                el.close();
-            }
+            el.close();
         });
     };
 }
