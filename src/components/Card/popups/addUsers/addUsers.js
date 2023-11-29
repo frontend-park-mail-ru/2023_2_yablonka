@@ -1,3 +1,4 @@
+import { actionUpdateCard } from '../../../../actions/boardActions.js';
 import dispatcher from '../../../../modules/dispatcher.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
@@ -117,6 +118,7 @@ export default class AddCardUsers extends Component {
                 // dispatcher.dispatch();
             } else {
                 target.removeAttribute('checked');
+                // dispatcher.dispatch();
             }
         }
     };

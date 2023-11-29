@@ -15,6 +15,9 @@ import { actionNavigate } from '../../actions/userActions.js';
 import Comments from './atomic/comments/comments.js';
 import userStorage from '../../storages/userStorage.js';
 import CardDate from './atomic/date/cardDate.js';
+import Validator from '../../modules/validator.js';
+import NotificationMessage from '../Common/notification/notificationMessage.js';
+import CardUser from './atomic/cardUser/cardUser.js';
 
 /**
  * Попап для хедера
@@ -99,6 +102,7 @@ export default class Card extends Component {
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.#addDate(parseInt(dialog.dataset.card, 10));
+        Card.#addUsers(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.addPopup(dialog);
@@ -137,6 +141,7 @@ export default class Card extends Component {
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.#addDate(parseInt(dialog.dataset.card, 10));
+        Card.#addUsers(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
@@ -218,13 +223,26 @@ export default class Card extends Component {
             const comment = dialog.querySelector('.card-information__add-comment-text').value;
             dialog.querySelector('.card-information__add-comment-text').value = '';
             const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
-            dispatcher.dispatch(
-                actionCommentCard({
-                    task_id: parseInt(dialog.dataset.card, 10),
-                    user_id: userId,
-                    text: comment,
-                }),
-            );
+            if (Validator.validateObjectName(comment)) {
+                dispatcher.dispatch(
+                    actionCommentCard({
+                        task_id: parseInt(dialog.dataset.card, 10),
+                        user_id: userId,
+                        text: comment,
+                    }),
+                );
+            } else {
+                NotificationMessage.showNotification(
+                    this.parent.querySelector('.card-information__add-comment').parentNode,
+                    false,
+                    true,
+                    {
+                        fontSize: 14,
+                        fontWeight: 200,
+                        text: 'Неккоректное сообщение',
+                    },
+                );
+            }
         }
     };
 
@@ -286,9 +304,11 @@ export default class Card extends Component {
         const commentsLocation = dialog.querySelector('.card-information__users-comments');
         commentsLocation.innerHTML = '';
 
-        this.#getComments(cardId).reverse().forEach((cmt) => {
-            commentsLocation.insertAdjacentHTML('beforeend', cmt);
-        });
+        this.#getComments(cardId)
+            .reverse()
+            .forEach((cmt) => {
+                commentsLocation.insertAdjacentHTML('beforeend', cmt);
+            });
     };
 
     static #addDate = (cardId) => {
@@ -299,5 +319,23 @@ export default class Card extends Component {
         const date = new CardDate(null, { id: cardId }).render();
 
         dateLocation.insertAdjacentHTML('beforeend', date);
+    };
+
+    static #addUsers = (cardId) => {
+        const dialog = document.querySelector('#card');
+        const usersLocation = dialog.querySelector('.card-information__users-wrapper');
+        usersLocation.innerHTML = '';
+
+        const users = workspaceStorage.getCardUsers(parseInt(cardId, 10));
+        const overflow = users.length - 3;
+        users.slice(0, 3).forEach((user) => {
+            usersLocation.insertAdjacentHTML(
+                'beforeend',
+                new CardUser(null, { avatar: user.avatar_url, id: user.user_id }),
+            );
+        });
+        if (overflow > 0) {
+            dialog.querySelector('.card-information__user-overflow').textContent = `+${overflow}`;
+        }
     };
 }
