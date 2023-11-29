@@ -57,3 +57,8 @@ export const actionAddUserBoard = (user) => ({
     type: 'addUserBoard',
     value: user,
 })
+
+export const actionRemoveUserBoard = (user) => ({
+    type: 'removeUserBoard',
+    value: user,
+})
