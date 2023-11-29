@@ -120,6 +120,8 @@ class WorkspaceStorage extends BaseStorage {
             board,
         );
 
+        console.log(responsePromise.json());
+
         let body;
         try {
             body = await responsePromise.json();
