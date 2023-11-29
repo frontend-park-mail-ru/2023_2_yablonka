@@ -16,7 +16,9 @@ class WorkspaceStorage extends BaseStorage {
         lists: 'lists',
         cards: 'cards',
         users: 'users',
-        comments: 'comments'
+        comments: 'comments',
+        checklists: 'checklists',
+        items: 'items'
     };
 
     /**
@@ -132,6 +134,8 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.cards, body.body.cards);
             this.storage.set(this.workspaceModel.users, body.body.users);
             this.storage.set(this.workspaceModel.comments, body.body.comments);
+            this.storage.set(this.workspaceModel.checklists, body.body.checklists);
+            this.storage.set(this.workspaceModel.items, body.body.checklist_items);
         }
     }
 
@@ -457,14 +461,15 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     getCardUsers(id) {
-        const cardUsers = [];
-        // const currentCardUserIds = this.storage
-        //     .get(this.workspaceModel.cards)
-        //     .find((crd) => crd.id === id).users;
+        const currentCardUserIds = this.storage
+            .get(this.workspaceModel.cards)
+            .find((crd) => crd.id === id).users;
 
-        // const cardUsers = this.storage
-        //     .get(this.workspaceModel.users)
-        //     .filter((usr) => currentCardUserIds.includes(usr.user_id));
+        const cardUsers = this.storage
+            .get(this.workspaceModel.users)
+            .filter(usr => {
+                return currentCardUserIds.find(uid => uid === usr.user_id)
+            });;
 
         return [...cardUsers];
     }
@@ -487,6 +492,26 @@ class WorkspaceStorage extends BaseStorage {
         });
 
         return comms;
+    }
+
+    getCardChecklists(id) {
+        const checklistIDs = this.storage.get(this.workspaceModel.cards).find(crd => crd.id === id).checklists;
+
+        const checklists = this.storage.get(this.workspaceModel.checklists).filter(chk => {
+            return checklistIDs.find(chid => chid === chk.id)
+        });
+
+        return checklists;
+    }
+
+    getChecklistItems(id) {
+        const itemsIDs = this.storage.get(this.workspaceModel.cards).find(crd => crd.id === id).checklist_items;
+
+        const items = this.storage.get(this.workspaceModel.checklists).filter(chk => {
+            return itemsIDs.find(chid => chid === chk.id)
+        });
+
+        return [...items];
     }
 }
 
