@@ -1,0 +1,35 @@
+.card-information__checkitems {
+    width: 100%;
+}
+
+.check-item {
+    justify-content: space-between;
+    min-height: 25px;
+    background-color: var(--checkitem-background-color);
+    width: 100%;
+    position: relative;
+}
+
+.input-check-item__checkbox {
+    position: absolute;
+    left: -30px;
+}
+
+.check-item__name {
+    align-self: flex-start;
+}
+
+.check-item-name__text {
+    color: var(--text-color-on-page);
+    max-width: 400px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.btn-check-item_delete {
+    background: transparent;
+}
+
+.btn-check-item_delete:hover {
+    background: var(--delete-checklist-button-hover);
+}

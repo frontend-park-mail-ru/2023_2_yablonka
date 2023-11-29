@@ -54,6 +54,9 @@
     --btn-card-action-background: #414b56;
     --btn-card-action-background-hover: #415655;
     --btn-close-card-background: #414b56;
+    --delete-checklist-button: #A1BDD914;
+    --delete-checklist-button-hover: #bbd2e921;
+    --checkitem-background-color: #86b7e728;
 
     --router-btn-border-color: #ffffff;
     --main-btn-border-color: #c0c9f4;
@@ -141,6 +144,11 @@
 .box-8-8 {
     width: 8px;
     height: 8px;
+}
+
+.box-12-12 {
+    width: 12px;
+    height: 12px;
 }
 
 .box-16-16 {
