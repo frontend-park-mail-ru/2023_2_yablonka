@@ -1,10 +1,26 @@
-<div class='flex-row-centered check-item'>
-    <div class='box-24-24 flex-centered check-item__checkbox'>
-        <input type='checkbox' class='strach-layout input input-check-item__checkbox' />
-    </div>
-    <div class='check-item__name'><span
+<div class='padding-5-10 border-radius-5 flex-row-centered check-item'>
+    <input
+        data-checkitem_id='{{this.checkitemID}}'
+        data-checklist_id='{{this.checklistID}}'
+        type='checkbox'
+        class='box-16-16 border-radius-5 input input-check-item__checkbox'
+    />
+    <div class='flex-centered check-item__name'><span
             class='font-size-14 font-weight-500 check-item-name__text'
-        ></span></div>
-    <div class='check-item__delete'>
-        <img class='check-item-delete__image' src='/svg/close.svg' alt='' /></div>
+        >{{this.name}}</span></div>
+    <button class='box-12-12 border-radius-5 flex-centered btn btn-check-item_delete'>
+        <svg
+            class='box-12-12'
+            fill='var(--text-color-in-card)'
+            width='800px'
+            height='800px'
+            viewBox='0 0 16 16'
+            xmlns='http://www.w3.org/2000/svg'
+        >
+            <path
+                d='M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z'
+                fill-rule='evenodd'
+            />
+        </svg>
+    </button>
 </div>
