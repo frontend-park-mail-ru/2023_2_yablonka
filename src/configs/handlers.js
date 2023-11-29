@@ -40,6 +40,8 @@ const handlers = [
     { type: 'createChecklistItem', method: workspaceStorage.createChecklistItem.bind(workspaceStorage) },
     { type: 'updateChecklistItem', method: workspaceStorage.updateChecklistItem.bind(workspaceStorage) },
     { type: 'deleteChecklistItem', method: workspaceStorage.deleteChecklistItem.bind(workspaceStorage) },
+    { type: 'addUserCard', method: workspaceStorage.addUserCard.bind(workspaceStorage) },
+    { type: 'removeUserCard', method: workspaceStorage.removeUserCard.bind(workspaceStorage) },
 ];
 
 export default handlers;

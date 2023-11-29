@@ -92,3 +92,13 @@ export const actionDeleteChecklistItem = (checklistItem) => ({
     type: 'deleteChecklistItem',
     value: checklistItem,
 });
+
+export const actionAddUserCard = (data) => ({
+    type: 'addUserCard',
+    value: data,
+})
+
+export const actionRemoveUserCard = (data) => ({
+    type: 'removeUserCard',
+    value: data,
+});

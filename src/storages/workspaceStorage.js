@@ -411,6 +411,36 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    async addUserCard(data) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/user/add/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            task,
+        );
+
+        const { status } = responseProtask
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    async removeUserCard(data) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/user/remove/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            task,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
     addBoard(board) {
         const idx = this.storage
             .get(this.workspaceModel.boards)
