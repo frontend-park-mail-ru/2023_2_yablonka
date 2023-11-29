@@ -18,7 +18,7 @@ class WorkspaceStorage extends BaseStorage {
         users: 'users',
         comments: 'comments',
         checklists: 'checklists',
-        items: 'items'
+        items: 'items',
     };
 
     /**
@@ -465,11 +465,9 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.cards)
             .find((crd) => crd.id === id).users;
 
-        const cardUsers = this.storage
-            .get(this.workspaceModel.users)
-            .filter(usr => {
-                return currentCardUserIds.find(uid => uid === usr.user_id)
-            });;
+        const cardUsers = this.storage.get(this.workspaceModel.users).filter((usr) => {
+            return currentCardUserIds.find((uid) => uid === usr.user_id);
+        });
 
         return [...cardUsers];
     }
@@ -485,37 +483,45 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     getCardComments(id) {
-        const commIDs = this.storage.get(this.workspaceModel.cards).find(crd => crd.id == id).comments;
+        const commIDs = this.storage
+            .get(this.workspaceModel.cards)
+            .find((crd) => crd.id == id).comments;
 
-        const comms = this.storage.get(this.workspaceModel.comments).filter(cmt => {
-            return commIDs.find(comid => comid == cmt.id)
+        const comms = this.storage.get(this.workspaceModel.comments).filter((cmt) => {
+            return commIDs.find((comid) => comid == cmt.id);
         });
 
         return comms;
     }
 
     getCardChecklists(id) {
-        const checklistIDs = this.storage.get(this.workspaceModel.cards).find(crd => crd.id === id).checklists;
+        const checklistIDs = this.storage
+            .get(this.workspaceModel.cards)
+            .find((crd) => crd.id === id).checklists;
 
-        const checklists = this.storage.get(this.workspaceModel.checklists).filter(chk => {
-            return checklistIDs.find(chid => chid === chk.id)
+        const checklists = this.storage.get(this.workspaceModel.checklists).filter((chk) => {
+            return checklistIDs.find((chid) => chid === chk.id);
         });
 
         return checklists;
     }
 
     getChecklistItems(id) {
-        const itemsIDs = this.storage.get(this.workspaceModel.cards).find(crd => crd.id === id).checklist_items;
+        const itemsIDs = this.storage
+            .get(this.workspaceModel.cards)
+            .find((crd) => crd.id === id).checklist_items;
 
-        const items = this.storage.get(this.workspaceModel.checklists).filter(chk => {
-            return itemsIDs.find(chid => chid === chk.id)
+        const items = this.storage.get(this.workspaceModel.checklists).filter((chk) => {
+            return itemsIDs.find((chid) => chid === chk.id);
         });
 
         return [...items];
     }
 
     searchUsers(substring) {
-        return this.storage.get(this.workspaceModel.users).filter(usr => usr.indexOf('substring') !== -1);
+        return this.storage
+            .get(this.workspaceModel.users)
+            .filter((usr) => usr.email.indexOf(substring) !== -1);
     }
 }
 

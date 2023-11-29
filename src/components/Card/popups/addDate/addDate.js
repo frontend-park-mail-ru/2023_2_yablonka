@@ -5,6 +5,7 @@ import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
 import template from './addDate.hbs';
 import './addDate.scss';
+
 /**
  * Попап для хедера
  * @class

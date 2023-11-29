@@ -12,6 +12,8 @@ import CreateWorkspace from '../components/popups/createWorkspace/createWorkspac
 import ListSettings from '../components/popups/listSettings/listSettings.js';
 import Card from '../components/Card/card.js';
 import AddDate from '../components/Card/popups/addDate/addDate.js';
+import AddBoardUsers from '../components/popups/addBoardUsers/addBoardUsers.js';
+import AddCardUsers from '../components/Card/popups/addUsers/addUsers.js';
 
 /**
  * Класс для рендера страницы доски
@@ -59,6 +61,8 @@ class Board extends BaseView {
                 new ListSettings(this.root, {}),
                 new Card(this.root, { avatar: user.avatar_url }),
                 new AddDate(this.root, {}),
+                new AddCardUsers(this.root, {}),
+                new AddBoardUsers(this.root, {}),
             ],
         );
 

@@ -97,6 +97,9 @@ export default class Card extends Component {
         dialog.querySelector('.card-information-list-name__title').textContent = list.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
 
+        Card.#addComments(parseInt(dialog.dataset.card, 10));
+        Card.#addDate(parseInt(dialog.dataset.card, 10));
+
         if (dialog.getAttribute('open') === null) {
             popupEvent.addPopup(dialog);
             dialog.showModal();
@@ -132,8 +135,8 @@ export default class Card extends Component {
         dialog.querySelector('.card-information-list-name__title').textContent = list.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
 
-        this.#addComments(parseInt(dialog.dataset.card, 10));
-        this.#addDate(parseInt(dialog.dataset.card, 10));
+        Card.#addComments(parseInt(dialog.dataset.card, 10));
+        Card.#addDate(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
@@ -222,7 +225,6 @@ export default class Card extends Component {
                     text: comment,
                 }),
             );
-            this.#addComments(parseInt(dialog.dataset.card, 10));
         }
     };
 
@@ -262,39 +264,40 @@ export default class Card extends Component {
         }
     };
 
-    #getComments = (cardId) => {
-        const cardComments = workspaceStorage.getCardById(parseInt(cardId, 10)).comments || [];
+    static #getComments = (cardId) => {
+        const cardComments = workspaceStorage.getCardComments(parseInt(cardId, 10));
         const comments = [];
 
         cardComments.forEach((comment) => {
             const user = workspaceStorage.getUserById(comment.user_id);
             comments.push(
                 new Comments(null, {
-                    avatar: user.avatar,
+                    avatar: user.avatar_url,
                     email: user.email,
                     comment: comment.text,
                 }).render(),
             );
         });
-
         return comments;
     };
 
-    #addComments = (cardId) => {
-        const commentsLocation = this.parent.querySelector('.card-information__users-comments');
+    static #addComments = (cardId) => {
+        const dialog = document.querySelector('#card');
+        const commentsLocation = dialog.querySelector('.card-information__users-comments');
         commentsLocation.innerHTML = '';
 
-        this.#getComments(cardId).forEach((cmt) => {
-            commentsLocation.insertAdjacentHTML('afterend', cmt);
+        this.#getComments(cardId).reverse().forEach((cmt) => {
+            commentsLocation.insertAdjacentHTML('beforeend', cmt);
         });
     };
 
-    #addDate = (cardId) => {
-        const dateLocation = this.parent.querySelector('.card-information__date-wrapper');
+    static #addDate = (cardId) => {
+        const dialog = document.querySelector('#card');
+        const dateLocation = dialog.querySelector('.card-information__date-wrapper');
         dateLocation.innerHTML = '';
-        console.log(cardId);
+
         const date = new CardDate(null, { id: cardId }).render();
 
-        dateLocation.insertAdjacentHTML('afterend', date);
+        dateLocation.insertAdjacentHTML('beforeend', date);
     };
 }

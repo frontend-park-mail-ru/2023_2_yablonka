@@ -28,6 +28,10 @@ class PopupEvent {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
+
+            if (e.target.closest('dialog')) {
+                return;
+            }
         }
 
         document.querySelectorAll('dialog').forEach((el) => {

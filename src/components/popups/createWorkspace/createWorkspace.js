@@ -4,7 +4,7 @@ import './createWorkspace.scss';
 import userStorage from '../../../storages/userStorage.js';
 import { actionCreateWorkspace } from '../../../actions/workspaceActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
-import { actionNavigate, actionRedirect } from '../../../actions/userActions.js';
+import { actionNavigate } from '../../../actions/userActions.js';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Validator from '../../../modules/validator.js';
 import popupEvent from '../../core/popeventProcessing.js';
@@ -66,15 +66,15 @@ export default class CreateWorkspace extends Component {
 
     #blockCreateButton = (e) => {
         e.preventDefault();
-        const input = this.parent.querySelector('input[data-name="workspace-name"');
+        const input = this.parent.querySelector('input[data-name="workspace-name"]');
         const btn = this.parent.querySelector('.btn-create-workspace-pop-up');
 
         if (e.target.value.length === 0) {
             btn.disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color');
+            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             btn.disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color');
+            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
@@ -85,7 +85,7 @@ export default class CreateWorkspace extends Component {
         const dialog = this.parent.querySelector('#create-workspace');
 
         if (dialog.getAttribute('open') === null) {
-            popupEvent.closeAllPopups();
+            popupEvent.closeAllPopups(e);
             popupEvent.addPopup(dialog);
             dialog.showModal();
         } else {
@@ -98,12 +98,7 @@ export default class CreateWorkspace extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        // const dialog = this.parent.querySelector('#create-workspace');
-
         if (e.target === e.currentTarget) {
-            // popupEvent.deletePopup(dialog);
-            // dialog.close();
-
             popupEvent.closeAllPopups();
         }
     };
