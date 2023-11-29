@@ -61,4 +61,34 @@ export const actionAddUserBoard = (user) => ({
 export const actionRemoveUserBoard = (user) => ({
     type: 'removeUserBoard',
     value: user,
-})
+});
+
+export const actionCreateChecklist = (newChecklist) => ({
+    type: 'createChecklist',
+    value: newChecklist,
+});
+
+export const actionUpdateChecklist = (newChecklist) => ({
+    type: 'updateChecklist',
+    value: newChecklist,
+});
+
+export const actionDeleteChecklist = (checklist) => ({
+    type: 'deleteChecklist',
+    value: checklist,
+});
+
+export const actionCreateChecklistItem = (newChecklistItem) => ({
+    type: 'createChecklistItem',
+    value: newChecklistItem,
+});
+
+export const actionUpdateChecklistItem = (newChecklistItem) => ({
+    type: 'updateChecklistItem',
+    value: newChecklistItem,
+});
+
+export const actionDeleteChecklistItem = (checklistItem) => ({
+    type: 'deleteChecklistItem',
+    value: checklistItem,
+});

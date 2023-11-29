@@ -270,6 +270,96 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    async createChecklist(checklist) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}checklist/create/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            checklist,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    async updateChecklist(checklist) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}checklist/edit/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            checklist,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    async deleteChecklist(checklist) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}checklist/delete/`,
+            'DELETE',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            checklist,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    async createChecklistItem(checklistItem) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}checklistItem/create/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            checklistItem,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    async updateChecklistItem(checklistItem) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}checklistItem/edit/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            checklistItem,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    async deleteChecklistItem(checklistItem) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}checklistItem/delete/`,
+            'DELETE',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            checklistItem,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
     async commentCard(comment) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}comment/create/`,

@@ -34,6 +34,12 @@ const handlers = [
     { type: 'getQuestions', method: userStorage.getQuestions.bind(userStorage) },
     { type: 'answerQuestion', method: userStorage.answerQuestion.bind(userStorage) },
     { type: 'commentCard', method: workspaceStorage.commentCard.bind(workspaceStorage) },
+    { type: 'createChecklist', method: workspaceStorage.createChecklist.bind(workspaceStorage) },
+    { type: 'updateChecklist', method: workspaceStorage.updateChecklist.bind(workspaceStorage) },
+    { type: 'deleteChecklist', method: workspaceStorage.deleteChecklist.bind(workspaceStorage) },
+    { type: 'createChecklistItem', method: workspaceStorage.createChecklistItem.bind(workspaceStorage) },
+    { type: 'updateChecklistItem', method: workspaceStorage.updateChecklistItem.bind(workspaceStorage) },
+    { type: 'deleteChecklistItem', method: workspaceStorage.deleteChecklistItem.bind(workspaceStorage) },
 ];
 
 export default handlers;
