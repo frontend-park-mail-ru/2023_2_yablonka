@@ -13,18 +13,10 @@
                 ></u></span>
         </div>
         <div class='flex-centered card-information__date-wrapper'>
-            {{{date}}}
         </div>
         <div class='flex-row card-information__users-wrapper'>
-            {{#each users as |user|}}
-                {{{user}}}
-            {{/each}}
-            {{#if this.userOverflow}}
-                <span
-                    class='font-size-16 font-weight-500 card-information__user-overflow'
-                >{{this.overflow}}</span>
-            {{/if}}
         </div>
+        <span class='font-size-16 font-weight-500 card-information__user-overflow'></span>
     </div>
     <div class='flex-column-centered gap-15 card-information__description-wrapper'>
         <div class='flex-row-centered description-wrapper__title'>
