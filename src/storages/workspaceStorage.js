@@ -273,6 +273,12 @@ class WorkspaceStorage extends BaseStorage {
             userStorage.storage.get(userStorage.userModel.csrf),
             comment,
         );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
     }
 
     async addUser(user) {
