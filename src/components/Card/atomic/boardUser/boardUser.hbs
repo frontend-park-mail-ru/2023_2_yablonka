@@ -1,13 +1,18 @@
-<div class='flex-row-centered gap-10 add-card-user__user'>
-    {{#if inCard}}
-        <input class='box-16-16 add-card-user__select-user' type='checkbox' checked />
+<div class='flex-row-centered gap-10 border-radius-5 add-card-user__user'>
+    {{#if this.inCard}}
+        <input
+            data-id='{{this.ID}}'
+            class='box-16-16 add-card-user__select-user'
+            type='checkbox'
+            checked
+        />
     {{else}}
-        <input class='box-16-16 add-card-user__select-user' type='checkbox' />
+        <input data-id='{{this.ID}}' class='box-16-16 add-card-user__select-user' type='checkbox' />
     {{/if}}
-    <div data-id='{{this.ID}}' class='flex-row-centered gap-10 add-card-user__user-information'><img
-            class='box-24-24 add-card-user__user-avatar'
+    <div class='flex-row-centered gap-10 add-card-user__user-information'><img
+            class='box-32-32 add-card-user__user-avatar'
             src='/img/{{this.avatar}}'
             alt='avatar'
-        /><span class='font-size-14 font-weight-500 add-card-user__user-email'>{{this.email}}</span>
+        /><span class='font-size-16 font-weight-500 add-card-user__user-email'>{{this.email}}</span>
     </div>
 </div>

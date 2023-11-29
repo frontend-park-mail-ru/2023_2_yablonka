@@ -1,6 +1,8 @@
-import { actionAddUserBoard } from '../../../actions/boardActions.js';
+import { actionAddUserBoard, actionRemoveUserBoard } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
 import Validator from '../../../modules/validator.js';
+import userStorage from '../../../storages/userStorage.js';
+import workspaceStorage from '../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
@@ -80,14 +82,12 @@ export default class AddBoardUsers extends Component {
         const btnAdd = this.parent.querySelector('.btn-add-board-user_add');
         const btnDelete = this.parent.querySelector('.btn-add-board-user_delete');
 
-        if (e.target.value.length === 0) {
+        if (input.value.length === 0) {
             btnAdd.disabled = true;
             btnDelete.disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             btnAdd.disabled = false;
             btnDelete.disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
@@ -101,32 +101,33 @@ export default class AddBoardUsers extends Component {
 
         if (Validator.validateObjectName(userEmail.value)) {
             popupEvent.closeAllPopups();
+            const boardId = parseInt(
+                this.parent.querySelector('.board-menu__board-name').dataset.board,
+                10,
+            );
+
             if (action === 'add-user') {
                 dispatcher.dispatch(
                     actionAddUserBoard({
                         user_email: userEmail,
-                        board_id: parseInt(
-                            this.parent.querySelector('.board-menu__board-name').dataset.board,
-                            10,
-                        ),
+                        board_id: boardId,
+                        workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
                     }),
                 );
             } else {
-                // dispatcher.dispatch(
-                //     actionRemoveUser({
-                //         user_email: userEmail,
-                //         board_id: parseInt(
-                //             this.parent.querySelector('.board-menu__board-name').dataset.board,
-                //             10,
-                //         ),
-                //     }),
-                // );
+                dispatcher.dispatch(
+                    actionRemoveUserBoard({
+                        user_id: workspaceStorage.getUserByEmail(userEmail),
+                        board_id: boardId,
+                        workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
+                    }),
+                );
             }
         } else {
             NotificationMessage.showNotification(email, true, true, {
                 fontSize: 12,
                 fontWeight: 200,
-                text: 'Неккоректный email',
+                text: 'Такого пользователя не существует',
             });
         }
     };

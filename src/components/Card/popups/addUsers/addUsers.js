@@ -1,3 +1,4 @@
+import dispatcher from '../../../../modules/dispatcher.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
@@ -29,6 +30,9 @@ export default class AddCardUsers extends Component {
         this.parent
             .querySelector('.input-add-card-user__search')
             .addEventListener('input', this.#searchUsers);
+        this.parent
+            .querySelector('.add-card-user__content')
+            .addEventListener('click', this.#selectUsers);
     }
 
     removeEventListeners() {
@@ -93,6 +97,7 @@ export default class AddCardUsers extends Component {
                 'beforeend',
                 new BoardUser(null, {
                     avatar: user.avatar_url,
+                    id: user.user_id,
                     email: user.email,
                     inCard: workspaceStorage
                         .getCardUsers(parseInt(dialog.dataset.card, 10))
@@ -100,5 +105,19 @@ export default class AddCardUsers extends Component {
                 }).render(),
             );
         });
+    };
+
+    #selectUsers = (e) => {
+        e.stopPropagation();
+
+        const { target } = e;
+        if (target.tagName === 'INPUT') {
+            if (target.getAttribute('checked') === null) {
+                target.setAttribute('checked', '');
+                // dispatcher.dispatch();
+            } else {
+                target.removeAttribute('checked');
+            }
+        }
     };
 }
