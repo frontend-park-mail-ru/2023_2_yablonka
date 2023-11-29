@@ -32,6 +32,8 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.cards, []);
         this.storage.set(this.workspaceModel.users, []);
         this.storage.set(this.workspaceModel.comments, []);
+        this.storage.set(this.workspaceModel.checklists, []);
+        this.storage.set(this.workspaceModel.items, []);
     }
 
     /**
