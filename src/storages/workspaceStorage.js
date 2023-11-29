@@ -441,11 +441,6 @@ class WorkspaceStorage extends BaseStorage {
         return [...cards];
     }
 
-    getCardById(id) {
-        console.log(this.storage.get(this.workspaceModel.cards));
-        return this.storage.get(this.workspaceModel.cards).find((card) => card.id === id);
-    }
-
     /**
      * Получение пользователей на доске
      * @param {Number} id - id доски
@@ -481,7 +476,9 @@ class WorkspaceStorage extends BaseStorage {
     getCardComments(id) {
         const commIDs = this.storage.get(this.workspaceModel.cards).find(crd => crd.id == id).comments;
 
-        const comms = this.storage.get(this.workspaceModel.comments).filter(cmt => commIDs.includes(parseInt(cmt.id, 10)));
+        const comms = this.storage.get(this.workspaceModel.comments).filter(cmt => {
+            return commIDs.find(comid => comid == cmt.id)
+        });
 
         return comms;
     }
