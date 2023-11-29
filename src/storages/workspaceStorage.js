@@ -523,6 +523,10 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.users)
             .filter((usr) => usr.email.indexOf(substring) !== -1);
     }
+
+    getUserByEmail(email) {
+        return this.storage.get(this.workspaceModel.users).find((usr) => usr.email === email);
+    }
 }
 
 const workspaceStorage = new WorkspaceStorage();

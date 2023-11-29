@@ -12,10 +12,18 @@
                     class='font-size-14 font-weight-500 card-information-list-name__title'
                 ></u></span>
         </div>
-        <div
-            class='flex-centered card-information__date-wrapper'
-        >
+        <div class='flex-centered card-information__date-wrapper'>
             {{{date}}}
+        </div>
+        <div class='flex-row card-information__users-wrapper'>
+            {{#each users as |user|}}
+                {{{user}}}
+            {{/each}}
+            {{#if this.userOverflow}}
+                <span
+                    class='font-size-16 font-weight-500 card-information__user-overflow'
+                >{{this.overflow}}</span>
+            {{/if}}
         </div>
     </div>
     <div class='flex-column-centered gap-15 card-information__description-wrapper'>
