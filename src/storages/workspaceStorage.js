@@ -590,7 +590,7 @@ class WorkspaceStorage extends BaseStorage {
             .find((crd) => crd.id === id).users;
 
         const cardUsers = this.storage.get(this.workspaceModel.users).filter((usr) => {
-            return currentCardUserIds.find((uid) => uid === usr.user_id);
+            return currentCardUserIds.find((uid) => uid == usr.user_id);
         });
 
         return [...cardUsers];
@@ -658,6 +658,11 @@ class WorkspaceStorage extends BaseStorage {
 
     isOwner(id) {
         return this.storage.get(this.workspaceModel.boards).owner_id === id;
+    }
+
+    isUserInCard(card_id, user_id){
+        const cardUsers = this.getCardUsers(card_id);
+        return !!cardUsers.find(usr=>usr.user_id===user_id);
     }
 }
 
