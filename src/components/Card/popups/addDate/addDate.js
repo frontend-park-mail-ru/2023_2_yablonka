@@ -83,8 +83,6 @@ export default class AddDate extends Component {
             const start = dialog.querySelector('.start-date__date').value;
             const end = dialog.querySelector('.end-date__date').value;
 
-            console.log(end === '' ? null : end);
-
             dispatcher.dispatch(
                 actionUpdateCard({
                     description: card.description,
@@ -166,8 +164,8 @@ export default class AddDate extends Component {
             [dialog.querySelector('.start-date__date').value] = card.start.split('T');
         }
         if (card.end !== null) {
-            dialog.querySelector('.start-end__checkbox').setAttribute('checked', '');
-            [dialog.querySelector('.start-date__date').end] = card.end.split('T');
+            dialog.querySelector('.end-end__checkbox').setAttribute('checked', '');
+            [dialog.querySelector('.end-date__date').end] = card.end.split('T');
         }
 
         const textColorStartDate = card.start
