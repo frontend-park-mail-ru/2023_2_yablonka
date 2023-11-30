@@ -85,9 +85,11 @@ export default class AddBoardUsers extends Component {
         if (input.value.length === 0) {
             btnAdd.disabled = true;
             btnDelete.disabled = true;
+            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             btnAdd.disabled = false;
             btnDelete.disabled = false;
+            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
@@ -100,34 +102,63 @@ export default class AddBoardUsers extends Component {
         const userEmail = email.value;
 
         if (Validator.validateObjectName(userEmail.value)) {
-            popupEvent.closeAllPopups();
             const boardId = parseInt(
                 this.parent.querySelector('.board-menu__board-name').dataset.board,
                 10,
             );
-
-            if (action === 'add-user') {
-                dispatcher.dispatch(
-                    actionAddUserBoard({
-                        user_email: userEmail,
-                        board_id: boardId,
-                        workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
-                    }),
-                );
-            } else {
-                dispatcher.dispatch(
-                    actionRemoveUserBoard({
-                        user_id: workspaceStorage.getUserByEmail(userEmail),
-                        board_id: boardId,
-                        workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
-                    }),
-                );
+            if (action === 'add-user' && workspaceStorage.checkUserInBoard(userEmail)) {
+                if (!workspaceStorage.isOwner(userEmail)) {
+                    popupEvent.closeAllPopups();
+                    dispatcher.dispatch(
+                        actionAddUserBoard({
+                            user_email: userEmail,
+                            board_id: boardId,
+                            workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
+                        }),
+                    );
+                } else {
+                    NotificationMessage.showNotification(email, false, true, {
+                        fontSize: 12,
+                        fontWeight: 200,
+                        text: 'Вы не можете добавить себя на доску',
+                    });
+                }
+            } else if (action === 'add-user') {
+                NotificationMessage.showNotification(email, false, true, {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Такой пользователь уже на доске',
+                });
+            }
+            if (action === 'delete-user' && workspaceStorage.checkUserInBoard(userEmail)) {
+                if (!workspaceStorage.isOwner(userEmail)) {
+                    popupEvent.closeAllPopups();
+                    dispatcher.dispatch(
+                        actionRemoveUserBoard({
+                            user_id: workspaceStorage.getUserByEmail(userEmail).user_id,
+                            board_id: boardId,
+                            workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
+                        }),
+                    );
+                } else {
+                    NotificationMessage.showNotification(email, false, true, {
+                        fontSize: 12,
+                        fontWeight: 200,
+                        text: 'Вы не можете удалить себя с доски',
+                    });
+                }
+            } else if (action === 'delete-user') {
+                NotificationMessage.showNotification(email, false, true, {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Такого пользователя нет на доске',
+                });
             }
         } else {
-            NotificationMessage.showNotification(email, true, true, {
+            NotificationMessage.showNotification(email, false, true, {
                 fontSize: 12,
                 fontWeight: 200,
-                text: 'Такого пользователя не существует',
+                text: 'Неккоректный email',
             });
         }
     };

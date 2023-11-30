@@ -12,10 +12,12 @@
         >
             Изменить название доски
         </button>
-        <button
-            class='border-radius-5 flex-centered font-size-16 font-weight-bold padding-5-10 btn btn-delete-board'
-        >
-            Удалить доску
-        </button>
+        {{#if this.isOwner}}
+            <button
+                class='border-radius-5 flex-centered font-size-16 font-weight-bold padding-5-10 btn btn-delete-board'
+            >
+                Удалить доску
+            </button>
+        {{/if}}
     </div>
 </dialog>

@@ -11,33 +11,37 @@
                 class='font-weight-bold padding-5-10 border-radius-5 workspace__name'
             >{{this.workspaceName}}</span>
         </span>
-        <button
-            data-workspace='{{this.workspaceId}}'
-            class='border-radius-5 btn btn-change-workspace'
-        ><div
-                class='strach-layout flex-row-centered padding-5-10 gap-10 border-radius-5 btn-change-workspace__contant-wrapper'
-            >
-                <img
-                    src='/svg/gear.svg'
-                    class='box-24-24 flex-centered btn-change-workspace__image'
-                />
-                <span
-                    class='flex-centered font-weight-bold font-size-16 btn-change-workspace__title'
-                >Действия</span>
-            </div>
-        </button></div>
-
+        {{#if this.isOwner}}
+            <button
+                data-workspace='{{this.workspaceId}}'
+                class='border-radius-5 btn btn-change-workspace'
+            ><div
+                    class='strach-layout flex-row-centered padding-5-10 gap-10 border-radius-5 btn-change-workspace__contant-wrapper'
+                >
+                    <img
+                        src='/svg/gear.svg'
+                        class='box-24-24 flex-centered btn-change-workspace__image'
+                    />
+                    <span
+                        class='flex-centered font-weight-bold font-size-16 btn-change-workspace__title'
+                    >Действия</span>
+                </div>
+            </button>
+        {{/if}}
+    </div>
     <div class='flex-row-centered gap-10 workspace__boards'>
         {{#each boards as |board|}}
             {{{board}}}
         {{/each}}
-        <button
-            data-workspace='{{this.workspaceId}}'
-            class='strach-layout border-radius-5 flex-centered btn btn-create-board'
-        >
-            <span
-                class='flex-centered strach-layout font-size-16 font-weight-500 workspace-board__create-title'
-            >Создать доску</span>
-        </button>
+        {{#if this.isOwner}}
+            <button
+                data-workspace='{{this.workspaceId}}'
+                class='strach-layout border-radius-5 flex-centered btn btn-create-board'
+            >
+                <span
+                    class='flex-centered strach-layout font-size-16 font-weight-500 workspace-board__create-title'
+                >Создать доску</span>
+            </button>
+        {{/if}}
     </div>
 </div>

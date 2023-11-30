@@ -120,8 +120,6 @@ class WorkspaceStorage extends BaseStorage {
             board,
         );
 
-
-
         let body;
         try {
             body = await responsePromise.json();
@@ -419,7 +417,7 @@ class WorkspaceStorage extends BaseStorage {
             task,
         );
 
-        const { status } = responseProtask
+        const { status } = responseProtask;
 
         if (status === 200) {
             emitter.trigger('rerender');
@@ -489,12 +487,12 @@ class WorkspaceStorage extends BaseStorage {
     getWorkspaceBoards(id) {
         let workspaceBoards = this.storage
             .get(this.workspaceModel.body)
-            .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === id).boards;
+            .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === id)?.boards;
 
         if (!workspaceBoards) {
             workspaceBoards = this.storage
                 .get(this.workspaceModel.body)
-                .body.workspaces.guestWorkspaces.find((ws) => ws.workspace_id === id).boards;
+                .body.workspaces.guestWorkspaces.find((ws) => ws.workspace_id === id)?.boards;
         }
 
         return [...workspaceBoards];
@@ -655,10 +653,12 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     checkUserInBoard(email) {
-        return !!this.storage.get(this.workspaceModel.users).find(usr => usr.email === email);
+        return !!this.storage
+            .get(this.workspaceModel.users)
+            .find((usr) => usr.email === email);
     }
 
-    isOwner(id){
+    isOwner(id) {
         return this.storage.get(this.workspaceModel.boards).owner_id === id;
     }
 }

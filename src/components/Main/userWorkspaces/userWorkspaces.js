@@ -17,20 +17,23 @@ export default class UserWorkspaces extends Component {
     render() {
         const userWorkspaces = this.#getWorkspaces(
             this.config?.yourWorkspaces ? this.config.yourWorkspaces : [],
+            true,
         );
         const guestWorkspaces = this.#getWorkspaces(
-            this.config?.guestWorkspaces ? this.config.guestWorkspaces : [],
+            this.config.guestWorkspaces ? this.config.guestWorkspaces : [],
+            false,
         );
 
         return template({ userWorkspaces, guestWorkspaces });
     }
 
-    #getWorkspaces(workspacesData) {
+    #getWorkspaces(workspacesData, owner) {
         const workspaces = [];
         workspacesData.forEach((workspace) => {
             workspaces.push(
                 new Workspace(null, {
                     workspaceId: workspace.workspace_id,
+                    isOwner: owner,
                     workspaceName: workspace.workspace_name,
                     boards: this.#getBoards(
                         workspace.boards ? workspace.boards : [],

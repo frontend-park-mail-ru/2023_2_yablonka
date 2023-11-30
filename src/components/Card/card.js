@@ -177,6 +177,7 @@ export default class Card extends Component {
         const cardId = e.target.closest('dialog')?.dataset.card;
 
         if (cardId) {
+            Card.updateHistory();
             dispatcher.dispatch(actionDeleteCard({ id: parseInt(cardId, 10) }));
         }
     };

@@ -1,3 +1,5 @@
+import { actionAddUserCard, actionRemoveUserBoard } from '../../../../actions/boardActions.js';
+import dispatcher from '../../../../modules/dispatcher.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
@@ -106,13 +108,27 @@ export default class AddCardUsers extends Component {
 
         const { target } = e;
         if (target.tagName === 'INPUT') {
+            const userEmail = target.nextNodeSibling.querySelector(
+                '.add-card-user__user-email',
+            ).textContent;
+            const cardId = this.parent.querySelector('#card').dataset.card;
             if (target.hasAttribute('checked')) {
                 target.cheched = true;
                 target.removeAttribute('checked');
-                // dispatcher.dispatch();
+                dispatcher.dispatch(
+                    actionAddUserCard({
+                        user_id: workspaceStorage.getUserByEmail(userEmail),
+                        task_id: parseInt(cardId, 10),
+                    }),
+                );
             } else {
                 target.setAttribute('checked', '');
-                // dispatcher.dispatch();
+                dispatcher.dispatch(
+                    actionRemoveUserBoard({
+                        user_id: workspaceStorage.getUserByEmail(userEmail),
+                        task_id: parseInt(cardId, 10),
+                    }),
+                );
             }
         }
     };

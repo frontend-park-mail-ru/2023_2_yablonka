@@ -17,7 +17,13 @@ export default class BoardSettings extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.parent.insertAdjacentHTML('beforeend', template({ ID: this.config.board_id }));
+        this.parent.insertAdjacentHTML(
+            'beforeend',
+            template({
+                ID: this.config.board_id,
+                isOwner: workspaceStorage.isOwner(this.config.owner_id),
+            }),
+        );
     }
 
     addEventListeners() {

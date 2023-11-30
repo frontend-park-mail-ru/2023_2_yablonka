@@ -8,7 +8,8 @@
             />
             <span
                 class='font-size-22 font-weight-500 padding-5-10 border-radius-5 board-menu__board-name'
-                contenteditable='true' data-board="{{this.boardID}}"
+                contenteditable='true'
+                data-board='{{this.boardID}}'
             >{{this.name}}</span>
         </div>
         <div class='flex-row-centered gap-5 board-menu__board-actions'>
@@ -30,7 +31,7 @@
         </div>
     </div>
     <div class='flex-row-centered gap-20 board__menu_right'>
-        <div class='flex-row-centered board-menu__team'>
+        <div class='flex-row-centered gap-5 board-menu__team'>
             {{#each users as |user|}}
                 {{{user}}}
             {{/each}}
