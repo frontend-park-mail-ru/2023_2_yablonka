@@ -1,6 +1,7 @@
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
 import template from './cardDate.hbs';
+
 import './cardDate.scss';
 
 /**
@@ -18,24 +19,11 @@ export default class CardDate extends Component {
     }
 
     #getCardTimeInformation = (cardId) => {
-        const cardTimeInformation = {};
 
         const card = workspaceStorage.getCardById(parseInt(cardId, 10));
-        const start = card.start ? card.start : null;
-        const end = card.end ? card.end : null;
+        const start = card.start ? card.start.split('T')[0] : false;
+        const end = card.end ? card.end.split('T')[0] : false;
 
-        if (start) {
-            [cardTimeInformation.start] = start.split('T');
-        } else {
-            [cardTimeInformation.start] = `${card.date_created.split('T')} (Дата создания карточки)`;
-        }
-        if (end) {
-            [cardTimeInformation.end] = end.split('T');
-            cardTimeInformation.isDate = true;
-        } else {
-            cardTimeInformation.isDate = false;
-        }
-
-        return cardTimeInformation;
+        return { start, end };
     };
 }

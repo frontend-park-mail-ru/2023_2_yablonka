@@ -1,5 +1,3 @@
-import { actionUpdateCard } from '../../../../actions/boardActions.js';
-import dispatcher from '../../../../modules/dispatcher.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
@@ -52,28 +50,23 @@ export default class AddCardUsers extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
         const dialog = this.parent.querySelector('#add-card-user');
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
 
-        if (cardId) {
-            const card = workspaceStorage.getCardById(cardId);
-
-            if (dialog.getAttribute('open') === null) {
-                popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
-                popupEvent.addPopup(dialog);
-                dialog.showModal();
-                const dialogSizes = dialog.getBoundingClientRect();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                        btnCoordinates.x - 10
-                    }px`,
-                );
-            } else {
-                popupEvent.deletePopup(dialog);
-                dialog.close();
-            }
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            popupEvent.addPopup(dialog);
+            dialog.showModal();
+            const dialogSizes = dialog.getBoundingClientRect();
+            dialog.setAttribute(
+                'style',
+                `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
+                    btnCoordinates.x - 10
+                }px`,
+            );
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     };
 
@@ -113,11 +106,12 @@ export default class AddCardUsers extends Component {
 
         const { target } = e;
         if (target.tagName === 'INPUT') {
-            if (target.getAttribute('checked') === null) {
-                target.setAttribute('checked', '');
+            if (target.hasAttribute('checked')) {
+                target.cheched = true;
+                target.removeAttribute('checked');
                 // dispatcher.dispatch();
             } else {
-                target.removeAttribute('checked');
+                target.setAttribute('checked', '');
                 // dispatcher.dispatch();
             }
         }

@@ -179,7 +179,6 @@ export default class AddDate extends Component {
             [dialog.querySelector('.start-date__date').value] = card.start.split('T');
         } else {
             startInput.disabled = true;
-            startInput.removeAttribute('checked');
         }
 
         if (card.end !== null) {
@@ -192,7 +191,6 @@ export default class AddDate extends Component {
             [dialog.querySelector('.end-date__date').value] = card.end.split('T');
         } else {
             endInput.disabled = true;
-            endCheckbox.removeAttribute('checked');
         }
 
         const textColorStartDate = card.start
