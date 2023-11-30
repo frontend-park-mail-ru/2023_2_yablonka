@@ -659,6 +659,10 @@ class WorkspaceStorage extends BaseStorage {
         console.log(res);
         return res;
     }
+
+    isOwner(id){
+        return this.storage.get(this.workspaceModel.boards).owner_id === id;
+    }
 }
 
 const workspaceStorage = new WorkspaceStorage();
