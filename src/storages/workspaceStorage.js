@@ -655,7 +655,9 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     checkUserInBoard(email) {
-        return !!this.storage.get(this.workspaceModel.users).find(usr => usr.email === email);
+        const res = !!this.storage.get(this.workspaceModel.users).find(usr => usr.email === email);
+        console.log(res);
+        return res;
     }
 }
 
