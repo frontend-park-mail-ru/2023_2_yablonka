@@ -1,4 +1,4 @@
-import { actionAddUserCard, actionRemoveUserBoard } from '../../../../actions/boardActions.js';
+import { actionAddUserCard, actionRemoveUserCard } from '../../../../actions/boardActions.js';
 import dispatcher from '../../../../modules/dispatcher.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
@@ -108,24 +108,24 @@ export default class AddCardUsers extends Component {
 
         const { target } = e;
         if (target.tagName === 'INPUT') {
-            const userEmail = target.nextNodeSibling.querySelector(
+            const userEmail = target.nextElementSibling.querySelector(
                 '.add-card-user__user-email',
             ).textContent;
             const cardId = this.parent.querySelector('#card').dataset.card;
             if (target.hasAttribute('checked')) {
-                target.cheched = true;
+                target.checked = true;
                 target.removeAttribute('checked');
                 dispatcher.dispatch(
-                    actionAddUserCard({
-                        user_id: workspaceStorage.getUserByEmail(userEmail),
+                    actionRemoveUserCard({
+                        user_id: workspaceStorage.getUserByEmail(userEmail).user_id,
                         task_id: parseInt(cardId, 10),
                     }),
                 );
             } else {
                 target.setAttribute('checked', '');
                 dispatcher.dispatch(
-                    actionRemoveUserBoard({
-                        user_id: workspaceStorage.getUserByEmail(userEmail),
+                    actionAddUserCard({
+                        user_id: workspaceStorage.getUserByEmail(userEmail).user_id,
                         task_id: parseInt(cardId, 10),
                     }),
                 );

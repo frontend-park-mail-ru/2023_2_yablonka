@@ -417,7 +417,7 @@ class WorkspaceStorage extends BaseStorage {
             data,
         );
 
-        const { status } = responseProtask
+        const { status } = responsePromise;
 
         if (status === 200) {
             emitter.trigger('rerender');
@@ -653,10 +653,10 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     checkUserInBoard(email) {
-        return !!this.storage.get(this.workspaceModel.users).find(usr => usr.email === email);
+        return !!this.storage.get(this.workspaceModel.users).find((usr) => usr.email === email);
     }
 
-    isOwner(id){
+    isOwner(id) {
         return this.storage.get(this.workspaceModel.boards).owner_id === id;
     }
 }

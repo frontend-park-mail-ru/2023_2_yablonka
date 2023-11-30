@@ -39,26 +39,23 @@ export default class AddChecklist extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
         const dialog = this.parent.querySelector('#card-checklist');
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
 
-        if (cardId) {
-            if (dialog.getAttribute('open') === null) {
-                popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
-                popupEvent.addPopup(dialog);
-                dialog.showModal();
-                const dialogSizes = dialog.getBoundingClientRect();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                        btnCoordinates.x - 10
-                    }px`,
-                );
-            } else {
-                popupEvent.deletePopup(dialog);
-                dialog.close();
-            }
+        if (dialog.getAttribute('open') === null) {
+            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            popupEvent.addPopup(dialog);
+            dialog.showModal();
+            const dialogSizes = dialog.getBoundingClientRect();
+            dialog.setAttribute(
+                'style',
+                `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
+                    btnCoordinates.x - 10
+                }px`,
+            );
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     };
 
