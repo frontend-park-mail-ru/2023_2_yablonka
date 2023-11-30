@@ -107,12 +107,10 @@ export default class AddBoardUsers extends Component {
             );
             if (action === 'add-user' && !workspaceStorage.checkUserInBoard(userEmail)) {
                 if (!workspaceStorage.isOwner(userEmail)) {
-                    popupEvent.closeAllPopups();
                     dispatcher.dispatch(
                         actionAddUserBoard({
                             user_email: userEmail,
                             board_id: boardId,
-                            workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
                         }),
                     );
                 } else {
@@ -131,12 +129,10 @@ export default class AddBoardUsers extends Component {
             }
             if (action === 'delete-user' && workspaceStorage.checkUserInBoard(userEmail)) {
                 if (!workspaceStorage.isOwner(userEmail)) {
-                    popupEvent.closeAllPopups();
                     dispatcher.dispatch(
                         actionRemoveUserBoard({
                             user_id: workspaceStorage.getUserByEmail(userEmail).user_id,
                             board_id: boardId,
-                            workspace_id: workspaceStorage.getBoardById(boardId).workspace_id,
                         }),
                     );
                 } else {

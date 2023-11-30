@@ -3,6 +3,8 @@ import AJAX from '../modules/ajax.js';
 import { apiPath, apiVersion } from '../configs/configs.js';
 import userStorage from './userStorage.js';
 import emitter from '../modules/actionTrigger.js';
+import NotificationMessage from '../components/Common/notification/notificationMessage.js';
+import popupEvent from '../components/core/popeventProcessing.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -390,7 +392,16 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            popupEvent.closeAllPopups();
             emitter.trigger('rerender');
+        } else if (status === 401) {
+            const email = document.querySelector('.input-add-board-user-content__input');
+
+            NotificationMessage.showNotification(email, false, true, {
+                fontSize: 12,
+                fontWeight: 200,
+                text: 'Такого пользователя не существует',
+            });
         }
     }
 
@@ -405,6 +416,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            popupEvent.closeAllPopups();
             emitter.trigger('rerender');
         }
     }
@@ -627,7 +639,7 @@ class WorkspaceStorage extends BaseStorage {
             return checklistIDs.find((chid) => chid === chk.id);
         });
 
-        return checklists.sort((x,y)=>x.list_position<y.list_position);
+        return checklists.sort((x, y) => x.list_position < y.list_position);
     }
 
     getChecklistItems(id) {
@@ -639,7 +651,7 @@ class WorkspaceStorage extends BaseStorage {
             return itemsIDs.find((chid) => chid === chk.id);
         });
 
-        return items.sort((x,y)=>x.list_position<y.list_position);
+        return items.sort((x, y) => x.list_position < y.list_position);
     }
 
     searchUsers(substring) {
@@ -660,9 +672,9 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.boards).owner_id === id;
     }
 
-    isUserInCard(card_id, user_id){
+    isUserInCard(card_id, user_id) {
         const cardUsers = this.getCardUsers(card_id);
-        return !!cardUsers.find(usr=>usr.user_id===user_id);
+        return !!cardUsers.find((usr) => usr.user_id === user_id);
     }
 }
 

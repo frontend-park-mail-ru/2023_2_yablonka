@@ -14,8 +14,8 @@ export default class CardUser extends Component {
      */
     render() {
         return template({
-            avatar_url: this.config.avatar_url,
-            ID: this.config.user_id,
+            avatar: this.config.avatar,
+            ID: this.config.id,
         });
     }
 }

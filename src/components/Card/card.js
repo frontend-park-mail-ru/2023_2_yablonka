@@ -18,6 +18,7 @@ import CardDate from './atomic/date/cardDate.js';
 import Validator from '../../modules/validator.js';
 import NotificationMessage from '../Common/notification/notificationMessage.js';
 import CardUser from './atomic/cardUser/cardUser.js';
+import Checklist from './atomic/checklist/checklist.js';
 
 /**
  * Попап для хедера
@@ -332,7 +333,10 @@ export default class Card extends Component {
         users.slice(0, 3).forEach((user) => {
             usersLocation.insertAdjacentHTML(
                 'beforeend',
-                new CardUser(null, { avatar: user.avatar_url, id: user.user_id }),
+                new CardUser(null, {
+                    avatar: user.avatar_url,
+                    user: user.user_id,
+                }).render(),
             );
         });
         if (overflow > 0) {
@@ -343,5 +347,28 @@ export default class Card extends Component {
     static #addChecklists = (cardId) => {
         const dialog = document.querySelector('#card');
         const checklistsLocation = dialog.querySelector('.card-information__date-wrapper');
+        const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));
+
+        if (checklists.length) {
+            const checklistsContainer = dialog.querySelector('.card-information__checklists');
+            checklistsContainer.display = 'flex';
+            checklists.forEach((checklist) => {
+                checklistsLocation.insertAdjacentHTML(
+                    'beforeend',
+                    new Checklist(null, {
+                        ID: checklist.task_id,
+                        name: checklist.name,
+                        checklistItems: Card.#getChecklistItems(checklist.task_id).render(),
+                    }),
+                );
+            });
+        }
+    };
+
+    static #getChecklistItems = (checklistId) => {
+        const items = [];
+        const checklistItems = workspaceStorage.getChecklistItems(checklistId);
+
+        checklistItems.forEach((item) => {});
     };
 }
