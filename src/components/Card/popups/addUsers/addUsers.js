@@ -67,7 +67,7 @@ export default class AddCardUsers extends Component {
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                        btnCoordinates.x + btnCoordinates.width + 50
+                        btnCoordinates.x - 10
                     }px`,
                 );
             } else {

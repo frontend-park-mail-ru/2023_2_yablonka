@@ -25,10 +25,10 @@ export default class AddDate extends Component {
             .querySelector('button[data-action=manage-card-data]')
             .addEventListener('click', this.#openPopup);
         this.parent
-            .querySelector('.start-date__checkbox')
+            .querySelector('.start-date__checkbox-wrapper')
             .addEventListener('click', this.#blockDateInput);
         this.parent
-            .querySelector('.end-date__checkbox')
+            .querySelector('.end-date__checkbox-wrapper')
             .addEventListener('click', this.#blockDateInput);
         this.parent.querySelector('.btn-card-date_save').addEventListener('click', this.#sendTime);
         this.parent
@@ -59,15 +59,19 @@ export default class AddDate extends Component {
         e.stopPropagation();
 
         const checkbox = e.target;
-        const dateInput = e.target.nextElementSibling;
+        const dateInput = e.target.parentNode.nextElementSibling;
 
-        if (checkbox.getAttribute('checked') !== null) {
+        if (checkbox.hasAttribute('checked')) {
             dateInput.disabled = true;
             dateInput.setAttribute('style', 'color: var(--text-color-on-page-inactive)');
+            dateInput.value = '';
+
             checkbox.removeAttribute('checked');
         } else {
             dateInput.disabled = false;
             dateInput.setAttribute('style', 'color: var(--text-color-on-page)');
+            dateInput.value = '';
+
             checkbox.setAttribute('checked', '');
         }
     };
@@ -130,7 +134,7 @@ export default class AddDate extends Component {
 
             this.#preprocessDates(card);
 
-            if (dialog.getAttribute('open') === null) {
+            if (!dialog.hasAttribute('open')) {
                 popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
                 popupEvent.addPopup(dialog);
                 dialog.showModal();
@@ -138,7 +142,7 @@ export default class AddDate extends Component {
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                        btnCoordinates.x + btnCoordinates.width + 50
+                        btnCoordinates.x - 10
                     }px`,
                 );
             } else {
@@ -159,13 +163,36 @@ export default class AddDate extends Component {
     #preprocessDates = (card) => {
         const dialog = this.parent.querySelector('#card-date');
 
+        const startCheckbox = dialog.querySelector('.start-date__checkbox');
+        const startInput = startCheckbox.parentNode.nextElementSibling;
+
+        const endCheckbox = dialog.querySelector('.end-date__checkbox');
+        const endInput = endCheckbox.parentNode.nextElementSibling;
+
         if (card.start !== null) {
-            dialog.querySelector('.start-date__checkbox').setAttribute('checked', '');
+            startCheckbox.checked = true;
+            startCheckbox.setAttribute('checked', '');
+
+            startCheckbox.removeAttribute('style');
+
+            startInput.disabled = false;
             [dialog.querySelector('.start-date__date').value] = card.start.split('T');
+        } else {
+            startInput.disabled = true;
+            startInput.removeAttribute('checked');
         }
+
         if (card.end !== null) {
-            dialog.querySelector('.end-end__checkbox').setAttribute('checked', '');
-            [dialog.querySelector('.end-date__date').end] = card.end.split('T');
+            endCheckbox.checked = true;
+            endCheckbox.setAttribute('checked', '');
+
+            endCheckbox.removeAttribute('style');
+
+            endInput.disabled = false;
+            [dialog.querySelector('.end-date__date').value] = card.end.split('T');
+        } else {
+            endInput.disabled = true;
+            endCheckbox.removeAttribute('checked');
         }
 
         const textColorStartDate = card.start

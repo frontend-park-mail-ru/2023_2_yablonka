@@ -4,7 +4,12 @@
         <div class='flex-column-centered gap-10 start-date'>
             <span class='font-size-12 font-weight-bold start-date__title'>Начало</span>
             <div class='flex-row-centered gap-10 start-date__input-wrapper'>
-                <input class='box-16-16 start-date__checkbox' type='checkbox' /><input
+                <div class='box-16-16 flex-centered start-date__checkbox-wrapper'><input
+                        data-name='start'
+                        class='strach-layout start-date__checkbox'
+                        type='checkbox'
+                    /></div>
+                <input
                     value=''
                     min='1900-01-01'
                     max='2100-01-01'
@@ -18,7 +23,12 @@
         <div class='flex-column-centered gap-10 end-date'>
             <span class='font-size-12 font-weight-bold end-date__title'>Срок</span>
             <div class='flex-row-centered gap-10 end-date__input-wrapper'>
-                <input class='box-16-16 end-date__checkbox' type='checkbox' />
+                <div class='box-16-16 flex-centered end-date__checkbox-wrapper'>
+                    <input
+                        data-name='end'
+                        class='strach-layout end-date__checkbox'
+                        type='checkbox'
+                    /></div>
                 <input
                     value=''
                     min='1900-01-01'
