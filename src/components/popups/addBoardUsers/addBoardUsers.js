@@ -1,7 +1,6 @@
 import { actionAddUserBoard, actionRemoveUserBoard } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
 import Validator from '../../../modules/validator.js';
-import userStorage from '../../../storages/userStorage.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Component from '../../core/basicComponent.js';
@@ -101,7 +100,7 @@ export default class AddBoardUsers extends Component {
         const email = this.parent.querySelector('.input-add-board-user-content__input');
         const userEmail = email.value;
 
-        if (Validator.validateEmail(userEmail.value)) {
+        if (Validator.validateEmail(userEmail)) {
             const boardId = parseInt(
                 this.parent.querySelector('.board-menu__board-name').dataset.board,
                 10,
