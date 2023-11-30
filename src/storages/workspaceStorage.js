@@ -627,7 +627,7 @@ class WorkspaceStorage extends BaseStorage {
             return checklistIDs.find((chid) => chid === chk.id);
         });
 
-        return checklists;
+        return checklists.sort((x,y)=>x.list_position<y.list_position);
     }
 
     getChecklistItems(id) {
@@ -639,7 +639,7 @@ class WorkspaceStorage extends BaseStorage {
             return itemsIDs.find((chid) => chid === chk.id);
         });
 
-        return [...items];
+        return items.sort((x,y)=>x.list_position<y.list_position);
     }
 
     searchUsers(substring) {
