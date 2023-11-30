@@ -105,7 +105,7 @@ export default class AddBoardUsers extends Component {
                 this.parent.querySelector('.board-menu__board-name').dataset.board,
                 10,
             );
-            if (action === 'add-user' && workspaceStorage.checkUserInBoard(userEmail)) {
+            if (action === 'add-user' && !workspaceStorage.checkUserInBoard(userEmail)) {
                 if (!workspaceStorage.isOwner(userEmail)) {
                     popupEvent.closeAllPopups();
                     dispatcher.dispatch(

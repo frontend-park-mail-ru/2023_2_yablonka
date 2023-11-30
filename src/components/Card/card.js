@@ -339,4 +339,9 @@ export default class Card extends Component {
             dialog.querySelector('.card-information__user-overflow').textContent = `+${overflow}`;
         }
     };
+
+    static #addChecklists = (cardId) => {
+        const dialog = document.querySelector('#card');
+        const checklistsLocation = dialog.querySelector('.card-information__date-wrapper');
+    };
 }
