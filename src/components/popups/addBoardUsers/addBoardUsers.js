@@ -101,7 +101,7 @@ export default class AddBoardUsers extends Component {
         const email = this.parent.querySelector('.input-add-board-user-content__input');
         const userEmail = email.value;
 
-        if (Validator.validateObjectName(userEmail.value)) {
+        if (Validator.validateEmail(userEmail.value)) {
             const boardId = parseInt(
                 this.parent.querySelector('.board-menu__board-name').dataset.board,
                 10,
