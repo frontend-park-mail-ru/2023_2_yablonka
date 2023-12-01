@@ -1,4 +1,9 @@
-import { actionCreateChecklist } from '../../../../actions/boardActions.js';
+import {
+    actionCreateChecklist,
+    actionCreateChecklistItem,
+    actionDeleteChecklist,
+    actionUpdateChecklistItem,
+} from '../../../../actions/boardActions.js';
 import dispatcher from '../../../../modules/dispatcher.js';
 import Validator from '../../../../modules/validator.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
@@ -35,6 +40,24 @@ export default class AddChecklist extends Component {
         this.parent
             .querySelector('.input-card-checklist__input')
             .addEventListener('input', this.#blockButton);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .addEventListener('click', this.#removeChecklist);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .addEventListener('click', this.#createChecklistItemShow);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .addEventListener('click', this.#createChecklistItemClose);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .addEventListener('click', this.#createChecklistItem);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .addEventListener('click', this.#deleteCheckItem);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .addEventListener('click', this.#setCheckItemCheck);
     }
 
     removeEventListeners() {
@@ -50,6 +73,24 @@ export default class AddChecklist extends Component {
         this.parent
             .querySelector('.input-card-checklist__input')
             .removeEventListener('input', this.#blockButton);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .removeEventListener('click', this.#removeChecklist);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .removeEventListener('click', this.#createChecklistItemShow);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .removeEventListener('click', this.#createChecklistItemClose);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .removeEventListener('click', this.#createChecklistItem);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .removeEventListener('click', this.#deleteCheckItem);
+        this.parent
+            .querySelector('.card-information__checklists')
+            .removeEventListener('click', this.#setCheckItemCheck);
     }
 
     #openPopup = (e) => {
@@ -122,6 +163,116 @@ export default class AddChecklist extends Component {
         } else {
             btnCreate.disabled = false;
             input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
+        }
+    };
+
+    #removeChecklist = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const checklist = e.target.closest('.card-information__checklist-wrapper');
+        if (e.target.closest('.btn-delete-checklist')) {
+            const checklistId = parseInt(checklist.dataset.checklist, 10);
+            dispatcher.dispatch(actionDeleteChecklist({ id: checklistId }));
+        }
+    };
+
+    #createChecklistItemShow = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const btn = e.target.closest('.btn-add-checklist-element');
+        if (btn) {
+            btn.style.display = 'none';
+            btn.nextElementSibling.style.display = 'flex';
+        }
+    };
+
+    #createChecklistItemClose = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const btn = e.target.closest('.btn-checklist-new-item_cancel');
+
+        if (btn) {
+            const input = btn.closest('.checklist-new-item');
+            input.querySelector('.input-checklist-new-item__input').value = '';
+            input.style.display = 'none';
+            input.previousElementSibling.style.display = 'flex';
+        }
+    };
+
+    #createChecklistItem = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const btn = e.target.closest('.btn-checklist-new-item_save');
+
+        if (btn) {
+            const checklist = e.target.closest('.card-information__checklist-wrapper');
+            const checklistId = parseInt(checklist.dataset.checklist, 10);
+            const input = checklist.querySelector('.input-checklist-new-item__input');
+            const name = input.value;
+
+            if (Validator.validateObjectName(name)) {
+                dispatcher.dispatch(
+                    actionCreateChecklistItem({
+                        checklist_id: checklistId,
+                        done: false,
+                        list_position: workspaceStorage.getChecklistItems(checklistId).length,
+                        name,
+                    }),
+                );
+            } else {
+                NotificationMessage.showNotification(input, false, true, {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Неккоректное название',
+                });
+            }
+        }
+    };
+
+    #setCheckItemCheck = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const btn = e.target.closest('input-check-item__checkbox');
+
+        if (btn) {
+            const checklist = e.target.closest('.card-information__checklist-wrapper');
+            const checklistItemId = parseInt(
+                checklist.querySelector('.check-item').dataset.checkitem_id,
+                10,
+            );
+            const input = checklist.querySelector('.input-check-item__checkbox');
+
+            dispatcher.dispatch(
+                actionUpdateChecklistItem({
+                    done: input.hasAttribute('checked'),
+                    id: checklistItemId,
+                    list_position: workspaceStorage.getChecklistItems(parseInt(checklist.id, 10))
+                        .length,
+                    name: checklist.querySelector('.ard-information__card-checklist-title')
+                        .textContent,
+                }),
+            );
+        }
+    };
+
+    #deleteCheckItem = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const btn = e.target.closest('.btn-check-item_delete');
+
+        if (btn) {
+            const checklist = e.target.closest('.card-information__checklist-wrapper');
+            const checklistItemId = parseInt(
+                checklist.querySelector('.check-item').dataset.checkitem_id,
+                10,
+            );
+            dispatcher.dispatch(actionUpdateChecklistItem({ id: checklistItemId }));
         }
     };
 }

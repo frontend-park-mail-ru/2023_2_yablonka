@@ -13,6 +13,10 @@ export default class Checklist extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        return template({});
+        return template({
+            name: this.config.name,
+            ID: this.config.id,
+            checklistItems: this.config.checklistItems,
+        });
     }
 }

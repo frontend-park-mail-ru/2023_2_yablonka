@@ -49,6 +49,7 @@
 
 .card-information__checklists {
     width: 100%;
+    display: none;
 }
 
 .card-information__checklist-wrapper {
@@ -63,6 +64,10 @@
     width: 100%;
 }
 
+.card-information__checkitems {
+    display: none;
+}
+
 .checklist-add-item {
     align-items: flex-start;
     width: 100%;
@@ -71,6 +76,7 @@
 .checklist-new-item {
     width: 100%;
     align-items: flex-start;
+    display: none;
 }
 
 .btn-delete-checklist,

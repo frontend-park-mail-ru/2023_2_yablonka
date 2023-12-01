@@ -643,12 +643,12 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     getChecklistItems(id) {
-        console.log(this.storage
-            .get(this.workspaceModel.checklists));
+        console.log(id);
+
+        console.log(this.storage.get(this.workspaceModel.checklists));
         const itemsIDs = this.storage
             .get(this.workspaceModel.checklists)
             .find((ch) => ch.id === id).items;
-
         const items = this.storage.get(this.workspaceModel.items).filter((chk) => {
             return itemsIDs.find((itm) => itm == chk.id);
         });

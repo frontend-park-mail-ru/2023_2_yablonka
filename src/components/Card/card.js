@@ -8,6 +8,7 @@ import CardContent from './cardContent/cardContent.js';
 import {
     actionCommentCard,
     actionDeleteCard,
+    actionDeleteChecklist,
     actionUpdateCard,
 } from '../../actions/boardActions.js';
 import dispatcher from '../../modules/dispatcher.js';
@@ -351,17 +352,17 @@ export default class Card extends Component {
         const dialog = document.querySelector('#card');
         const checklistsLocation = dialog.querySelector('.card-information__checklists');
         const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));
-        console.log(checklists);
+
         if (checklists.length) {
             checklistsLocation.style.display = 'flex';
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',
                     new Checklist(null, {
-                        ID: checklist.task_id,
+                        id: checklist.id,
                         name: checklist.name,
-                        checklistItems: Card.#getChecklistItems(checklist.task_id).render(),
-                    }),
+                        checklistItems: Card.#getChecklistItems(checklist.id),
+                    }).render(),
                 );
             });
         }
@@ -377,8 +378,10 @@ export default class Card extends Component {
                     checkitem_id: item.id,
                     checklist_id: item.checklist_id,
                     name: item.name,
+                    checked: item.done,
                 }).render(),
             );
         });
+        return items;
     };
 }

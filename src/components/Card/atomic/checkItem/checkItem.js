@@ -17,6 +17,7 @@ export default class CheckItem extends Component {
             checkitemID: this.config.id,
             checklistID: this.config.checklist_id,
             name: this.config.name,
+            checked: this.config.done,
         });
     }
 }
