@@ -626,7 +626,7 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     isOwner(id) {
-        return this.storage.get(this.workspaceModel.boards)[0].owner_id === id;
+        return this.storage.get(this.workspaceModel.boards).owner_id === id;
     }
 
     isUserInCard(card_id, user_id) {
