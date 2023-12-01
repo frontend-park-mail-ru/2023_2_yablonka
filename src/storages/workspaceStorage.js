@@ -139,7 +139,7 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.users, body.body.users);
             this.storage.set(this.workspaceModel.comments, body.body.comments);
             this.storage.set(this.workspaceModel.checklists, body.body.checklists);
-            this.storage.set(this.workspaceModel.items, body.body.checklist_items);
+            this.storage.set(this.workspaceModel.items, body.body.tems);
         } else if (status === 403) {
             emitter.trigger('noaccess');
         }
