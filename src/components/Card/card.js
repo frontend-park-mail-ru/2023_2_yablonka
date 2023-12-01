@@ -212,6 +212,8 @@ export default class Card extends Component {
                 actionUpdateCard({
                     id: cardId,
                     name,
+                    start: card.start,
+                    end: card.end,
                     description,
                     list_position: parseInt(card.list_position, 10),
                 }),
