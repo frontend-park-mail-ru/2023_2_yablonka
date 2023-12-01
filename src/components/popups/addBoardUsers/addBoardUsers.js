@@ -111,6 +111,11 @@ export default class AddBoardUsers extends Component {
                         actionAddUserBoard({
                             user_email: userEmail,
                             board_id: boardId,
+                            workspace_id: parseInt(
+                                this.parent.querySelector('.sidebar__workspace-information').dataset
+                                    .workspace,
+                                10,
+                            ),
                         }),
                     );
                 } else {
