@@ -636,7 +636,7 @@ class WorkspaceStorage extends BaseStorage {
             .find((crd) => crd.id === id).checklists;
 
         const checklists = this.storage.get(this.workspaceModel.checklists).filter((chk) => {
-            return checklistIDs.find((chid) => chid === chk.id);
+            return checklistIDs.find((chid) => chid == chk.id);
         });
 
         return checklists.sort((x, y) => x.list_position < y.list_position);
@@ -648,7 +648,7 @@ class WorkspaceStorage extends BaseStorage {
             .find((crd) => crd.id === id).checklist_items;
 
         const items = this.storage.get(this.workspaceModel.checklists).filter((chk) => {
-            return itemsIDs.find((chid) => chid === chk.id);
+            return itemsIDs.find((chid) => chid == chk.id);
         });
 
         return items.sort((x, y) => x.list_position < y.list_position);

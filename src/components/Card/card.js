@@ -19,6 +19,7 @@ import Validator from '../../modules/validator.js';
 import NotificationMessage from '../Common/notification/notificationMessage.js';
 import CardUser from './atomic/cardUser/cardUser.js';
 import Checklist from './atomic/checklist/checklist.js';
+import CheckItem from './atomic/checkItem/checkItem.js';
 
 /**
  * Попап для хедера
@@ -104,6 +105,7 @@ export default class Card extends Component {
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.#addDate(parseInt(dialog.dataset.card, 10));
         Card.#addUsers(parseInt(dialog.dataset.card, 10));
+        Card.#addChecklists(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.addPopup(dialog);
@@ -143,6 +145,7 @@ export default class Card extends Component {
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.#addDate(parseInt(dialog.dataset.card, 10));
         Card.#addUsers(parseInt(dialog.dataset.card, 10));
+        Card.#addChecklists(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
@@ -346,12 +349,11 @@ export default class Card extends Component {
 
     static #addChecklists = (cardId) => {
         const dialog = document.querySelector('#card');
-        const checklistsLocation = dialog.querySelector('.card-information__date-wrapper');
+        const checklistsLocation = dialog.querySelector('.card-information__checklists');
         const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));
-
+        console.log(checklists);
         if (checklists.length) {
-            const checklistsContainer = dialog.querySelector('.card-information__checklists');
-            checklistsContainer.display = 'flex';
+            checklistsLocation.style.display = 'flex';
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',
@@ -369,6 +371,14 @@ export default class Card extends Component {
         const items = [];
         const checklistItems = workspaceStorage.getChecklistItems(checklistId);
 
-        checklistItems.forEach((item) => {});
+        checklistItems.forEach((item) => {
+            items.push(
+                new CheckItem(null, {
+                    checkitem_id: item.id,
+                    checklist_id: item.checklist_id,
+                    name: item.name,
+                }).render(),
+            );
+        });
     };
 }
