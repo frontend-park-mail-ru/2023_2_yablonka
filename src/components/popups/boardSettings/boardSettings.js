@@ -1,6 +1,7 @@
 import { actionDeleteBoard, actionUpdateBoard } from '../../../actions/boardActions.js';
 import { actionRedirect } from '../../../actions/userActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
+import userStorage from '../../../storages/userStorage.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
@@ -21,7 +22,9 @@ export default class BoardSettings extends Component {
             'beforeend',
             template({
                 ID: this.config.board_id,
-                isOwner: workspaceStorage.isOwner(this.config.user_id),
+                isOwner: workspaceStorage.isOwner(
+                    userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+                ),
             }),
         );
     }

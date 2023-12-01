@@ -23,7 +23,6 @@ export default class UserWorkspaces extends Component {
             this.config.guestWorkspaces ? this.config.guestWorkspaces : [],
             false,
         );
-
         return template({ userWorkspaces, guestWorkspaces });
     }
 
