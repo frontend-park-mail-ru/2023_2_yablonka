@@ -470,12 +470,12 @@ class WorkspaceStorage extends BaseStorage {
      */
     getWorkspaceById(id) {
         const workspaces = this.storage.get(this.workspaceModel.body);
-        let workspace = workspaces.body.workspaces.yourWorkspaces.find(
+        let workspace = workspaces.body.workspaces.yourWorkspaces?.find(
             (ws) => ws.workspace_id === id,
         );
         if (workspace) return workspace;
 
-        workspace = workspaces.body.workspaces.guestWorkspaces.find((ws) => ws.workspace_id === id);
+        workspace = workspaces.body.workspaces.guestWorkspaces?.find((ws) => ws.workspace_id === id);
 
         return workspace;
     }
