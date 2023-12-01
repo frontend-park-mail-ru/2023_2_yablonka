@@ -23,7 +23,7 @@ export default class BoardSettings extends Component {
             template({
                 ID: this.config.board_id,
                 isOwner: workspaceStorage.isOwner(
-                    userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+                    this.config.user_id,
                 ),
             }),
         );

@@ -16,14 +16,13 @@ export default class Sidebar extends Component {
      * Рендерит компонент в DOM
      */
     render() {
+        console.log(this.config);
         return template({
             workspaceID: this.config.workspace_id,
             workspaceIcon: Array.from(this.config.workspaceName)[0],
             workspaceName: this.config.workspaceName,
             boards: this.#getWorkspaceBoards(this.config.workspace_id),
-            isOwner: workspaceStorage.isOwner(
-                userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
-            ),
+            isOwner: workspaceStorage.isOwner(this.config.user_id),
         });
     }
 
