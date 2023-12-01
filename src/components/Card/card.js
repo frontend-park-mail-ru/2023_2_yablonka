@@ -355,6 +355,7 @@ export default class Card extends Component {
 
         if (checklists.length) {
             checklistsLocation.style.display = 'flex';
+            checklistsLocation.innerHTML = '';
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',
