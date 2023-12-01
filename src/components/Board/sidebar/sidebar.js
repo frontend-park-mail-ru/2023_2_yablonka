@@ -16,7 +16,6 @@ export default class Sidebar extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        console.log(this.config);
         return template({
             workspaceID: this.config.workspace_id,
             workspaceIcon: Array.from(this.config.workspaceName)[0],
