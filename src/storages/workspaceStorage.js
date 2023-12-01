@@ -499,7 +499,7 @@ class WorkspaceStorage extends BaseStorage {
     getWorkspaceBoards(id) {
         let workspaceBoards = this.storage
             .get(this.workspaceModel.body)
-            .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === id).boards;
+            .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === id)?.boards;
 
         if (!workspaceBoards) {
             workspaceBoards = this.storage
@@ -537,48 +537,6 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Array} - массив карточек
      */
     getListCards(id) {
-        // const cards = [
-        //     {
-        //         id: 1,
-        //         list_id: 3,
-        //         date_created: '2023-11-25T01:10:36.436655Z',
-        //         name: 'task1',
-        //         description: 'some dsc',
-        //         list_position: 1,
-        //         start: null,
-        //         end: null,
-        //         users: null,
-        //         checklists: null,
-        //         comments: null,
-        //     },
-        //     {
-        //         id: 2,
-        //         list_id: 2,
-        //         date_created: '2023-11-25T01:10:36.436655Z',
-        //         name: 'Задача 2',
-        //         description: '',
-        //         list_position: 3,
-        //         start: null,
-        //         end: null,
-        //         users: null,
-        //         checklists: null,
-        //         comments: null,
-        //     },
-        //     {
-        //         id: 3,
-        //         list_id: 1,
-        //         date_created: '2023-11-25T01:10:36.436655Z',
-        //         name: 'TASача',
-        //         description: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-        //         list_position: 2,
-        //         start: null,
-        //         end: null,
-        //         users: null,
-        //         checklists: null,
-        //         comments: null,
-        //     },
-        // ];
-
         const cards = this.storage
             .get(this.workspaceModel.cards)
             .filter((card) => card.list_id === id)
@@ -601,9 +559,9 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.cards)
             .find((crd) => crd.id === id).users;
 
-        const cardUsers = this.storage.get(this.workspaceModel.users).filter((usr) => {
-            return currentCardUserIds.find((uid) => uid == usr.user_id);
-        });
+        const cardUsers = this.storage
+            .get(this.workspaceModel.users)
+            .filter((usr) => currentCardUserIds.find((uid) => uid == usr.user_id));
 
         return [...cardUsers];
     }
@@ -623,9 +581,9 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.cards)
             .find((crd) => crd.id == id).comments;
 
-        const comms = this.storage.get(this.workspaceModel.comments).filter((cmt) => {
-            return commIDs.find((comid) => comid == cmt.id);
-        });
+        const comms = this.storage
+            .get(this.workspaceModel.comments)
+            .filter((cmt) => commIDs.find((comid) => comid == cmt.id));
 
         return comms;
     }
@@ -635,23 +593,20 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.cards)
             .find((crd) => crd.id === id).checklists;
 
-        const checklists = this.storage.get(this.workspaceModel.checklists).filter((chk) => {
-            return checklistIDs.find((chid) => chid == chk.id);
-        });
+        const checklists = this.storage
+            .get(this.workspaceModel.checklists)
+            .filter((chk) => checklistIDs.find((chid) => chid == chk.id));
 
         return checklists.sort((x, y) => x.list_position < y.list_position);
     }
 
     getChecklistItems(id) {
-        console.log(id);
-
-        console.log(this.storage.get(this.workspaceModel.checklists));
         const itemsIDs = this.storage
             .get(this.workspaceModel.checklists)
             .find((ch) => ch.id === id).items;
-        const items = this.storage.get(this.workspaceModel.items).filter((chk) => {
-            return itemsIDs.find((itm) => itm == chk.id);
-        });
+        const items = this.storage
+            .get(this.workspaceModel.items)
+            .filter((chk) => itemsIDs.find((itm) => itm == chk.id));
 
         return items.sort((x, y) => x.list_position < y.list_position);
     }
@@ -671,6 +626,7 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     isOwner(id) {
+        console.log(this.storage.get(this.workspaceModel.boards), id);
         return this.storage.get(this.workspaceModel.boards).owner_id === id;
     }
 

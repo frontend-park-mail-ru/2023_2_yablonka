@@ -21,7 +21,7 @@ export default class CreateBoard extends Component {
     }
 
     addEventListeners() {
-        this.parent.querySelectorAll('.btn-create-board').forEach((btn) => {
+        this.parent.querySelectorAll('.btn-create-board')?.forEach((btn) => {
             btn.addEventListener('click', this.#openCreateBoard);
         });
         this.parent
@@ -34,7 +34,7 @@ export default class CreateBoard extends Component {
     }
 
     removeEventListeners() {
-        this.parent.querySelectorAll('.btn-create-board').forEach((btn) => {
+        this.parent.querySelectorAll('.btn-create-board')?.forEach((btn) => {
             btn.removeEventListener('click', this.#openCreateBoard);
         });
         this.parent

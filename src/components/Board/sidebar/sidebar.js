@@ -3,6 +3,7 @@ import WorkspaceBoard from './atomic/workspaceBoard/workspaceBoard';
 import Component from '../../core/basicComponent';
 import template from './sidebar.hbs';
 import './sidebar.scss';
+import userStorage from '../../../storages/userStorage';
 
 /**
  * слои-обертки
@@ -20,6 +21,9 @@ export default class Sidebar extends Component {
             workspaceIcon: Array.from(this.config.workspaceName)[0],
             workspaceName: this.config.workspaceName,
             boards: this.#getWorkspaceBoards(this.config.workspace_id),
+            isOwner: workspaceStorage.isOwner(
+                userStorage.storage.get(userStorage.userModel.body).body.user.user_id,
+            ),
         });
     }
 
