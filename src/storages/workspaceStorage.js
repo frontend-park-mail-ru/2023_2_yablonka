@@ -132,7 +132,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            console.log(body);
+            // console.log(body);
             this.addBoard(body.body.board);
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
@@ -323,7 +323,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async createChecklistItem(checklistItem) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}checklistItem/create/`,
+            `${apiPath + apiVersion}checklist/item/create/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             checklistItem,
@@ -338,7 +338,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async updateChecklistItem(checklistItem) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}checklistItem/edit/`,
+            `${apiPath + apiVersion}checklist/item/edit/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             checklistItem,
@@ -353,7 +353,7 @@ class WorkspaceStorage extends BaseStorage {
 
     async deleteChecklistItem(checklistItem) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}checklistItem/delete/`,
+            `${apiPath + apiVersion}checklist/item/delete/`,
             'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
             checklistItem,
@@ -626,7 +626,6 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     isOwner(id) {
-        console.log(this.storage.get(this.workspaceModel.boards), id);
         return this.storage.get(this.workspaceModel.boards).owner_id === id;
     }
 

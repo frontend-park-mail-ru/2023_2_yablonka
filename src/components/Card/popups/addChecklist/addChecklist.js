@@ -2,6 +2,7 @@ import {
     actionCreateChecklist,
     actionCreateChecklistItem,
     actionDeleteChecklist,
+    actionDeleteChecklistItem,
     actionUpdateChecklistItem,
 } from '../../../../actions/boardActions.js';
 import dispatcher from '../../../../modules/dispatcher.js';
@@ -235,26 +236,22 @@ export default class AddChecklist extends Component {
 
     #setCheckItemCheck = (e) => {
         e.stopPropagation();
-        e.preventDefault();
 
-        const btn = e.target.closest('input-check-item__checkbox');
+        const btn = e.target.closest('.input-check-item__checkbox');
 
         if (btn) {
-            const checklist = e.target.closest('.card-information__checklist-wrapper');
-            const checklistItemId = parseInt(
-                checklist.querySelector('.check-item').dataset.checkitem_id,
-                10,
-            );
-            const input = checklist.querySelector('.input-check-item__checkbox');
+            const checklistItem = e.target.closest('.check-item');
+            const checklistItemId = parseInt(checklistItem.dataset.checkitem_id, 10);
+            const input = checklistItem.querySelector('.input-check-item__checkbox');
 
             dispatcher.dispatch(
                 actionUpdateChecklistItem({
-                    done: input.hasAttribute('checked'),
+                    done: input.hasAttribute('checked') !== true,
                     id: checklistItemId,
-                    list_position: workspaceStorage.getChecklistItems(parseInt(checklist.id, 10))
-                        .length,
-                    name: checklist.querySelector('.ard-information__card-checklist-title')
-                        .textContent,
+                    list_position: workspaceStorage.getChecklistItems(
+                        parseInt(checklistItem.dataset.checklist_id, 10),
+                    ).length,
+                    name: checklistItem.querySelector('.check-item-name__text').textContent,
                 }),
             );
         }
@@ -267,12 +264,9 @@ export default class AddChecklist extends Component {
         const btn = e.target.closest('.btn-check-item_delete');
 
         if (btn) {
-            const checklist = e.target.closest('.card-information__checklist-wrapper');
-            const checklistItemId = parseInt(
-                checklist.querySelector('.check-item').dataset.checkitem_id,
-                10,
-            );
-            dispatcher.dispatch(actionUpdateChecklistItem({ id: checklistItemId }));
+            const checklist = e.target.closest('.check-item');
+            const checklistItemId = parseInt(checklist.dataset.checkitem_id, 10);
+            dispatcher.dispatch(actionDeleteChecklistItem({ id: checklistItemId }));
         }
     };
 }

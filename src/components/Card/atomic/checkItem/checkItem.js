@@ -14,8 +14,8 @@ export default class CheckItem extends Component {
      */
     render() {
         return template({
-            checkitemID: this.config.id,
-            checklistID: this.config.checklist_id,
+            checkitem_id: this.config.id,
+            checklist_id: this.config.checklist_id,
             name: this.config.name,
             checked: this.config.done,
         });

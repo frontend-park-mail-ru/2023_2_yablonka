@@ -1,16 +1,16 @@
-<div class='padding-5-10 border-radius-5 flex-row-centered check-item'>
+<div
+    data-checkitem_id='{{this.checkitem_id}}'
+    data-checklist_id='{{this.checklist_id}}'
+    class='padding-5-10 border-radius-5 flex-row-centered check-item'
+>
     {{#if this.checked}}
         <input
-            data-checkitem_id='{{this.checkitem_id}}'
-            data-checklist_id='{{this.checklist_id}}'
             type='checkbox'
             class='box-16-16 border-radius-5 input input-check-item__checkbox'
             checked
         />
     {{else}}
         <input
-            data-checkitem_id='{{this.checkitem_id}}'
-            data-checklist_id='{{this.checklist_id}}'
             type='checkbox'
             class='box-16-16 border-radius-5 input input-check-item__checkbox'
         />

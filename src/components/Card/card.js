@@ -366,6 +366,11 @@ export default class Card extends Component {
                 );
             });
         }
+        dialog.querySelectorAll('.card-information__checkitems')?.forEach((items) => {
+            if (items.children.length) {
+                items.setAttribute('style', 'display: flex');
+            }
+        });
     };
 
     static #getChecklistItems = (checklistId) => {
@@ -375,10 +380,10 @@ export default class Card extends Component {
         checklistItems.forEach((item) => {
             items.push(
                 new CheckItem(null, {
-                    checkitem_id: item.id,
+                    id: item.id,
                     checklist_id: item.checklist_id,
                     name: item.name,
-                    checked: item.done,
+                    done: item.done,
                 }).render(),
             );
         });
