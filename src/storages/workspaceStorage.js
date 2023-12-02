@@ -132,7 +132,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            // console.log(body);
+            console.log(body);
             this.addBoard(body.body.board);
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
@@ -163,7 +163,7 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     async deleteBoard(board) {
-        const responsePromise = await AJAX(
+        await AJAX(
             `${apiPath + apiVersion}board/delete/`,
             'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
@@ -432,7 +432,12 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const currentCardUserIds = this.storage
+                .get(this.workspaceModel.cards)
+                .find((crd) => crd.id === data.task_id).users;
+            currentCardUserIds.push(`${data.user_id}`);
+
+            currentCardUserIds.sort((f, s) => parseInt(f, 10) < parseInt(s, f));
         }
     }
 
@@ -447,7 +452,15 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const currentCardUserIds = this.storage
+                .get(this.workspaceModel.cards)
+                .find((crd) => crd.id === data.task_id).users;
+
+            const ind = currentCardUserIds.findIndex(
+                (userId) => parseInt(userId, 10) === data.user_id,
+            );
+
+            currentCardUserIds.splice(ind, ind + 1);
         }
     }
 
@@ -629,9 +642,9 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.boards)[0].owner_id === id;
     }
 
-    isUserInCard(card_id, user_id) {
-        const cardUsers = this.getCardUsers(card_id);
-        return !!cardUsers.find((usr) => usr.user_id === user_id);
+    isUserInCard(cardId, userId) {
+        const cardUsers = this.getCardUsers(cardId);
+        return !!cardUsers.find((usr) => usr.user_id === userId);
     }
 }
 

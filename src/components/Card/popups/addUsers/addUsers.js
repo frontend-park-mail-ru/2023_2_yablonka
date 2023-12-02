@@ -4,6 +4,7 @@ import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
 import BoardUser from '../../atomic/boardUser/boardUser.js';
+import Card from '../../card.js';
 import template from './addUsers.hbs';
 import './addUsers.scss';
 
@@ -103,19 +104,19 @@ export default class AddCardUsers extends Component {
         });
     };
 
-    #selectUsers = (e) => {
+    #selectUsers = async (e) => {
         e.stopPropagation();
 
         const { target } = e;
-        if (target.tagName === 'INPUT') {
+        if (target.tagName === 'INPUT' && target.type === 'checkbox') {
             const userEmail = target.nextElementSibling.querySelector(
                 '.add-card-user__user-email',
             ).textContent;
             const cardId = this.parent.querySelector('#card').dataset.card;
             if (target.hasAttribute('checked')) {
-                target.checked = true;
                 target.removeAttribute('checked');
-                dispatcher.dispatch(
+                target.checked = false;
+                await dispatcher.dispatch(
                     actionRemoveUserCard({
                         user_id: workspaceStorage.getUserByEmail(userEmail).user_id,
                         task_id: parseInt(cardId, 10),
@@ -123,13 +124,14 @@ export default class AddCardUsers extends Component {
                 );
             } else {
                 target.setAttribute('checked', '');
-                dispatcher.dispatch(
+                await dispatcher.dispatch(
                     actionAddUserCard({
                         user_id: workspaceStorage.getUserByEmail(userEmail).user_id,
                         task_id: parseInt(cardId, 10),
                     }),
                 );
             }
+            Card.addUsers(parseInt(cardId, 10));
         }
     };
 }

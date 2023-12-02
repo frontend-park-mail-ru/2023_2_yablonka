@@ -105,7 +105,7 @@ export default class Card extends Component {
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.#addDate(parseInt(dialog.dataset.card, 10));
-        Card.#addUsers(parseInt(dialog.dataset.card, 10));
+        Card.addUsers(parseInt(dialog.dataset.card, 10));
         Card.#addChecklists(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
@@ -145,7 +145,7 @@ export default class Card extends Component {
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.#addDate(parseInt(dialog.dataset.card, 10));
-        Card.#addUsers(parseInt(dialog.dataset.card, 10));
+        Card.addUsers(parseInt(dialog.dataset.card, 10));
         Card.#addChecklists(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
@@ -329,12 +329,13 @@ export default class Card extends Component {
         dateLocation.insertAdjacentHTML('beforeend', date);
     };
 
-    static #addUsers = (cardId) => {
+    static addUsers = (cardId) => {
         const dialog = document.querySelector('#card');
         const usersLocation = dialog.querySelector('.card-information__users-wrapper');
         usersLocation.innerHTML = '';
 
         const users = workspaceStorage.getCardUsers(parseInt(cardId, 10));
+        
         const overflow = users.length - 3;
         users.slice(0, 3).forEach((user) => {
             usersLocation.insertAdjacentHTML(
@@ -346,7 +347,13 @@ export default class Card extends Component {
             );
         });
         if (overflow > 0) {
-            dialog.querySelector('.card-information__user-overflow').textContent = `+${overflow}`;
+            const message = document.createElement('span');
+
+            message.classList.add(
+                ...'font-size-16 font-weight-500 card-information__user-overflow'.split(' '),
+            );
+            message.textContent = `+${overflow}`;
+            usersLocation.appendChild(message);
         }
     };
 
