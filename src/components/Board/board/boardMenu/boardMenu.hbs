@@ -1,18 +1,20 @@
 <div class='flex-row-centered board__menu'>
     <div class='flex-row-centered gap-50 board__menu_left'>
-        <div class='flex-row-centered gap-5 board-menu__board-name-wrapper'>
+        <div class='flex-row-centered gap-10 board-menu__board-name-wrapper'>
             <img
                 class='box-24-24 add-board-to-favourite'
-                src='/svg/star.svg'
+                src='/svg/board.svg'
                 alt='add-to-favourite'
             />
-            <span
-                class='font-size-22 font-weight-500 padding-5-10 border-radius-5 board-menu__board-name'
-                contenteditable='true'
-                data-board='{{this.boardID}}'
-            >{{this.name}}</span>
+            <div class='flex-centered border-radius-5 padding-5-10 board-name__input-wrapper' data-active="false">
+                <input
+                    class='font-size-22 font-weight-500 input input-board-name__input'
+                    value='{{this.name}}'
+                    data-board='{{this.boardID}}'
+                />
+            </div>
         </div>
-        <div class='flex-row-centered gap-5 board-menu__board-actions'>
+        {{! <div class='flex-row-centered gap-5 board-menu__board-actions'>
             <div class='flex-row-centered gap-5 border-radius-5 padding-5-10 board-actions-wrapper'>
                 <img
                     class='box-24-24 board-actions__image'
@@ -28,7 +30,7 @@
                     alt='board-actions'
                 />
             </button>
-        </div>
+        </div> }}
     </div>
     <div class='flex-row-centered gap-20 board__menu_right'>
         <div class='flex-row-centered gap-5 board-menu__team'>

@@ -184,7 +184,12 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const oldBoard = this.getBoardById(board.id);
+            if (oldBoard.name !== board.name) {
+                oldBoard.name = board.name;
+            } else {
+                emitter.trigger('rerender');
+            }
         }
     }
 

@@ -15,6 +15,7 @@ export default class BaseView {
 
     render() {
         this.components.forEach((cmp) => cmp.render());
+        this.root.removeAttribute('style');
     }
 
     addListeners() {
@@ -28,6 +29,8 @@ export default class BaseView {
     }
 
     clear() {
+        this.root.setAttribute('style', 'filter: blur(8px)');
+
         this.removeListeners();
         popupEvent.clearPopups();
         this.root.innerHTML = '';

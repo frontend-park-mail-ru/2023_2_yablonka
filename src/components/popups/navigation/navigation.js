@@ -64,7 +64,7 @@ export default class Navigation extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#navigation-menu');
+        const dialog = this.parent.querySelector('#navigation-menu');
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();

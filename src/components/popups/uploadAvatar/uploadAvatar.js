@@ -14,6 +14,10 @@ import './uploadAvatar.scss';
 export default class UploadAvatarModal extends Component {
     avatarFile;
 
+    filename;
+
+    mimetype;
+
     readFileAsByteArray(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -35,51 +39,51 @@ export default class UploadAvatarModal extends Component {
     }
 
     addEventListeners() {
-        document
+        this.parent
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .addEventListener('click', this.#openModal);
-        document
+        this.parent
             .querySelector('.btn-upload-avatar')
             .addEventListener('click', this.#chooseFileAction);
-        document
+        this.parent
             .querySelector('.input-upload-avatar')
             .addEventListener('change', this.#previewAvatar);
-        document
+        this.parent
             .querySelector('.btn-revert-change-avatar')
             .addEventListener('click', this.#revertChanges);
-        document
+        this.parent
             .querySelector('.upload-avatar-modal__button_cancel')
             .addEventListener('click', this.#openModal);
-        document.querySelector('#upload-avatar').addEventListener('click', this.#closeModal);
-        document
+        this.parent.querySelector('#upload-avatar').addEventListener('click', this.#closeModal);
+        this.parent
             .querySelector('.upload-avatar-modal__button_upload')
             .addEventListener('click', this.#updateAvatar);
     }
 
     removeEventListeners() {
-        document
+        this.parent
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .removeEventListener('click', this.#openModal);
-        document
+        this.parent
             .querySelector('.btn-upload-avatar')
             .removeEventListener('click', this.#chooseFileAction);
-        document
+        this.parent
             .querySelector('.input-upload-avatar')
             .removeEventListener('change', this.#previewAvatar);
-        document
+        this.parent
             .querySelector('.btn-revert-change-avatar')
             .removeEventListener('click', this.#revertChanges);
-        document
+        this.parent
             .querySelector('.upload-avatar-modal__button_cancel')
             .removeEventListener('click', this.#closeModal);
-        document.querySelector('#upload-avatar').removeEventListener('click', this.#closeModal);
-        document
+        this.parent.querySelector('#upload-avatar').removeEventListener('click', this.#closeModal);
+        this.parent
             .querySelector('.upload-avatar-modal__button_upload')
             .removeEventListener('click', this.#updateAvatar);
     }
 
     #changeForm = (from, to) => {
-        const form = document.querySelector('.form-upload-avatar');
+        const form = this.parent.querySelector('.form-upload-avatar');
 
         Array.from(form.children).forEach((e, ind) => {
             if (ind !== form.children.length - 1) {
@@ -95,42 +99,50 @@ export default class UploadAvatarModal extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#upload-avatar');
+        const dialog = this.parent.querySelector('#upload-avatar');
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.showModal();
-            this.avatarFile = null;
+            this.#clearFile();
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
-            this.avatarFile = null;
+            this.#clearFile();
         }
     };
 
     #closeModal = (e) => {
-        // const dialog = document.querySelector('#upload-avatar');
+        // const dialog = this.parent.querySelector('#upload-avatar');
 
         if (e.target === e.currentTarget) {
             this.#changeForm('none', 'flex');
             popupEvent.closeAllPopups();
-            this.avatarFile = null;
+            this.#clearFile();
         }
+    };
+
+    #clearFile = () => {
+        this.avatarFile = null;
+        this.filename = null;
+        this.mimetype = null;
     };
 
     #chooseFileAction = (e) => {
         e.stopPropagation();
 
-        document.querySelector('.input-upload-avatar').click();
+        this.parent.querySelector('.input-upload-avatar').click();
     };
 
     #previewAvatar = (e) => {
         e.stopPropagation();
 
-        const file = document.querySelector('.input-upload-avatar').files[0];
+        const file = this.parent.querySelector('.input-upload-avatar').files[0];
         this.avatarFile = structuredClone(file);
-        const previewImage = document.querySelector('.avatar-preview__image');
+        this.filename = file.name;
+        this.mimetype = file.type;
+        const previewImage = this.parent.querySelector('.avatar-preview__image');
 
         if (file) {
             previewImage.style.display = 'block';
@@ -154,11 +166,17 @@ export default class UploadAvatarModal extends Component {
 
         const avatar = await this.readFileAsByteArray(this.avatarFile);
 
+        console.log(this.filename, this.mimetype);
+
         dispatcher.dispatch(
             actionUpdateAvatar({
                 avatar: Array.from(avatar.values()),
+                filename: this.filename,
+                mimetype: this.mimetype,
             }),
         );
+
+        this.#clearFile();
 
         this.#changeForm('none', 'flex');
     };
