@@ -11,6 +11,7 @@ import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../../Common/notification/notificationMessage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
+import Card from '../../card.js';
 import template from './addChecklist.hbs';
 import './addChecklist.scss';
 
@@ -126,7 +127,7 @@ export default class AddChecklist extends Component {
         }
     };
 
-    #createChecklist = (e) => {
+    #createChecklist = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -135,13 +136,14 @@ export default class AddChecklist extends Component {
         const name = input.value;
 
         if (Validator.validateObjectName(name)) {
-            dispatcher.dispatch(
+            await dispatcher.dispatch(
                 actionCreateChecklist({
                     name,
                     task_id: cardId,
                     list_position: workspaceStorage.getCardChecklists(cardId).length,
                 }),
             );
+            Card.ad;
         } else {
             NotificationMessage.showNotification(input, false, true, {
                 fontSize: 12,
@@ -167,14 +169,14 @@ export default class AddChecklist extends Component {
         }
     };
 
-    #removeChecklist = (e) => {
+    #removeChecklist = async (e) => {
         e.stopPropagation();
         e.preventDefault();
 
         const checklist = e.target.closest('.card-information__checklist-wrapper');
         if (e.target.closest('.btn-delete-checklist')) {
             const checklistId = parseInt(checklist.dataset.checklist, 10);
-            dispatcher.dispatch(actionDeleteChecklist({ id: checklistId }));
+            await dispatcher.dispatch(actionDeleteChecklist({ id: checklistId }));
         }
     };
 

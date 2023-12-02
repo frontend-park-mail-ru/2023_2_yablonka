@@ -106,7 +106,7 @@ export default class Card extends Component {
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.addUsers(parseInt(dialog.dataset.card, 10));
-        Card.#addChecklists(parseInt(dialog.dataset.card, 10));
+        Card.addChecklists(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.addPopup(dialog);
@@ -146,7 +146,7 @@ export default class Card extends Component {
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.addUsers(parseInt(dialog.dataset.card, 10));
-        Card.#addChecklists(parseInt(dialog.dataset.card, 10));
+        Card.addChecklists(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
@@ -357,7 +357,7 @@ export default class Card extends Component {
         }
     };
 
-    static #addChecklists = (cardId) => {
+    static addChecklists = (cardId) => {
         const dialog = document.querySelector('#card');
         const checklistsLocation = dialog.querySelector('.card-information__checklists');
         const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));

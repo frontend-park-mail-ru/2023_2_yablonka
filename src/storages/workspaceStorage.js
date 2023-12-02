@@ -293,9 +293,20 @@ class WorkspaceStorage extends BaseStorage {
         );
 
         const { status } = responsePromise;
+        let body;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const boardChecklists = this.storage.get(this.workspaceModel.checklists);
+            const cardChecklists = this.getCardById(parseInt(checklist.task_id, 10)).checklists;
+
+            body = await responsePromise.json();
+            boardChecklists.push(body.body.checklist);
+            boardChecklists.sort((f, s) => parseInt(f.id, 10) < parseInt(s.id, 10));
+
+            cardChecklists.push(`${body.body.checklist.id}`);
+            cardChecklists.sort((f, s) => parseInt(f.id, 10) < parseInt(s.id, 10));
+
+            Card.addChecklists(parseInt(checklist.task_id, 10));
         }
     }
 
