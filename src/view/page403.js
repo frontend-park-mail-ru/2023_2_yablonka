@@ -8,20 +8,18 @@ import BaseView from './baseView.js';
 import emitter from '../modules/actionTrigger.js';
 
 class Page403 extends BaseView {
-
     constructor() {
         super();
         emitter.bind('noaccess', this.renderPage.bind(this));
     }
+
     /**
      * Рендер страницы в DOM
      */
     async renderPage() {
         document.title = 'Tabula: Not found';
 
-        const redirectionPage = userStorage.storage.get(userStorage.userModel.status) === 200 ?
-            'На главную' :
-            'Авторизоваться';
+        const redirectionPage = userStorage.storage.get(userStorage.userModel.status) === 200 ? 'На главную' : 'Авторизоваться';
 
         this.components.push(new Error403(this.root, { redirectionPage }));
 

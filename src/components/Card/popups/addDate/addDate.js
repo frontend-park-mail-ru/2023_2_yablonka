@@ -37,6 +37,12 @@ export default class AddDate extends Component {
         this.parent
             .querySelector('#card-date')
             .addEventListener('click', this.#closePopupByBackground);
+        this.parent
+            .querySelector('.start-date__date')
+            .addEventListener('change', this.#processDateSelect);
+        this.parent
+            .querySelector('.end-date__date')
+            .addEventListener('change', this.#processDateSelect);
     }
 
     removeEventListeners() {
@@ -53,7 +59,45 @@ export default class AddDate extends Component {
         this.parent
             .querySelector('#card-date')
             .removeEventListener('click', this.#closePopupByBackground);
+        this.parent
+            .querySelector('.start-date__date')
+            .removeEventListener('change', this.#processDateSelect);
+        this.parent
+            .querySelector('.end-date__date')
+            .removeEventListener('change', this.#processDateSelect);
     }
+
+    #processDateSelect = (e) => {
+        const { target } = e;
+        const startDate = this.parent.querySelector('.start-date__date');
+        const endDate = this.parent.querySelector('.end-date__date');
+        const start = startDate.value;
+        const end = endDate.value;
+        startDate.value = start;
+        endDate.value = end;
+        if (start !== '' && end !== '') {
+            const startTime = new Date(start);
+            const endTime = new Date(end);
+
+            if (target.dataset.time === 'start') {
+                endDate.value =
+                    endTime < startTime
+                        ? new Date(startTime.setDate(startTime.getDate() + 1))
+                              .toISOString()
+                              .split('T')[0]
+                        : end;
+            }
+
+            if (target.dataset.time === 'end') {
+                startDate.value =
+                    startTime > endTime
+                        ? new Date(endTime.setDate(endTime.getDate() - 1))
+                              .toISOString()
+                              .split('T')[0]
+                        : start;
+            }
+        }
+    };
 
     #blockDateInput = (e) => {
         e.stopPropagation();
@@ -80,10 +124,10 @@ export default class AddDate extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const catdId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
-        if (catdId) {
+        const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
+        if (cardId) {
             const dialog = this.parent.querySelector('#card-date');
-            const card = workspaceStorage.getCardById(catdId);
+            const card = workspaceStorage.getCardById(cardId);
             const start = dialog.querySelector('.start-date__date').value;
             const end = dialog.querySelector('.end-date__date').value;
 
@@ -91,7 +135,7 @@ export default class AddDate extends Component {
                 actionUpdateCard({
                     description: card.description,
                     end: end === '' ? null : new Date(end).toISOString(),
-                    id: catdId,
+                    id: cardId,
                     list_position: card.list_position,
                     name: card.name,
                     start: start === '' ? null : new Date(start).toISOString(),

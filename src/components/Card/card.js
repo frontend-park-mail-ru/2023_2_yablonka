@@ -104,7 +104,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__card-description').value = card.description;
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
-        Card.#addDate(parseInt(dialog.dataset.card, 10));
+        Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.addUsers(parseInt(dialog.dataset.card, 10));
         Card.#addChecklists(parseInt(dialog.dataset.card, 10));
 
@@ -144,7 +144,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__card-description').value = card.description;
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
-        Card.#addDate(parseInt(dialog.dataset.card, 10));
+        Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.addUsers(parseInt(dialog.dataset.card, 10));
         Card.#addChecklists(parseInt(dialog.dataset.card, 10));
 
@@ -319,7 +319,7 @@ export default class Card extends Component {
             });
     };
 
-    static #addDate = (cardId) => {
+    static addDate = (cardId) => {
         const dialog = document.querySelector('#card');
         const dateLocation = dialog.querySelector('.card-information__date-wrapper');
         dateLocation.innerHTML = '';
@@ -335,7 +335,7 @@ export default class Card extends Component {
         usersLocation.innerHTML = '';
 
         const users = workspaceStorage.getCardUsers(parseInt(cardId, 10));
-        
+
         const overflow = users.length - 3;
         users.slice(0, 3).forEach((user) => {
             usersLocation.insertAdjacentHTML(

@@ -5,6 +5,7 @@ import userStorage from './userStorage.js';
 import emitter from '../modules/actionTrigger.js';
 import NotificationMessage from '../components/Common/notification/notificationMessage.js';
 import popupEvent from '../components/core/popeventProcessing.js';
+import Card from '../components/Card/card.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -257,7 +258,14 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const oldCard = this.getCardById(card.id);
+            if (oldCard.start !== card.start || oldCard.end !== card.end) {
+                oldCard.start = card.start;
+                oldCard.end = card.end;
+                Card.addDate(card.id);
+            } else {
+                emitter.trigger('rerender');
+            }
         }
     }
 
@@ -488,7 +496,9 @@ class WorkspaceStorage extends BaseStorage {
         );
         if (workspace) return workspace;
 
-        workspace = workspaces.body.workspaces.guestWorkspaces?.find((ws) => ws.workspace_id === id);
+        workspace = workspaces.body.workspaces.guestWorkspaces?.find(
+            (ws) => ws.workspace_id === id,
+        );
 
         return workspace;
     }

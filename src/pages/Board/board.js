@@ -203,8 +203,7 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
         const { entity } = entityNode.dataset;
 
         const addEntityBtn = entityNode.parentNode.querySelector(`.add-new-${entity}`);
@@ -221,8 +220,7 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 
@@ -239,8 +237,7 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 
@@ -260,13 +257,11 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
         if (
-            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' &&
-            e.target.closest(`.btn-create-${entity}_cancel`)
+            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' && e.target.closest(`.btn-create-${entity}_cancel`)
         ) {
             this.#closeNewEntity(e);
             this.#blockCreateNewEntityBtn(e);
@@ -277,8 +272,7 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 

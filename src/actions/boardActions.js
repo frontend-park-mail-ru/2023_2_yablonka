@@ -56,7 +56,7 @@ export const actionCommentCard = (comment) => ({
 export const actionAddUserBoard = (user) => ({
     type: 'addUserBoard',
     value: user,
-})
+});
 
 export const actionRemoveUserBoard = (user) => ({
     type: 'removeUserBoard',
@@ -96,7 +96,7 @@ export const actionDeleteChecklistItem = (checklistItem) => ({
 export const actionAddUserCard = (data) => ({
     type: 'addUserCard',
     value: data,
-})
+});
 
 export const actionRemoveUserCard = (data) => ({
     type: 'removeUserCard',
