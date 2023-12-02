@@ -287,14 +287,17 @@ export default class AddChecklist extends Component {
         );
     };
 
-    static deleteChecklist = (checklist) => {
+    static deleteChecklist = (checklistId) => {
         const dialog = document.querySelector('#card');
+        const checklistContainer = dialog.querySelector('.card-information__checklists');
         const checklistObject = dialog.querySelector(
-            `.card-information__checklists[data-checklist=${checklist.id}]`,
+            `.card-information__checklist-wrapper[data-checklist="${checklistId}"]`,
         );
 
         checklistObject.remove();
-    };
 
-    static delete;
+        if (!checklistContainer.childElementCount) {
+            checklistContainer.setAttribute('style', 'display: none');
+        }
+    };
 }

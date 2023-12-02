@@ -333,25 +333,25 @@ class WorkspaceStorage extends BaseStorage {
         );
 
         const { status } = responsePromise;
-        let body;
 
         if (status === 200) {
             const boardChecklists = this.storage.get(this.workspaceModel.checklists);
-            const cardChecklists = this.getCardById(parseInt(checklist.task_id, 10)).checklists;
+            const cardChecklists = this.getCardById(
+                this.getChecklistById(checklist.id).task_id,
+            ).checklists;
 
-            body = await responsePromise.json();
-            const boardChecklistInd = boardChecklists.findInex(
+            const boardChecklistInd = boardChecklists.findIndex(
                 (checklistElement) =>
                     parseInt(checklistElement.id, 10) === parseInt(checklist.id, 10),
             );
             boardChecklists.splice(boardChecklistInd, boardChecklistInd + 1);
 
-            const cardChecklistInd = boardChecklists.findInex(
-                (checklistId) => parseInt(checklistId, 10) === body.body.checklist,
+            const cardChecklistInd = cardChecklists.findIndex(
+                (checklistId) => parseInt(checklistId, 10) === parseInt(checklist.id, 10),
             );
-            cardChecklists.sort((f, s) => parseInt(f.id, 10) < parseInt(s.id, 10));
+            cardChecklists.splice(cardChecklistInd, cardChecklistInd + 1);
 
-            AddChecklist.deleteChecklist(body.body.checklist);
+            AddChecklist.deleteChecklist(parseInt(checklist.id, 10));
         }
     }
 
@@ -662,6 +662,14 @@ class WorkspaceStorage extends BaseStorage {
             .filter((chk) => itemsIDs.find((itm) => itm == chk.id));
 
         return items.sort((x, y) => x.list_position < y.list_position);
+    }
+
+    getChecklistById(id) {
+        const checklists = this.storage.get(this.workspaceModel.checklists);
+
+        const checklist = checklists.find((ch) => ch.id === id);
+
+        return checklist;
     }
 
     searchUsers(substring) {
