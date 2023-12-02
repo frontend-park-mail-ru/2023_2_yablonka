@@ -156,7 +156,7 @@ export default class UploadAvatarModal extends Component {
 
         dispatcher.dispatch(
             actionUpdateAvatar({
-                avatar,
+                avatar: Array.from(avatar.values()),
             }),
         );
 

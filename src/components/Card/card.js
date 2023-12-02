@@ -105,8 +105,8 @@ export default class Card extends Component {
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
-        Card.addUsers(parseInt(dialog.dataset.card, 10));
-        Card.addChecklists(parseInt(dialog.dataset.card, 10));
+        Card.updateUsers(parseInt(dialog.dataset.card, 10));
+        Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.addPopup(dialog);
@@ -145,7 +145,7 @@ export default class Card extends Component {
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
-        Card.addUsers(parseInt(dialog.dataset.card, 10));
+        Card.updateUsers(parseInt(dialog.dataset.card, 10));
         Card.addChecklists(parseInt(dialog.dataset.card, 10));
 
         if (dialog.getAttribute('open') === null) {
@@ -329,7 +329,7 @@ export default class Card extends Component {
         dateLocation.insertAdjacentHTML('beforeend', date);
     };
 
-    static addUsers = (cardId) => {
+    static updateUsers = (cardId) => {
         const dialog = document.querySelector('#card');
         const usersLocation = dialog.querySelector('.card-information__users-wrapper');
         usersLocation.innerHTML = '';
@@ -357,14 +357,16 @@ export default class Card extends Component {
         }
     };
 
-    static addChecklists = (cardId) => {
+    static addChecklists = (cardId, clear) => {
         const dialog = document.querySelector('#card');
         const checklistsLocation = dialog.querySelector('.card-information__checklists');
         const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));
 
         if (checklists.length) {
             checklistsLocation.style.display = 'flex';
-            checklistsLocation.innerHTML = '';
+            if (clear) {
+                checklistsLocation.innerHTML = '';
+            }
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',

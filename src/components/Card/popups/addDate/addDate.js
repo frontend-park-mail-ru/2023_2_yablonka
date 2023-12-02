@@ -30,9 +30,9 @@ export default class AddDate extends Component {
         this.parent
             .querySelector('.end-date__checkbox-wrapper')
             .addEventListener('click', this.#blockDateInput);
-        this.parent.querySelector('.btn-card-date_save').addEventListener('click', this.#sendTime);
+        this.parent.querySelector('.card-date__buttons').addEventListener('click', this.#sendTime);
         this.parent
-            .querySelector('.btn-card-date_delete')
+            .querySelector('.card-date__buttons')
             .addEventListener('click', this.#deleteTime);
         this.parent
             .querySelector('#card-date')
@@ -54,8 +54,11 @@ export default class AddDate extends Component {
             .querySelector('.end-date__checkbox')
             .removeEventListener('click', this.#blockDateInput);
         this.parent
-            .querySelector('.btn-card-date_save')
+            .querySelector('.card-date__buttons')
             .removeEventListener('click', this.#sendTime);
+        this.parent
+            .querySelector('.card-date__buttons')
+            .addEventListener('click', this.#deleteTime);
         this.parent
             .querySelector('#card-date')
             .removeEventListener('click', this.#closePopupByBackground);
@@ -120,48 +123,52 @@ export default class AddDate extends Component {
         }
     };
 
-    #sendTime = (e) => {
+    #sendTime = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
-        if (cardId) {
-            const dialog = this.parent.querySelector('#card-date');
-            const card = workspaceStorage.getCardById(cardId);
-            const start = dialog.querySelector('.start-date__date').value;
-            const end = dialog.querySelector('.end-date__date').value;
+        if (e.target.closest('.btn-card-date_save')) {
+            const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
+            if (cardId) {
+                const dialog = this.parent.querySelector('#card-date');
+                const card = workspaceStorage.getCardById(cardId);
+                const start = dialog.querySelector('.start-date__date').value;
+                const end = dialog.querySelector('.end-date__date').value;
 
-            dispatcher.dispatch(
-                actionUpdateCard({
-                    description: card.description,
-                    end: end === '' ? null : new Date(end).toISOString(),
-                    id: cardId,
-                    list_position: card.list_position,
-                    name: card.name,
-                    start: start === '' ? null : new Date(start).toISOString(),
-                }),
-            );
+                await dispatcher.dispatch(
+                    actionUpdateCard({
+                        description: card.description,
+                        end: end === '' ? null : new Date(end).toISOString(),
+                        id: cardId,
+                        list_position: card.list_position,
+                        name: card.name,
+                        start: start === '' ? null : new Date(start).toISOString(),
+                    }),
+                );
+            }
         }
     };
 
-    #deleteTime = (e) => {
+    #deleteTime = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const catdId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
-        if (catdId) {
-            const card = workspaceStorage.getCardById(catdId);
+        if (e.target.closest('.btn-card-date_delete')) {
+            const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
+            if (cardId) {
+                const card = workspaceStorage.getCardById(cardId);
 
-            dispatcher.dispatch(
-                actionUpdateCard({
-                    description: card.description,
-                    end: null,
-                    id: catdId,
-                    list_position: card.list_position,
-                    name: card.name,
-                    start: null,
-                }),
-            );
+                await dispatcher.dispatch(
+                    actionUpdateCard({
+                        description: card.description,
+                        end: null,
+                        id: cardId,
+                        list_position: card.list_position,
+                        name: card.name,
+                        start: null,
+                    }),
+                );
+            }
         }
     };
 

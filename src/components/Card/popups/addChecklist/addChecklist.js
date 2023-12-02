@@ -11,6 +11,7 @@ import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../../Common/notification/notificationMessage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
+import Checklist from '../../atomic/checklist/checklist.js';
 import Card from '../../card.js';
 import template from './addChecklist.hbs';
 import './addChecklist.scss';
@@ -44,7 +45,7 @@ export default class AddChecklist extends Component {
             .addEventListener('input', this.#blockButton);
         this.parent
             .querySelector('.card-information__checklists')
-            .addEventListener('click', this.#removeChecklist);
+            .addEventListener('click', this.#deleteChecklist);
         this.parent
             .querySelector('.card-information__checklists')
             .addEventListener('click', this.#createChecklistItemShow);
@@ -77,7 +78,7 @@ export default class AddChecklist extends Component {
             .removeEventListener('input', this.#blockButton);
         this.parent
             .querySelector('.card-information__checklists')
-            .removeEventListener('click', this.#removeChecklist);
+            .removeEventListener('click', this.#deleteChecklist);
         this.parent
             .querySelector('.card-information__checklists')
             .removeEventListener('click', this.#createChecklistItemShow);
@@ -143,7 +144,6 @@ export default class AddChecklist extends Component {
                     list_position: workspaceStorage.getCardChecklists(cardId).length,
                 }),
             );
-            Card.ad;
         } else {
             NotificationMessage.showNotification(input, false, true, {
                 fontSize: 12,
@@ -169,7 +169,7 @@ export default class AddChecklist extends Component {
         }
     };
 
-    #removeChecklist = async (e) => {
+    #deleteChecklist = async (e) => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -271,4 +271,30 @@ export default class AddChecklist extends Component {
             dispatcher.dispatch(actionDeleteChecklistItem({ id: checklistItemId }));
         }
     };
+
+    static addChecklist = (checklist) => {
+        const dialog = document.querySelector('#card');
+        const checklistsLocation = dialog.querySelector('.card-information__checklists');
+
+        checklistsLocation.style.display = 'flex';
+        checklistsLocation.insertAdjacentHTML(
+            'afterbegin',
+            new Checklist(null, {
+                id: checklist.id,
+                name: checklist.name,
+                checklistItems: [],
+            }).render(),
+        );
+    };
+
+    static deleteChecklist = (checklist) => {
+        const dialog = document.querySelector('#card');
+        const checklistObject = dialog.querySelector(
+            `.card-information__checklists[data-checklist=${checklist.id}]`,
+        );
+
+        checklistObject.remove();
+    };
+
+    static delete;
 }

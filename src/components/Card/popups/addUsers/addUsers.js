@@ -4,7 +4,6 @@ import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
 import BoardUser from '../../atomic/boardUser/boardUser.js';
-import Card from '../../card.js';
 import template from './addUsers.hbs';
 import './addUsers.scss';
 
@@ -131,7 +130,6 @@ export default class AddCardUsers extends Component {
                     }),
                 );
             }
-            Card.addUsers(parseInt(cardId, 10));
         }
     };
 }

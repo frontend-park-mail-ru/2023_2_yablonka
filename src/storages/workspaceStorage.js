@@ -6,6 +6,7 @@ import emitter from '../modules/actionTrigger.js';
 import NotificationMessage from '../components/Common/notification/notificationMessage.js';
 import popupEvent from '../components/core/popeventProcessing.js';
 import Card from '../components/Card/card.js';
+import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -263,8 +264,6 @@ class WorkspaceStorage extends BaseStorage {
                 oldCard.start = card.start;
                 oldCard.end = card.end;
                 Card.addDate(card.id);
-            } else {
-                emitter.trigger('rerender');
             }
         }
     }
@@ -306,7 +305,7 @@ class WorkspaceStorage extends BaseStorage {
             cardChecklists.push(`${body.body.checklist.id}`);
             cardChecklists.sort((f, s) => parseInt(f.id, 10) < parseInt(s.id, 10));
 
-            Card.addChecklists(parseInt(checklist.task_id, 10));
+            AddChecklist.addChecklist(body.body.checklist);
         }
     }
 
@@ -334,9 +333,25 @@ class WorkspaceStorage extends BaseStorage {
         );
 
         const { status } = responsePromise;
+        let body;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const boardChecklists = this.storage.get(this.workspaceModel.checklists);
+            const cardChecklists = this.getCardById(parseInt(checklist.task_id, 10)).checklists;
+
+            body = await responsePromise.json();
+            const boardChecklistInd = boardChecklists.findInex(
+                (checklistElement) =>
+                    parseInt(checklistElement.id, 10) === parseInt(checklist.id, 10),
+            );
+            boardChecklists.splice(boardChecklistInd, boardChecklistInd + 1);
+
+            const cardChecklistInd = boardChecklists.findInex(
+                (checklistId) => parseInt(checklistId, 10) === body.body.checklist,
+            );
+            cardChecklists.sort((f, s) => parseInt(f.id, 10) < parseInt(s.id, 10));
+
+            AddChecklist.deleteChecklist(body.body.checklist);
         }
     }
 
@@ -457,6 +472,8 @@ class WorkspaceStorage extends BaseStorage {
             currentCardUserIds.push(`${data.user_id}`);
 
             currentCardUserIds.sort((f, s) => parseInt(f, 10) < parseInt(s, f));
+
+            Card.updateUsers(parseInt(data.task_id, 10));
         }
     }
 
@@ -480,6 +497,8 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             currentCardUserIds.splice(ind, ind + 1);
+
+            Card.updateUsers(parseInt(data.task_id, 10));
         }
     }
 
