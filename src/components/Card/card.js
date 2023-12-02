@@ -146,7 +146,7 @@ export default class Card extends Component {
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.updateUsers(parseInt(dialog.dataset.card, 10));
-        Card.addChecklists(parseInt(dialog.dataset.card, 10));
+        Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
