@@ -269,6 +269,10 @@ class WorkspaceStorage extends BaseStorage {
                 oldCard.start = card.start;
                 oldCard.end = card.end;
                 Card.addDate(card.id);
+            } else if (oldCard.name !== card.name || oldCard.description !== card.description) {
+                oldCard.name = card.name;
+                oldCard.description = card.description;
+                Card.changeNameAndDescriptionHelper(card.id);
             }
         }
     }

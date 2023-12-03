@@ -81,8 +81,7 @@ export default class Card extends Component {
         this.parent
             .querySelector('#card')
             .removeEventListener('click', this.#closeCardByBackground);
-        window
-            .removeEventListener('resize', this.#resize);
+        window.removeEventListener('resize', this.#resize);
 
         this.parent
             .querySelector('button[data-action=delete-card]')
@@ -224,6 +223,17 @@ export default class Card extends Component {
                 }),
             );
         }
+    };
+
+    static changeNameAndDescriptionHelper = (cardId) => {
+        const card = workspaceStorage.getCardById(parseInt(cardId, 10));
+
+        const dialog = document.querySelector('#card');
+        const name = dialog.querySelector('.card-information__card-name');
+        const description = dialog.querySelector('.card-information__card-description');
+
+        name.value = card.name ? card.name : '';
+        description.value = card.description ? card.description : '';
     };
 
     #createComment = (e) => {
