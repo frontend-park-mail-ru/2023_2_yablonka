@@ -369,9 +369,18 @@ class WorkspaceStorage extends BaseStorage {
         );
 
         const { status } = responsePromise;
+        let body;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            body = await responsePromise.json();
+
+            const checklistItems = this.storage.get(this.workspaceModel.items);
+            const checklist = this.getChecklistById(parseInt(checklistItem.checklist_id, 10));
+
+            checklistItems.push(body.body.checklistItem);
+            checklist.items.push(`${body.body.checklistItem.id}`);
+
+            AddChecklist.addCheckItem(body.body.checklistItem);
         }
     }
 
@@ -408,8 +417,6 @@ class WorkspaceStorage extends BaseStorage {
             const { items } = this.getChecklistById(
                 this.getChecklistItemById(checklistItem.id).checklist_id,
             );
-            console.log(structuredClone(checklistItems));
-            console.log(structuredClone(items));
 
             const checklistItemInd = checklistItems.findIndex(
                 (item) => parseInt(item.id, 10) === parseInt(checklistItem.id, 10),
@@ -420,9 +427,6 @@ class WorkspaceStorage extends BaseStorage {
                 (item) => parseInt(item, 10) === parseInt(checklistItem.id, 10),
             );
             items.splice(itemId, itemId + 1);
-
-            console.log(structuredClone(checklistItems));
-            console.log(structuredClone(items));
 
             AddChecklist.deleteCheckItem(parseInt(checklistItem.id, 10));
         }

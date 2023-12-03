@@ -11,6 +11,7 @@ import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../../Common/notification/notificationMessage.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
+import CheckItem from '../../atomic/checkItem/checkItem.js';
 import Checklist from '../../atomic/checklist/checklist.js';
 import template from './addChecklist.hbs';
 import './addChecklist.scss';
@@ -199,14 +200,18 @@ export default class AddChecklist extends Component {
 
         if (btn) {
             e.preventDefault();
-            const input = btn.closest('.checklist-new-item');
-            input.querySelector('.input-checklist-new-item__input').value = '';
-            input.style.display = 'none';
-            input.previousElementSibling.style.display = 'flex';
+            this.#createChecklistItemCloseHelper(btn);
         }
     };
 
-    #createChecklistItem = (e) => {
+    #createChecklistItemCloseHelper = (btn) => {
+        const input = btn.closest('.checklist-new-item');
+        input.querySelector('.input-checklist-new-item__input').value = '';
+        input.style.display = 'none';
+        input.previousElementSibling.style.display = 'flex';
+    };
+
+    #createChecklistItem = async (e) => {
         e.stopPropagation();
 
         const btn = e.target.closest('.btn-checklist-new-item_save');
@@ -219,7 +224,7 @@ export default class AddChecklist extends Component {
             const name = input.value;
 
             if (Validator.validateObjectName(name)) {
-                dispatcher.dispatch(
+                await dispatcher.dispatch(
                     actionCreateChecklistItem({
                         checklist_id: checklistId,
                         done: false,
@@ -227,6 +232,7 @@ export default class AddChecklist extends Component {
                         name,
                     }),
                 );
+                this.#createChecklistItemCloseHelper(btn.nextElementSibling);
             } else {
                 NotificationMessage.showNotification(input, false, true, {
                     fontSize: 12,
@@ -310,6 +316,23 @@ export default class AddChecklist extends Component {
         if (!checklistContainer.childElementCount) {
             checklistContainer.setAttribute('style', 'display: none');
         }
+    };
+
+    static addCheckItem = (checkItem) => {
+        const dialog = document.querySelector('#card');
+        const checklist = dialog.querySelector(
+            `.card-information__checklist-wrapper[data-checklist="${checkItem.checklist_id}"]`,
+        );
+        const checklistItemsContainer = checklist.querySelector('.card-information__checkitems');
+
+        if (!checklistItemsContainer.childElementCount) {
+            checklistItemsContainer.setAttribute('style', 'display: flex');
+        }
+
+        checklistItemsContainer.insertAdjacentHTML(
+            'beforeend',
+            new CheckItem(null, checkItem).render(),
+        );
     };
 
     static deleteCheckItem = (checkItemId) => {
