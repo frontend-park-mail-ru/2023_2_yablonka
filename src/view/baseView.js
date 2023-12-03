@@ -1,5 +1,4 @@
 import popupEvent from '../components/core/popeventProcessing';
-import emitter from '../modules/actionTrigger';
 
 export default class BaseView {
     components = [];
@@ -29,8 +28,7 @@ export default class BaseView {
     }
 
     clear() {
-        this.root.setAttribute('style', 'filter: blur(8px)');
-
+        this.root.setAttribute('style', 'filter: blur(10px)');
         this.removeListeners();
         popupEvent.clearPopups();
         this.root.innerHTML = '';

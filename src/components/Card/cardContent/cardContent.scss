@@ -4,9 +4,7 @@
     width: 70%;
     align-items: flex-start;
     padding: 5px 20px 10px 40px;
-    max-height: 500px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 .card-information__name-and-tags-wrapper {
@@ -238,22 +236,6 @@
 }
 
 .card-information__comment-text::-webkit-scrollbar-thumb {
-    background-color: rgba(192, 192, 192, 0.858);
-    border-radius: 5px;
-}
-
-.card-data__card-information::-webkit-scrollbar {
-    height: 4px;
-    width: 4px;
-}
-
-.card-data__card-information::-webkit-scrollbar-track {
-    background: #00000026;
-    border-radius: 6px;
-    margin: 10px;
-}
-
-.card-data__card-information::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
 }

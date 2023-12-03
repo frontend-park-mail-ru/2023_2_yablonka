@@ -386,7 +386,10 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const oldChecklistItem = this.getChecklistItemById(checklistItem.id);
+            if (oldChecklistItem.done !== checklistItem.done) {
+                oldChecklistItem.done = checklistItem.done;
+            }
         }
     }
 
@@ -401,7 +404,27 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const checklistItems = this.storage.get(this.workspaceModel.items);
+            const { items } = this.getChecklistById(
+                this.getChecklistItemById(checklistItem.id).checklist_id,
+            );
+            console.log(structuredClone(checklistItems));
+            console.log(structuredClone(items));
+
+            const checklistItemInd = checklistItems.findIndex(
+                (item) => parseInt(item.id, 10) === parseInt(checklistItem.id, 10),
+            );
+            checklistItems.splice(checklistItemInd, checklistItemInd + 1);
+
+            const itemId = items.findIndex(
+                (item) => parseInt(item, 10) === parseInt(checklistItem.id, 10),
+            );
+            items.splice(itemId, itemId + 1);
+
+            console.log(structuredClone(checklistItems));
+            console.log(structuredClone(items));
+
+            AddChecklist.deleteCheckItem(parseInt(checklistItem.id, 10));
         }
     }
 
@@ -667,6 +690,14 @@ class WorkspaceStorage extends BaseStorage {
             .filter((chk) => itemsIDs.find((itm) => itm == chk.id));
 
         return items.sort((x, y) => x.list_position < y.list_position);
+    }
+
+    getChecklistItemById(id) {
+        const checklistItems = this.storage.get(this.workspaceModel.items);
+
+        const item = checklistItems.find((ch) => ch.id === id);
+
+        return item;
     }
 
     getChecklistById(id) {

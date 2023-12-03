@@ -12,7 +12,6 @@ import NotificationMessage from '../../../Common/notification/notificationMessag
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
 import Checklist from '../../atomic/checklist/checklist.js';
-import Card from '../../card.js';
 import template from './addChecklist.hbs';
 import './addChecklist.scss';
 
@@ -171,10 +170,11 @@ export default class AddChecklist extends Component {
 
     #deleteChecklist = async (e) => {
         e.stopPropagation();
-        e.preventDefault();
 
         const checklist = e.target.closest('.card-information__checklist-wrapper');
         if (e.target.closest('.btn-delete-checklist')) {
+            e.preventDefault();
+
             const checklistId = parseInt(checklist.dataset.checklist, 10);
             await dispatcher.dispatch(actionDeleteChecklist({ id: checklistId }));
         }
@@ -182,10 +182,11 @@ export default class AddChecklist extends Component {
 
     #createChecklistItemShow = (e) => {
         e.stopPropagation();
-        e.preventDefault();
 
         const btn = e.target.closest('.btn-add-checklist-element');
         if (btn) {
+            e.preventDefault();
+
             btn.style.display = 'none';
             btn.nextElementSibling.style.display = 'flex';
         }
@@ -193,11 +194,11 @@ export default class AddChecklist extends Component {
 
     #createChecklistItemClose = (e) => {
         e.stopPropagation();
-        e.preventDefault();
 
         const btn = e.target.closest('.btn-checklist-new-item_cancel');
 
         if (btn) {
+            e.preventDefault();
             const input = btn.closest('.checklist-new-item');
             input.querySelector('.input-checklist-new-item__input').value = '';
             input.style.display = 'none';
@@ -207,11 +208,11 @@ export default class AddChecklist extends Component {
 
     #createChecklistItem = (e) => {
         e.stopPropagation();
-        e.preventDefault();
 
         const btn = e.target.closest('.btn-checklist-new-item_save');
 
         if (btn) {
+            e.preventDefault();
             const checklist = e.target.closest('.card-information__checklist-wrapper');
             const checklistId = parseInt(checklist.dataset.checklist, 10);
             const input = checklist.querySelector('.input-checklist-new-item__input');
@@ -236,19 +237,28 @@ export default class AddChecklist extends Component {
         }
     };
 
-    #setCheckItemCheck = (e) => {
+    #setCheckItemCheck = async (e) => {
         e.stopPropagation();
 
-        const btn = e.target.closest('.input-check-item__checkbox');
+        const input = e.target.closest('.input-check-item__checkbox');
 
-        if (btn) {
+        if (input) {
             const checklistItem = e.target.closest('.check-item');
             const checklistItemId = parseInt(checklistItem.dataset.checkitem_id, 10);
-            const input = checklistItem.querySelector('.input-check-item__checkbox');
 
-            dispatcher.dispatch(
+            let check;
+            if (input.hasAttribute('checked')) {
+                input.removeAttribute('checked');
+                input.checked = false;
+                check = false;
+            } else {
+                input.setAttribute('checked', '');
+                check = true;
+            }
+
+            await dispatcher.dispatch(
                 actionUpdateChecklistItem({
-                    done: input.hasAttribute('checked') !== true,
+                    done: check,
                     id: checklistItemId,
                     list_position: workspaceStorage.getChecklistItems(
                         parseInt(checklistItem.dataset.checklist_id, 10),
@@ -259,16 +269,17 @@ export default class AddChecklist extends Component {
         }
     };
 
-    #deleteCheckItem = (e) => {
+    #deleteCheckItem = async (e) => {
         e.stopPropagation();
-        e.preventDefault();
 
         const btn = e.target.closest('.btn-check-item_delete');
 
         if (btn) {
+            e.preventDefault();
+
             const checklist = e.target.closest('.check-item');
             const checklistItemId = parseInt(checklist.dataset.checkitem_id, 10);
-            dispatcher.dispatch(actionDeleteChecklistItem({ id: checklistItemId }));
+            await dispatcher.dispatch(actionDeleteChecklistItem({ id: checklistItemId }));
         }
     };
 
@@ -290,7 +301,7 @@ export default class AddChecklist extends Component {
     static deleteChecklist = (checklistId) => {
         const dialog = document.querySelector('#card');
         const checklistContainer = dialog.querySelector('.card-information__checklists');
-        const checklistObject = dialog.querySelector(
+        const checklistObject = checklistContainer.querySelector(
             `.card-information__checklist-wrapper[data-checklist="${checklistId}"]`,
         );
 
@@ -298,6 +309,20 @@ export default class AddChecklist extends Component {
 
         if (!checklistContainer.childElementCount) {
             checklistContainer.setAttribute('style', 'display: none');
+        }
+    };
+
+    static deleteCheckItem = (checkItemId) => {
+        const dialog = document.querySelector('#card');
+        const checklistItemsObject = dialog.querySelector(
+            `.check-item[data-checkitem_id="${checkItemId}"]`,
+        );
+        const checklistItemsContainer = checklistItemsObject.parentElement;
+
+        checklistItemsObject.remove();
+
+        if (!checklistItemsContainer.childElementCount) {
+            checklistItemsContainer.setAttribute('style', 'display: none');
         }
     };
 }

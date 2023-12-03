@@ -26,6 +26,7 @@ body {
     height: 100%;
     display: flex;
     background-color: var(--main-page-background);
+    transition: 0.1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
 button:disabled {

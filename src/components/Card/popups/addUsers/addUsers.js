@@ -106,15 +106,15 @@ export default class AddCardUsers extends Component {
     #selectUsers = async (e) => {
         e.stopPropagation();
 
-        const { target } = e;
-        if (target.tagName === 'INPUT' && target.type === 'checkbox') {
-            const userEmail = target.nextElementSibling.querySelector(
+        const input = e.target;
+        if (input.tagName === 'INPUT' && input.type === 'checkbox') {
+            const userEmail = input.nextElementSibling.querySelector(
                 '.add-card-user__user-email',
             ).textContent;
             const cardId = this.parent.querySelector('#card').dataset.card;
-            if (target.hasAttribute('checked')) {
-                target.removeAttribute('checked');
-                target.checked = false;
+            if (input.hasAttribute('checked')) {
+                input.removeAttribute('checked');
+                input.checked = false;
                 await dispatcher.dispatch(
                     actionRemoveUserCard({
                         user_id: workspaceStorage.getUserByEmail(userEmail).user_id,
@@ -122,7 +122,7 @@ export default class AddCardUsers extends Component {
                     }),
                 );
             } else {
-                target.setAttribute('checked', '');
+                input.setAttribute('checked', '');
                 await dispatcher.dispatch(
                     actionAddUserCard({
                         user_id: workspaceStorage.getUserByEmail(userEmail).user_id,

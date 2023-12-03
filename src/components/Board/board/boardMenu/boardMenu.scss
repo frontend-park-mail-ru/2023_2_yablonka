@@ -4,6 +4,7 @@
     width: 100%;
     background-color: var(--board-menu-background);
     padding: 12px 20px 12px 20px;
+    backdrop-filter: blur(1px);
 }
 
 .board__menu_left,

@@ -51,6 +51,8 @@ export default class Card extends Component {
             .querySelector('.btn-card-modal__exit-wrapper')
             .addEventListener('click', this.#closeCardByBtn);
         this.parent.querySelector('#card').addEventListener('click', this.#closeCardByBackground);
+        window.addEventListener('resize', this.#resize);
+
         this.parent.querySelectorAll('.list__card-wrapper').forEach((card) => {
             card.addEventListener('click', this.#openCard);
         });
@@ -79,6 +81,9 @@ export default class Card extends Component {
         this.parent
             .querySelector('#card')
             .removeEventListener('click', this.#closeCardByBackground);
+        window
+            .removeEventListener('resize', this.#resize);
+
         this.parent
             .querySelector('button[data-action=delete-card]')
             .removeEventListener('click', this.#deleteCard);
@@ -114,12 +119,12 @@ export default class Card extends Component {
 
             const dialogSizes = dialog.getBoundingClientRect();
             const windowSizes = document.querySelector('.page').getBoundingClientRect();
-
+            // Math.floor(
+            //     (windowSizes.height - dialogSizes.height) / 2,
+            // )
             dialog.setAttribute(
                 'style',
-                `top: ${Math.floor(
-                    (windowSizes.height - dialogSizes.height) / 2,
-                )}px; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
+                `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
             );
         }
     };
@@ -257,15 +262,17 @@ export default class Card extends Component {
     #resize = () => {
         const dialog = this.parent.querySelector('#card');
 
-        const dialogSizes = dialog.getBoundingClientRect();
-        const windowSizes = this.parent.getBoundingClientRect();
-
-        dialog.setAttribute(
-            'style',
-            `top: ${Math.floor(
-                (windowSizes.height - dialogSizes.height) / 2,
-            )}px; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
-        );
+        window.requestAnimationFrame(() => {
+            const dialogSizes = dialog.getBoundingClientRect();
+            const windowSizes = this.parent.getBoundingClientRect();
+            // Math.floor(
+            //     (windowSizes.height - dialogSizes.height) / 2,
+            // )
+            dialog.setAttribute(
+                'style',
+                `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
+            );
+        });
     };
 
     static updateHistory = (cardId) => {

@@ -16,12 +16,12 @@
 }
 
 .create-workspace__title {
-    color: var(--text-color-in-main);
+    color: var(--text-color-in-create-popups);
     align-items: flex-start;
 }
 
 .create-workspace__name {
-    color: var(--text-color-in-main);
+    color: var(--text-color-in-create-popups);
     width: 100%;
     align-items: flex-start;
 }
@@ -29,7 +29,7 @@
 .input-workspace-name {
     width: 100%;
     height: 32px;
-    color: #c0c9f4;
+    color: var(--text-color-on-page);
     outline: none;
     background-color: var(--input-background-color);
     box-shadow: inset 0 0 0 2px var(--input-border-color);
@@ -42,13 +42,13 @@
 .create-workspace__description {
     width: 100%;
     align-items: flex-start;
-    color: var(--text-color-in-main);
+    color: var(--text-color-in-create-popups);
 }
 
 .textarea-workspace-description {
     width: 100%;
     height: 80px;
-    color: #c0c9f4;
+    color: var(--text-color-on-page);
     outline: none;
     background-color: var(--input-background-color);
     box-shadow: inset 0 0 0 2px var(--input-border-color);
@@ -68,5 +68,5 @@
 
 .btn-create-workspace-pop-up:active {
     background-color: var(--action-active-button-color);
-    color: var(--text-color-in-main);
+    color: var(--text-color-in-create-popups);
 }
