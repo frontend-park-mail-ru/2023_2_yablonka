@@ -46,7 +46,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                // { from: './src/sw.js', to: './' },
+                { from: './src/sw.js', to: './' },
                 { from: './static/img/', to: './img' },
                 { from: './static/svg/', to: './svg' },
             ],
