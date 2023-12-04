@@ -14,12 +14,12 @@ export default class BaseView {
 
     render() {
         this.components.forEach((cmp) => cmp.render());
-        this.root.removeAttribute('style');
     }
 
     addListeners() {
         this.root.addEventListener('click', popupEvent.closeAllPopups);
         this.components.forEach((cmp) => cmp.addEventListeners());
+        this.root.removeAttribute('style');
     }
 
     removeListeners() {

@@ -236,7 +236,7 @@ export default class Card extends Component {
         description.value = card.description ? card.description : '';
     };
 
-    #createComment = (e) => {
+    #createComment = async (e) => {
         e.stopPropagation();
 
         if (e.key === 'Enter') {
@@ -247,7 +247,7 @@ export default class Card extends Component {
             dialog.querySelector('.card-information__add-comment-text').value = '';
             const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
             if (Validator.validateObjectName(comment)) {
-                dispatcher.dispatch(
+                await dispatcher.dispatch(
                     actionCommentCard({
                         task_id: parseInt(dialog.dataset.card, 10),
                         user_id: userId,
@@ -334,6 +334,22 @@ export default class Card extends Component {
             .forEach((cmt) => {
                 commentsLocation.insertAdjacentHTML('beforeend', cmt);
             });
+    };
+
+    static addComment = (comment) => {
+        const dialog = document.querySelector('#card');
+        const commentsLocation = dialog.querySelector('.card-information__users-comments');
+
+        const user = workspaceStorage.getUserById(parseInt(comment.user_id, 10));
+
+        commentsLocation.insertAdjacentHTML(
+            'afterbegin',
+            new Comments(null, {
+                avatar: user.avatar_url,
+                email: user.email,
+                comment: comment.text,
+            }).render(),
+        );
     };
 
     static addDate = (cardId) => {

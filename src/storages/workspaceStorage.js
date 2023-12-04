@@ -445,9 +445,25 @@ class WorkspaceStorage extends BaseStorage {
         );
 
         const { status } = responsePromise;
+        let body;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const comments = this.storage.get(this.workspaceModel.comments);
+
+            body = await responsePromise.json();
+            const newComment = {
+                id: body.body.comment.id,
+                user_id: body.body.comment.user_id,
+                text: body.body.comment.text,
+                date_created: body.body.comment.date_created,
+            };
+
+            const card = this.getCardById(parseInt(body.body.comment.task_id, 10));
+            card.comments.push(`${newComment.id}`);
+
+            comments.push(newComment);
+
+            Card.addComment(newComment);
         }
     }
 
