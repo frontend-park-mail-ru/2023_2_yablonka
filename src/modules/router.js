@@ -2,6 +2,7 @@ import userStorage from '../storages/userStorage.js';
 import { routes, signedInRoutes } from '../configs/configs.js';
 import { boardHrefRegExp, hrefRegExp, navigationPagesHrefRegExp } from './regExp.js';
 import emitter from './actionTrigger.js';
+import offline from '../view/offline.js';
 
 /**
  * Класс, реализующий роутер
@@ -15,6 +16,7 @@ class Router {
         this.views = new Map();
         this.signedInViews = new Map();
 
+
         emitter.bind('rerender', this.reRenderPage.bind(this));
 
         routes.forEach((route) => {
@@ -24,6 +26,11 @@ class Router {
         signedInRoutes.forEach((route) => {
             this.registerView(route, true);
         });
+    }
+
+    goOffline(){
+        this.currentPage.clear();
+        offline.renderPage();
     }
 
     reRenderPage() {

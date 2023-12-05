@@ -42,6 +42,7 @@ const handlers = [
     { type: 'deleteChecklistItem', method: workspaceStorage.deleteChecklistItem.bind(workspaceStorage) },
     { type: 'addUserCard', method: workspaceStorage.addUserCard.bind(workspaceStorage) },
     { type: 'removeUserCard', method: workspaceStorage.removeUserCard.bind(workspaceStorage) },
+    { type: 'goOffline', method: router.goOffline.bind(router) },
 ];
 
 export default handlers;

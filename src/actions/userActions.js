@@ -106,3 +106,8 @@ export const actionGetQuestions = () => ({
     type: 'getQuestions',
     value: {},
 });
+
+export const actionGoOffline = ()=>({
+    type:'goOffline',
+    value:{}
+})

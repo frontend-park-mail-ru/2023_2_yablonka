@@ -1,4 +1,6 @@
 // components
+import { actionRedirect } from '../actions/userActions.js';
+import emitter from '../modules/actionTrigger.js';
 import Error404 from '../pages/404/error404.js';
 // storages
 import userStorage from '../storages/userStorage.js';
@@ -11,6 +13,10 @@ class Page404 extends BaseView {
      */
     async renderPage() {
         document.title = 'Tabula: Not found';
+
+        if(navigator.onLline){
+            actionRedirect('/main',false);
+        }
 
         const redirectionPage = userStorage.storage.get(userStorage.userModel.status) === 200 ? 'На главную' : 'Авторизоваться';
 

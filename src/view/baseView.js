@@ -20,6 +20,7 @@ export default class BaseView {
         this.root.addEventListener('click', popupEvent.closeAllPopups);
         this.components.forEach((cmp) => cmp.addEventListeners());
         this.root.removeAttribute('style');
+        
     }
 
     removeListeners() {
