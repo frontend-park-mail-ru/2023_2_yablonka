@@ -19,7 +19,6 @@ import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js
 /**
  * Класс для рендера страницы доски
  * @class
- * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
  */
 class Board extends BaseView {
     workspaceID;
@@ -76,6 +75,9 @@ class Board extends BaseView {
         }
     }
 
+    /**
+     * Ререндер страницы
+     */
     reRender() {
         this.clear();
         this.renderPage();

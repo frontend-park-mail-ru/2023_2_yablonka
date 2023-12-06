@@ -18,6 +18,13 @@ export default class Offline extends Component {
         );
     }
 
-    addEventListeners(){console.log('addE')}
-    removeEventListeners(){console.log('rmvE')}
+    /**
+     * Добавление подписок(которых нет)
+     */
+    addEventListeners(){}
+
+    /**
+     * Удаление подписок(которых нет)
+     */
+    removeEventListeners(){}
 }

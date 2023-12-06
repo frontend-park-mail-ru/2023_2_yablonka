@@ -7,6 +7,10 @@ import userStorage from '../storages/userStorage.js';
 // dispatcher
 import BaseView from './baseView.js';
 
+/**
+ * Страница 404
+ * @class
+ */
 class Page404 extends BaseView {
     /**
      * Рендер страницы в DOM
@@ -26,6 +30,9 @@ class Page404 extends BaseView {
         this.addListeners();
     }
 
+    /**
+     * Ререндер страницы
+     */
     async reRender() {
         this.clear();
         this.renderPage();

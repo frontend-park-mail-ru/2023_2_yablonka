@@ -298,10 +298,6 @@ class UserStorage extends BaseStorage {
         }
     }
 
-    getStoredStat() {
-        return this.storage.get(this.userModel.stats);
-    }
-
     /**
      * Запрос на получение опросника
      */
@@ -326,16 +322,16 @@ class UserStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Получение вопросов для опросника
+     * @returns {Array}
+     */
     getStoredQuestions() {
         return [
             { id: 1, content: 'Вы любите розы?', type: 'CSI' },
             { id: 2, content: 'Вы любите раков?', type: 'NSP' },
             { id: 3, content: 'Вы любите жену?', type: 'CSI' },
         ];
-    }
-
-    isShown() {
-        return this.storage.get(this.userModel.isShown);
     }
 
     /**
