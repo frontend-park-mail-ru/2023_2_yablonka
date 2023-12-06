@@ -1,0 +1,16 @@
+.workspace-settings {
+    min-width: 140px;
+    background-color: var(--pop-up-background-color);
+}
+
+.btn-change-workspace-name,
+.btn-delete-workspace {
+    width: 100%;
+    color: var(--text-color-on-page);
+    background-color: var(--pop-up-background-color);
+}
+
+.btn-change-workspace-name:hover,
+.btn-delete-workspace:hover {
+    background-color: var(--hover-navigation-paragraph);
+}

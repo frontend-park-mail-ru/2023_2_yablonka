@@ -1,0 +1,11 @@
+<form
+    id='form-sign'
+    class='flex-column-centered gap-15 form form-sign'
+    action='/user/login/'
+    method='POST'
+    enctype='application/x-www-form-urlencoded'
+>
+    {{#each inputs as |input|}}
+        {{{input}}}
+    {{/each}}
+</form>

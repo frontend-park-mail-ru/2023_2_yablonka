@@ -1,0 +1,100 @@
+.modal-upload-avatar {
+    top: 15%;
+    left: calc(50% - 200px);
+    width: 400px;
+    background-color: var(--modal-upload-avatar-background-color);
+}
+
+.upload-avatar-modal__title {
+    align-self: start;
+    color: var(--text-color-upload-avatar-title);
+}
+
+.upload-avatar-modal__image {
+    width: 220px;
+    height: 220px;
+    border: 2px dashed #c7c7c7;
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.upload-avatar-modal__picture {
+    height: 65%;
+    width: 65%;
+    object-fit: contain;
+}
+
+.upload-avatar-modal-image__message {
+    text-align: center;
+    width: 90%;
+    color: var(--text-color-upload-avatar-title);
+}
+
+.form-upload-avatar {
+    width: 100%;
+}
+
+.btn-upload-avatar {
+    min-width: 140px;
+    height: 35px;
+    background-color: var(--action-button-color);
+    border: none;
+}
+
+.input-upload-avatar {
+    display: none;
+}
+
+.upload-avatar-modal__buttons {
+    margin-top: 25%;
+    align-self: flex-end;
+    display: flex;
+    align-items: end;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.upload-avatar-modal__button {
+    min-width: 80px;
+    height: 35px;
+    border: none;
+}
+
+.upload-avatar-modal__button_upload {
+    background-color: var(--action-button-color);
+}
+
+.upload-avatar-modal__button_cancel {
+    background-color: var(--cancel-button-color);
+}
+
+.upload-avatar-modal__undo {
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 5%;
+    top: 5%;
+}
+
+.btn-revert-change-avatar {
+    background-color: transparent;
+}
+
+.btn-revert-change-avatar:hover {
+    background-color: var(--undo-avatar-upload-active-button-color);
+}
+
+.upload-avatar-modal__undo img {
+    width: 50%;
+    height: 50%;
+}
+
+.upload-avatar-modal__avatar-preview {
+    position: relative;
+    display: none;
+}
+
+.avatar-preview__image {
+    width: 200px;
+    height: 200px;
+}

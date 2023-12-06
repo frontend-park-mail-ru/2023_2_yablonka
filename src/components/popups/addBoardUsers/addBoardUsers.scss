@@ -1,0 +1,42 @@
+.add-board-user {
+    width: 280px;
+    padding: 10px;
+    max-height: 200px;
+    overflow: hidden;
+    background-color: var(--pop-up-background-color);
+}
+
+.add-board-user-content__title {
+    color: var(--text-color-on-page);
+}
+
+.input-add-board-user-content__input {
+    outline: none;
+    color: var(--text-color-on-page);
+    width: 90%;
+    min-height: 32px;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--need-text-color);
+}
+
+.add-board-user-content__buttons {
+    justify-content: space-between;
+    width: 90%;
+}
+
+.btn-add-board-user_add {
+    background-color: var(--action-button-color);
+    min-height: 25px;
+    min-width: 100px;
+}
+
+.btn-add-board-user_add:active {
+    color: var(--text-color-on-page);
+    background-color: var(--action-active-button-color);
+}
+
+.btn-add-board-user_delete {
+    background-color: var(--delete-button-color);
+    min-height: 25px;
+    min-width: 100px;
+}

@@ -1,0 +1,85 @@
+.workspace {
+    align-items: flex-start;
+    width: 100%;
+}
+
+.workspace__menu {
+    gap: 30px;
+    width: 100%;
+}
+
+.workspaces__title,
+.workspace__title {
+    color: var(--text-color-in-main);
+}
+
+.workspace__name {
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    max-width: 160px;
+    min-width: 160px;
+}
+
+.workspace__name:focus {
+    outline: 2px solid var(--text-color-on-page);
+    max-width: 240px;
+}
+
+.workspace__boards {
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.link-user-board {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    color: var(--text-color-in-main);
+}
+
+.workspace-board__title {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.btn-create-board {
+    width: 200px;
+    height: 100px;
+    background-color: var(--create-workspace-board-background);
+}
+
+.workspace-board__create-title {
+    color: var(--text-color-in-main);
+}
+
+.btn-change-workspace {
+    color: var(--text-color-on-page);
+    background-color: var(--change-workspace-button-background-color);
+}
+
+.btn-change-workspace:hover {
+    background-color: var(--change-workspace-button-hover-background-color);
+}
+
+.btn-change-workspace:active {
+    background-color: var(--change-workspace-button-active-background-color);
+}
+
+.workspace__name::-webkit-scrollbar {
+    height: 4px;
+    width: 6px;
+}
+
+.workspace__name::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0 10px;
+}
+
+.workspace__name::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}

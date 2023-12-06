@@ -1,0 +1,21 @@
+<dialog id='card' class='border-radius-10 card-modal' popover>
+    <button class='border-radius-10 flex-centered btn btn-card-modal__exit-wrapper'>
+        <svg
+            class='box-16-16'
+            fill='var(--text-color-in-card)'
+            width='800px'
+            height='800px'
+            viewBox='0 0 16 16'
+            xmlns='http://www.w3.org/2000/svg'
+        >
+            <path
+                d='M0 14.545L1.455 16 8 9.455 14.545 16 16 14.545 9.455 8 16 1.455 14.545 0 8 6.545 1.455 0 0 1.455 6.545 8z'
+                fill-rule='evenodd'
+            />
+        </svg>
+    </button>
+    <div class='strach-layout flex-row-centered card-modal__card-data'>
+        {{{cardContent}}}
+        {{{sidebar}}}
+    </div>
+</dialog>

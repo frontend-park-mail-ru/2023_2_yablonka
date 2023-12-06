@@ -1,0 +1,42 @@
+.card-modal {
+    width: 800px;
+    background-color: var(--card-background);
+    padding: 20px 20px 40px 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 5%;
+}
+
+.card-modal::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.card-modal::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 10px;
+}
+
+.card-modal::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}
+
+.btn-card-modal__exit-wrapper {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    padding: 10px;
+    background-color: transparent;
+    outline: none;
+}
+
+.btn-card-modal__exit-wrapper:hover {
+    background-color: var(--btn-close-card-background);
+}
+
+.card-modal__card-data {
+    padding: 30px 20px 0px 10px;
+    align-items: flex-start;
+}

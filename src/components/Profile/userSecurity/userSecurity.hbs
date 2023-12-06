@@ -1,0 +1,14 @@
+<div class='flex-column-centered gap-20 container-profile__user-security'>
+    <form
+        id='form-profile'
+        class='form form-profile'
+        action='/user/edit/change_password/'
+        method='POST'
+        enctype='application/x-www-form-urlencoded'
+    >
+        {{#each inputs as |input|}}
+            {{{input}}}
+        {{/each}}
+        {{{btn}}}
+    </form>
+</div>

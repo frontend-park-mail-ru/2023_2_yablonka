@@ -1,0 +1,27 @@
+<div class='flex-column-centered gap-40 card-data__card-actions'>
+    <div class='flex-column-centered gap-10 card-actions__card-settings'>
+        <span class='font-size-18 font-weight-500 card-settings__title'>Настройка карточки</span>
+        {{#each settings as |setting|}}
+            <button
+                data-action='{{this.action}}'
+                class='padding-0-10 gap-10 border-radius-5 flex-row-centered flex-start btn btn-card-settings__action'
+            >
+                <img class='box-16-16 action-logo' src='/svg/{{setting.icon}}' />
+                <span class='font-size-16 font-weight-500 action-name'>{{setting.name}}</span>
+            </button>
+        {{/each}}
+
+    </div>
+    <div class='flex-column-centered gap-10 card-actions__user-actions'>
+        <span class='font-size-18 font-weight-500 user-actions__title'>Действия с карточкой</span>
+        {{#each actions as |action|}}
+            <button
+                data-action='{{this.action}}'
+                class='padding-0-10 gap-10 border-radius-5 flex-row-centered flex-start btn btn-user-actions__action'
+            >
+                <img class='box-16-16 action-logo' src='/svg/{{action.icon}}' />
+                <span class='font-size-16 font-weight-500 action-name'>{{action.name}}</span>
+            </button>
+        {{/each}}
+    </div>
+</div>

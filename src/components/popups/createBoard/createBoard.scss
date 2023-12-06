@@ -1,0 +1,89 @@
+.create-board {
+    width: 300px;
+    overflow: hidden;
+    z-index: 10;
+    background-color: var(--pop-up-background-color);
+}
+
+.create-board-wrapper {
+    padding: 20px;
+}
+
+.board-example {
+    position: relative;
+}
+
+.board-example__image {
+    width: 100%;
+    height: 120px;
+}
+
+.board-example__svg {
+    position: absolute;
+    width: 90%;
+    height: 100px;
+}
+
+.form__create-board {
+    width: 100%;
+}
+
+.create-board__title {
+    color: var(--text-color-in-create-popups);
+    align-items: flex-start;
+}
+
+.create-board__name {
+    color: var(--text-color-in-create-popups);
+    width: 100%;
+    align-items: flex-start;
+}
+
+.input-board-name {
+    width: 100%;
+    height: 32px;
+    color: #c0c9f4;
+    outline: none;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--input-border-color);
+}
+
+.input-board-name:focus {
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--need-text-color);
+}
+
+.create-board__workspace-select {
+    width: 100%;
+    align-items: flex-start;
+    color: var(--text-color-in-main);
+}
+
+.select-workspace {
+    height: 32px;
+    width: 100%;
+    color: #c0c9f4;
+    outline: none;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--input-border-color);
+}
+
+.select-workspace:focus {
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
+}
+
+.select-workspace__workspace {
+    height: 32px;
+}
+
+.btn-create-board-pop-up {
+    width: 100%;
+    background-color: var(--action-button-color);
+    height: 32px;
+}
+
+.btn-create-board-pop-up:active {
+    background-color: var(--action-active-button-color);
+    color: var(--text-color-in-main);
+}

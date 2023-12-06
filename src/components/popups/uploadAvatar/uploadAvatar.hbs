@@ -1,0 +1,61 @@
+<dialog
+    id='upload-avatar'
+    class='border-radius-8 padding-10-15 modal-upload-avatar'
+    aria-modal='true'
+    popover
+>
+    <div class='flex-column-centered flex-centered gap-30 upload-avatar-modal-wrapper'>
+        <div class='font-size-20 font-weight-500 upload-avatar-modal__title'><span>Изменить фото
+                профиля</span></div>
+        <form
+            id='upload-profile-avatar'
+            class='form form-upload-avatar flex-column-centered flex-centered gap-10'
+            action='/change_avatar'
+            method='POST'
+            enctype='multipart/form-data'
+        >
+            <div class='flex-column-centered flex-centered gap-5 upload-avatar-modal__image'><img
+                    class='upload-avatar-modal__picture'
+                    src='/img/upload.png'
+                    alt='upload image'
+                />
+                <span class='upload-avatar-modal-image__message'>Перетащите изображения сюда</span></div>
+            <div class='flex-centered upload-avatar-modal__alternative'><span
+                    class='font-size-14 upload-avatar-modal-image__message'
+                >или</span></div>
+            <div class='form__input form__input-upload-avatar'>
+                <button
+                    type='button'
+                    data-action='choose'
+                    class='btn btn-upload-avatar padding-5-10 border-radius-5 font-size-16 font-weight-bold'
+                    form='upload-avatar'
+                >
+                    <span>Загрузите фото<input
+                            type='file'
+                            data-name='upload-avatar'
+                            accept='image/jpeg, image/png'
+                            class='input input-upload-avatar'
+                            name='user-avatar'
+                        /></span>
+                </button>
+            </div>
+            <div class='upload-avatar-modal__avatar-preview'><img
+                    class='border-radius-10 avatar-preview__image'
+                    src=''
+                    alt='avatar-preview'
+                /><div class='flex-centered upload-avatar-modal__undo'><button
+                        class='stratch-layout flex-centered border-radius-5 btn btn-revert-change-avatar'
+                    ><img src='/svg/close.svg' alt='undo-change-avatar' /></button></div></div>
+        </form>
+        <div class='upload-avatar-modal__buttons'>
+            <button
+                class='padding-5-10 border-radius-5 font-weight-bold upload-avatar-modal__button upload-avatar-modal__button_cancel'
+            ><span>Отменить</span></button>
+            <button
+                type='submit'
+                form='upload-profile-avatar'
+                class='padding-5-10 border-radius-5 font-weight-bold upload-avatar-modal__button upload-avatar-modal__button_upload'
+            ><span>Сохранить</span></button>
+        </div>
+    </div>
+</dialog>

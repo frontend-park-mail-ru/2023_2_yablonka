@@ -1,0 +1,38 @@
+<dialog id='navigation-menu' class='border-radius-10 pop-up-menu' aria-modal='false' popover>
+    <div class='flex-column-centered gap-15 padding-10-15 strach-layout pop-up-menu-wrapper'>
+        <div class='flex-column-centered flex-centered gap-5 pop-up-menu__user'>
+            <span class='font-size-15 font-weight-500 pop-up-menu__menu-title'>Учётная запись</span>
+            <div class='flex-row-centered padding-0-10 flex-centered pop-up-menu__user-profile'>
+                <div class='box-40-40 pop-up-menu__user-avatar'>
+                    <img
+                        class='avatar-wrapper pop-up-menu__avatar-image'
+                        src='/img/{{this.avatar}}'
+                        alt='avatar'
+                    />
+                </div>
+                <div class='flex-column-centered flex-start gap-5 pop-up-menu__user-information'>
+                    <span
+                        class='font-size-14 font-weight-400 user-information__nickname'
+                    >{{this.name}}&nbsp{{this.surname}}</span><span
+                        class='font-size-14 font-weight-100 user-information__email'
+                    >{{this.email}}</span>
+                </div>
+            </div>
+        </div>
+        <div class='pop-up-menu__underline'></div>
+        <div class='flex-column-centered flex-centered gap-5 pop-up-menu__navigation'>
+            <span class='pop-up-menu__menu-name'>Tabula</span>
+            {{#each buttons as | button |}}
+            <div class='flex-start padding-0-10 border-radius-5 navigation__item'>
+                <a class='link profile-link' data-action='{{button.action}}' href='{{button.href}}'>{{button.title}}</a>
+            </div>
+            {{/each}}
+        </div>
+        <div class='pop-up-menu__underline'></div>
+        <div class='flex-column-centered flex-start pop-up-menu__log-out'>
+            <div class='flex-start border-raduis-5 padding-0-10 navigation__item'>
+                <a class='link profile-link' data-action='logout' href='/logout'>Выход</a>
+            </div>
+        </div>
+    </div>
+</dialog>

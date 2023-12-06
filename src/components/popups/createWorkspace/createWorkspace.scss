@@ -1,0 +1,72 @@
+.create-workspace {
+    top: 15%;
+    left: 40%;
+    width: 500px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.create-workspace-wrapper {
+    background-color: var(--pop-up-background-color);
+    padding: 25px 50px;
+}
+
+.form__create-workspace {
+    width: 100%;
+}
+
+.create-workspace__title {
+    color: var(--text-color-in-create-popups);
+    align-items: flex-start;
+}
+
+.create-workspace__name {
+    color: var(--text-color-in-create-popups);
+    width: 100%;
+    align-items: flex-start;
+}
+
+.input-workspace-name {
+    width: 100%;
+    height: 32px;
+    color: var(--text-color-on-page);
+    outline: none;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--input-border-color);
+}
+
+.input-workspace-name:focus {
+    box-shadow: inset 0 0 0 2px var(--input-active-border-color);
+}
+
+.create-workspace__description {
+    width: 100%;
+    align-items: flex-start;
+    color: var(--text-color-in-create-popups);
+}
+
+.textarea-workspace-description {
+    width: 100%;
+    height: 80px;
+    color: var(--text-color-on-page);
+    outline: none;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--input-border-color);
+    resize: none;
+}
+
+.textarea-workspace-description:focus {
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
+}
+
+.btn-create-workspace-pop-up {
+    width: 100%;
+    background-color: var(--action-button-color);
+    height: 32px;
+}
+
+.btn-create-workspace-pop-up:active {
+    background-color: var(--action-active-button-color);
+    color: var(--text-color-in-create-popups);
+}

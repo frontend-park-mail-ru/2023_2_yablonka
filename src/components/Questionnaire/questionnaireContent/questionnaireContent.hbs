@@ -1,0 +1,8 @@
+<span class='font-size-20 font-weight-500 questionnaire__title'>
+    {{this.title}}
+</span>
+<div class='flex-row-centered flex-centered questionnaire__rating' data-metric='{{this.metric}}'>
+    {{#each buttons as |button|}}
+        {{{button}}}
+    {{/each}}
+</div>

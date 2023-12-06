@@ -1,0 +1,24 @@
+.workspace-paragraph {
+    max-width: 130px;
+    min-width: 130px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom:px;
+    white-space: nowrap;
+    color: var(--text-color-in-main);
+}
+
+.workspace-paragraph::-webkit-scrollbar {
+    height: 4px;
+    width: 6px;
+}
+.workspace-paragraph::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.workspace-paragraph::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}

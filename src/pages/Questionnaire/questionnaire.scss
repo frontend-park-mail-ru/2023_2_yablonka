@@ -1,0 +1,20 @@
+.page__layout-questionnaire {
+    width: 100%;
+    height: 100%;
+}
+
+.questionnaire {
+    position: relative;
+    padding-top: 20px;
+}
+
+.questionnaire__content {
+    width: 100%;
+}
+
+.btn-close-iframe {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: transparent;
+}

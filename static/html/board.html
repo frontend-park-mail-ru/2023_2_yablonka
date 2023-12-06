@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../../dist/app.9baa4e4a6093bffee7d8.css" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.9baa4e4a6093bffee7d8.css.map" type="text/css" />
+        <link rel="icon" type="image/svg+xml" sizes="32x32" href="logo_favicon.svg" />
+
+        <title></title>
+        <script src="/utils/handlebars.runtime.js"></script>
+        <script src="/utils/handlebars.precompiled.js"></script>
+        <script type="module" src="index.js"></script>
+    </head>
+    <body>
+        <div class="page">
+            <div class="strach-layout flex-column-centered page__layout page__layout-board">
+                <div
+                    style="background: url('../img/main_theme.jpg'); background-size: cover"
+                    class="flex-row-centered container-board"
+                >
+                    <div class="flex-column-centered gap-20 sidebar">
+                        <div
+                            class="flex-row-centered flex-centered gap-15 padding-5-10 sidebar__workspace-information"
+                        >
+                            <span
+                                class="box-32-32 font-size-22 font-weight-bold border-radius-5 flex-centered workspace-logo"
+                                >U</span
+                            >
+                            <span class="font-size-22 font-weight-500 sidebar__workspace-name"
+                                >User workspace</span
+                            >
+                        </div>
+                        <div class="flex-column-centered gap-15 sidebar__actions">
+                            <div class="flex-row-centered sidebar__board-members">
+                                <div class="flex-row-centered gap-10 board-action__main-action">
+                                    <img
+                                        class="box-24-24 board-action__image"
+                                        src="../svg/person.svg"
+                                        alt="board-action-image"
+                                    /><span class="board-action__name">Участники</span>
+                                </div>
+                                <div class="flex-centered board-action__additional-action">
+                                    <img
+                                        class="additional-action__image"
+                                        src="../svg/plus.svg"
+                                        alt="additional-action"
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex-row-centered gap-10 sidebar__board-settings">
+                                <img
+                                    class="box-24-24 board-action__image"
+                                    src="../svg/gear.svg"
+                                    alt="board-action-image"
+                                /><span class="board-action__name">Настройки проекта</span>
+                            </div>
+                        </div>
+                        <div class="flex-column-centered gap-15 sidebar__boards-list">
+                            <div class="flex-row-centered sidebar-boards-list__action">
+                                <span
+                                    class="font-size-18 font-weight-500 gap-10 sidebar-boards-list__action-title"
+                                    >Мои доски</span
+                                ><img
+                                    class="sidebar-boards-list__action-image"
+                                    src="../svg/plus.svg"
+                                    alt="additional-action"
+                                />
+                            </div>
+                            <div class="sidebar-board-list-wrapper">
+                                <div class="flex-column-centered gap-10 sidebar-board-list">
+                                    <div
+                                        class="flex-row-centered gap-10 sidebar-boards-list__board"
+                                    >
+                                        <img
+                                            class="border-radius-5 sidebar-boards-list__board-image"
+                                            src="../img/main_theme.jpg"
+                                            alt="board-image"
+                                        />
+                                        <span
+                                            class="font-size-16 font-weight-400 sidebar-boards-list__board-name"
+                                            >User desk</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-column-centered board">
+                        <div class="flex-row-centered board__menu">
+                            <div class="flex-row-centered gap-50 board__menu_left">
+                                <div class="flex-row-centered gap-5 board-menu__board-name-wrapper">
+                                    <img
+                                        class="box-24-24 add-board-to-favourite"
+                                        src="../svg/star.svg"
+                                        alt="add-to-favourite"
+                                    />
+                                    <span
+                                        class="font-size-22 font-weight-500 padding-5-10 border-radius-5 board-menu__board-name"
+                                        contenteditable="true"
+                                        >Best desk</span
+                                    >
+                                </div>
+                                <div class="flex-row-centered gap-5 board-menu__board-actions">
+                                    <div
+                                        class="flex-row-centered gap-5 border-radius-5 padding-5-10 board-actions-wrapper"
+                                    >
+                                        <img
+                                            class="box-24-24 board-actions__image"
+                                            src="../svg/clipboard-pulse.svg"
+                                            alt="boards-action"
+                                        />
+                                        <span
+                                            class="font-size-16 font-weight-500 board-actions__title"
+                                            >По доске</span
+                                        >
+                                    </div>
+                                    <button class="flex-centered btn btn-board-actions">
+                                        <img
+                                            class="box-24-24 additional-action__image"
+                                            src="../svg/chevron-down.svg"
+                                            alt="board-actions"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex-row-centered gap-20 board__menu_right">
+                                <div class="flex-row-centered board-menu__team">
+                                    <div class="box-32-32 flex-row-centered team-member__remain">
+                                        <button
+                                            class="font-size-18 font-weight-500 strach-layout flex-centered btn btn-team-member__remain"
+                                        >
+                                            +1
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex-row-centered gap-10 board-menu__board-actions">
+                                    <button
+                                        class="flex-row-centered border-radius-5 gap-10 padding-5-10 btn btn-share-action"
+                                    >
+                                        <img
+                                            class="box-24-24 strach-layout board-actions__image"
+                                            src="../svg/person-plus.svg"
+                                            alt="boards-action"
+                                        />
+                                        <span
+                                            class="font-size-16 font-weight-500 board-actions__title"
+                                            >Добавить участника</span
+                                        >
+                                    </button>
+                                    <button class="btn btn-board-actions">
+                                        <img
+                                            class="box-24-24 strach-layout additional-action__image"
+                                            src="../svg/three-dots.svg"
+                                            alt="board-actions"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-row-centered board__main-content">
+                            <ol class="flex-row-centered gap-15 board__lists">
+                                <li class="list">
+                                    <div
+                                        class="flex-column-centered border-radius-10 gap-10 list__container"
+                                    >
+                                        <div class="flex-row-centered list__title-wrapper">
+                                            <span
+                                                contenteditable="true"
+                                                class="font-size-20 font-weight-500 border-radius-5 padding-5-10 list__title"
+                                                >Column</span
+                                            >
+                                            <button
+                                                class="box-24-24 flex-centered btn btn-list-settings"
+                                            >
+                                                <img
+                                                    class="strach-layout list-action__image"
+                                                    src="../svg/three-dots.svg"
+                                                    alt="list-action"
+                                                />
+                                            </button>
+                                        </div>
+                                        <ol class="flex-column-centered gap-10 list__content">
+                                            <li class="list__card-wrapper">
+                                                <div
+                                                    class="border-radius-8 padding-10-15 list__card"
+                                                >
+                                                    <span
+                                                        class="font-size-16 font-weight-500 card-name"
+                                                        >Card name</span
+                                                    >
+                                                </div>
+                                            </li>
+                                        </ol>
+                                        <div class="padding-10-15 list__add-card">
+                                            <button
+                                                class="flex-row-centered gap-10 btn btn-add-card"
+                                            >
+                                                <img
+                                                    class="box-16-16 add-card__image"
+                                                    src="../svg/plus.svg"
+                                                    alt="add-card"
+                                                />
+                                                <span
+                                                    class="font-size-16 font-weight-500 add-card__title"
+                                                    >Добавить карточку</span
+                                                >
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="border-radius-10 add-new-list">
+                                    <div
+                                        class="flex-start border-radius-10 add-new-list__container"
+                                    >
+                                        <button
+                                            class="strach-layout flex-start padding-0-10 gap-10 btn btn-add-new-list"
+                                        >
+                                            <img
+                                                class="box-16-16 add-list__image"
+                                                src="../svg/plus.svg"
+                                                alt="add-card"
+                                            />
+                                            <span
+                                                class="font-size-20 font-weight-500 add-card__title"
+                                                >Добавить карточку</span
+                                            >
+                                        </button>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<div class='flex-column-centered strach-layout page__layout page__layout-profile'>
+    {{{header}}}
+    <div class='container-profile'>
+        {{{userAvatar}}}
+        <nav class='container-profile__navigation'>
+            {{#if this.information}}
+                <a
+                    class='profile-navigation__user-information profile-navigation_active'
+                    href='/profile'
+                >Профиль</a>
+                <a class='profile-navigation__security' href='/security'>Безопасность</a>
+            {{else}}
+                <a class='profile-navigation__user-information' href='/profile'>Профиль</a>
+                <a
+                    class='profile-navigation__security profile-navigation_active'
+                    href='/security'
+                >Безопасность</a>
+            {{/if}}
+        </nav>
+        <div class='profile-separator-line'></div>
+        {{{userProfile}}}
+    </div>
+</div>

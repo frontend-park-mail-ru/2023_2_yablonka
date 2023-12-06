@@ -1,0 +1,457 @@
+:root {
+    --text-color-in-input: #c7c7c7;
+    --text-color-in-main: #b6c2cf;
+    --text-color-in-sign: #ffffff;
+    --text-color-on-page: #c0c9f4;
+    --text-color-on-page-inactive: #c0c9f44f;
+    --text-color-in-card: #c0c9f4;
+    --text-color-in-create-popups: #b6c2cf;
+    --text-color-in-search: #938989;
+    --text-color-name-contrast: #ffffff;
+    --text-color-forgotten-password: rgba(199, 199, 199);
+    --text-color-upload-avatar-title: #747474;
+    --text-color-action-page-button: #000000;
+    --need-text-color: #f46285;
+    --error-text-color: #f46285;
+    --success-text-color: rgb(122, 244, 98);
+    --text-color-card-files-action-buttons: #000000;
+    --text-color-card-action-buttons: #000000;
+    --text-color-card-popop-actions: #c0c9f4;
+    --text-color-action-buttons: #000000;
+
+    --sign-page-background: #0c1116;
+    --header-background: #161a1d;
+    --main-page-background: #1c2127;
+    --create-workspace-board-background: #a1bdd914;
+    --sidebar-background: rgb(30 35 36 / 81%);
+    --board-menu-background: rgba(30, 35, 36, 0.521);
+    --board-menu-background-hover: rgba(255, 255, 255, 0.1);
+    --column-background: #101204;
+    --card-background: #20252b;
+    --card-background-popups: #171c20;
+    --pop-up-background-color: rgba(22, 26, 29, 1);
+    --modal-upload-avatar-background-color: #f4f4f6;
+    --list-background-color: #101204;
+    --card-item-background-color: #20252b;
+    --comment-background-color: rgba(7, 15, 23, 50%);
+    --date-field-background: rgba(45, 60, 75, 0.5);
+    --add-user-to-card-background: #414b5650;
+    --add-user-to-card-background-hover: #414b569d;
+    --card-date-background: rgba(45, 60, 75, 0.5);
+
+    --action-button-color: #7ba4f3;
+    --cancel-button-color: #cbcaca;
+    --btn-delete-background: #f46285;
+    --delete-button-color: #f46285;
+    --action-active-button-color: #092957;
+    --undo-avatar-upload-active-button-color: #c7c7c797;
+    --sign-button-color: #000000;
+    --input-background-color: #262d34;
+    --change-workspace-button-background-color: #1a3056ad;
+    --change-workspace-button-hover-background-color: #293a5aad;
+    --change-workspace-button-active-background-color: #273b5cad;
+    --search-background-color: #000000;
+    --add-new-list-background-color: #2a3066;
+    --card-description-background-color: #414b56;
+    --btn-change-file-background: #08991e;
+    --btn-delete-file-background: #f46285;
+    --btn-card-action-background: #414b56;
+    --btn-card-action-background-hover: #415655;
+    --btn-close-card-background: #414b56;
+    --delete-checklist-button: #a1bdd914;
+    --delete-checklist-button-hover: #bbd2e921;
+    --checkitem-background-color: #86b7e728;
+
+    --router-btn-border-color: #ffffff;
+    --main-btn-border-color: #c0c9f4;
+    --sign-border-color: #ffffff;
+    --sign-logo-shadow: rgba(41, 41, 41, 50%);
+    --sign-text-shadow: rgba(255, 255, 255, 25%);
+    --add-new-list-border-color: #c0c9f4;
+    --input-active-border-color: #c0c9f4;
+
+    --add-new-column-background-color: #2a3066;
+    --input-border-color: #38424d;
+    --new-date-border-color: #c0c9f4;
+
+    --workspace--icon-gradient-bolder: #e774bb;
+    --workspace--icon-gradient-subtle: #cd5a91;
+
+    --sign-page-box-shadow: 4px 4px 10px rgba(255, 255, 255, 0.15);
+    --hover-navigation-paragraph: rgba(38, 44, 49, 1);
+    --team-member-btn-hover: rgba(38, 44, 49, 1);
+    --shadow-sign-color: rgba(255, 255, 255, 15%);
+
+    --questionnaire-inactive: #dde0ec;
+    --questionnaire-active: rgb(232, 178, 42);
+    --questionnaire-background: #262d34;
+    --questionnaire-text-color: #c0c9f4;
+    --questionnaire-rating-text-color: #c0c9f4;
+    --questionnaire-rating-background-color: #7c7d8465;
+    --questionnaire-background-btn-next: #7ba4f3;
+    --questionnaire-background-btn-next-active: #092957;
+    --questionnaire-text-btn-next-active: #c0c9f4;
+    --questionnaire-background-btn-skip: #373e45;
+    --questionnaire-text-color-btn-next: #000000;
+    --questionnaire-text-color-btn-skip: #747474;
+    --questionnaire-text-color-btn-next-active: #092957;
+    --questionnaire-text-color-btn-skip-active: #95999f;
+}
+
+.flex-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.flex-spaced-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-column-centered {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.flex-row-centered {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.strach-layout {
+    width: 100%;
+    height: 100%;
+}
+
+.avatar-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.box-8-8 {
+    width: 8px;
+    height: 8px;
+}
+
+.box-12-12 {
+    width: 12px;
+    height: 12px;
+}
+
+.box-16-16 {
+    width: 16px;
+    height: 16px;
+}
+
+.box-24-24 {
+    width: 24px;
+    height: 24px;
+}
+
+.box-32-32 {
+    width: 32px;
+    height: 32px;
+}
+
+.box-40-40 {
+    width: 40px;
+    height: 40px;
+}
+
+.box-48-48 {
+    width: 48px;
+    height: 48px;
+}
+
+.link {
+    outline: none;
+    text-decoration: none;
+}
+
+.link_disabled {
+    pointer-events: none;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.btn:active {
+    scale: 0.95;
+    opacity: 0.75;
+    transition: ease-in-out 0.2s ease-in-out;
+}
+
+.btn-action {
+    background-color: var(--action-button-color);
+}
+
+.btn-action:active {
+    background-color: var(--action-active-button-color);
+}
+
+.padding-10-20 {
+    padding: 10px 20px;
+}
+
+.padding-10-15 {
+    padding: 10px 15px;
+}
+
+.padding-15-10 {
+    padding: 15px 10px;
+}
+
+.padding-5-10 {
+    padding: 5px 10px;
+}
+
+.padding-10-5 {
+    padding: 10px 5px;
+}
+
+.padding-0-10 {
+    padding: 0px 10px;
+}
+
+.padding-0-5 {
+    padding: 0px 5px;
+}
+
+.btn-action {
+    min-width: 100px;
+    min-height: 35px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.gap-5 {
+    gap: 5px;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.gap-25 {
+    gap: 25px;
+}
+
+.gap-30 {
+    gap: 30px;
+}
+
+.gap-35 {
+    gap: 35px;
+}
+
+.gap-40 {
+    gap: 40px;
+}
+
+.gap-45 {
+    gap: 45px;
+}
+
+.gap-50 {
+    gap: 50px;
+}
+
+.font-size-10 {
+    font-size: 10px;
+}
+
+.font-size-11 {
+    font-size: 11px;
+}
+
+.font-size-12 {
+    font-size: 12px;
+}
+
+.font-size-13 {
+    font-size: 13px;
+}
+
+.font-size-14 {
+    font-size: 14px;
+}
+
+.font-size-15 {
+    font-size: 15px;
+}
+
+.font-size-16 {
+    font-size: 16px;
+}
+
+.font-size-17 {
+    font-size: 17px;
+}
+
+.font-size-18 {
+    font-size: 18px;
+}
+
+.font-size-19 {
+    font-size: 19px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.font-size-21 {
+    font-size: 21px;
+}
+
+.font-size-22 {
+    font-size: 22px;
+}
+
+.font-size-23 {
+    font-size: 23px;
+}
+
+.font-size-24 {
+    font-size: 24px;
+}
+
+.font-size-25 {
+    font-size: 25px;
+}
+
+.font-size-26 {
+    font-size: 26px;
+}
+
+.font-size-27 {
+    font-size: 27px;
+}
+
+.font-size-28 {
+    font-size: 28px;
+}
+
+.font-size-29 {
+    font-size: 29px;
+}
+
+.font-size-30 {
+    font-size: 30px;
+}
+
+.font-size-31 {
+    font-size: 31px;
+}
+
+.font-size-32 {
+    font-size: 32px;
+}
+
+.font-size-33 {
+    font-size: 33px;
+}
+
+.font-size-34 {
+    font-size: 34px;
+}
+
+.font-size-35 {
+    font-size: 35px;
+}
+
+.font-size-36 {
+    font-size: 36px;
+}
+
+.font-weight-100 {
+    font-weight: 100;
+}
+
+.font-weight-200 {
+    font-weight: 200;
+}
+
+.font-weight-300 {
+    font-weight: 300;
+}
+
+.font-weight-400 {
+    font-weight: 400;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.font-weight-600 {
+    font-weight: 600;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+.font-weight-800 {
+    font-weight: 800;
+}
+
+.font-weight-900 {
+    font-weight: 900;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.border-radius-5 {
+    border-radius: 5px;
+}
+
+.border-radius-6 {
+    border-radius: 6px;
+}
+
+.border-radius-7 {
+    border-radius: 7px;
+}
+
+.border-radius-8 {
+    border-radius: 8px;
+}
+
+.border-radius-9 {
+    border-radius: 9px;
+}
+
+.border-radius-10 {
+    border-radius: 10px;
+}

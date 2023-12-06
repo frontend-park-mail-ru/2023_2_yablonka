@@ -1,0 +1,41 @@
+<div
+    data-checklist='{{this.ID}}'
+    class='flex-column-centered gap-15 card-information__checklist-wrapper'
+>
+    <div class='flex-row-centered checklist-wrapper__title'>
+        <img class='box-24-24 card-information__icon' src='/svg/checklist.svg' />
+        <span
+            class='font-size-16 font-weight-500 card-information__card-checklist-title'
+        >{{this.name}}
+        </span>
+        <button
+            class='padding-5-10 border-radius-5 font-size-16 font-weight-500 btn btn-delete-checklist'
+        >Удалить</button>
+    </div>
+    <div class='flex-column-centered gap-5 card-information__checkitems'>
+        {{#each this.checklistItems as |item|}}
+            {{{item}}}
+        {{/each}}
+    </div>
+    <div class='flex-column-centered checklist-add-item'>
+        <button
+            class='padding-5-10 border-radius-5 font-size-14 font-weight-500 btn btn-add-checklist-element'
+        >Добавить элемент</button>
+        <div class='flex-column-centered gap-10 checklist-new-item'>
+            <input
+                placeholder='Название пункта чеклиста...'
+                maxlength='128'
+                class='border-radius-5 font-size-14 font-weight-500 padding-5-10 input input-checklist-new-item__input'
+                type='text'
+            />
+            <div class='flex-row-centered gap-10 checklist-new-item__buttons'>
+                <button
+                    class='padding-5-10 border-radius-5 font-size-14 font-weight-500 btn btn-checklist-new-item_save'
+                >Сохранить</button>
+                <button
+                    class='padding-5-10 border-radius-5 font-size-14 font-weight-500 btn btn-checklist-new-item_cancel'
+                >Отмена</button>
+            </div>
+        </div>
+    </div>
+</div>

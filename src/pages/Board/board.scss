@@ -1,0 +1,16 @@
+.page__layout-board {
+    min-width: 320px;
+    position: relative;
+}
+
+.container-board {
+    flex-grow: 1;
+    width: 100%;
+    background-size: cover;
+}
+
+.board {
+    width: calc(100%-250px);
+    height: 100%;
+    flex-grow: 1;
+}

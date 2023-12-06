@@ -1,0 +1,86 @@
+.board__menu {
+    justify-content: space-between;
+    min-height: 64px;
+    width: 100%;
+    background-color: var(--board-menu-background);
+    padding: 12px 20px 12px 20px;
+    backdrop-filter: blur(1px);
+}
+
+.board__menu_left,
+.board__menu_right {
+    width: fit-content;
+}
+
+.board__menu_left {
+    justify-content: flex-start;
+}
+
+.board__menu_right {
+    justify-content: flex-end;
+}
+
+.board-name__input-wrapper {
+    max-width: 100px;
+    min-width: 30px;
+    width: fit-content;
+}
+
+.board-name__input-wrapper_active {
+    background: var(--main-page-background);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
+}
+
+.input-board-name__input {
+    color: var(--text-color-on-page);
+    overflow-y: hidden;
+    overflow-x: auto;
+    width: 100%;
+    text-wrap: nowrap;
+    background: transparent;
+    outline: none;
+}
+
+.access-settings__title {
+    color: var(--text-color-on-page);
+}
+
+.board-actions-wrapper {
+    background-color: var(--action-button-color);
+    color: var(--text-color-action-page-button);
+    min-height: 35px;
+    min-width: 80px;
+}
+
+.btn-board-actions,
+.btn-board-settings {
+    background-color: transparent;
+    min-height: 100%;
+    width: 35px;
+}
+
+.board-menu__team {
+    padding-left: 10px;
+}
+
+.team-member__remain {
+    border-radius: 100%;
+}
+
+.btn-team-member__remain {
+    background: transparent;
+    color: var(--text-color-on-page);
+    border-radius: 100%;
+}
+
+.btn-team-member__remain:hover,
+.btn-team-member__remain:active {
+    background-color: var(--team-member-btn-hover);
+}
+
+.btn-share-action {
+    background-color: var(--action-button-color);
+    color: var(--text-color-action-page-button);
+    min-height: 35px;
+    min-width: 80px;
+}

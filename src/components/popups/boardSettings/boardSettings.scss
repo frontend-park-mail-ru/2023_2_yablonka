@@ -1,0 +1,16 @@
+.board-settings {
+    min-width: 140px;
+    background-color: var(--pop-up-background-color);
+}
+
+.btn-change-board-name,
+.btn-delete-board {
+    width: 100%;
+    color: var(--text-color-on-page);
+    background-color: var(--pop-up-background-color);
+}
+
+.btn-change-board-name:hover,
+.btn-delete-board:hover {
+    background-color: var(--hover-navigation-paragraph);
+}

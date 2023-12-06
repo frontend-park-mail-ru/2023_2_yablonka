@@ -1,0 +1,46 @@
+.pop-up-menu {
+    top: 70px;
+    left: calc(100% - 230px - 10px);
+    z-index: 10;
+    overflow: hidden;
+    width: 230px;
+    background-color: var(--pop-up-background-color);
+    color: var(--text-color-on-page);
+}
+
+.pop-up-menu__user,
+.pop-up-menu__navigation {
+    width: 100%;
+    color: var(--text-color-on-page);
+}
+
+.pop-up-menu__menu-title {
+    align-self: flex-start;
+}
+
+.pop-up-menu__user-profile {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.pop-up-menu__user-information {
+    width: calc(100% - 35px);
+    padding-left: 10px;
+}
+
+.user-information__nickname,
+.user-information__email {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.pop-up-menu__underline {
+    border: solid 1px rgba(52, 60, 66, 1);
+    width: 100%;
+}
+
+.pop-up-menu__log-out {
+    width: 100%;
+}

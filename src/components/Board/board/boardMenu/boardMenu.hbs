@@ -1,0 +1,70 @@
+<div class='flex-row-centered board__menu'>
+    <div class='flex-row-centered gap-50 board__menu_left'>
+        <div class='flex-row-centered gap-10 board-menu__board-name-wrapper'>
+            <img
+                class='box-24-24 add-board-to-favourite'
+                src='/svg/board.svg'
+                alt='add-to-favourite'
+            />
+            <div class='flex-centered border-radius-5 padding-5-10 board-name__input-wrapper' data-active="false">
+                <input
+                    class='font-size-22 font-weight-500 input input-board-name__input'
+                    value='{{this.name}}'
+                    data-board='{{this.boardID}}'
+                />
+            </div>
+        </div>
+        {{! <div class='flex-row-centered gap-5 board-menu__board-actions'>
+            <div class='flex-row-centered gap-5 border-radius-5 padding-5-10 board-actions-wrapper'>
+                <img
+                    class='box-24-24 board-actions__image'
+                    src='/svg/clipboard-pulse.svg'
+                    alt='boards-action'
+                />
+                <span class='font-size-16 font-weight-500 board-actions__title'>По доске</span>
+            </div>
+            <button class='flex-centered btn btn-board-actions'>
+                <img
+                    class='box-24-24 additional-action__image'
+                    src='/svg/chevron-down.svg'
+                    alt='board-actions'
+                />
+            </button>
+        </div> }}
+    </div>
+    <div class='flex-row-centered gap-20 board__menu_right'>
+        <div class='flex-row-centered gap-5 board-menu__team'>
+            {{#each users as |user|}}
+                {{{user}}}
+            {{/each}}
+            {{#if this.usersOveflow.overflow}}
+                <div class='box-32-32 flex-row-centered team-member__remain'>
+                    <button
+                        class='font-size-18 font-weight-500 strach-layout flex-centered btn btn-team-member__remain'
+                    >
+                        {{this.usersOveflow.count}}
+                    </button>
+                </div>
+            {{/if}}
+        </div>
+        <div class='flex-row-centered gap-10 board-menu__board-actions'>
+            <button
+                class='flex-row-centered border-radius-5 gap-10 padding-5-10 btn btn-share-action'
+            >
+                <img
+                    class='box-24-24 strach-layout board-actions__image'
+                    src='/svg/person-plus.svg'
+                    alt='boards-action'
+                />
+                <span class='font-size-16 font-weight-500 board-actions__title'>Добавить участника</span>
+            </button>
+            <button class='btn btn-board-settings'>
+                <img
+                    class='box-24-24 strach-layout additional-action__image'
+                    src='/svg/three-dots.svg'
+                    alt='board-actions'
+                />
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background-color: var(--sidebar-background);
+    backdrop-filter: blur(3px);
+}
+
+.sidebar__workspace-information {
+    height: 64px;
+    width: 100%;
+    color: var(--text-color-on-page);
+}
+
+.sidebar__user-avatar {
+    border-radius: 100%;
+}
+
+.sidebar__workspace-name {
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-wrap: nowrap;
+    max-width: 80%;
+}
+
+.sidebar__workspace-name::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.sidebar__workspace-name::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.sidebar__workspace-name::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}
+
+.sidebar__actions {
+    width: 100%;
+    padding: 0px 20px 0 10px;
+    color: var(--text-color-on-page);
+}
+
+.sidebar__board-action {
+    width: 100%;
+}
+
+.sidebar__board-members {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sidebar__board-settings {
+    width: 100%;
+}
+
+.btn-board-sidebar {
+    width: 32px;
+    height: 32px;
+    background-color: var(--create-workspace-board-background);
+}
+
+.sidebar__boards-list {
+    width: 100%;
+    padding: 0px 20px;
+    flex-grow: 1;
+}
+
+.sidebar-boards-list__action {
+    justify-content: space-between;
+    width: 100%;
+    color: var(--text-color-on-page);
+}
+
+.sidebar-board-list-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-board-list {
+    position: absolute;
+    top: 0;
+    bottom: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.sidebar-board-list::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.sidebar-board-list::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.sidebar-board-list::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}
+
+.sidebar-boards-list__board-name::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.sidebar-boards-list__board-name::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.sidebar-boards-list__board-name::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}

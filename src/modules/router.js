@@ -1,6 +1,8 @@
 import userStorage from '../storages/userStorage.js';
-import { routes, signedInRoutes, actionsWithLogin } from '../configs/configs.js';
-import { hrefRegExp } from './regExp.js';
+import { routes, signedInRoutes } from '../configs/configs.js';
+import { boardHrefRegExp, hrefRegExp, navigationPagesHrefRegExp } from './regExp.js';
+import emitter from './actionTrigger.js';
+import offline from '../view/offline.js';
 
 /**
  * Класс, реализующий роутер
@@ -13,7 +15,9 @@ class Router {
     constructor() {
         this.views = new Map();
         this.signedInViews = new Map();
-        this.actionsWithLogin = new Map();
+
+
+        emitter.bind('rerender', this.reRenderPage.bind(this));
 
         routes.forEach((route) => {
             this.registerView(route);
@@ -22,10 +26,15 @@ class Router {
         signedInRoutes.forEach((route) => {
             this.registerView(route, true);
         });
+    }
 
-        actionsWithLogin.forEach((action) => {
-            this.registerActions(action, true);
-        });
+    goOffline(){
+        this.currentPage.clear();
+        offline.renderPage();
+    }
+
+    reRenderPage() {
+        this.currentPage.reRender();
     }
 
     /**
@@ -46,12 +55,8 @@ class Router {
      * @param {string} route.path - path, по которому будет происходить вызов action
      * @param {string} route.action - action, которое вызывается через path
      */
-    registerActions({ path, action }, privateAction = false) {
-        if (privateAction) {
-            this.actionsWithLogin.set(path, action);
-        } else {
-            this.actions.set(path, action);
-        }
+    registerActions({ path, action }) {
+        this.actions.set(path, action);
     }
 
     /**
@@ -60,9 +65,11 @@ class Router {
      * @returns {string} - корневой элемент в виде строки
      */
     matchView(href) {
-        const parts = href.split('/');
-        if (parts[3]) {
-            return `/${parts[3]}`;
+        if (href.match(navigationPagesHrefRegExp)) {
+            return href;
+        }
+        if (href.match(boardHrefRegExp)) {
+            return '/board';
         }
         return '/signin';
     }
@@ -71,12 +78,8 @@ class Router {
      * Метод для валидации и определения текущего URL
      * @returns {string} - текущий URL
      */
-    getPath() {
-        return decodeURIComponent(
-            window.location.href.match(hrefRegExp.host)
-                ? window.location.href.replace(hrefRegExp.host, '')
-                : window.location.href.replace(hrefRegExp.localhost, ''),
-        );
+    getPath(href) {
+        return decodeURIComponent(href.replace(hrefRegExp, ''));
     }
 
     /**
@@ -88,14 +91,14 @@ class Router {
     navigate({ path, state, pushState }) {
         if (pushState) {
             if (state) {
-                window.history.pushState(state, '', path);
+                window.history.pushState(state, '', `${window.location.origin}${path}`);
             } else {
-                window.history.pushState('', '', path);
+                window.history.pushState('', '', `${window.location.origin}${path}`);
             }
         } else if (state) {
-            window.history.replaceState(state, '', path);
+            window.history.replaceState(state, '', `${window.location.origin}${path}`);
         } else {
-            window.history.replaceState('', '', path);
+            window.history.replaceState('', '', `${window.location.origin}${path}`);
         }
         this.prevURL = path;
     }
@@ -104,10 +107,10 @@ class Router {
      * Обработчик события изменения активной записи истории
      */
     onPopStateEvent = () => {
-        const redirection = this.redirect(window.location.href.replace(window.location.origin, ''));
+        const redirection = this.redirect(window.location.pathname);
         this.open(
             {
-                path: redirection === window.location.href ? redirection : this.prevURL,
+                path: redirection === window.location.pathname ? redirection : this.prevURL,
                 state: '',
             },
             false,
@@ -124,14 +127,13 @@ class Router {
         if (this.currentPage) {
             this.currentPage.clear();
         }
-
         const { path, state } = stateObject;
         const currentView = this.matchView(path);
 
         this.currentPage = this.views.get(currentView) || this.signedInViews.get(currentView);
 
-        this.currentPage.renderPage();
         this.navigate({ path, state, pushState });
+        this.currentPage.renderPage();
     }
 
     /**
@@ -142,27 +144,25 @@ class Router {
     redirect(href) {
         userStorage.authVerify();
         const isAuth = userStorage.storage.get(userStorage.userModel.status) === 200;
-
-        if (href === '/') {
-            return isAuth ? `${window.location.origin}/boards` : `${window.location.origin}/signin`;
+        if (href === '/' || href === '') {
+            return isAuth ? '/main' : '/signin';
         }
-
         if (!isAuth) {
             if (href === '/signup') {
-                return `${window.location.origin}${href}`;
+                return href;
             }
             this.redirectUrl = href;
-            return `${window.location.origin}/signin`;
+            return '/signin';
         }
         if (href === '/signin' || href === '/signup') {
-            return `${window.location.origin}/boards`;
+            return '/main';
         }
         if (this.redirectUrl) {
             const redirectedHref = this.redirectUrl;
             this.redirectUrl = undefined;
             return redirectedHref;
         }
-        return `${window.location.origin}${href}`;
+        return href;
     }
 
     /**
@@ -170,25 +170,21 @@ class Router {
      * после перезагрузки окна браузера
      */
     refresh(pushState) {
-        const matchedPath = this.getPath();
-        const matchedView = this.matchView(matchedPath);
-
-        const redirectedPath = this.redirect(matchedPath.replace(window.location.origin, ''));
-        const pageState = '';
-
+        const matchedView = this.matchView(window.location.pathname);
+        const redirectedPath = this.redirect(window.location.pathname);
         if (this.views.get(matchedView) || this.signedInViews.get(matchedView)) {
             this.open(
                 {
                     path: redirectedPath,
-                    state: pageState,
+                    state: '',
                 },
                 pushState,
             );
         } else {
             this.open(
                 {
-                    path: `${window.location.origin}/signin`,
-                    state: pageState,
+                    path: '/404',
+                    state: '',
                 },
                 pushState,
             );

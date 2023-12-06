@@ -69,3 +69,45 @@ export const actionLogout = () => ({
     type: 'userLogout',
     value: {},
 });
+
+/**
+ * Действие, означающее изменение профиля пользователя
+ * @param {Object} user - данные пользователя
+ */
+export const actionUpdateProfile = (user) => ({
+    type: 'updateProfile',
+    value: user,
+});
+
+/**
+ * Действие, означающее изменение пароля
+ * @param {Object} user - данные пользователя
+ */
+export const actionUpdatePassword = (user) => ({
+    type: 'updatePassword',
+    value: user,
+});
+
+/**
+ * Действие, означающее изменение аватарки
+ * @param {Object} user - данные пользователя
+ */
+export const actionUpdateAvatar = (user) => ({
+    type: 'updateAvatar',
+    value: user,
+});
+
+export const actionAnswerQuestion = (answer) => ({
+    type: 'answerQuestion',
+    value: answer,
+});
+
+export const actionGetQuestions = () => ({
+    type: 'getQuestions',
+    value: {},
+});
+
+export const actionGoOffline = ()=>({
+    type:'goOffline',
+    value:{}
+})

@@ -1,0 +1,13 @@
+<div class='form__input form__input-question'>
+    <span class='input-question__title'>{{this.title}}</span>
+    <input
+        type='text'
+        placeholder='{{this.placeholder}}'
+        class='input input-question-input input_disable'
+        value='{{this.value}}'
+    />
+    {{if this.checked}}
+        <input type='checkbox' class='input input-metric-type' checked/>
+    {{/if}}
+    <span class="input-question__type">Is&nbsp{{this.type}}?</span>
+</div>

@@ -1,84 +1,56 @@
-import Header from '../components/deskComponents/header/header.js';
-import { actionRedirect, actionLogout, actionNavigate } from '../actions/userActions.js';
+// base view
+import BaseView from './baseView.js';
+// components
+import ProfilePage from '../pages/Profile/profile.js';
+import ChangeAvatarPopup from '../components/popups/changeAvatar/changeAvatar.js';
+import CreateWorkspace from '../components/popups/createWorkspace/createWorkspace.js';
+import UploadAvatarModal from '../components/popups/uploadAvatar/uploadAvatar.js';
+// storages
 import userStorage from '../storages/userStorage.js';
-import emitter from '../modules/eventTrigger.js';
-import dispatcher from '../modules/dispatcher.js';
-import workspaceStorage from '../storages/workspaceStorage.js';
+import Navigation from '../components/popups/navigation/navigation.js';
+import emitter from '../modules/actionTrigger.js';
 
 /**
  * Класс для рендера страницы профиля
  * @class
  * @param {HTMLElement} root - Родительский элемент, в который будет вставлена страница.
  */
-class Profile {
-    #root;
-
-    /**
-     * @constructor
-     */
+class Profile extends BaseView {
     constructor() {
-        this.#root = document.querySelector('.page');
+        super();
+        emitter.bind('updateProfile', this.reRender.bind(this));
     }
 
     /**
      * Рендер страницы в DOM
      */
     async renderPage() {
-        this.#root.innerHTML = '';
-        this.#root.style.backgroundColor = '';
+        document.title = 'Tabula: Profile';
+        const factor = Math.floor(Math.random() * 100 + 1);
 
-        document.title = 'Tabula: Профиль';
+        const { user } = userStorage.storage.get(userStorage.userModel.body).body;
 
-        const user = userStorage.storage.get(userStorage.userModel.body);
+        if (window.location.pathname === '/profile') {
+            this.components.push(new ProfilePage(this.root, { ...user, information: true }));
+        } else if (window.location.pathname === '/security') {
+            this.components.push(new ProfilePage(this.root, { ...user, information: false }));
+        }
+        this.components.push(
+            ...[
+                new Navigation(this.root, user),
+                new CreateWorkspace(this.root, {}),
+                new ChangeAvatarPopup(this.root, {}),
+                new UploadAvatarModal(this.root, {}),
+            ],
+        );
 
-        const header = new Header(this.#root, {
-            user: { avatar: user.body.user.thumbnail_url },
-        });
-        header.render();
-
+        this.render();
         this.addListeners();
     }
 
-    /**
-     * Добавляет обработчики событий
-     */
-    addListeners() {
-        this.#root.querySelector('.log-out').addEventListener('click', this.logoutHandler);
-        emitter.bind('logout', this.close);
-    }
-
-    /**
-     * Убирает обработчики событий
-     */
-    removeListeners() {
-        this.#root.querySelector('.log-out').removeEventListener('click', this.logoutHandler);
-        emitter.unbind('logout', this.close);
-    }
-
-    /**
-     * Handler события нажатия на ссылку для перехода на log out
-     * @param {Event} e - Событие
-     */
-    logoutHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionLogout());
-    }
-
-    /**
-     * Закрытие страницы и редирект на страницу логина
-     */
-    close() {
-        dispatcher.dispatch(actionNavigate(window.location.href, '', true));
-        dispatcher.dispatch(actionRedirect('/signin', false));
-        dispatcher.dispatch(actionNavigate(`${window.location.origin}/signin`, '', false));
-    }
-
-    /**
-     * Очистка страницы
-     */
-    clear() {
-        this.removeListeners();
-        this.#root.innerHTML = '';
+    async reRender() {
+        this.clear();
+        this.renderPage();
     }
 }
 

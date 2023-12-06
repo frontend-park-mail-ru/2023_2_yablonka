@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../../dist/app.a5a04411668d90178df3.css" type="text/css" />
+        <link rel="stylesheet" href="../../dist/app.a5a04411668d90178df3.css.map" type="text/css" />
+        <title></title>
+    </head>
+    <body>
+        <div class="page">
+            <dialog
+                id="create-board"
+                class="flex-column-centered create-board"
+                aria-modal="false"
+                popover
+                open
+            >
+                <div class=" gap-30 border-radius-10 flex-column-centered create-board-wrapper">
+                    <div class="flex-centered board-example-wrapper">
+                        <div class="flex-centered flex-column-centered board-example">
+                            <img
+                                class="strach-layout border-radius-5 board-example__image"
+                                src="../img/main_theme.jpg"
+                                alt="board-example"
+                            /><img
+                                class="strach-layout board-example__svg"
+                                src="../svg/board-template.svg"
+                                alt="board-example-layout"
+                            />
+                        </div>
+                    </div>
+                    <form
+                        class="flex-column-centered gap-35 form form__create-board"
+                        method="POST"
+                        action="/board/create/"
+                    >
+                        <div class="flex-column-centered gap-5 create-board__name">
+                            <span class="font-size-12 font-weight-500 create-board-name__title"
+                                >Заголовок доски</span
+                            >
+                            <input
+                                maxlength="32"
+                                class="font-size-14 font-weght-200 border-radius-5 padding-5-10 input input-board-name"
+                                type="text"
+                                placeholder="Название доски"
+                                data-name="board-name"
+                                required
+                            />
+                            <span class="font-size-11 font-weght-200 create-board-name__description"
+                                >👋 Укажите название доски.</span
+                            >
+                        </div>
+                        <button
+                            class="border-radius-5 padding-0-10 font-size-14 font-weight-bold btn btn-create-board-pop-up"
+                        >
+                            Создать
+                        </button>
+                    </form>
+                </div>
+            </dialog>
+        </div>
+    </body>
+</html>

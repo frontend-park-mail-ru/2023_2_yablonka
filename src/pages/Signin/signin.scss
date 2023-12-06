@@ -1,0 +1,182 @@
+@media screen and (max-width: 576px), (max-height: 576px) {
+    .sign-link {
+        margin-top: 0px;
+    }
+
+    .form__input > img {
+        display: none;
+    }
+
+    .input-sign {
+        width: 280px;
+    }
+}
+
+@media screen and (min-width: 576px),
+    (min-height: 576px) and (max-width: 992px),
+    (max-height: 576px) {
+    .sign-link {
+        margin-top: 20px;
+    }
+
+    .input-sign {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 1062px), (max-height: 770px) {
+    .page__image {
+        display: none;
+    }
+
+    .input-sign {
+        width: 320px;
+    }
+}
+
+@media screen and (min-width: 1062px) and (max-width: 1200px) {
+    .page__image_right {
+        right: 40px;
+        height: 220px;
+        width: 350px;
+    }
+
+    .page__image_left {
+        left: 40px;
+        height: 270px;
+        width: 350px;
+    }
+
+    .sign-link {
+        margin-top: 40px;
+    }
+
+    .input-sign {
+        width: 320px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .page__image_right {
+        right: 40px;
+        height: 330px;
+        width: 465px;
+    }
+
+    .page__image_left {
+        left: 40px;
+        height: 360px;
+        width: 460px;
+    }
+
+    .sign-link {
+        margin-top: 60px;
+    }
+
+    .input-sign {
+        width: 360px;
+    }
+}
+
+.page__layout-sign {
+    background-color: var(--sign-page-background);
+    overflow: auto;
+    padding: 20px;
+}
+
+.page__layout-sign::-webkit-scrollbar {
+    height: 4px;
+    width: 8px;
+}
+
+.page__layout-sign::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0;
+}
+
+.page__layout-sign::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}
+
+.page__image {
+    position: absolute;
+    bottom: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.forgotten-password-link {
+    color: var(--text-color-forgotten-password);
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    display: flex;
+    align-self: flex-end;
+}
+
+.container-sign {
+    height: 100%;
+}
+
+.container-sign__header {
+    font-size: 72px;
+    color: #fff;
+    text-shadow: var(--sign-logo-shadow) 0 15px 10px;
+}
+
+.container-sign-header__logo {
+    text-shadow: var(--sign-logo-shadow) 0 15px 10px;
+    padding-right: 10px;
+    width: 90px;
+    height: 70px;
+}
+
+.form__input > img {
+    height: 32px;
+    width: 32px;
+    padding-left: 3px;
+}
+
+.input-sign {
+    color: var(--text-color-in-input);
+    background: transparent;
+    font-weight: 400;
+    height: 34px;
+    padding-left: 5px;
+    font-size: 20px;
+    outline: none;
+    position: relative;
+}
+
+.btn-sign {
+    background-color: #000;
+    box-shadow: var(--shadow-sign-color) 4px 4px 10px;
+    border: var(--sign-border-color) 2px solid;
+    height: 50px;
+    min-width: 140px;
+    border-radius: 10px;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    align-self: center;
+}
+
+.form__input-sign {
+    border: 2px solid var(--sign-border-color);
+    box-shadow: var(--sign-logo-shadow) 4px 4px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.sign-link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-color-in-sign);
+    font-size: 20px;
+    font-weight: 400;
+}

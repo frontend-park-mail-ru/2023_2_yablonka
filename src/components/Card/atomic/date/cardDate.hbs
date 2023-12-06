@@ -1,0 +1,23 @@
+{{#if this.start}}
+    <div class='flex-row-centered gap-5 padding-5-10 border-radius-5 card-information__date'>
+        {{#if this.end}}
+            <span
+                class='font-size-12 font-weight-bold date-wrapper__date_start'
+            >{{this.start}}</span>
+            <span class='font-size-12 font-weight-bold'>&nbsp;—&nbsp;</span>
+            <span class='font-size-12 font-weight-bold date-wrapper__date_end'>{{this.end}}</span>
+        {{else}}
+            <span class='font-size-12 font-weight-bold'>Старт</span>
+            <span
+                class='font-size-12 font-weight-bold date-wrapper__date_start'
+            >{{this.start}}</span>
+        {{/if}}
+    </div>
+{{else}}
+    {{#if this.end}}
+        <div class='flex-row-centered gap-5 padding-5-10 border-radius-5 card-information__date'>
+            <span class='font-size-12 font-weight-bold'>Конец</span>
+            <span class='font-size-12 font-weight-bold date-wrapper__date_end'>{{this.end}}</span>
+        </div>
+    {{/if}}
+{{/if}}

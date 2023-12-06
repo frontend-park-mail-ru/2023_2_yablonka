@@ -1,4 +1,4 @@
-import { validatorPasswordRegExp } from './regExp.js';
+import { validateObjectNameRegExp, validatePasswordRegExp } from './regExp.js';
 
 /**
  * Класс для валидации данных формы
@@ -19,7 +19,7 @@ export default class Validator {
      * @param {string} password - Строка с паролем
      * @return {boolean} - false, если неправильный, true, если правильный
      */
-    static validatePassword = (password) => validatorPasswordRegExp.test(password);
+    static validatePassword = (password) => validatePasswordRegExp.test(password);
 
     /**
      * Проверяет пароли на совпадение
@@ -29,4 +29,13 @@ export default class Validator {
      * @return {boolean} - false, если неправильный, true, если правильный
      */
     static validateRepeatPasswords = (passwordOne, passwordTwo) => passwordOne === passwordTwo;
+
+    /**
+     * Проверяет пароли на совпадение
+     *
+     * @param {string} passwordOne - Строка с паролем
+     * @param {string} passwordTwo - Строка с повторённым паролем
+     * @return {boolean} - false, если неправильный, true, если правильный
+     */
+    static validateObjectName = (name) => validateObjectNameRegExp.test(name);
 }

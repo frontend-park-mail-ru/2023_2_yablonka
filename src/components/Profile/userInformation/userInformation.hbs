@@ -1,0 +1,15 @@
+<div class="flex-column-centered gap-20 container-profile__user-information">
+    <form
+        id='form-profile'
+        class='form form-profile'
+        action='/user/edit/'
+        method='POST'
+        enctype='application/x-www-form-urlencoded'
+    >
+        {{#each inputs as |input|}}
+            {{{input}}}
+        {{/each}}
+        {{{textarea}}}
+        {{{btn}}}
+    </form>
+</div>

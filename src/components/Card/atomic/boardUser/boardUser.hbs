@@ -1,0 +1,18 @@
+<div class='flex-row-centered gap-10 border-radius-5 add-card-user__user'>
+    {{#if this.inCard}}
+        <input
+            data-id='{{this.ID}}'
+            class='box-16-16 add-card-user__select-user'
+            type='checkbox'
+            checked
+        />
+    {{else}}
+        <input data-id='{{this.ID}}' class='box-16-16 add-card-user__select-user' type='checkbox' />
+    {{/if}}
+    <div class='flex-row-centered gap-10 add-card-user__user-information'><img
+            class='box-32-32 add-card-user__user-avatar'
+            src='/img/{{this.avatar}}'
+            alt='avatar'
+        /><span class='font-size-16 font-weight-500 add-card-user__user-email'>{{this.email}}</span>
+    </div>
+</div>

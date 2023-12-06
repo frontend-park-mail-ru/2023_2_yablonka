@@ -1,0 +1,20 @@
+<div class='container-profile__avatar'>
+    <div class='profile-avatar'>
+        <div class='profile-avatar__image'>
+            <div class='profile-avatar__change-avatar'><div class='change-avatar__wrapper'>
+                    <button data-open='true' class='change-avatar__button'>
+                        <img
+                            class='change-avatar__icon'
+                            src='/svg/camera.svg'
+                            alt='change-avatar'
+                        /></button>
+                </div>
+            </div>
+            <img class='profile-user-image' src='/img/{{this.avatar}}' alt='avatar' />
+        </div>
+        <div class='profile-avatar__user-reference'>
+            <span class='user-reference__name-and-surname'>{{this.name}}&nbsp{{this.surname}}</span>
+            <span class='user-reference__email'><b>@</b>&nbsp{{this.email}}</span>
+        </div>
+    </div>
+</div>

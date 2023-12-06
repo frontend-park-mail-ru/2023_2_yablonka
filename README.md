@@ -33,31 +33,30 @@
 
 Используется линтер Prettier, camelCase для объявлений.
 
-Линтер - ESlint
+Линтер - ESlint, настройки в файле .eslintrc.json
 
 Prettier - расширение для VSCode. Рекомендуется работать в нём.
 
 ## Компиляция шаблонов
 
-В папке tools запустить precompiler.bash командой "bash precompiler.bash".
-
-Важно! Он работает ТОЛЬКО на Linux и macOS.
+Команда npm run compile
 
 ## Развёртывание проекта
 
 Необходимо: Node.js v20.8.0
-Под неё express v4.18.2, handlebars v4.7.8
 
 Рекомендуется также установить nodemon как Dev dependency, чтобы пользоваться Hot Reload.
 Для установки express, handlebars: "npm i (или install) express handlebars".
 Для установки nodemon: "npm i -D nodemon".
 
-Эти пакеты уже есть в package.json, то есть достаточно выполнить команду npm i.
-При этому, чтобы добавить пакет в dev зависимости, можно его установить через "npm i --save-dev" и тогда npm i установит и его.
+В корне проекта ввести команду "npm i --save-dev" для установки dev dependecies и
+"npm i" для установки обычных
+
+У нас используется bundler WebPack. Чтобы собрать проект, нужно запустить команду "npm run build"
 
 Релиз на сервере запускается по команде "npm start".
 
-Отладочный - на nodemon с помощью "npm run debug".
+Debug-режим запускается по команде "npm run debug"
 
 Клонирование репозитория:
 Чтобы склонировать репозиторий, нужно написать в терминале команду:

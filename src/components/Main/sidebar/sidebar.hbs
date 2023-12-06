@@ -1,0 +1,39 @@
+<div class='flex-column-centered gap-10 sidebar-main-wrapper'>
+    <div class='flex-column-centered gap-10 sidebar-main'>
+        <div class='flex-column-centered gap-10 padding-0-10 sidebar-main__menu'>
+            <button
+                class='font-size-18 font-weight-500 padding-5-10 border-radius-8 flex-row-centered gap-10 btn btn-sidebar-boards-menu btn-sidebar-boards-menu_selected'
+                disabled
+            ><img class='box-16-16' src='/svg/board.svg' alt='boards' /><span>Доски</span>
+            </button>
+            <button
+                class='font-size-18 font-weight-500 padding-5-10 border-radius-8 flex-row-centered gap-10 btn btn-sidebar-boards-menu'
+                disabled
+            >
+                <img class='box-16-16' src='/svg/files.svg' alt='templates' /><span>Шаблоны</span>
+            </button>
+        </div>
+        <div class='flex-column-centered gap-10 workspaces-list'>
+            <span class='font-size-18 font-weight-500 workspaces-list__title'>Рабочие пространства</span>
+            <div class='flex-centered workspaces-list__container-wrapper'>
+                <ol class='flex-column-centered gap-10 workspaces-list__container'>
+                    {{#each workspaceParagraphs as |workspacePargraph|}}
+                        {{{workspacePargraph}}}
+                    {{/each}}
+                    <li class='workspaces-list__create-item'>
+                        <button
+                            class='border-radius-5 font-size-14 font-weight-500 flex-row-centered gap-10 btn btn-create-workspace'
+                        >
+                            <img
+                                class='box-16-16 btn-create-workspace__image'
+                                src='/svg/plus.svg'
+                                alt='add-workspace'
+                            /><span class='btn-create-workspace__title'>Создайте рабочее
+                                пространство</span>
+                        </button>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>

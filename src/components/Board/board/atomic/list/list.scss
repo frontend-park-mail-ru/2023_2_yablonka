@@ -1,0 +1,112 @@
+.list {
+    display: block;
+    flex-shrink: 0;
+    width: fit-content;
+    height: 100%;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.list__container {
+    background-color: var(--list-background-color);
+    max-height: 100%;
+    width: 250px;
+    padding: 10px;
+}
+
+.list__title-wrapper {
+    width: 100%;
+    flex: 1 1 auto;
+    justify-content: space-between;
+}
+
+.list__title {
+    max-width: 60%;
+    color: var(--text-color-on-page);
+    outline: none;
+    overflow-x: auto;
+}
+
+.list__title:focus {
+    box-shadow: inset 0 0 0 2px var(--text-color-on-page);
+    max-width: 85%;
+}
+
+.list__title::-webkit-scrollbar {
+    height: 14px;
+    width: 6px;
+}
+
+.list__title::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 6px;
+    margin: 0 10px;
+}
+
+.list__title::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
+}
+
+.btn-change-list {
+    background: transparent;
+}
+
+.list__content {
+    height: 100%;
+    width: 100%;
+    user-select: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    list-style-type: none;
+}
+
+.list__add-card {
+    width: fit-content;
+}
+
+.btn-add-new-card {
+    background-color: transparent;
+}
+
+.add-card__title {
+    color: var(--text-color-on-page);
+}
+
+.new-card {
+    height: 100%;
+}
+
+.form-new-card__container {
+    background-color: var(--list-background-color);
+    width: 250px;
+    padding: 10px;
+    align-items: flex-start;
+}
+
+.input-new-card-name {
+    width: 100%;
+    height: 32px;
+    color: #c0c9f4;
+    outline: none;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--need-text-color);
+}
+
+.input-new-card-name:focus {
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--need-text-color);
+}
+
+.btn-create-card_confirm {
+    background-color: var(--action-button-color);
+    min-height: 35px;
+}
+
+.btn-create-card_cancel {
+    background: transparent;
+}
+
+.btn-create-card_cancel:hover {
+    background-color: var(--hover-navigation-paragraph);
+}
