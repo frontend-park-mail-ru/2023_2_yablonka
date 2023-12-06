@@ -199,11 +199,16 @@ export default class BoardPage extends Component {
         dispatcher.dispatch(actionRedirect('/profile', false));
     }
 
+    /**
+     * Функция для показа меню создания списка/карточки
+     * @param {Event} e - Событие
+     */
     #addNewEntity = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
         const { entity } = entityNode.dataset;
 
         const addEntityBtn = entityNode.parentNode.querySelector(`.add-new-${entity}`);
@@ -216,11 +221,16 @@ export default class BoardPage extends Component {
         input.blur();
     };
 
+    /**
+     * Функция для закрытия меню создания списка/карточки
+     * @param {Event} e - Событие
+     */
     #closeNewEntity = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 
@@ -233,11 +243,16 @@ export default class BoardPage extends Component {
         addEntityForm.style.display = 'none';
     };
 
+    /**
+     * Функция для блокировки кнопки создания списка/карточки
+     * @param {Event} e - Событие
+     */
     #blockCreateNewEntityBtn = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 
@@ -253,26 +268,37 @@ export default class BoardPage extends Component {
         }
     };
 
+    /**
+     * Функция для копки отмены создания списка/карточки
+     * @param {Event} e - Событие
+     */
     #cancelCreateNewEntityBtn = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
         if (
-            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' && e.target.closest(`.btn-create-${entity}_cancel`)
+            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' &&
+            e.target.closest(`.btn-create-${entity}_cancel`)
         ) {
             this.#closeNewEntity(e);
             this.#blockCreateNewEntityBtn(e);
         }
     };
 
+    /**
+     * Функция, обрабатывающая создание, списка/карточки
+     * @param {Event} e - Событие
+     */
     #createEntity = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 

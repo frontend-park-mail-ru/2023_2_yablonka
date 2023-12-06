@@ -12,23 +12,24 @@ export default class BaseView {
         this.root = document.querySelector('.page');
     }
 
-    /**Рендер компонентов */
+    /**
+     * функция рендера всех компонентов
+     */
     render() {
         this.components.forEach((cmp) => cmp.render());
     }
 
     /**
-     * Добавить листенеры
+     * функция добавлениея обработчиков событий каждого из компонентов
      */
     addListeners() {
         this.root.addEventListener('click', popupEvent.closeAllPopups);
         this.components.forEach((cmp) => cmp.addEventListeners());
         this.root.removeAttribute('style');
-        
     }
 
     /**
-     * Убрать листенеры
+     * функция удаления обработчиков событий каждого из компонентов
      */
     removeListeners() {
         this.root.removeEventListener('click', popupEvent.closeAllPopups);
@@ -36,7 +37,7 @@ export default class BaseView {
     }
 
     /**
-     * Очистка страницы
+     * функция очистки страницы перед рендером
      */
     clear() {
         this.root.setAttribute('style', 'filter: blur(10px)');
