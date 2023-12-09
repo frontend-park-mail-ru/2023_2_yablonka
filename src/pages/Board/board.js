@@ -328,13 +328,27 @@ export default class BoardPage extends Component {
         this.#draggingElement = e.target;
     }
 
+    #positioningCard(mouseCoord, element){
+        const elementCoord = element.getBoundingClientRect();
+        const elementCenter = elementCoord.y + elementCoord.height/2;
+
+        return mouseCoord<elementCenter ? 'beforebegin':'afterend';
+    }
+
+    #positioningList(mouseCoord, element){
+        const elementCoord = element.getBoundingClientRect();
+        const elementCenter = elementCoord.x + elementCoord.width/2;
+
+        return mouseCoord<elementCenter ? 'beforebegin':'afterend';
+    }
+
     #dropHandler = (e)=>
     {
         e.preventDefault();
         console.log(e.target, this.#draggingElement.classList)
         if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list__card-wrapper')){
             if(e.target.classList.contains('list__card')|| e.target.classList.contains('list__card-wrapper')){
-                e.target.closest('.list__card-wrapper').insertAdjacentHTML('afterend',this.#draggingElement.outerHTML);
+                e.target.closest('.list__card-wrapper').insertAdjacentHTML(this.#positioningCard(e.clientY, e.target.closest('.list__card-wrapper')),this.#draggingElement.outerHTML);
             }
             else
             {
@@ -345,7 +359,7 @@ export default class BoardPage extends Component {
 
         }
         else if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list')){
-                e.target.closest('.list').insertAdjacentHTML('afterend',this.#draggingElement.outerHTML);
+                e.target.closest('.list').insertAdjacentHTML(this.#positioningList(e.clientX, e.target.closest('.list')),this.#draggingElement.outerHTML);
                 this.#draggingElement.outerHTML ='';
                 this.#draggingElement = null;
         }
