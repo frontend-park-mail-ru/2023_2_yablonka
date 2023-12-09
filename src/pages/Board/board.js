@@ -326,6 +326,7 @@ export default class BoardPage extends Component {
         e.preventDefault();
 
         this.#draggingElement = e.target;
+        this.#draggingElement.style.display = 'none';
     }
 
     #positioningCard(mouseCoord, element){
@@ -345,7 +346,9 @@ export default class BoardPage extends Component {
     #dropHandler = (e)=>
     {
         e.preventDefault();
-        console.log(e.target, this.#draggingElement.classList)
+
+        this.#draggingElement.style.display='block';
+
         if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list__card-wrapper')){
             if(e.target.classList.contains('list__card')|| e.target.classList.contains('list__card-wrapper')){
                 e.target.closest('.list__card-wrapper').insertAdjacentHTML(this.#positioningCard(e.clientY, e.target.closest('.list__card-wrapper')),this.#draggingElement.outerHTML);
