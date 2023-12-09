@@ -340,7 +340,6 @@ export default class BoardPage extends Component {
 
         }
 
-        this.#draggingElement?.style.display
     }
 
     #dragoverHandler = (e)=>{
