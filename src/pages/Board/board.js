@@ -24,6 +24,8 @@ export default class BoardPage extends Component {
     /**
      * Рендерит компонент в DOM
      */
+
+    #draggingElement;
     render() {
         const page = {
             thumbnail_url: this.config.board.thumbnail_url,
@@ -92,6 +94,9 @@ export default class BoardPage extends Component {
             btn.addEventListener('click', this.#createEntity);
         });
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
+        this.parent.querySelector('.board__main-content').addEventListener('drag', this.#dragHandler);
+        this.parent.querySelector('.board__main-content').addEventListener('drop', this.#dropHandler);
+        this.parent.querySelector('.board__main-content').addEventListener('dragover', this.#dragoverHandler);
 
         emitter.bind('logout', this.close);
     }
@@ -312,6 +317,35 @@ export default class BoardPage extends Component {
             });
         }
     };
+
+    #dragHandler = (e)=>{
+        e.preventDefault();
+
+        this.#draggingElement = e.target;
+    }
+
+    #dropHandler = (e)=>
+    {
+        e.preventDefault();
+        if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list__card-wrapper')){
+            if(e.target.classList.contains('list__card')|| e.target.classList.contains('list__card-wrapper')){
+                e.target.closest('.list__card-wrapper').insertAdjacentHTML('afterend',this.#draggingElement.outerHTML);
+            }
+            else
+            {
+                e.target.closest('.list').querySelector('.list__content').insertAdjacentHTML('beforeend', this.#draggingElement.outerHTML);
+            }
+            this.#draggingElement.outerHTML ='';
+            this.#draggingElement = null;
+
+        }
+
+        this.#draggingElement?.style.display
+    }
+
+    #dragoverHandler = (e)=>{
+        e.preventDefault();
+    }
 
     /**
      * Закрытие страницы и редирект на страницу логина
