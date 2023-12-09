@@ -26,6 +26,7 @@ export default class BoardPage extends Component {
      */
 
     #draggingElement;
+    #elementDisplay;
     render() {
         const page = {
             thumbnail_url: this.config.board.thumbnail_url,
@@ -327,6 +328,7 @@ export default class BoardPage extends Component {
     #dropHandler = (e)=>
     {
         e.preventDefault();
+        console.log(e.target, this.#draggingElement.classList)
         if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list__card-wrapper')){
             if(e.target.classList.contains('list__card')|| e.target.classList.contains('list__card-wrapper')){
                 e.target.closest('.list__card-wrapper').insertAdjacentHTML('afterend',this.#draggingElement.outerHTML);
@@ -338,6 +340,11 @@ export default class BoardPage extends Component {
             this.#draggingElement.outerHTML ='';
             this.#draggingElement = null;
 
+        }
+        else if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list')){
+                e.target.closest('.list').insertAdjacentHTML('afterend',this.#draggingElement.outerHTML);
+                this.#draggingElement.outerHTML ='';
+                this.#draggingElement = null;
         }
 
     }
