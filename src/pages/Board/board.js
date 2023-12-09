@@ -95,9 +95,9 @@ export default class BoardPage extends Component {
             btn.addEventListener('click', this.#createEntity);
         });
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
-        this.parent.querySelector('.board__main-content').addEventListener('drag', this.#dragHandler);
-        this.parent.querySelector('.board__main-content').addEventListener('drop', this.#dropHandler);
-        this.parent.querySelector('.board__main-content').addEventListener('dragover', this.#dragoverHandler);
+        this.parent.addEventListener('drag', this.#dragHandler);
+        this.parent.addEventListener('drop', this.#dropHandler);
+        this.parent.addEventListener('dragover', this.#dragoverHandler);
 
         emitter.bind('logout', this.close);
     }
@@ -150,9 +150,9 @@ export default class BoardPage extends Component {
             btn.removeEventListener('click', this.#createEntity);
         });
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
-        this.parent.querySelector('.board__main-content').removeEventListener('drag', this.#dragHandler);
-        this.parent.querySelector('.board__main-content').removeEventListener('drop', this.#dropHandler);
-        this.parent.querySelector('.board__main-content').removeEventListener('dragover', this.#dragoverHandler);
+        this.parent.removeEventListener('drag', this.#dragHandler);
+        this.parent.removeEventListener('drop', this.#dropHandler);
+        this.parent.removeEventListener('dragover', this.#dragoverHandler);
 
         emitter.unbind('logout', this.close);
     }
@@ -324,9 +324,13 @@ export default class BoardPage extends Component {
 
     #dragHandler = (e)=>{
         e.preventDefault();
+        
+        if(e.target.classList.contains('list')||e.target.classList.contains('list__card-wrapper'))
+        {
+            this.#draggingElement=e.target;
+            this.#draggingElement.style.display = 'none';
+        }
 
-        this.#draggingElement = e.target;
-        this.#draggingElement.style.display = 'none';
     }
 
     #positioningCard(mouseCoord, element){
@@ -347,7 +351,10 @@ export default class BoardPage extends Component {
     {
         e.preventDefault();
 
-        this.#draggingElement.style.display='block';
+        if(this.#draggingElement)
+        {
+            this.#draggingElement.style.display='block';
+        }
 
         if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list__card-wrapper')){
             if(e.target.classList.contains('list__card')|| e.target.classList.contains('list__card-wrapper')){
@@ -358,14 +365,14 @@ export default class BoardPage extends Component {
                 e.target.closest('.list').querySelector('.list__content').insertAdjacentHTML('beforeend', this.#draggingElement.outerHTML);
             }
             this.#draggingElement.outerHTML ='';
-            this.#draggingElement = null;
 
         }
         else if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list')){
                 e.target.closest('.list').insertAdjacentHTML(this.#positioningList(e.clientX, e.target.closest('.list')),this.#draggingElement.outerHTML);
                 this.#draggingElement.outerHTML ='';
-                this.#draggingElement = null;
         }
+
+        this.#draggingElement = null;
 
     }
 

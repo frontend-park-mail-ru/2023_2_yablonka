@@ -16,6 +16,9 @@ import './main.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class MainPage extends Component {
+
+    draggingElement;
+
     /**
      * Рендерит компонент в DOM
      */
@@ -49,6 +52,9 @@ export default class MainPage extends Component {
             link.addEventListener('click', this.toBoardHandler);
         });
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
+        this.parent.addEventListener('drag', this.#dragHandler);
+        this.parent.addEventListener('dragover', this.#dragoverHandler);
+        this.parent.addEventListener('drop', this.#dropHandler);
 
         emitter.bind('logout', this.close);
     }
@@ -76,6 +82,10 @@ export default class MainPage extends Component {
             link.removeEventListener('click', this.toBoardHandler);
         });
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
+        this.parent.removeEventListener('drag', this.#dragHandler);
+        this.parent.removeEventListener('dragover', this.#dragoverHandler);
+        this.parent.removeEventListener('drop', this.#dropHandler);
+
 
         emitter.unbind('logout', this.close);
     }
@@ -129,6 +139,50 @@ export default class MainPage extends Component {
         dispatcher.dispatch(
             actionRedirect(e.target.closest('.link-user-board').getAttribute('href'), false),
         );
+    }
+
+    #dragHandler(e){
+        e.preventDefault();
+
+        this.draggingElement = e.target.closest('a');
+        if(!this.draggingElement?.classList?.contains('link-user-board')){
+            this.draggingElement=null;
+            return;
+        }
+
+        this.draggingElement.style.display='none';
+    }
+
+    #dragoverHandler(e){
+        e.preventDefault();
+    }
+    
+    #dropHandler(e){
+        e.preventDefault();
+
+        if(this.draggingElement)
+        {
+            this.draggingElement.style.display='flex';
+        }
+
+        if(e.target.closest('.workspace')&&this.draggingElement.classList.contains('link-user-board')){
+            if(e.target.closest('.link-user-board'))
+            {
+                const elementCoord = e.target.closest('.link-user-board').getBoundingClientRect();
+                const elementCenter = elementCoord.x + elementCoord.width/2;
+
+                const position = e.clientX<elementCenter ? 'beforebegin':'afterend';
+                
+                e.target.closest('.link-user-board').insertAdjacentHTML(position, this.draggingElement.outerHTML);
+                this.draggingElement.outerHTML ='';
+            }
+            else {
+                e.target.closest('.workspace').querySelector('.workspace__boards').insertAdjacentHTML('afterbegin', this.draggingElement.outerHTML);
+                this.draggingElement.outerHTML ='';
+            }
+
+            this.draggingElement = null;
+        }
     }
 
     /**
