@@ -150,6 +150,9 @@ export default class BoardPage extends Component {
             btn.removeEventListener('click', this.#createEntity);
         });
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
+        this.parent.querySelector('.board__main-content').removeEventListener('drag', this.#dragHandler);
+        this.parent.querySelector('.board__main-content').removeEventListener('drop', this.#dropHandler);
+        this.parent.querySelector('.board__main-content').removeEventListener('dragover', this.#dragoverHandler);
 
         emitter.unbind('logout', this.close);
     }
