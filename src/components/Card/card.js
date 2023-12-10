@@ -485,4 +485,21 @@ export default class Card extends Component {
     #dragoverHandler(e) {
         e.preventDefault();
     }
+
+    static clearCard = () => {
+        const dialog = document.querySelector('#card');
+        dialog.close();
+        popupEvent.deletePopup(dialog);
+
+        dialog.querySelector('.card-information__card-name').textContent = '';
+        dialog.querySelector('.card-information-list-name__title').textContent = '';
+        dialog.querySelector('.card-information__date-wrapper').innerHTML = '';
+        dialog.querySelector('.card-information__users-wrapper').innerHTML = '';
+        dialog.querySelector('.card-information__card-description').value = '';
+        dialog.querySelector('.card-information__checklists').innerHTML = '';
+        dialog.querySelector('.card-information__users-comments').innerHTML = '';
+
+        const cardId = dialog.dataset.card;
+        document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`).remove();
+    };
 }

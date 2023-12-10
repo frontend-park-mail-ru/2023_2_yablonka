@@ -150,7 +150,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            console.log(body);
+            console.log(structuredClone(body));
             this.addBoard(body.body.board);
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
@@ -163,7 +163,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Создание доски
-     * @param {Object} board - объект новой доски 
+     * @param {Object} board - объект новой доски
      */
     async createBoard(board) {
         const responsePromise = await AJAX(
@@ -197,7 +197,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Обновление доски
-     * @param {Object} board - обновленные данные доски 
+     * @param {Object} board - обновленные данные доски
      */
     async updateBoard(board) {
         const responsePromise = await AJAX(
@@ -221,7 +221,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Создание списка карточек
-     * @param {Object} list - данные нового списка 
+     * @param {Object} list - данные нового списка
      */
     async createList(list) {
         const responsePromise = await AJAX(
@@ -240,7 +240,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Обновление списка карточек
-     * @param {Object} list - обновленные данные списка 
+     * @param {Object} list - обновленные данные списка
      */
     async updateList(list) {
         const responsePromise = await AJAX(
@@ -278,7 +278,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Создание новой карточки
-     * @param {Object} card - Данные новой карточки 
+     * @param {Object} card - Данные новой карточки
      */
     async createCard(card) {
         const responsePromise = await AJAX(
@@ -325,7 +325,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Удаление карточки
-     * @param {Object} card - Удаляемая карточка 
+     * @param {Object} card - Удаляемая карточка
      */
     async deleteCard(card) {
         const responsePromise = await AJAX(
@@ -338,13 +338,29 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const deletedCard = this.getCardById(card.id);
+            const list = this.getListById(deletedCard.list_id);
+            list.cards.forEach((cardId) => {
+                const listCard = this.getCardById(parseInt(cardId, 10));
+                if (listCard.list_position > deletedCard.list_position) {
+                    list.list_position -= 1;
+                }
+            });
+            const idxList = list.cards.findIndex((itemId) => itemId === `${card.id}`);
+            list.cards.splice(idxList, idxList + 1);
+
+            const idxCard = this.storage
+                .get(this.workspaceModel.cards)
+                .findIndex((item) => item.id === card.id);
+            this.storage.get(this.workspaceModel.cards).splice(idxCard, idxCard + 1);
+
+            Card.clearCard();
         }
     }
 
     /**
      * Создание нового чеклиста
-     * @param {Object} checklist - данные нового чеклиста 
+     * @param {Object} checklist - данные нового чеклиста
      */
     async createChecklist(checklist) {
         const responsePromise = await AJAX(
@@ -374,7 +390,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Обновление чеклиста
-     * @param {Object} checklist - обноавленные данные чеклиста 
+     * @param {Object} checklist - обноавленные данные чеклиста
      */
     async updateChecklist(checklist) {
         const responsePromise = await AJAX(
@@ -393,7 +409,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Удаление чеклиста
-     * @param {Object} checklist - удаляемый чеклист 
+     * @param {Object} checklist - удаляемый чеклист
      */
     async deleteChecklist(checklist) {
         const responsePromise = await AJAX(
@@ -575,7 +591,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Удаление юзера с доски
-     * @param {Object} user - удаляемый юзер  
+     * @param {Object} user - удаляемый юзер
      */
     async removeUser(user) {
         const responsePromise = await AJAX(
@@ -621,7 +637,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Удаление юзера с карточки
-     * @param {Object} user - удаляемый юзер  
+     * @param {Object} user - удаляемый юзер
      */
     async removeUserCard(data) {
         const responsePromise = await AJAX(
@@ -650,7 +666,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Добавление доски в хранилище
-     * @param {Object} board - объект добавляемой в хранилище доски 
+     * @param {Object} board - объект добавляемой в хранилище доски
      */
     addBoard(board) {
         const idx = this.storage
@@ -760,7 +776,7 @@ class WorkspaceStorage extends BaseStorage {
     /**
      * Получение юзеров, находящихся на карточке
      * @param {Number} id - id карточки
-     * @returns 
+     * @returns
      */
     getCardUsers(id) {
         const currentCardUserIds = this.storage
@@ -776,7 +792,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Получение карточки по id
-     * @param {Number} id - id карточки 
+     * @param {Number} id - id карточки
      * @returns {Object}
      */
     getCardById(id) {
@@ -786,7 +802,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Получение юзера по id
-     * @param {Number} id - id юзера 
+     * @param {Number} id - id юзера
      * @returns {Object}
      */
     getUserById(id) {
@@ -796,7 +812,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Получение комментов карточки
-     * @param {Number} id - id карточки 
+     * @param {Number} id - id карточки
      * @returns {Array}
      */
     getCardComments(id) {
@@ -813,7 +829,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Получение чеклистов карточки
-     * @param {Number} id - id карточки 
+     * @param {Number} id - id карточки
      * @returns {Array}
      */
     getCardChecklists(id) {
@@ -831,7 +847,7 @@ class WorkspaceStorage extends BaseStorage {
     /**
      * Получение пунктов чеклиста
      * @param {Number} id - id чеклиста
-     * @returns 
+     * @returns
      */
     getChecklistItems(id) {
         const itemsIDs = this.storage
@@ -846,7 +862,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Получение пункта чеклиста по его id
-     * @param {Number} id - id пункта чеклиста 
+     * @param {Number} id - id пункта чеклиста
      * @returns {Object}
      */
     getChecklistItemById(id) {
@@ -859,7 +875,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Получение чеклиста по id
-     * @param {Number} id - id чеклиста 
+     * @param {Number} id - id чеклиста
      * @returns {Object}
      */
     getChecklistById(id) {
@@ -872,7 +888,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Поиск по подстроке
-     * @param {String} substring - подстрока для поиска 
+     * @param {String} substring - подстрока для поиска
      * @returns {Array}
      */
     searchUsers(substring) {
@@ -883,7 +899,7 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Поиск юзера по почте
-     * @param {String} email - почта юзера 
+     * @param {String} email - почта юзера
      * @returns {Object}
      */
     getUserByEmail(email) {
@@ -892,8 +908,8 @@ class WorkspaceStorage extends BaseStorage {
 
     /**
      * Находится ли юзер в доске
-     * @param {String} email - почта изера 
-     * @returns 
+     * @param {String} email - почта изера
+     * @returns
      */
     checkUserInBoard(email) {
         return !!this.storage.get(this.workspaceModel.users).find((usr) => usr.email === email);
@@ -902,7 +918,7 @@ class WorkspaceStorage extends BaseStorage {
     /**
      * Проверка является ли юзер владельцем доски
      * @param {Number} id - id юзера
-     * @returns 
+     * @returns
      */
     isOwner(id) {
         return this.storage.get(this.workspaceModel.boards)[0].owner_id === id;

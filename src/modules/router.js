@@ -201,8 +201,6 @@ class Router {
      */
     start() {
         window.addEventListener('popstate', this.onPopStateEvent);
-        console.log(window.location.href);
-
         this.refresh(false);
     }
 }
