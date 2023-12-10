@@ -1,5 +1,5 @@
-<li class='list' data-list='{{this.ID}}' data-list_position='{{this.position}}' draggable="true">
-    <div class='flex-column-centered border-radius-10 gap-10 list__container'>
+<li class='list' data-list='{{this.ID}}' data-list_position='{{this.position}}'>
+    <div class='flex-column-centered border-radius-10 gap-10 list__container' draggable='true'>
         <div class='flex-row-centered list__title-wrapper'>
             <span
                 data-list='{{this.ID}}'
@@ -25,7 +25,7 @@
                 <span class='font-size-16 font-weight-500 add-card__title'>Добавить карточку</span>
             </button>
         </div>
-        <div data-entity='card' class='new-card' style="display: none">
+        <div data-entity='card' class='new-card' style='display: none'>
             <form
                 class='flex-column-centered gap-10 border-radius-10 padding-5-10 form form-new-card__container'
                 id='create-card__list-{{this.ID}}'

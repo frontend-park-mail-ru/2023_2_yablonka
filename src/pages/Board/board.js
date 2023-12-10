@@ -97,9 +97,10 @@ export default class BoardPage extends Component {
             btn.addEventListener('click', this.#createEntity);
         });
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
-        this.parent.addEventListener('drag', this.#dragHandler);
+        this.parent.addEventListener('dragstart', this.#dragStartHandler, false);
+        this.parent.addEventListener('dragend', this.#dragEndHandler, false);
         this.parent.addEventListener('drop', this.#dropHandler);
-        this.parent.addEventListener('dragover', this.#dragoverHandler);
+        this.parent.addEventListener('dragover', this.#dragoverHandler, false);
 
         emitter.bind('logout', this.close);
     }
@@ -152,9 +153,10 @@ export default class BoardPage extends Component {
             btn.removeEventListener('click', this.#createEntity);
         });
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
-        this.parent.removeEventListener('drag', this.#dragHandler);
+        this.parent.removeEventListener('dragstart', this.#dragStartHandler, false);
+        this.parent.removeEventListener('dragend', this.#dragEndHandler, false);
         this.parent.removeEventListener('drop', this.#dropHandler);
-        this.parent.removeEventListener('dragover', this.#dragoverHandler);
+        this.parent.removeEventListener('dragover', this.#dragoverHandler, false);
 
         emitter.unbind('logout', this.close);
     }
@@ -330,16 +332,31 @@ export default class BoardPage extends Component {
         }
     };
 
-    #dragHandler = (e) => {
-        e.preventDefault();
-
+    #dragStartHandler = (e) => {
         if (
             e.target.classList.contains('list') ||
             e.target.classList.contains('list__card-wrapper')
         ) {
-            this.#draggingElement = e.target;
-            this.#draggingElement.style.display = 'none';
+            [this.#draggingElement] = e.target.children;
+
+            // const sizes = this.#draggingElement.getBoundingClientRect();
+            // console.log(sizes);
+            // const draggable = this.#draggingElement.cloneNode(true);
+            // draggable.classList.add(...['dragged', 'temp-dragged']);
+            // draggable.setAttribute(
+            //     'style',
+            //     `position: absolute; width: ${sizes.width}px; heigth: ${sizes.heigth}px`,
+            // );
+            // e.dataTransfer.setDragImage(draggable, 0, 0);
+            // this.parent.appendChild(draggable);
+            // this.#draggingElement.parentNode.style.opacity = 0;
+            this.#draggingElement.classList.add('draggable');
         }
+    };
+
+    #dragEndHandler = () => {
+        this.#draggingElement?.classList.remove('draggable');
+        this.parent.querySelector('.temp-dragged')?.remove();
     };
 
     #positioningCard(mouseCoord, element) {
@@ -359,13 +376,11 @@ export default class BoardPage extends Component {
     #dropHandler = (e) => {
         e.preventDefault();
 
-        if (this.#draggingElement) {
-            this.#draggingElement.style.display = 'block';
-        }
+        this.#draggingElement?.classList.remove('draggable');
 
         if (
             e.target.closest('.list') &&
-            this.#draggingElement.classList.contains('list__card-wrapper')
+            this.#draggingElement.parentNode.classList.contains('list__card-wrapper')
         ) {
             if (
                 e.target.classList.contains('list__card') ||
@@ -375,24 +390,28 @@ export default class BoardPage extends Component {
                     .closest('.list__card-wrapper')
                     .insertAdjacentHTML(
                         this.#positioningCard(e.clientY, e.target.closest('.list__card-wrapper')),
-                        this.#draggingElement.outerHTML,
+                        this.#draggingElement.parentNode.outerHTML,
                     );
             } else {
                 e.target
                     .closest('.list')
                     .querySelector('.list__content')
-                    .insertAdjacentHTML('beforeend', this.#draggingElement.outerHTML);
+                    .insertAdjacentHTML('beforeend', this.#draggingElement.parentNode.outerHTML);
             }
-            this.#draggingElement.outerHTML = '';
-        } else if (e.target.closest('.list') && this.#draggingElement.classList.contains('list')) {
+            this.#draggingElement.parentNode.remove();
+        } else if (
+            e.target.closest('.list') &&
+            this.#draggingElement.parentNode.classList.contains('list')
+        ) {
             e.target
                 .closest('.list')
                 .insertAdjacentHTML(
                     this.#positioningList(e.clientX, e.target.closest('.list')),
-                    this.#draggingElement.outerHTML,
+                    this.#draggingElement.parentNode.outerHTML,
                 );
-            this.#draggingElement.outerHTML = '';
+            this.#draggingElement.parentNode.remove();
         }
+        this.parent.querySelector('.temp-dragged')?.remove();
 
         this.#draggingElement = null;
     };
