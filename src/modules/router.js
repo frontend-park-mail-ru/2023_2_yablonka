@@ -16,7 +16,6 @@ class Router {
         this.views = new Map();
         this.signedInViews = new Map();
 
-
         emitter.bind('rerender', this.reRenderPage.bind(this));
 
         routes.forEach((route) => {
@@ -31,7 +30,7 @@ class Router {
     /**
      * Функция, которая рендерит страницу оффлайна
      */
-    goOffline(){
+    goOffline() {
         this.currentPage.clear();
         offline.renderPage();
     }
@@ -202,6 +201,8 @@ class Router {
      */
     start() {
         window.addEventListener('popstate', this.onPopStateEvent);
+        console.log(window.location.href);
+
         this.refresh(false);
     }
 }

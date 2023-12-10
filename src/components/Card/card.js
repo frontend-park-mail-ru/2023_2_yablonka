@@ -297,8 +297,8 @@ export default class Card extends Component {
             dispatcher.dispatch(
                 actionNavigate(
                     `${
-                        window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0]
-                    }_card_${cardId}`,
+                        window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0]
+                    }/card/${cardId}`,
                     '',
                     false,
                 ),
@@ -306,7 +306,7 @@ export default class Card extends Component {
         } else {
             dispatcher.dispatch(
                 actionNavigate(
-                    window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0],
+                    window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0],
                     '',
                     false,
                 ),
