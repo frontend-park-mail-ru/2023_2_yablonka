@@ -6,7 +6,7 @@
                 <div class='box-40-40 pop-up-menu__user-avatar'>
                     <img
                         class='avatar-wrapper pop-up-menu__avatar-image'
-                        src='/img/{{this.avatar}}'
+                        src='{{this.avatar}}'
                         alt='avatar'
                     />
                 </div>
@@ -21,7 +21,6 @@
         </div>
         <div class='pop-up-menu__underline'></div>
         <div class='flex-column-centered flex-centered gap-5 pop-up-menu__navigation'>
-            <span class='pop-up-menu__menu-name'>Tabula</span>
             {{#each buttons as | button |}}
             <div class='flex-start padding-0-10 border-radius-5 navigation__item'>
                 <a class='link profile-link' data-action='{{button.action}}' href='{{button.href}}'>{{button.title}}</a>
