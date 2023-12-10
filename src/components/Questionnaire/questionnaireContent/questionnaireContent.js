@@ -30,7 +30,9 @@ export default class QuestionnaireContent extends Component {
         const btns = [];
         for (let i = 1; i < this.#innerConfig[metric] + 1; i += 1) {
             btns.push(
-                metric === 'NSP' ? new StarButton(null, { rating: i }).render() : new NumberButton(null, { rating: i }).render(),
+                metric === 'NSP'
+                    ? new StarButton(null, { rating: i }).render()
+                    : new NumberButton(null, { rating: i }).render(),
             );
         }
         return btns;

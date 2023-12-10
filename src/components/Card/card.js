@@ -125,9 +125,7 @@ export default class Card extends Component {
 
             const dialogSizes = dialog.getBoundingClientRect();
             const windowSizes = document.querySelector('.page').getBoundingClientRect();
-            // Math.floor(
-            //     (windowSizes.height - dialogSizes.height) / 2,
-            // )
+            
             dialog.setAttribute(
                 'style',
                 `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
@@ -213,8 +211,8 @@ export default class Card extends Component {
             dispatcher.dispatch(
                 actionNavigate(
                     `${
-                        window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0]
-                    }_card_${cardId}`,
+                        window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0]
+                    }/card/${cardId}`,
                     '',
                     false,
                 ),
@@ -234,10 +232,13 @@ export default class Card extends Component {
 
     static changeNameAndDescriptionHelper = (cardId) => {
         const card = workspaceStorage.getCardById(parseInt(cardId, 10));
+        const cardInList = document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`);
 
         const dialog = document.querySelector('#card');
         const name = dialog.querySelector('.card-information__card-name');
         const description = dialog.querySelector('.card-information__card-description');
+
+        cardInList.querySelector('.card-name').textContent = card.name ? card.name : '';
 
         name.value = card.name ? card.name : '';
         description.value = card.description ? card.description : '';
@@ -282,9 +283,7 @@ export default class Card extends Component {
         window.requestAnimationFrame(() => {
             const dialogSizes = dialog.getBoundingClientRect();
             const windowSizes = this.parent.getBoundingClientRect();
-            // Math.floor(
-            //     (windowSizes.height - dialogSizes.height) / 2,
-            // )
+
             dialog.setAttribute(
                 'style',
                 `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,

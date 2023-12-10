@@ -26,7 +26,9 @@ export default class BoardPage extends Component {
      */
 
     #draggingElement;
+
     #elementDisplay;
+
     render() {
         const page = {
             thumbnail_url: this.config.board.thumbnail_url,
@@ -212,7 +214,8 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
         const { entity } = entityNode.dataset;
 
         const addEntityBtn = entityNode.parentNode.querySelector(`.add-new-${entity}`);
@@ -229,7 +232,8 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 
@@ -246,7 +250,8 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 
@@ -266,11 +271,13 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
         if (
-            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' && e.target.closest(`.btn-create-${entity}_cancel`)
+            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' &&
+            e.target.closest(`.btn-create-${entity}_cancel`)
         ) {
             this.#closeNewEntity(e);
             this.#blockCreateNewEntityBtn(e);
@@ -281,7 +288,8 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode = e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         const { entity } = entityNode.dataset;
 
@@ -322,63 +330,76 @@ export default class BoardPage extends Component {
         }
     };
 
-    #dragHandler = (e)=>{
+    #dragHandler = (e) => {
         e.preventDefault();
-        
-        if(e.target.classList.contains('list')||e.target.classList.contains('list__card-wrapper'))
-        {
-            this.#draggingElement=e.target;
+
+        if (
+            e.target.classList.contains('list') ||
+            e.target.classList.contains('list__card-wrapper')
+        ) {
+            this.#draggingElement = e.target;
             this.#draggingElement.style.display = 'none';
         }
+    };
 
-    }
-
-    #positioningCard(mouseCoord, element){
+    #positioningCard(mouseCoord, element) {
         const elementCoord = element.getBoundingClientRect();
-        const elementCenter = elementCoord.y + elementCoord.height/2;
+        const elementCenter = elementCoord.y + elementCoord.height / 2;
 
-        return mouseCoord<elementCenter ? 'beforebegin':'afterend';
+        return mouseCoord < elementCenter ? 'beforebegin' : 'afterend';
     }
 
-    #positioningList(mouseCoord, element){
+    #positioningList(mouseCoord, element) {
         const elementCoord = element.getBoundingClientRect();
-        const elementCenter = elementCoord.x + elementCoord.width/2;
+        const elementCenter = elementCoord.x + elementCoord.width / 2;
 
-        return mouseCoord<elementCenter ? 'beforebegin':'afterend';
+        return mouseCoord < elementCenter ? 'beforebegin' : 'afterend';
     }
 
-    #dropHandler = (e)=>
-    {
+    #dropHandler = (e) => {
         e.preventDefault();
 
-        if(this.#draggingElement)
-        {
-            this.#draggingElement.style.display='block';
+        if (this.#draggingElement) {
+            this.#draggingElement.style.display = 'block';
         }
 
-        if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list__card-wrapper')){
-            if(e.target.classList.contains('list__card')|| e.target.classList.contains('list__card-wrapper')){
-                e.target.closest('.list__card-wrapper').insertAdjacentHTML(this.#positioningCard(e.clientY, e.target.closest('.list__card-wrapper')),this.#draggingElement.outerHTML);
+        if (
+            e.target.closest('.list') &&
+            this.#draggingElement.classList.contains('list__card-wrapper')
+        ) {
+            if (
+                e.target.classList.contains('list__card') ||
+                e.target.classList.contains('list__card-wrapper')
+            ) {
+                e.target
+                    .closest('.list__card-wrapper')
+                    .insertAdjacentHTML(
+                        this.#positioningCard(e.clientY, e.target.closest('.list__card-wrapper')),
+                        this.#draggingElement.outerHTML,
+                    );
+            } else {
+                e.target
+                    .closest('.list')
+                    .querySelector('.list__content')
+                    .insertAdjacentHTML('beforeend', this.#draggingElement.outerHTML);
             }
-            else
-            {
-                e.target.closest('.list').querySelector('.list__content').insertAdjacentHTML('beforeend', this.#draggingElement.outerHTML);
-            }
-            this.#draggingElement.outerHTML ='';
-
-        }
-        else if(e.target.closest('.list')&&this.#draggingElement.classList.contains('list')){
-                e.target.closest('.list').insertAdjacentHTML(this.#positioningList(e.clientX, e.target.closest('.list')),this.#draggingElement.outerHTML);
-                this.#draggingElement.outerHTML ='';
+            this.#draggingElement.outerHTML = '';
+        } else if (e.target.closest('.list') && this.#draggingElement.classList.contains('list')) {
+            e.target
+                .closest('.list')
+                .insertAdjacentHTML(
+                    this.#positioningList(e.clientX, e.target.closest('.list')),
+                    this.#draggingElement.outerHTML,
+                );
+            this.#draggingElement.outerHTML = '';
         }
 
         this.#draggingElement = null;
+    };
 
-    }
-
-    #dragoverHandler = (e)=>{
+    #dragoverHandler = (e) => {
         e.preventDefault();
-    }
+    };
 
     /**
      * Закрытие страницы и редирект на страницу логина
