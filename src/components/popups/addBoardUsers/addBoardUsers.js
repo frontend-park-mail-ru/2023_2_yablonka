@@ -102,7 +102,7 @@ export default class AddBoardUsers extends Component {
 
         if (Validator.validateEmail(userEmail)) {
             const boardId = parseInt(
-                this.parent.querySelector('.board-menu__board-name').dataset.board,
+                this.parent.querySelector('.input-board-name__input').dataset.board,
                 10,
             );
             if (action === 'add-user' && !workspaceStorage.checkUserInBoard(userEmail)) {
