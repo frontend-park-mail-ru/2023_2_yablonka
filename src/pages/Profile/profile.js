@@ -248,6 +248,12 @@ export default class Profile extends Component {
         dispatcher.dispatch(actionLogout());
     }
 
+    static changeAvatar = (avatarUrl) => {
+        document.querySelector('.profile-user-image').src = avatarUrl;
+        document.querySelector('.btn-avatar__image').src = avatarUrl;
+        document.querySelector('.pop-up-menu__avatar-image').src = avatarUrl;
+    }
+
     /**
      * Закрытие страницы и редирект на страницу логина
      */

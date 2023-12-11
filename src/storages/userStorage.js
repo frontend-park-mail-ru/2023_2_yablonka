@@ -3,6 +3,7 @@ import AJAX from '../modules/ajax.js';
 import { apiPath, apiVersion } from '../configs/configs.js';
 import emitter from '../modules/actionTrigger.js';
 import NotificationMessage from '../components/Common/notification/notificationMessage.js';
+import Profile from '../pages/Profile/profile.js';
 
 /**
  * Хранилище объекта "пользователь"
@@ -242,7 +243,7 @@ class UserStorage extends BaseStorage {
             const oldUser = this.storage.get(this.userModel.body);
             oldUser.body.user.avatar_url = body.avatar_url;
             this.storage.set(this.userModel.body, oldUser);
-            emitter.trigger('rerender');
+            Profile.changeAvatar(body.avatar_url);
             emitter.trigger('changeSuccess');
         } else {
             emitter.trigger('changeError');

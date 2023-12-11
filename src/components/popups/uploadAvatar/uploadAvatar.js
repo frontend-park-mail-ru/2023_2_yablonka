@@ -166,8 +166,6 @@ export default class UploadAvatarModal extends Component {
 
         const avatar = await this.readFileAsByteArray(this.avatarFile);
 
-        console.log(this.filename, this.mimetype);
-
         dispatcher.dispatch(
             actionUpdateAvatar({
                 avatar: Array.from(avatar.values()),
