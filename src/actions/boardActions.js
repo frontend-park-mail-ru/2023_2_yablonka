@@ -102,3 +102,8 @@ export const actionRemoveUserCard = (data) => ({
     type: 'removeUserCard',
     value: data,
 });
+
+export const actionReorderList = (data) => ({
+    type: 'reorderList',
+    value: data,
+});
