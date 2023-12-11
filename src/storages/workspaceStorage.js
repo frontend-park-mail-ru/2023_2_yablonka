@@ -277,6 +277,25 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     /**
+     * Переупорядочивание списка карточек
+     * @param {Object} ids - массив с id карточек
+     */
+    async reorderList(ids) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}list/reorder/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            ids,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    /**
      * Создание новой карточки
      * @param {Object} card - Данные новой карточки
      */
