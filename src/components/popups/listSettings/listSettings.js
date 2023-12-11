@@ -118,14 +118,14 @@ export default class ListSettings extends Component {
         }
     };
 
-    #deleteListHandler = () => {
-        const dialog = this.parent.querySelector('#list-settings');
+    #deleteListHandler = (e) => {
+        const dialog = e.target.closest('#list-settings');
         if (dialog.dataset.list) {
             const listId = parseInt(dialog.dataset.list, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
-
-            dispatcher.dispatch(actionDeleteList(listId));
+            
+            dispatcher.dispatch(actionDeleteList({ id: listId }));
         }
     };
 
