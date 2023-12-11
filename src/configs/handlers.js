@@ -43,6 +43,7 @@ const handlers = [
     { type: 'addUserCard', method: workspaceStorage.addUserCard.bind(workspaceStorage) },
     { type: 'removeUserCard', method: workspaceStorage.removeUserCard.bind(workspaceStorage) },
     { type: 'goOffline', method: router.goOffline.bind(router) },
+    { type: 'reorderList', method: workspaceStorage.reorderList.bind(workspaceStorage) },
 ];
 
 export default handlers;
