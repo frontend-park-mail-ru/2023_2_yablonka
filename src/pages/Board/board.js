@@ -411,7 +411,9 @@ export default class BoardPage extends Component {
                     ids.push(parseInt(c.dataset.card, 10));
                 });
 
-            dispatcher.dispatch(actionReorderList({ ids }));
+            const list_id = parseInt(e.target.closest('.list').dataset.list);
+
+            dispatcher.dispatch(actionReorderList({ list_id:list_id, ids:ids }));
             this.#draggingElement.parentNode.remove();
         } else if (
             e.target.closest('.list') &&
