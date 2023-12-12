@@ -411,9 +411,13 @@ export default class BoardPage extends Component {
                     ids.push(parseInt(c.dataset.card, 10));
                 });
 
-            const list_id = parseInt(e.target.closest('.list').dataset.list);
+            const listId = parseInt(e.target.closest('.list').dataset.list);
+            const cardId = parseInt(e.target.closest('.list__card-wrapper').dataset.card);
+            const oldListId = workspaceStorage.getCardById(parseInt(cardId)).list_id;
+            const oldListIds = [];
+            document.querySelector(`.list[data-list="${oldListId}"`).querySelectorAll('.list__card-wrapper').forEach(c=>{oldListIds.push(parseInt(c.dataset.card))});
 
-            dispatcher.dispatch(actionReorderList({ list_id:list_id, ids:ids }));
+            dispatcher.dispatch(actionReorderList({old_list:{list_id:oldListId, ids:oldListIds}, new_list:{ list_id:listId, ids:ids }, id_card:cardId}));
             this.#draggingElement.parentNode.remove();
         } else if (
             e.target.closest('.list') &&
