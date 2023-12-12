@@ -26,6 +26,9 @@ export default class AddBoardUsers extends Component {
             .querySelector('.btn-share-action')
             .addEventListener('click', this.#openAddUserPopup);
         this.parent
+            .querySelector('.btn-add-user-to-board')
+            .addEventListener('click', this.#openAddUserPopup);
+        this.parent
             .querySelector('.btn-add-board-user_add')
             .addEventListener('click', this.#manageUser);
         this.parent
@@ -40,6 +43,9 @@ export default class AddBoardUsers extends Component {
         this.parent
             .querySelector('.btn-share-action')
             .removeEventListener('click', this.#openAddUserPopup);
+        this.parent
+            .querySelector('.btn-add-user-to-board')
+            .addEventListener('click', this.#openAddUserPopup);
         this.parent
             .querySelector('.btn-add-board-user_add')
             .removeEventListener('click', this.#manageUser);
@@ -57,16 +63,25 @@ export default class AddBoardUsers extends Component {
 
         const dialog = this.parent.querySelector('#add-board-user');
 
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
+        const btn = e.target.closest('button');
+        const btnCoordinates = btn.getBoundingClientRect();
+
+        let top;
+        let left;
+
+        if (btn.classList.contains('btn-add-user-to-board')) {
+            top = btnCoordinates.top - 10;
+            left = btnCoordinates.left + 50;
+        } else {
+            top = btnCoordinates.top + 50;
+            left = btnCoordinates.left - 100;
+        }
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 100}px`,
-            );
+            dialog.setAttribute('style', `top: ${top}px; left: ${left}px`);
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();

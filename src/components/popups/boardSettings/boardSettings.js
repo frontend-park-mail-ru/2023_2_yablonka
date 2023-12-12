@@ -135,7 +135,7 @@ export default class BoardSettings extends Component {
             const numbers = letters.filter((el) => /\d/.test(el));
             const characters = letters.filter((el) => !/\d/.test(el));
 
-            const width = Math.floor(numbers.length * 12.5 + characters.length * 10.5) + 20;
+            const width = Math.floor(numbers.length * 12.5 + characters.length * 11.5) + 20;
             const maxWidth = Math.floor(
                 this.parent.querySelector('.board-menu__team').getBoundingClientRect().left -
                     input.getBoundingClientRect().left,

@@ -7,7 +7,11 @@ import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
 import workspaceStorage from '../../storages/workspaceStorage.js';
 import BoardMenu from '../../components/Board/board/boardMenu/boardMenu.js';
-import { actionCreateCard, actionCreateList, actionReorderList } from '../../actions/boardActions.js';
+import {
+    actionCreateCard,
+    actionCreateList,
+    actionReorderList,
+} from '../../actions/boardActions.js';
 import Validator from '../../modules/validator.js';
 import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
 import template from './board.hbs';
@@ -400,9 +404,14 @@ export default class BoardPage extends Component {
             }
             const ids = [];
 
-            e.target.closest('.list').querySelectorAll('.list__card-wrapper').forEach(c=>{ids.push(parseInt(c.dataset.card));});
+            e.target
+                .closest('.list')
+                .querySelectorAll('.list__card-wrapper')
+                .forEach((c) => {
+                    ids.push(parseInt(c.dataset.card, 10));
+                });
 
-            dispatcher.dispatch(actionReorderList({ids:ids}));
+            dispatcher.dispatch(actionReorderList({ ids }));
             this.#draggingElement.parentNode.remove();
         } else if (
             e.target.closest('.list') &&
