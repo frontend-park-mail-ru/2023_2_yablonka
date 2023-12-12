@@ -20,12 +20,12 @@
             {{/each}}
         </ol>
         <div data-entity='card' class='padding-10-15 add-new-card'>
-            <button class='flex-row-centered gap-10 btn btn-add-new-card'>
+            <button class='flex-row-centered gap-10 btn btn-add-new-card add-new-entity'>
                 <img class='box-16-16 add-card__image' src='/svg/plus.svg' alt='add-card' />
                 <span class='font-size-16 font-weight-500 add-card__title'>Добавить карточку</span>
             </button>
         </div>
-        <div data-entity='card' class='new-card' style='display: none'>
+        <div data-entity='card' class='new-entity new-card' style='display: none'>
             <form
                 class='flex-column-centered gap-10 border-radius-10 padding-5-10 form form-new-card__container'
                 id='create-card__list-{{this.ID}}'
@@ -48,7 +48,7 @@
                         Добавить карточку
                     </button>
                     <button
-                        class='box-32-32 flex-centered border-radius-5 gap-10 btn btn-create-card btn-create-card_cancel'
+                        class='box-32-32 flex-centered border-radius-5 gap-10 btn btn-create-card btn-create_cancel'
                     >
                         <svg
                             class='btn-add-card-cancel__image border-radius-5 box-16-16'

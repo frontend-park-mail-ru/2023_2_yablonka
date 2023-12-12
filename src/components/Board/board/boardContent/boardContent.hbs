@@ -5,13 +5,15 @@
         {{/each}}
         <li data-entity='list' class='border-radius-10 add-new-list'>
             <div class='flex-start border-radius-10 add-new-list__container'>
-                <button class='strach-layout flex-start padding-0-10 gap-10 btn btn-add-new-list'>
+                <button
+                    class='strach-layout flex-start padding-0-10 gap-10 btn btn-add-new-list add-new-entity'
+                >
                     <img class='box-16-16 add-list__image' src='/svg/plus.svg' alt='add-card' />
                     <span class='font-size-20 font-weight-500 add-card__title'>Добавить список</span>
                 </button>
             </div>
         </li>
-        <li data-entity='list' class='border-radius-10 new-list' style='display: none'>
+        <li data-entity='list' class='border-radius-10 new-entity new-list' style='display: none'>
             <form
                 class='flex-column-centered gap-10 border-radius-10 padding-5-10 form form-new-list__container'
                 id='create-list'
@@ -34,7 +36,7 @@
                         Добавить список
                     </button>
                     <button
-                        class='box-32-32 flex-centered border-radius-5 gap-10 btn btn-create-list btn-create-list_cancel'
+                        class='box-32-32 flex-centered border-radius-5 gap-10 btn btn-create-list btn-create_cancel'
                     >
                         <svg
                             class='btn-add-list-cancel__image border-radius-5 box-16-16'

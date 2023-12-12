@@ -33,6 +33,8 @@ export default class BoardPage extends Component {
 
     #elementDisplay;
 
+    #openedCreateMenu = [];
+
     render() {
         const page = {
             thumbnail_url: this.config.board.thumbnail_url,
@@ -75,25 +77,10 @@ export default class BoardPage extends Component {
         this.parent
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
-
-        this.parent
-            .querySelector('.btn-add-new-list')
-            .addEventListener('click', this.#addNewEntity);
-        this.parent.querySelectorAll('.btn-add-new-card').forEach((btn) => {
-            btn.addEventListener('click', this.#addNewEntity);
-        });
-        this.parent
-            .querySelector('.input-new-list-name')
-            .addEventListener('input', this.#blockCreateNewEntityBtn);
-        this.parent.querySelectorAll('.input-new-card-name').forEach((btn) => {
-            btn.addEventListener('input', this.#blockCreateNewEntityBtn);
-        });
-        this.parent
-            .querySelector('.btn-create-list_cancel')
-            .addEventListener('click', this.#cancelCreateNewEntityBtn);
-        this.parent.querySelectorAll('.btn-create-card').forEach((btn) => {
-            btn.addEventListener('click', this.#cancelCreateNewEntityBtn);
-        });
+        this.parent.addEventListener('click', this.#addNewEntity);
+        this.parent.addEventListener('click', this.#closeAllCreateMenu);
+        this.parent.addEventListener('input', this.#blockCreateNewEntityBtn);
+        this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent
             .querySelector('.btn-create-list_confirm')
             .addEventListener('click', this.#createEntity);
@@ -132,24 +119,10 @@ export default class BoardPage extends Component {
             .querySelector('.profile-link[data-action=security]')
             .removeEventListener('click', this.toSecurityHandler);
 
-        this.parent
-            .querySelector('.btn-add-new-list')
-            .addEventListener('click', this.#addNewEntity);
-        this.parent.querySelectorAll('.btn-add-new-card').forEach((btn) => {
-            btn.addEventListener('click', this.#addNewEntity);
-        });
-        this.parent
-            .querySelector('.input-new-list-name')
-            .removeEventListener('input', this.#blockCreateNewEntityBtn);
-        this.parent.querySelectorAll('.input-new-card-name').forEach((btn) => {
-            btn.removeEventListener('input', this.#blockCreateNewEntityBtn);
-        });
-        this.parent
-            .querySelector('.btn-create-list_cancel')
-            .removeEventListener('click', this.#cancelCreateNewEntityBtn);
-        this.parent.querySelectorAll('.btn-create-card').forEach((btn) => {
-            btn.removeEventListener('click', this.#cancelCreateNewEntityBtn);
-        });
+        this.parent.removeEventListener('click', this.#addNewEntity);
+        this.parent.removeEventListener('click', this.#closeAllCreateMenu);
+        this.parent.removeEventListener('input', this.#blockCreateNewEntityBtn);
+        this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent
             .querySelector('.btn-create-list_confirm')
             .removeEventListener('click', this.#createEntity);
@@ -220,36 +193,79 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
-        const { entity } = entityNode.dataset;
+        if (e.target.closest('button')?.classList.contains('add-new-entity')) {
+            this.#closeAllCreateMenu();
 
-        const addEntityBtn = entityNode.parentNode.querySelector(`.add-new-${entity}`);
-        const addEntityForm = entityNode.parentNode.querySelector(`.new-${entity}`);
+            const entityNode =
+                e.target.closest('li[data-entity=list]') ||
+                e.target.closest('div[data-entity=card]');
 
-        addEntityBtn.style.display = 'none';
-        addEntityForm.style.display = 'block';
+            const { entity } = entityNode.dataset;
 
-        const input = entityNode.parentNode.querySelector(`.input-new-${entity}-name`);
-        input.blur();
+            const addEntityBtn = entityNode.closest(`.add-new-${entity}`);
+            const addEntityForm = addEntityBtn.nextElementSibling;
+
+            addEntityBtn.style.display = 'none';
+            addEntityForm.style.display = 'block';
+
+            const input = addEntityForm.querySelector(`.input-new-${entity}-name`);
+
+            input.focus();
+            input.blur();
+
+            this.#openedCreateMenu.push({ entity, node: entityNode.nextElementSibling });
+        }
     };
 
     #closeNewEntity = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        if (e.target.closest('button')?.classList.contains('btn-create_cancel')) {
+            const entityNode =
+                e.target.closest('li[data-entity=list]') ||
+                e.target.closest('div[data-entity=card]');
 
-        const { entity } = entityNode.dataset;
+            const { entity } = entityNode.dataset;
 
-        entityNode.parentNode.querySelector(`.form-new-${entity}__container`).reset();
+            const addEntityForm = entityNode.closest(`.new-${entity}`);
+            const addEntityBtn = addEntityForm.previousElementSibling;
 
-        const addEntityBtn = entityNode.parentNode.querySelector(`.add-new-${entity}`);
-        const addEntityForm = entityNode.parentNode.querySelector(`.new-${entity}`);
+            addEntityForm.querySelector(`.form-new-${entity}__container`).reset();
 
-        addEntityBtn.style.display = 'block';
-        addEntityForm.style.display = 'none';
+            addEntityBtn.style.display = 'block';
+            addEntityForm.style.display = 'none';
+
+            const idx = this.#openedCreateMenu.findIndex((node) => node.node === entityNode);
+            this.#openedCreateMenu.splice(idx, idx + 1);
+        }
+    };
+
+    #closeAllCreateMenu = (e) => {
+        if (
+            !(
+                e?.target.closest('li[data-entity=list]') ||
+                e?.target.closest('div[data-entity=card]')
+            )
+        ) {
+            this.#openedCreateMenu.forEach((menu) => {
+                const menuForm = menu.node.closest(`.new-${menu.entity}`);
+                const menuBtn = menu.node.previousElementSibling;
+
+                menuForm.querySelector(`.form-new-${menu.entity}__container`).reset();
+
+                menuBtn.style.display = 'block';
+                menuForm.style.display = 'none';
+
+                const btn = menu.node.querySelector(`.btn-create-${menu.entity}_confirm`);
+                const input = menu.node.querySelector(`.input-new-${menu.entity}-name`);
+
+                btn.disabled = true;
+                input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
+            });
+
+            this.#openedCreateMenu = [];
+        }
     };
 
     #blockCreateNewEntityBtn = (e) => {
@@ -259,17 +275,22 @@ export default class BoardPage extends Component {
         const entityNode =
             e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
-        const { entity } = entityNode.dataset;
+        if (entityNode?.classList.contains('new-entity')) {
+            const { entity } = entityNode.dataset;
 
-        const btn = entityNode.parentNode.querySelector(`.btn-create-${entity}_confirm`);
-        const input = entityNode.parentNode.querySelector(`.input-new-${entity}-name`);
+            const btn = entityNode.querySelector(`.btn-create-${entity}_confirm`);
+            const input = entityNode.querySelector(`.input-new-${entity}-name`);
 
-        if (input.value.length === 0) {
-            btn.disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
-        } else {
-            btn.disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
+            if (input.value.length === 0) {
+                btn.disabled = true;
+                input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
+            } else {
+                btn.disabled = false;
+                input.setAttribute(
+                    'style',
+                    'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)',
+                );
+            }
         }
     };
 
@@ -277,14 +298,9 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        const entityNodeCancelBtn = e.target.closest('button');
 
-        const { entity } = entityNode.dataset;
-        if (
-            entityNode.parentNode.querySelector(`.new-${entity}`)?.style.display === 'block' &&
-            e.target.closest(`.btn-create-${entity}_cancel`)
-        ) {
+        if (entityNodeCancelBtn?.classList.contains('btn-create_cancel')) {
             this.#closeNewEntity(e);
             this.#blockCreateNewEntityBtn(e);
         }
@@ -411,13 +427,24 @@ export default class BoardPage extends Component {
                     ids.push(parseInt(c.dataset.card, 10));
                 });
 
-            const listId = parseInt(e.target.closest('.list').dataset.list);
-            const cardId = parseInt(e.target.closest('.list__card-wrapper').dataset.card);
-            const oldListId = workspaceStorage.getCardById(parseInt(cardId)).list_id;
+            const listId = parseInt(e.target.closest('.list').dataset.list, 10);
+            const cardId = parseInt(e.target.closest('.list__card-wrapper').dataset.card, 10);
+            const oldListId = workspaceStorage.getCardById(parseInt(cardId, 10)).list_id;
             const oldListIds = [];
-            document.querySelector(`.list[data-list="${oldListId}"`).querySelectorAll('.list__card-wrapper').forEach(c=>{oldListIds.push(parseInt(c.dataset.card))});
+            document
+                .querySelector(`.list[data-list="${oldListId}"`)
+                .querySelectorAll('.list__card-wrapper')
+                .forEach((c) => {
+                    oldListIds.push(parseInt(c.dataset.card, 10));
+                });
 
-            dispatcher.dispatch(actionReorderList({old_list:{list_id:oldListId, ids:oldListIds}, new_list:{ list_id:listId, ids:ids }, id_card:cardId}));
+            dispatcher.dispatch(
+                actionReorderList({
+                    old_list: { list_id: oldListId, ids: oldListIds },
+                    new_list: { list_id: listId, ids },
+                    id_card: cardId,
+                }),
+            );
             this.#draggingElement.parentNode.remove();
         } else if (
             e.target.closest('.list') &&

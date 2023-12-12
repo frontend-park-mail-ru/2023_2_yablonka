@@ -71,10 +71,10 @@ export default class AddBoardUsers extends Component {
 
         if (btn.classList.contains('btn-add-user-to-board')) {
             top = btnCoordinates.top - 10;
-            left = btnCoordinates.left + 50;
+            left = btnCoordinates.left + 60;
         } else {
-            top = btnCoordinates.top + 50;
-            left = btnCoordinates.left - 100;
+            top = btnCoordinates.top + 60;
+            left = btnCoordinates.left - 65;
         }
 
         if (dialog.getAttribute('open') === null) {

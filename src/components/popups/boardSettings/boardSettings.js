@@ -45,10 +45,10 @@ export default class BoardSettings extends Component {
             .addEventListener('input', this.#resizeBoardNameInput);
         this.parent
             .querySelector('.input-board-name__input')
-            .addEventListener('focus', this.#changeBackgoundBoardNameInput);
+            .addEventListener('focus', this.#changeBackgroundBoardNameInput);
         this.parent
             .querySelector('.input-board-name__input')
-            .addEventListener('blur', this.#changeBackgoundBoardNameInput);
+            .addEventListener('blur', this.#changeBackgroundBoardNameInput);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -70,10 +70,10 @@ export default class BoardSettings extends Component {
             .removeEventListener('input', this.#resizeBoardNameInput);
         this.parent
             .querySelector('.input-board-name__input')
-            .removeEventListener('focus', this.#changeBackgoundBoardNameInput);
+            .removeEventListener('focus', this.#changeBackgroundBoardNameInput);
         this.parent
             .querySelector('.input-board-name__input')
-            .removeEventListener('blur', this.#changeBackgoundBoardNameInput);
+            .removeEventListener('blur', this.#changeBackgroundBoardNameInput);
 
         window.addEventListener('resize', this.#resize);
     }
@@ -94,7 +94,8 @@ export default class BoardSettings extends Component {
 
         const dialog = this.parent.querySelector('#board-settings');
 
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
+        const btn = e.target.closest('button');
+        const btnCoordinates = btn.getBoundingClientRect();
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
@@ -102,7 +103,7 @@ export default class BoardSettings extends Component {
             dialog.show();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.right - 200}px`,
+                `top: ${btnCoordinates.top - 20}px; left: ${btnCoordinates.left + 60}px`,
             );
         } else {
             popupEvent.deletePopup(dialog);
@@ -118,7 +119,7 @@ export default class BoardSettings extends Component {
             .getBoundingClientRect();
         dialog.setAttribute(
             'style',
-            `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.right - 200}px`,
+            `top: ${btnCoordinates.top - 20}px; left: ${btnCoordinates.left + 60}px`,
         );
     };
 
@@ -135,7 +136,7 @@ export default class BoardSettings extends Component {
             const numbers = letters.filter((el) => /\d/.test(el));
             const characters = letters.filter((el) => !/\d/.test(el));
 
-            const width = Math.floor(numbers.length * 12.5 + characters.length * 11.5) + 20;
+            const width = Math.floor(numbers.length * 12.5 + characters.length * 11) + 20;
             const maxWidth = Math.floor(
                 this.parent.querySelector('.board-menu__team').getBoundingClientRect().left -
                     input.getBoundingClientRect().left,
@@ -147,7 +148,7 @@ export default class BoardSettings extends Component {
         }
     };
 
-    #changeBackgoundBoardNameInput = (e) => {
+    #changeBackgroundBoardNameInput = (e) => {
         e.stopPropagation();
 
         if (e.type === 'focus' || e.type === 'blur') {
