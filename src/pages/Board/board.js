@@ -359,6 +359,11 @@ export default class BoardPage extends Component {
         lastList.insertAdjacentHTML('afterend', newList);
     };
 
+    static updateList = (list) => {
+        const lst = document.querySelector(`.list[data-list="${list.id}"]`);
+        lst.querySelector('.list__title').textContent = list.name;
+    };
+
     static deleteList = (listId) => {
         const list = document.querySelector(`.list[data-list="${listId}"]`);
         list.remove();

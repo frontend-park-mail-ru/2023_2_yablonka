@@ -269,7 +269,10 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const lst = this.getListById(parseInt(list.id, 10));
+            lst.name = list.name;
+
+            BoardPage.updateList(list);
         }
     }
 
