@@ -356,7 +356,7 @@ export default class BoardPage extends Component {
 
         const lists = document.querySelectorAll('.list');
 
-        if (lists.length > 1) {
+        if (lists.length) {
             const lastList = lists[lists.length - 1];
             lastList.insertAdjacentHTML('afterend', newList);
         } else {
