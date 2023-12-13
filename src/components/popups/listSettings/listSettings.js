@@ -1,5 +1,6 @@
 import { actionDeleteList, actionUpdateList } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
+import BoardPage from '../../../pages/Board/board.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
@@ -57,9 +58,11 @@ export default class ListSettings extends Component {
 
     #openSettings = (e) => {
         e.preventDefault();
-        e.stopPropagation();
 
         if (e.target.closest('.btn-change-list')) {
+            e.stopPropagation();
+            BoardPage.closeAllCreateMenu();
+
             const dialog = this.parent.querySelector('#list-settings');
 
             const btn = e.target.closest('button');
