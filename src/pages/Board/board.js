@@ -355,9 +355,14 @@ export default class BoardPage extends Component {
         }).render();
 
         const lists = document.querySelectorAll('.list');
-        const lastList = lists[lists.length - 1];
 
-        lastList.insertAdjacentHTML('afterend', newList);
+        if (lists.length > 1) {
+            const lastList = lists[lists.length - 1];
+            lastList.insertAdjacentHTML('afterend', newList);
+        } else {
+            const boardContent = document.querySelector('.board__lists');
+            boardContent.insertAdjacentHTML('afterbegin', newList);
+        }
     };
 
     static updateList = (list) => {
