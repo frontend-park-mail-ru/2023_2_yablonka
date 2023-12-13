@@ -293,7 +293,7 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const lists = this.storage.get(this.workspaceModel.lists);
             const idx = lists.findIndex((lst) => lst.id === parseInt(list.id, 10));
-            lists.splice(idx, idx + 1);
+            lists.splice(idx, 1);
 
             lists.forEach((lst, position) => {
                 lst.list_position = position;
@@ -392,6 +392,7 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const deletedCard = this.getCardById(card.id);
             const list = this.getListById(deletedCard.list_id);
+
             list.cards.forEach((cardId) => {
                 const listCard = this.getCardById(parseInt(cardId, 10));
                 if (listCard.list_position > deletedCard.list_position) {
@@ -399,12 +400,13 @@ class WorkspaceStorage extends BaseStorage {
                 }
             });
             const idxList = list.cards.findIndex((itemId) => itemId === `${card.id}`);
-            list.cards.splice(idxList, idxList + 1);
+            list.cards.splice(idxList, 1);
 
             const idxCard = this.storage
                 .get(this.workspaceModel.cards)
                 .findIndex((item) => item.id === card.id);
-            this.storage.get(this.workspaceModel.cards).splice(idxCard, idxCard + 1);
+
+            this.storage.get(this.workspaceModel.cards).splice(idxCard, 1);
 
             Card.clearCard();
         }
@@ -483,12 +485,12 @@ class WorkspaceStorage extends BaseStorage {
                 (checklistElement) =>
                     parseInt(checklistElement.id, 10) === parseInt(checklist.id, 10),
             );
-            boardChecklists.splice(boardChecklistInd, boardChecklistInd + 1);
+            boardChecklists.splice(boardChecklistInd, 1);
 
             const cardChecklistInd = cardChecklists.findIndex(
                 (checklistId) => parseInt(checklistId, 10) === parseInt(checklist.id, 10),
             );
-            cardChecklists.splice(cardChecklistInd, cardChecklistInd + 1);
+            cardChecklists.splice(cardChecklistInd, 1);
 
             AddChecklist.deleteChecklist(parseInt(checklist.id, 10));
         }
@@ -567,12 +569,12 @@ class WorkspaceStorage extends BaseStorage {
             const checklistItemInd = checklistItems.findIndex(
                 (item) => parseInt(item.id, 10) === parseInt(checklistItem.id, 10),
             );
-            checklistItems.splice(checklistItemInd, checklistItemInd + 1);
+            checklistItems.splice(checklistItemInd, 1);
 
             const itemId = items.findIndex(
                 (item) => parseInt(item, 10) === parseInt(checklistItem.id, 10),
             );
-            items.splice(itemId, itemId + 1);
+            items.splice(itemId, 1);
 
             AddChecklist.deleteCheckItem(parseInt(checklistItem.id, 10));
         }
@@ -710,7 +712,7 @@ class WorkspaceStorage extends BaseStorage {
                 (userId) => parseInt(userId, 10) === data.user_id,
             );
 
-            currentCardUserIds.splice(ind, ind + 1);
+            currentCardUserIds.splice(ind, 1);
 
             Card.updateUsers(parseInt(data.task_id, 10));
         }

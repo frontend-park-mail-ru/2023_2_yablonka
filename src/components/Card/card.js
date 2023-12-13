@@ -497,5 +497,6 @@ export default class Card extends Component {
 
         const cardId = dialog.dataset.card;
         document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`).remove();
+        dialog.dataset.card = ''; 
     };
 }
