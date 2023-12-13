@@ -20,6 +20,7 @@ import NotificationMessage from '../Common/notification/notificationMessage.js';
 import CardUser from './atomic/cardUser/cardUser.js';
 import Checklist from './atomic/checklist/checklist.js';
 import CheckItem from './atomic/checkItem/checkItem.js';
+import BoardPage from '../../pages/Board/board.js';
 
 /**
  * Попап для хедера
@@ -44,19 +45,13 @@ export default class Card extends Component {
     }
 
     addEventListeners() {
-        this.parent.querySelectorAll('.list__card-wrapper').forEach((card) => {
-            card.addEventListener('click', this.#openCard);
-            card.addEventListener('click', this.#resize);
-        });
+        this.parent.querySelector('.board').addEventListener('click', this.#openCard);
         this.parent
             .querySelector('.btn-card-modal__exit-wrapper')
             .addEventListener('click', this.#closeCardByBtn);
         this.parent.querySelector('#card').addEventListener('click', this.#closeCardByBackground);
         window.addEventListener('resize', this.#resize);
 
-        this.parent.querySelectorAll('.list__card-wrapper').forEach((card) => {
-            card.addEventListener('click', this.#openCard);
-        });
         this.parent
             .querySelector('button[data-action=delete-card]')
             .addEventListener('click', this.#deleteCard);
@@ -75,10 +70,7 @@ export default class Card extends Component {
     }
 
     removeEventListeners() {
-        this.parent.querySelectorAll('.list__card-wrapper').forEach((card) => {
-            card.removeEventListener('click', this.#openCard);
-            card.removeEventListener('click', this.#resize);
-        });
+        this.parent.querySelector('.board').removeEventListener('click', this.#openCard);
         this.parent
             .querySelector('.btn-card-modal__exit-wrapper')
             .removeEventListener('click', this.#closeCardByBtn);
@@ -119,13 +111,13 @@ export default class Card extends Component {
         Card.updateUsers(parseInt(dialog.dataset.card, 10));
         Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.addPopup(dialog);
             dialog.showModal();
 
             const dialogSizes = dialog.getBoundingClientRect();
             const windowSizes = document.querySelector('.page').getBoundingClientRect();
-            
+
             dialog.setAttribute(
                 'style',
                 `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
@@ -135,33 +127,38 @@ export default class Card extends Component {
 
     #openCard = (e) => {
         e.preventDefault();
-        e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#card');
+        if (e.target.closest('.list__card-wrapper')) {
+            e.stopPropagation();
+            BoardPage.closeAllCreateMenu();
 
-        const card = workspaceStorage.getCardById(
-            parseInt(e.target.closest('.list__card-wrapper').dataset.card, 10),
-        );
-        const list = workspaceStorage.getListById(
-            parseInt(e.target.closest('.list').dataset.list, 10),
-        );
+            const dialog = this.parent.querySelector('#card');
 
-        dialog.dataset.card = card.id;
+            const card = workspaceStorage.getCardById(
+                parseInt(e.target.closest('.list__card-wrapper').dataset.card, 10),
+            );
+            const list = workspaceStorage.getListById(
+                parseInt(e.target.closest('.list').dataset.list, 10),
+            );
 
-        dialog.querySelector('.card-information__card-name').textContent = card.name;
-        dialog.querySelector('.card-information-list-name__title').textContent = list.name;
-        dialog.querySelector('.card-information__card-description').value = card.description;
+            dialog.dataset.card = card.id;
 
-        Card.#addComments(parseInt(dialog.dataset.card, 10));
-        Card.addDate(parseInt(dialog.dataset.card, 10));
-        Card.updateUsers(parseInt(dialog.dataset.card, 10));
-        Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+            dialog.querySelector('.card-information__card-name').textContent = card.name;
+            dialog.querySelector('.card-information-list-name__title').textContent = list.name;
+            dialog.querySelector('.card-information__card-description').value = card.description;
 
-        if (dialog.getAttribute('open') === null) {
-            popupEvent.closeAllPopups();
-            popupEvent.addPopup(dialog);
-            dialog.showModal();
-            Card.updateHistory(card.id);
+            Card.#addComments(parseInt(dialog.dataset.card, 10));
+            Card.addDate(parseInt(dialog.dataset.card, 10));
+            Card.updateUsers(parseInt(dialog.dataset.card, 10));
+            Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+
+            if (!dialog.hasAttribute('open')) {
+                popupEvent.closeAllPopups();
+                popupEvent.addPopup(dialog);
+                dialog.showModal();
+                Card.updateHistory(card.id);
+                this.#resize();
+            }
         }
     };
 

@@ -18,6 +18,7 @@ import template from './board.hbs';
 import './board.scss';
 import popupEvent from '../../components/core/popeventProcessing.js';
 import List from '../../components/Board/board/atomic/list/list.js';
+import Card from '../../components/Board/board/atomic/card/card.js';
 
 /**
  * слои-обертки
@@ -369,6 +370,16 @@ export default class BoardPage extends Component {
     static deleteList = (listId) => {
         const list = document.querySelector(`.list[data-list="${listId}"]`);
         list.remove();
+    };
+
+    static addNewCard = (card) => {
+        const newCard = new Card(null, { id: card.id, name: card.name }).render();
+
+        const cardsContainer = document
+            .querySelector(`.list[data-list="${card.list_id}"]`)
+            .querySelector('.list__content');
+
+        cardsContainer.insertAdjacentHTML('beforeend', newCard);
     };
 
     #dragStartHandler = (e) => {

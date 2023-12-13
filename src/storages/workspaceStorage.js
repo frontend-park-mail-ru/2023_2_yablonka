@@ -337,7 +337,13 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const body = await responsePromise.json();
+            const list = this.getListById(parseInt(body.body.task.list_id, 10));
+
+            this.storage.get(this.workspaceModel.cards).push(body.body.task);
+            list.cards.push(`${body.body.task.id}`);
+
+            BoardPage.addNewCard(body.body.task);
         }
     }
 
