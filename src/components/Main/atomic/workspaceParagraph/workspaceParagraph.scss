@@ -3,9 +3,13 @@
     min-width: 130px;
     overflow-x: auto;
     overflow-y: hidden;
-    padding-bottom:px;
     white-space: nowrap;
     color: var(--text-color-in-main);
+    line-height: normal;
+}
+
+.workspaces-list__item {
+    padding-left: 30px;
 }
 
 .workspace-paragraph::-webkit-scrollbar {

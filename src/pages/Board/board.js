@@ -33,7 +33,7 @@ export default class BoardPage extends Component {
 
     #elementDisplay;
 
-    #openedCreateMenu = [];
+    static #openedCreateMenu = [];
 
     render() {
         const page = {
@@ -78,7 +78,7 @@ export default class BoardPage extends Component {
             .querySelector('.profile-link[data-action=security]')
             .addEventListener('click', this.toSecurityHandler);
         this.parent.addEventListener('click', this.#addNewEntity);
-        this.parent.addEventListener('click', this.#closeAllCreateMenu);
+        this.parent.addEventListener('click', BoardPage.closeAllCreateMenu);
         this.parent.addEventListener('input', this.#blockCreateNewEntityBtn);
         this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.addEventListener('click', this.#createEntity);
@@ -116,7 +116,7 @@ export default class BoardPage extends Component {
             .removeEventListener('click', this.toSecurityHandler);
 
         this.parent.removeEventListener('click', this.#addNewEntity);
-        this.parent.removeEventListener('click', this.#closeAllCreateMenu);
+        this.parent.removeEventListener('click', BoardPage.closeAllCreateMenu);
         this.parent.removeEventListener('input', this.#blockCreateNewEntityBtn);
         this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.removeEventListener('click', this.#createEntity);
@@ -186,7 +186,7 @@ export default class BoardPage extends Component {
         e.stopPropagation();
 
         if (e.target.closest('button')?.classList.contains('add-new-entity')) {
-            this.#closeAllCreateMenu();
+            BoardPage.closeAllCreateMenu();
 
             const entityNode =
                 e.target.closest('li[data-entity=list]') ||
@@ -203,9 +203,8 @@ export default class BoardPage extends Component {
             const input = addEntityForm.querySelector(`.input-new-${entity}-name`);
 
             input.focus();
-            input.blur();
 
-            this.#openedCreateMenu.push({ entity, node: entityNode.nextElementSibling });
+            BoardPage.#openedCreateMenu.push({ entity, node: entityNode.nextElementSibling });
         }
     };
 
@@ -228,19 +227,14 @@ export default class BoardPage extends Component {
             addEntityBtn.style.display = 'block';
             addEntityForm.style.display = 'none';
 
-            const idx = this.#openedCreateMenu.findIndex((node) => node.node === entityNode);
-            this.#openedCreateMenu.splice(idx, idx + 1);
+            const idx = BoardPage.#openedCreateMenu.findIndex((node) => node.node === entityNode);
+            BoardPage.#openedCreateMenu.splice(idx, idx + 1);
         }
     };
 
-    #closeAllCreateMenu = (e) => {
-        if (
-            !(
-                e?.target.closest('li[data-entity=list]') ||
-                e?.target.closest('div[data-entity=card]')
-            )
-        ) {
-            this.#openedCreateMenu.forEach((menu) => {
+    static closeAllCreateMenu = (e) => {
+        if (!e || !(e.target.closest('.new-entity') || e.target.closest('.add-new-entity'))) {
+            BoardPage.#openedCreateMenu.forEach((menu) => {
                 const menuForm = menu.node.closest(`.new-${menu.entity}`);
                 const menuBtn = menu.node.previousElementSibling;
 

@@ -81,8 +81,8 @@ export default class BoardSettings extends Component {
     #renameBoard = () => {
         const dialog = this.parent.querySelector('#board-settings');
 
-        const boardName = this.parent.querySelector('.board-menu__board-name');
-        boardName.focus();
+        const input = this.parent.querySelector('.input-board-name__input');
+        input.focus();
 
         popupEvent.deletePopup(dialog);
         dialog.close();
