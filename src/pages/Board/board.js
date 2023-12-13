@@ -361,7 +361,9 @@ export default class BoardPage extends Component {
 
     static updateList = (list) => {
         const lst = document.querySelector(`.list[data-list="${list.id}"]`);
-        lst.querySelector('.list__title').textContent = list.name;
+        const name = lst.querySelector('.list__title');
+        name.textContent = list.name;
+        name.focus();
     };
 
     static deleteList = (listId) => {
