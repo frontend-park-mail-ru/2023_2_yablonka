@@ -212,7 +212,7 @@ class UserStorage extends BaseStorage {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Не удалось изменить пароль',
+                    text: 'Неверный пароль',
                 },
             );
         }

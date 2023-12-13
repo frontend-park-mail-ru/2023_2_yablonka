@@ -196,7 +196,7 @@ export default class Profile extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Пароли не совпадают',
+                    text: 'Новые пароли не совпадают',
                 },
             );
         } else {

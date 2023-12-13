@@ -81,12 +81,8 @@ export default class BoardPage extends Component {
         this.parent.addEventListener('click', this.#closeAllCreateMenu);
         this.parent.addEventListener('input', this.#blockCreateNewEntityBtn);
         this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
-        this.parent
-            .querySelector('.btn-create-list_confirm')
-            .addEventListener('click', this.#createEntity);
-        this.parent.querySelectorAll('.btn-create-card_confirm').forEach((btn) => {
-            btn.addEventListener('click', this.#createEntity);
-        });
+        this.parent.addEventListener('click', this.#createEntity);
+
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
         this.parent.addEventListener('dragstart', this.#dragStartHandler, false);
         this.parent.addEventListener('dragend', this.#dragEndHandler, false);
@@ -123,12 +119,8 @@ export default class BoardPage extends Component {
         this.parent.removeEventListener('click', this.#closeAllCreateMenu);
         this.parent.removeEventListener('input', this.#blockCreateNewEntityBtn);
         this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
-        this.parent
-            .querySelector('.btn-create-list_confirm')
-            .removeEventListener('click', this.#createEntity);
-        this.parent.querySelectorAll('.btn-create-card_confirm').forEach((btn) => {
-            btn.removeEventListener('click', this.#createEntity);
-        });
+        this.parent.removeEventListener('click', this.#createEntity);
+
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
         this.parent.removeEventListener('dragstart', this.#dragStartHandler, false);
         this.parent.removeEventListener('dragend', this.#dragEndHandler, false);
@@ -257,7 +249,7 @@ export default class BoardPage extends Component {
                 menuBtn.style.display = 'block';
                 menuForm.style.display = 'none';
 
-                const btn = menu.node.querySelector(`.btn-create-${menu.entity}_confirm`);
+                const btn = menu.node.querySelector(`.btn-create_confirm`);
                 const input = menu.node.querySelector(`.input-new-${menu.entity}-name`);
 
                 btn.disabled = true;
@@ -278,7 +270,7 @@ export default class BoardPage extends Component {
         if (entityNode?.classList.contains('new-entity')) {
             const { entity } = entityNode.dataset;
 
-            const btn = entityNode.querySelector(`.btn-create-${entity}_confirm`);
+            const btn = entityNode.querySelector(`.btn-create_confirm`);
             const input = entityNode.querySelector(`.input-new-${entity}-name`);
 
             if (input.value.length === 0) {
@@ -310,45 +302,51 @@ export default class BoardPage extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const entityNode =
-            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        if (e.target.closest('.btn-create_confirm')) {
+            const entityNode =
+                e.target.closest('li[data-entity=list]') ||
+                e.target.closest('div[data-entity=card]');
 
-        const { entity } = entityNode.dataset;
+            const { entity } = entityNode.dataset;
 
-        const input = entityNode.parentNode.querySelector(`.input-new-${entity}-name`);
-        const { value } = input;
+            const input = entityNode.parentNode.querySelector(`.input-new-${entity}-name`);
+            const { value } = input;
 
-        if (Validator.validateObjectName(value)) {
-            this.#closeNewEntity(e);
-            this.#blockCreateNewEntityBtn(e);
+            if (Validator.validateObjectName(value)) {
+                this.#closeNewEntity(e);
+                this.#blockCreateNewEntityBtn(e);
 
-            if (entity === 'list') {
-                const boardId = this.parent.querySelector('.input-board-name__input').dataset.board;
+                if (entity === 'list') {
+                    const boardId = this.parent.querySelector('.input-board-name__input').dataset
+                        .board;
 
-                dispatcher.dispatch(
-                    actionCreateList({
-                        board_id: parseInt(boardId, 10),
-                        name: value,
-                        list_position: workspaceStorage.getBoardLists(parseInt(boardId, 10)).length,
-                    }),
-                );
+                    dispatcher.dispatch(
+                        actionCreateList({
+                            board_id: parseInt(boardId, 10),
+                            name: value,
+                            list_position: workspaceStorage.getBoardLists(parseInt(boardId, 10))
+                                .length,
+                        }),
+                    );
+                } else {
+                    const listId = e.target.closest('.list').dataset.list;
+
+                    dispatcher.dispatch(
+                        actionCreateCard({
+                            list_id: parseInt(listId, 10),
+                            name: value,
+                            list_position: workspaceStorage.getListCards(parseInt(listId, 10))
+                                .length,
+                        }),
+                    );
+                }
             } else {
-                const listId = e.target.closest('.list').dataset.list;
-
-                dispatcher.dispatch(
-                    actionCreateCard({
-                        list_id: parseInt(listId, 10),
-                        name: value,
-                        list_position: workspaceStorage.getListCards(parseInt(listId, 10)).length,
-                    }),
-                );
+                NotificationMessage.showNotification(input, false, true, {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Неккоректное название',
+                });
             }
-        } else {
-            NotificationMessage.showNotification(input, false, true, {
-                fontSize: 12,
-                fontWeight: 200,
-                text: 'Неккоректное название',
-            });
         }
     };
 
@@ -427,15 +425,21 @@ export default class BoardPage extends Component {
                     ids.push(parseInt(c.dataset.card, 10));
                 });
 
-            const listId = parseInt(e.target.closest('.list').dataset.list, 10);
-            const cardId = parseInt(e.target.closest('.list__card-wrapper').dataset.card, 10);
+            const listId = parseInt(this.#draggingElement.closest('.list').dataset.list, 10);
+            const cardId = parseInt(
+                this.#draggingElement.closest('.list__card-wrapper').dataset.card,
+                10,
+            );
             const oldListId = workspaceStorage.getCardById(parseInt(cardId, 10)).list_id;
             const oldListIds = [];
-            document
+            this.parent
                 .querySelector(`.list[data-list="${oldListId}"`)
                 .querySelectorAll('.list__card-wrapper')
                 .forEach((c) => {
-                    oldListIds.push(parseInt(c.dataset.card, 10));
+                    const id = parseInt(c.dataset.card, 10);
+                    if (id !== cardId) {
+                        oldListIds.push(id);
+                    }
                 });
 
             dispatcher.dispatch(
