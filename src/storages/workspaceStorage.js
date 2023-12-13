@@ -250,6 +250,7 @@ class WorkspaceStorage extends BaseStorage {
 
             this.storage.get(this.workspaceModel.lists).push(newList);
             BoardPage.addNewList(newList);
+            BoardPage.closeAllCreateMenu();
         }
     }
 
@@ -287,7 +288,15 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const lists = this.storage.get(this.workspaceModel.lists);
+            const idx = lists.findIndex((lst) => lst.id === parseInt(list.id, 10));
+            lists.splice(idx, idx + 1);
+
+            lists.forEach((lst, position) => {
+                lst.list_position = position;
+            });
+
+            BoardPage.deleteList(parseInt(list.id, 10));
         }
     }
 
