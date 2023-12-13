@@ -55,3 +55,8 @@ button {
 .navigation__item:hover {
     background-color: var(--hover-navigation-paragraph);
 }
+
+
+.avatar {
+    object-fit: cover;
+}
