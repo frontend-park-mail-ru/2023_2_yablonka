@@ -17,6 +17,7 @@ import NotificationMessage from '../../components/Common/notification/notificati
 import template from './board.hbs';
 import './board.scss';
 import popupEvent from '../../components/core/popeventProcessing.js';
+import List from '../../components/Board/board/atomic/list/list.js';
 
 /**
  * слои-обертки
@@ -342,6 +343,20 @@ export default class BoardPage extends Component {
                 });
             }
         }
+    };
+
+    static addNewList = (list) => {
+        const newList = new List(null, {
+            id: list.id,
+            name: list.name,
+            list_position: list.list_position,
+            cards: list.cards,
+        }).render();
+
+        const lists = document.querySelectorAll('.list');
+        const lastList = lists[lists.length - 1];
+
+        lastList.insertAdjacentHTML('afterend', newList);
     };
 
     #dragStartHandler = (e) => {

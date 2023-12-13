@@ -17,7 +17,7 @@ export default class List extends Component {
         return template({
             name: this.config.name,
             ID: this.config.id,
-            position: this.config.position,
+            position: this.config.list_position,
             cards: this.#getListCards(this.config.cards),
         });
     }

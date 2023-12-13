@@ -7,6 +7,8 @@ import NotificationMessage from '../components/Common/notification/notificationM
 import popupEvent from '../components/core/popeventProcessing.js';
 import Card from '../components/Card/card.js';
 import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js';
+import Board from '../components/Main/atomic/board/board.js';
+import BoardPage from '../pages/Board/board.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -238,16 +240,16 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             const body = await responsePromise.json();
-            console.log(structuredClone(this.storage.get(this.workspaceModel.lists)));
             const newList = {
-                id: body.body.id,
-                name: body.body.name,
-                cards: body.body.tasks,
-                list_position: body.body.list_position,
-                board_id: body.body.board_id,
+                id: body.body.list.id,
+                name: body.body.list.name,
+                cards: body.body.list.tasks,
+                list_position: body.body.list.list_position,
+                board_id: body.body.list.board_id,
             };
 
             this.storage.get(this.workspaceModel.lists).push(newList);
+            BoardPage.addNewList(newList);
         }
     }
 
