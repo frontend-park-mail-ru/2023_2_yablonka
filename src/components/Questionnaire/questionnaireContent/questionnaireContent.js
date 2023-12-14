@@ -6,8 +6,6 @@ import './questionnaireContent.scss';
 /**
  * слои-обертки
  * @class
- * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
- * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class QuestionnaireContent extends Component {
     #innerConfig = {
@@ -26,11 +24,18 @@ export default class QuestionnaireContent extends Component {
         });
     }
 
+    /**
+     * Функция для получения отредеренного массива c кнопками рейтинга
+     * @param {string} metric - тип метрики
+     * @return {array} btns - массив с отрендеренными компонентами кнопок
+     */
     #getButtons(metric) {
         const btns = [];
         for (let i = 1; i < this.#innerConfig[metric] + 1; i += 1) {
             btns.push(
-                metric === 'NSP' ? new StarButton(null, { rating: i }).render() : new NumberButton(null, { rating: i }).render(),
+                metric === 'NSP'
+                    ? new StarButton(null, { rating: i }).render()
+                    : new NumberButton(null, { rating: i }).render(),
             );
         }
         return btns;

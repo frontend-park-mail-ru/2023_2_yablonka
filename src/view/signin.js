@@ -54,6 +54,9 @@ class Signin extends BaseView {
         }
     };
 
+    /**
+     * Ререндер страницы
+     */
     async reRender() {
         this.clear();
         this.renderPage();

@@ -69,6 +69,10 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.status, status);
     }
 
+    /**
+     * Создание рабочего пространства
+     * @param {Object} newWorkspace - данные рабочего пространства
+     */
     async createWorkspace(newWorkspace) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}workspace/create/`,
@@ -84,6 +88,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление рабочего пространства
+     * @param {Object} workspace - удаляемое рабочее пространство
+     */
     async deleteWorkspace(workspace) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}workspace/delete/`,
@@ -101,6 +109,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Обновление рабочего пространства
+     * @param {Object} newWorkspace - обновленные данные рабочего пространства
+     */
     async updateWorkspace(newWorkspace) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}workspace/update/`,
@@ -116,6 +128,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Получение доски с содержимым
+     * @param {Object} board - объект с id доски
+     */
     async getBoard(board) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/`,
@@ -142,11 +158,13 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.comments, body.body.comments);
             this.storage.set(this.workspaceModel.checklists, body.body.checklists);
             this.storage.set(this.workspaceModel.items, body.body.checklist_items);
-        } else if (status === 403) {
-            emitter.trigger('noaccess');
         }
     }
 
+    /**
+     * Создание доски
+     * @param {Object} board - объект новой доски 
+     */
     async createBoard(board) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/create/`,
@@ -164,6 +182,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление доски
+     * @param {Object} board - удаляемая доска
+     */
     async deleteBoard(board) {
         await AJAX(
             `${apiPath + apiVersion}board/delete/`,
@@ -173,6 +195,10 @@ class WorkspaceStorage extends BaseStorage {
         );
     }
 
+    /**
+     * Обновление доски
+     * @param {Object} board - обновленные данные доски 
+     */
     async updateBoard(board) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/update/`,
@@ -193,6 +219,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Создание списка карточек
+     * @param {Object} list - данные нового списка 
+     */
     async createList(list) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}list/create/`,
@@ -208,6 +238,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Обновление списка карточек
+     * @param {Object} list - обновленные данные списка 
+     */
     async updateList(list) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}list/edit/`,
@@ -223,6 +257,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление списка карточек
+     * @param {Object} list - удаляемый список
+     */
     async deleteList(list) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}list/delete/`,
@@ -238,6 +276,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Создание новой карточки
+     * @param {Object} card - Данные новой карточки 
+     */
     async createCard(card) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/create/`,
@@ -253,6 +295,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Обновление карточки
+     * @param {Object} card - обновлённые данные карточки
+     */
     async updateCard(card) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/edit/`,
@@ -277,6 +323,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление карточки
+     * @param {Object} card - Удаляемая карточка 
+     */
     async deleteCard(card) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/delete/`,
@@ -292,6 +342,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Создание нового чеклиста
+     * @param {Object} checklist - данные нового чеклиста 
+     */
     async createChecklist(checklist) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}checklist/create/`,
@@ -318,6 +372,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Обновление чеклиста
+     * @param {Object} checklist - обноавленные данные чеклиста 
+     */
     async updateChecklist(checklist) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}checklist/edit/`,
@@ -333,6 +391,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление чеклиста
+     * @param {Object} checklist - удаляемый чеклист 
+     */
     async deleteChecklist(checklist) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}checklist/delete/`,
@@ -364,6 +426,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Создание нового пункта чеклиста
+     * @param {Object} checklistItem - данные нового пункта чеклиста
+     */
     async createChecklistItem(checklistItem) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}checklist/item/create/`,
@@ -388,6 +454,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Обновление пункта чеклиста
+     * @param {Object} checklistItem - обновленные данные пункта чеклиста
+     */
     async updateChecklistItem(checklistItem) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}checklist/item/edit/`,
@@ -406,6 +476,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление пункта чеклиста
+     * @param {Object} checklistItem - удаляемый пункт чеклиста
+     */
     async deleteChecklistItem(checklistItem) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}checklist/item/delete/`,
@@ -436,6 +510,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Комментирование карточки
+     * @param {Object} comment - новый коммент
+     */
     async commentCard(comment) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}comment/create/`,
@@ -467,6 +545,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Добавление юзера на доску
+     * @param {Object} user - пользователь, добавляемый на доску
+     */
     async addUser(user) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/user/add/`,
@@ -491,6 +573,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление юзера с доски
+     * @param {Object} user - удаляемый юзер  
+     */
     async removeUser(user) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/user/remove/`,
@@ -507,6 +593,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Добавление юзера на карточку
+     * @param {Object} user - пользователь, добавляемый на карточку
+     */
     async addUserCard(data) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/user/add/`,
@@ -529,6 +619,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Удаление юзера с карточки
+     * @param {Object} user - удаляемый юзер  
+     */
     async removeUserCard(data) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/user/remove/`,
@@ -554,6 +648,10 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    /**
+     * Добавление доски в хранилище
+     * @param {Object} board - объект добавляемой в хранилище доски 
+     */
     addBoard(board) {
         const idx = this.storage
             .get(this.workspaceModel.boards)
@@ -659,6 +757,11 @@ class WorkspaceStorage extends BaseStorage {
         return [...this.storage.get(this.workspaceModel.users)];
     }
 
+    /**
+     * Получение юзеров, находящихся на карточке
+     * @param {Number} id - id карточки
+     * @returns 
+     */
     getCardUsers(id) {
         const currentCardUserIds = this.storage
             .get(this.workspaceModel.cards)
@@ -671,16 +774,31 @@ class WorkspaceStorage extends BaseStorage {
         return [...cardUsers];
     }
 
+    /**
+     * Получение карточки по id
+     * @param {Number} id - id карточки 
+     * @returns {Object}
+     */
     getCardById(id) {
         const crd = this.storage.get(this.workspaceModel.cards).find((crd) => crd.id === id);
         return crd;
     }
 
+    /**
+     * Получение юзера по id
+     * @param {Number} id - id юзера 
+     * @returns {Object}
+     */
     getUserById(id) {
         const usr = this.storage.get(this.workspaceModel.users).find((usr) => usr.user_id === id);
         return usr;
     }
 
+    /**
+     * Получение комментов карточки
+     * @param {Number} id - id карточки 
+     * @returns {Array}
+     */
     getCardComments(id) {
         const commIDs = this.storage
             .get(this.workspaceModel.cards)
@@ -693,6 +811,11 @@ class WorkspaceStorage extends BaseStorage {
         return comms;
     }
 
+    /**
+     * Получение чеклистов карточки
+     * @param {Number} id - id карточки 
+     * @returns {Array}
+     */
     getCardChecklists(id) {
         const checklistIDs = this.storage
             .get(this.workspaceModel.cards)
@@ -705,6 +828,11 @@ class WorkspaceStorage extends BaseStorage {
         return checklists.sort((x, y) => x.list_position < y.list_position);
     }
 
+    /**
+     * Получение пунктов чеклиста
+     * @param {Number} id - id чеклиста
+     * @returns 
+     */
     getChecklistItems(id) {
         const itemsIDs = this.storage
             .get(this.workspaceModel.checklists)
@@ -716,6 +844,11 @@ class WorkspaceStorage extends BaseStorage {
         return items.sort((x, y) => x.list_position < y.list_position);
     }
 
+    /**
+     * Получение пункта чеклиста по его id
+     * @param {Number} id - id пункта чеклиста 
+     * @returns {Object}
+     */
     getChecklistItemById(id) {
         const checklistItems = this.storage.get(this.workspaceModel.items);
 
@@ -724,6 +857,11 @@ class WorkspaceStorage extends BaseStorage {
         return item;
     }
 
+    /**
+     * Получение чеклиста по id
+     * @param {Number} id - id чеклиста 
+     * @returns {Object}
+     */
     getChecklistById(id) {
         const checklists = this.storage.get(this.workspaceModel.checklists);
 
@@ -732,24 +870,50 @@ class WorkspaceStorage extends BaseStorage {
         return checklist;
     }
 
+    /**
+     * Поиск по подстроке
+     * @param {String} substring - подстрока для поиска 
+     * @returns {Array}
+     */
     searchUsers(substring) {
         return this.storage
             .get(this.workspaceModel.users)
             .filter((usr) => usr.email.indexOf(substring) !== -1);
     }
 
+    /**
+     * Поиск юзера по почте
+     * @param {String} email - почта юзера 
+     * @returns {Object}
+     */
     getUserByEmail(email) {
         return this.storage.get(this.workspaceModel.users).find((usr) => usr.email === email);
     }
 
+    /**
+     * Находится ли юзер в доске
+     * @param {String} email - почта изера 
+     * @returns 
+     */
     checkUserInBoard(email) {
         return !!this.storage.get(this.workspaceModel.users).find((usr) => usr.email === email);
     }
 
+    /**
+     * Проверка является ли юзер владельцем доски
+     * @param {Number} id - id юзера
+     * @returns 
+     */
     isOwner(id) {
         return this.storage.get(this.workspaceModel.boards)[0].owner_id === id;
     }
 
+    /**
+     * Проверка есть ли юзер в карточке
+     * @param {Number} cardId - айди карточки
+     * @param {Number} userId - айди юзера
+     * @returns {boolean}
+     */
     isUserInCard(cardId, userId) {
         const cardUsers = this.getCardUsers(cardId);
         return !!cardUsers.find((usr) => usr.user_id === userId);

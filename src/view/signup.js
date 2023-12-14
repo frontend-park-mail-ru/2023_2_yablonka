@@ -63,6 +63,9 @@ class Signup extends BaseView {
         }
     };
 
+    /**
+     * Ререндер страницы
+     */
     async reRender() {
         this.clear();
         this.renderPage();

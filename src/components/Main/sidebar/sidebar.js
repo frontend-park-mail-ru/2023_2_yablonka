@@ -5,8 +5,6 @@ import './sidebar.scss';
 /**
  * Меню слева
  * @class
- * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
- * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Sidebar extends Component {
     /**
@@ -19,6 +17,11 @@ export default class Sidebar extends Component {
         return template({ workspaceParagraphs });
     }
 
+    /**
+     * Функция для получения отрендеренного массива c компонентами формы
+     * @param {array} workspaces - данные input для рендера компонента формы
+     * @return {array} inputs - массив с отрендеренными компонентами формы
+     */
     #getWorkspaceParagraphs(workspaces) {
         const workspaceParagraphs = [];
         workspaces.forEach((workspace) => {

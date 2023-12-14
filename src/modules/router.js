@@ -28,11 +28,17 @@ class Router {
         });
     }
 
+    /**
+     * Функция, которая рендерит страницу оффлайна
+     */
     goOffline(){
         this.currentPage.clear();
         offline.renderPage();
     }
 
+    /**
+     * Ререндер страницы
+     */
     reRenderPage() {
         this.currentPage.reRender();
     }

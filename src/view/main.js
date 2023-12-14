@@ -18,7 +18,7 @@ import emitter from '../modules/actionTrigger.js';
 import IFrame from '../components/atomic/iframe/iframe.js';
 
 /**
- * Класс для рендера страницы досок
+ * Класс для рендера страницы воркспейсов
  * @class
  */
 class Main extends BaseView {
@@ -63,6 +63,9 @@ class Main extends BaseView {
         this.addListeners();
     }
 
+    /**
+     * Ререндер страницы
+     */
     reRender() {
         this.clear();
         this.renderPage();

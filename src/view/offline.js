@@ -6,7 +6,10 @@ import userStorage from '../storages/userStorage.js';
 import BaseView from './baseView.js';
 
 import emitter from '../modules/actionTrigger.js';
-
+/**
+ * Страница оффлайна
+ * @class
+ */
 class OfflinePage extends BaseView {
 
     /**
