@@ -718,7 +718,7 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
-    async addFileCard(file){
+    async addFileCard(file) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/file/add/`,
             'POST',
@@ -736,11 +736,10 @@ class WorkspaceStorage extends BaseStorage {
 
         const { status } = responsePromise;
         if (status === 200) {
-            
         }
     }
 
-    async removeFileCard(file){
+    async removeFileCard(file) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/file/remove/`,
             'POST',

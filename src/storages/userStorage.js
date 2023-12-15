@@ -255,7 +255,7 @@ class UserStorage extends BaseStorage {
             `${apiPath + apiVersion}user/edit/delete_avatar/`,
             'DELETE',
             this.storage.get(this.userModel.csrf),
-            user,
+            {},
         );
 
         let body = {};

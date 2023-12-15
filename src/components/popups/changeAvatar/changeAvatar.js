@@ -35,21 +35,27 @@ export default class ChangeAvatarPopup extends Component {
         this.parent
             .querySelector('.change-avatar__button')
             .addEventListener('click', this.#changeAvatarMenu);
+        this.parent
+            .querySelector('.button[data-action="delete-avatar"]')
+            .addEventListener('click', this.#deleteAvatar);
     }
 
     removeEventListeners() {
         this.parent
             .querySelector('.change-avatar__button')
             .removeEventListener('click', this.#changeAvatarMenu);
+        this.parent
+            .querySelector('.button[data-action="delete-avatar"]')
+            .removeEventListener('click', this.#deleteAvatar);
     }
 
     #changeAvatarMenu = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#change-avatar');
+        const dialog = this.parent.querySelector('#change-avatar');
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
@@ -59,11 +65,10 @@ export default class ChangeAvatarPopup extends Component {
         }
     };
 
-    async #deleteAvatar(e){
+    async #deleteAvatar(e) {
         e.preventDefault();
         e.stopPropagation();
 
         await dispatcher.dispatch(actionDeleteAvatar());
-
     }
 }
