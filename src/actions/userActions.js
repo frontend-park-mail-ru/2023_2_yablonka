@@ -111,3 +111,8 @@ export const actionGoOffline = ()=>({
     type:'goOffline',
     value:{}
 })
+
+export const actionDeleteAvatar = () =>({
+    type:'deleteAvatar',
+    value:{}
+})

@@ -718,6 +718,37 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    async addFileCard(file){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/file/add/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            file,
+        );
+
+        let body = {};
+
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
+        const { status } = responsePromise;
+        if (status === 200) {
+            
+        }
+    }
+
+    async removeFileCard(file){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/file/remove/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            file,
+        );
+    }
+
     /**
      * Добавление доски в хранилище
      * @param {Object} board - объект добавляемой в хранилище доски

@@ -1,6 +1,8 @@
+import dispatcher from '../../../modules/dispatcher.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
 import template from './changeAvatar.hbs';
+import { actionDeleteAvatar } from '../../../actions/userActions.js';
 import './changeAvatar.scss';
 /**
  * Попап для хедера
@@ -56,4 +58,12 @@ export default class ChangeAvatarPopup extends Component {
             dialog.close();
         }
     };
+
+    async #deleteAvatar(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        await dispatcher.dispatch(actionDeleteAvatar());
+
+    }
 }
