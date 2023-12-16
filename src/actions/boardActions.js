@@ -107,3 +107,8 @@ export const actionReorderList = (data) => ({
     type: 'reorderList',
     value: data,
 });
+
+export const actionReorderLists = (data) => ({
+    type: 'reorderLists',
+    value: data
+})

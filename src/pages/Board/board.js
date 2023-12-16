@@ -11,6 +11,7 @@ import {
     actionCreateCard,
     actionCreateList,
     actionReorderList,
+    actionReorderLists,
 } from '../../actions/boardActions.js';
 import Validator from '../../modules/validator.js';
 import NotificationMessage from '../../components/Common/notification/notificationMessage.js';
@@ -481,9 +482,9 @@ export default class BoardPage extends Component {
 
             dispatcher.dispatch(
                 actionReorderList({
-                    old_list: { list_id: oldListId, ids: oldListIds },
-                    new_list: { list_id: listId, ids },
-                    id_card: cardId,
+                    old_list: { id: oldListId, task_ids: oldListIds },
+                    new_list: { id: listId, task_ids:ids },
+                    task_id: cardId,
                 }),
             );
             this.#draggingElement.parentNode.remove();
@@ -498,6 +499,9 @@ export default class BoardPage extends Component {
                     this.#draggingElement.parentNode.outerHTML,
                 );
             this.#draggingElement.parentNode.remove();
+            const ids = [];
+            document.querySelectorAll('.list').forEach(e=>{ids.push(parseInt(e.dataset.list))});
+            dispatcher.dispatch(actionReorderLists(data));
         }
         this.parent.querySelector('.temp-dragged')?.remove();
 

@@ -45,6 +45,7 @@ const handlers = [
     { type: 'goOffline', method: router.goOffline.bind(router) },
     { type: 'reorderList', method: workspaceStorage.reorderList.bind(workspaceStorage) },
     { type: 'deleteAvatar', method: userStorage.deleteAvatar.bind(userStorage) },
+    { type: 'reorderLists', method: workspaceStorage.reorderLists.bind(workspaceStorage) },
 ];
 
 export default handlers;

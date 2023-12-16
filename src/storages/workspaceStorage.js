@@ -309,6 +309,25 @@ class WorkspaceStorage extends BaseStorage {
      */
     async reorderList(ids) {
         const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/move/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            ids,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    /**
+     * Переупорядочивание списков карточек
+     * @param {Object} ids - массив с id списков
+     */
+    async reorderLists(ids) {
+        const responsePromise = await AJAX(
             `${apiPath + apiVersion}list/reorder/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
