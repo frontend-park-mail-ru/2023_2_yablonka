@@ -45,7 +45,7 @@ export default class ChangeAvatarPopup extends Component {
             .querySelector('.change-avatar__button')
             .removeEventListener('click', this.#changeAvatarMenu);
         this.parent
-            .querySelector('.button[data-action="delete-avatar"]')
+            .querySelector('button[data-action="delete-avatar"]')
             .removeEventListener('click', this.#deleteAvatar);
     }
 
