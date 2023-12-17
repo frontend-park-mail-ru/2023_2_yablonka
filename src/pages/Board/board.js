@@ -389,6 +389,7 @@ export default class BoardPage extends Component {
     };
 
     #dragStartHandler = (e) => {
+        console.log(e.target);
         if (
             e.target.classList.contains('list') ||
             e.target.classList.contains('list__card-wrapper')
@@ -433,10 +434,10 @@ export default class BoardPage extends Component {
         e.preventDefault();
 
         this.#draggingElement?.classList.remove('draggable');
-
+        
         if (
             e.target.closest('.list') &&
-            this.#draggingElement.parentNode.classList.contains('list__card-wrapper')
+            this.#draggingElement.classList.contains('list__card-wrapper')
         ) {
             if (
                 e.target.classList.contains('list__card') ||
