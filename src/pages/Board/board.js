@@ -389,12 +389,12 @@ export default class BoardPage extends Component {
     };
 
     #dragStartHandler = (e) => {
-        console.log(e.target);
-        if (
-            e.target.classList.contains('list') ||
-            e.target.classList.contains('list__card-wrapper')
-        ) {
-            [this.#draggingElement] = e.target.children;
+        if (e.target.closest('.list__container') || e.target.closest('.list__card')) {
+            e.stopPropagation();
+
+            this.#draggingElement = e.target.closest('.list__card')
+                ? e.target.closest('.list__card')
+                : e.target.closest('.list__container');
 
             // const sizes = this.#draggingElement.getBoundingClientRect();
             // console.log(sizes);
@@ -413,7 +413,6 @@ export default class BoardPage extends Component {
 
     #dragEndHandler = () => {
         this.#draggingElement?.classList.remove('draggable');
-        this.parent.querySelector('.temp-dragged')?.remove();
     };
 
     #positioningCard(mouseCoord, element) {
@@ -434,7 +433,7 @@ export default class BoardPage extends Component {
         e.preventDefault();
 
         this.#draggingElement?.classList.remove('draggable');
-        
+
         if (
             e.target.closest('.list') &&
             this.#draggingElement.classList.contains('list__card-wrapper')
@@ -484,7 +483,7 @@ export default class BoardPage extends Component {
             dispatcher.dispatch(
                 actionReorderList({
                     old_list: { id: oldListId, task_ids: oldListIds },
-                    new_list: { id: listId, task_ids:ids },
+                    new_list: { id: listId, task_ids: ids },
                     task_id: cardId,
                 }),
             );
@@ -501,8 +500,10 @@ export default class BoardPage extends Component {
                 );
             this.#draggingElement.parentNode.remove();
             const ids = [];
-            document.querySelectorAll('.list').forEach(e=>{ids.push(parseInt(e.dataset.list))});
-            dispatcher.dispatch(actionReorderLists({ids}));
+            document.querySelectorAll('.list').forEach((e) => {
+                ids.push(parseInt(e.dataset.list));
+            });
+            dispatcher.dispatch(actionReorderLists({ ids }));
         }
         this.parent.querySelector('.temp-dragged')?.remove();
 
