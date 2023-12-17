@@ -408,6 +408,8 @@ export default class BoardPage extends Component {
             // this.parent.appendChild(draggable);
             // this.#draggingElement.parentNode.style.opacity = 0;
             this.#draggingElement.classList.add('draggable');
+        } else {
+            e.preventDefault();
         }
     };
 
