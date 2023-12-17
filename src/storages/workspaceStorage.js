@@ -859,7 +859,7 @@ class WorkspaceStorage extends BaseStorage {
     getBoardLists() {
         const lists = this.storage
             .get(this.workspaceModel.lists)
-            .sort((x, y) => x.list_position > y.list_position);
+            .sort((x, y) => x.list_position - y.list_position);
         return [...lists];
     }
 
@@ -881,7 +881,8 @@ class WorkspaceStorage extends BaseStorage {
         const cards = this.storage
             .get(this.workspaceModel.cards)
             .filter((card) => card.list_id === id)
-            .sort((x, y) => x.list_position > y.list_position);
+            .sort((x, y) => x.list_position - y.list_position);
+            console.log(cards);
 
         return [...cards];
     }

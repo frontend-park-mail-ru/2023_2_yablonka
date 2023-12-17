@@ -464,6 +464,17 @@ export default class BoardPage extends Component {
             }
             const ids = [];
 
+            const cardId = parseInt(
+                this.#draggingElement.closest('.list__card-wrapper').dataset.card,
+                10,
+            );
+
+            const oldListId = workspaceStorage.getCardById(parseInt(cardId, 10)).list_id;
+            const oldListIds = [];
+            workspaceStorage.getListCards(oldListId).forEach(el=>{
+                oldListIds.push(el.id);
+            });
+            this.#draggingElement.parentNode.remove();
             e.target
                 .closest('.list')
                 .querySelectorAll('.list__card-wrapper')
@@ -472,21 +483,7 @@ export default class BoardPage extends Component {
                 });
 
             const listId = parseInt(e.target.closest('.list').dataset.list, 10);
-            const cardId = parseInt(
-                this.#draggingElement.closest('.list__card-wrapper').dataset.card,
-                10,
-            );
-            const oldListId = workspaceStorage.getCardById(parseInt(cardId, 10)).list_id;
-            const oldListIds = [];
-            this.parent
-                .querySelector(`.list[data-list="${oldListId}"`)
-                .querySelectorAll('.list__card-wrapper')
-                .forEach((c) => {
-                    const id = parseInt(c.dataset.card, 10);
-                    if (id !== cardId) {
-                        oldListIds.push(id);
-                    }
-                });
+
 
             dispatcher.dispatch(
                 actionReorderList({
@@ -495,7 +492,6 @@ export default class BoardPage extends Component {
                     task_id: cardId,
                 }),
             );
-            this.#draggingElement.parentNode.remove();
         } else if (
             e.target.closest('.list') &&
             this.#draggingElement.parentNode.classList.contains('list')
