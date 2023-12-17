@@ -318,7 +318,20 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const cards=this.storage.get(this.workspaceModel.cards);
+            cards.forEach(el=>{
+                if(el.id===ids.task_id){
+                    el.list_id=ids.new_list.id;
+                }});
+            ids.old_list.task_ids.forEach((id,index)=>{
+                const idx = cards.findIndex(c=>c.id===id);
+                cards[idx].list_position=index;
+            });
+            ids.new_list.task_ids.forEach((id,index)=>{
+                const idx = cards.findIndex(c=>c.id===id);
+                cards[idx].list_position=index;
+            });
+            this.storage.set(this.workspaceModel.cards,cards);
         }
     }
 
@@ -337,7 +350,12 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const lists=this.storage.get(this.workspaceModel.lists);
+            ids.ids.forEach((el,index)=>{
+                const idx = lists.findIndex(lst=>lst.id===el);
+                lists[idx].list_position = index;
+            })
+            this.storage.set(this.workspaceModel.lists, lists);
         }
     }
 
@@ -580,7 +598,12 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            emitter.trigger('rerender');
+            const items=this.storage.get(this.workspaceModel.items);
+            ids.ids.forEach((el,index)=>{
+                const idx = items.findIndex(lst=>lst.id===el);
+                items[idx].list_position = index;
+            })
+            this.storage.set(this.workspaceModel.items, items);
         }
     }
 
@@ -980,7 +1003,7 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.items)
             .filter((chk) => itemsIDs.find((itm) => itm == chk.id));
 
-        return items.sort((x, y) => x.list_position < y.list_position);
+        return items.sort((x, y) => x.list_position - y.list_position);
     }
 
     /**
