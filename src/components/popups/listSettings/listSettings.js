@@ -58,7 +58,6 @@ export default class ListSettings extends Component {
 
     #openSettings = (e) => {
         e.preventDefault();
-
         if (e.target.closest('.btn-change-list')) {
             e.stopPropagation();
             BoardPage.closeAllCreateMenu();

@@ -389,11 +389,12 @@ export default class BoardPage extends Component {
     };
 
     #dragStartHandler = (e) => {
-        if (
-            e.target.classList.contains('list') ||
-            e.target.classList.contains('list__card-wrapper')
-        ) {
-            [this.#draggingElement] = e.target.children;
+        if (e.target.closest('.list__container') || e.target.closest('.list__card')) {
+            e.stopPropagation();
+
+            this.#draggingElement = e.target.closest('.list__card')
+                ? e.target.closest('.list__card')
+                : e.target.closest('.list__container');
 
             // const sizes = this.#draggingElement.getBoundingClientRect();
             // console.log(sizes);
@@ -407,6 +408,8 @@ export default class BoardPage extends Component {
             // this.parent.appendChild(draggable);
             // this.#draggingElement.parentNode.style.opacity = 0;
             this.#draggingElement.classList.add('draggable');
+        } else {
+            e.preventDefault();
         }
     };
 
@@ -433,6 +436,7 @@ export default class BoardPage extends Component {
         e.preventDefault();
 
         this.#draggingElement?.classList.remove('draggable');
+        console.log(this.#draggingElement);
 
         if (
             e.target.closest('.list') &&
