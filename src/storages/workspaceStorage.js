@@ -7,7 +7,6 @@ import NotificationMessage from '../components/Common/notification/notificationM
 import popupEvent from '../components/core/popeventProcessing.js';
 import Card from '../components/Card/card.js';
 import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js';
-import Board from '../components/Main/atomic/board/board.js';
 import BoardPage from '../pages/Board/board.js';
 
 /**
@@ -318,20 +317,21 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            const cards=this.storage.get(this.workspaceModel.cards);
-            cards.forEach(el=>{
-                if(el.id===ids.task_id){
-                    el.list_id=ids.new_list.id;
-                }});
-            ids.old_list.task_ids.forEach((id,index)=>{
-                const idx = cards.findIndex(c=>c.id===id);
-                cards[idx].list_position=index;
+            const cards = this.storage.get(this.workspaceModel.cards);
+            cards.forEach((el) => {
+                if (el.id === ids.task_id) {
+                    el.list_id = ids.new_list.id;
+                }
             });
-            ids.new_list.task_ids.forEach((id,index)=>{
-                const idx = cards.findIndex(c=>c.id===id);
-                cards[idx].list_position=index;
+            ids.old_list.task_ids.forEach((id, index) => {
+                const idx = cards.findIndex((c) => c.id === id);
+                cards[idx].list_position = index;
             });
-            this.storage.set(this.workspaceModel.cards,cards);
+            ids.new_list.task_ids.forEach((id, index) => {
+                const idx = cards.findIndex((c) => c.id === id);
+                cards[idx].list_position = index;
+            });
+            this.storage.set(this.workspaceModel.cards, cards);
         }
     }
 
@@ -350,11 +350,11 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            const lists=this.storage.get(this.workspaceModel.lists);
-            ids.ids.forEach((el,index)=>{
-                const idx = lists.findIndex(lst=>lst.id===el);
+            const lists = this.storage.get(this.workspaceModel.lists);
+            ids.ids.forEach((el, index) => {
+                const idx = lists.findIndex((lst) => lst.id === el);
                 lists[idx].list_position = index;
-            })
+            });
             this.storage.set(this.workspaceModel.lists, lists);
         }
     }
@@ -598,11 +598,11 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            const items=this.storage.get(this.workspaceModel.items);
-            ids.ids.forEach((el,index)=>{
-                const idx = items.findIndex(lst=>lst.id===el);
+            const items = this.storage.get(this.workspaceModel.items);
+            ids.ids.forEach((el, index) => {
+                const idx = items.findIndex((lst) => lst.id === el);
                 items[idx].list_position = index;
-            })
+            });
             this.storage.set(this.workspaceModel.items, items);
         }
     }
@@ -905,7 +905,6 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.cards)
             .filter((card) => card.list_id === id)
             .sort((x, y) => x.list_position - y.list_position);
-            console.log(cards);
 
         return [...cards];
     }
@@ -931,7 +930,9 @@ class WorkspaceStorage extends BaseStorage {
 
         const cardUsers = this.storage
             .get(this.workspaceModel.users)
-            .filter((usr) => currentCardUserIds.find((uid) => uid == usr.user_id));
+            .filter((usr) =>
+                currentCardUserIds.find((uid) => parseInt(uid, 10) === parseInt(usr.user_id, 10)),
+            );
 
         return [...cardUsers];
     }
@@ -942,8 +943,8 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Object}
      */
     getCardById(id) {
-        const crd = this.storage.get(this.workspaceModel.cards).find((crd) => crd.id === id);
-        return crd;
+        const card = this.storage.get(this.workspaceModel.cards).find((crd) => crd.id === id);
+        return card;
     }
 
     /**
@@ -952,8 +953,8 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Object}
      */
     getUserById(id) {
-        const usr = this.storage.get(this.workspaceModel.users).find((usr) => usr.user_id === id);
-        return usr;
+        const user = this.storage.get(this.workspaceModel.users).find((usr) => usr.user_id === id);
+        return user;
     }
 
     /**
@@ -964,11 +965,11 @@ class WorkspaceStorage extends BaseStorage {
     getCardComments(id) {
         const commIDs = this.storage
             .get(this.workspaceModel.cards)
-            .find((crd) => crd.id == id).comments;
+            .find((crd) => parseInt(crd.id, 10) === parseInt(id, 10)).comments;
 
         const comms = this.storage
             .get(this.workspaceModel.comments)
-            .filter((cmt) => commIDs.find((comid) => comid == cmt.id));
+            .filter((cmt) => commIDs.find((comid) => parseInt(comid, 10) === parseInt(cmt.id, 10)));
 
         return comms;
     }
@@ -985,7 +986,9 @@ class WorkspaceStorage extends BaseStorage {
 
         const checklists = this.storage
             .get(this.workspaceModel.checklists)
-            .filter((chk) => checklistIDs.find((chid) => chid == chk.id));
+            .filter((chk) =>
+                checklistIDs.find((chid) => parseInt(chid, 10) === parseInt(chk.id, 10)),
+            );
 
         return checklists.sort((x, y) => x.list_position < y.list_position);
     }
@@ -1001,7 +1004,7 @@ class WorkspaceStorage extends BaseStorage {
             .find((ch) => ch.id === id).items;
         const items = this.storage
             .get(this.workspaceModel.items)
-            .filter((chk) => itemsIDs.find((itm) => itm == chk.id));
+            .filter((chk) => itemsIDs.find((itm) => parseInt(itm, 10) === parseInt(chk.id, 10)));
 
         return items.sort((x, y) => x.list_position - y.list_position);
     }
