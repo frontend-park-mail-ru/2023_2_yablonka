@@ -455,6 +455,7 @@ export default class BoardPage extends Component {
                     .insertAdjacentHTML('beforeend', this.#draggingElement.parentNode.outerHTML);
             }
             const ids = [];
+            this.#draggingElement.parentNode.remove();
 
             e.target
                 .closest('.list')
@@ -463,7 +464,7 @@ export default class BoardPage extends Component {
                     ids.push(parseInt(c.dataset.card, 10));
                 });
 
-            const listId = parseInt(this.#draggingElement.closest('.list').dataset.list, 10);
+            const listId = parseInt(e.target.closest('.list').dataset.list, 10);
             const cardId = parseInt(
                 this.#draggingElement.closest('.list__card-wrapper').dataset.card,
                 10,
@@ -487,7 +488,6 @@ export default class BoardPage extends Component {
                     task_id: cardId,
                 }),
             );
-            this.#draggingElement.parentNode.remove();
         } else if (
             e.target.closest('.list') &&
             this.#draggingElement.parentNode.classList.contains('list')
