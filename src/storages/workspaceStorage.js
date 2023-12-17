@@ -332,6 +332,19 @@ class WorkspaceStorage extends BaseStorage {
                 cards[idx].list_position = index;
             });
             this.storage.set(this.workspaceModel.cards, cards);
+            
+            const lists=this.storage.get(this.workspaceModel.lists);
+            lists.forEach(el=>{
+                if(el.id===ids.old_list.id){
+                    el.cards.splice(el.cards.findIndex(c=>c==ids.task_id),1);
+                }
+            })
+            lists.forEach(el=>{
+                if(el.id===ids.new_list.id){
+                    el.cards = ids.new_list.task_ids;
+                }
+            })
+            this.storage.set(this.workspaceModel.lists,lists);
         }
     }
 
