@@ -64,9 +64,6 @@ export default class Card extends Component {
         this.parent
             .querySelector('.card-information__add-comment-text')
             .addEventListener('keydown', this.#createComment);
-        this.parent.addEventListener('drag', this.#dragHandler);
-        this.parent.addEventListener('drop', this.#dropHandler);
-        this.parent.addEventListener('dragover', this.#dragoverHandler);
     }
 
     removeEventListeners() {
@@ -88,9 +85,6 @@ export default class Card extends Component {
         this.parent
             .querySelector('.card-information__card-name')
             .removeEventListener('keydown', this.#changeNameAndDescription);
-        this.parent.removeEventListener('drag', this.#dragHandler);
-        this.parent.removeEventListener('drop', this.#dropHandler);
-        this.parent.removeEventListener('dragover', this.#dragoverHandler);
     }
 
     static openByRedirect = (id) => {
@@ -437,50 +431,6 @@ export default class Card extends Component {
         });
         return items;
     };
-
-    #dragHandler(e) {
-        e.preventDefault();
-        if (e.target.closest('.check-item')) {
-            this.draggingElement = e.target.closest('.check-item');
-            this.draggingElement.style.display = 'none';
-        }
-    }
-
-    #dropHandler(e) {
-        e.preventDefault();
-
-        if (this.draggingElement) {
-            this.draggingElement.style.display = '';
-        }
-
-        if (
-            e.target.closest('.card-information__checklist-wrapper') &&
-            this.draggingElement?.classList.contains('check-item')
-        ) {
-            if (
-                e.target.closest('.card-information__checklist-wrapper').dataset.checklist !==
-                this.draggingElement.dataset.checklist_id
-            ) {
-                console.log('Bad');
-                return;
-            }
-
-            const elementCoord = e.target.closest('.check-item').getBoundingClientRect();
-            const elementCenter = elementCoord.y + elementCoord.height / 2;
-
-            const position = e.clientY < elementCenter ? 'beforebegin' : 'afterend';
-            e.target
-                .closest('.check-item')
-                .insertAdjacentHTML(position, this.draggingElement.outerHTML);
-            this.draggingElement.outerHTML = '';
-        }
-
-        this.draggingElement = null;
-    }
-
-    #dragoverHandler(e) {
-        e.preventDefault();
-    }
 
     static clearCard = () => {
         const dialog = document.querySelector('#card');

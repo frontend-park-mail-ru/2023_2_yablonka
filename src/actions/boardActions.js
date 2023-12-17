@@ -111,4 +111,9 @@ export const actionReorderList = (data) => ({
 export const actionReorderLists = (data) => ({
     type: 'reorderLists',
     value: data
+});
+
+export const actionReorderChecklist = (data)=>({
+    type:'reorderChecklist',
+    value:data
 })

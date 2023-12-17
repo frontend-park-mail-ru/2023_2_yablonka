@@ -566,6 +566,25 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     /**
+     * Перестановка пунктов чеклиста
+     * @param {Object} ids - обновленный порядок id
+     */
+    async reorderChecklistItems(ids) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}checklist/item/reorder/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            ids,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            emitter.trigger('rerender');
+        }
+    }
+
+    /**
      * Удаление пункта чеклиста
      * @param {Object} checklistItem - удаляемый пункт чеклиста
      */

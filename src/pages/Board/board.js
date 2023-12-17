@@ -10,6 +10,7 @@ import BoardMenu from '../../components/Board/board/boardMenu/boardMenu.js';
 import {
     actionCreateCard,
     actionCreateList,
+    actionReorderChecklist,
     actionReorderList,
     actionReorderLists,
 } from '../../actions/boardActions.js';
@@ -389,12 +390,17 @@ export default class BoardPage extends Component {
     };
 
     #dragStartHandler = (e) => {
-        if (e.target.closest('.list__container') || e.target.closest('.list__card')) {
+        if (e.target.closest('.list__container') || e.target.closest('.list__card') || e.target.closest('.check-item')) {
             e.stopPropagation();
+            if(e.target.closest('.check-item')){
+                this.#draggingElement = e.target.closest('.check-item');
+            }else
+            {
 
             this.#draggingElement = e.target.closest('.list__card')
                 ? e.target.closest('.list__card')
                 : e.target.closest('.list__container');
+            }
 
             // const sizes = this.#draggingElement.getBoundingClientRect();
             // console.log(sizes);
@@ -417,7 +423,7 @@ export default class BoardPage extends Component {
         this.#draggingElement?.classList.remove('draggable');
     };
 
-    #positioningCard(mouseCoord, element) {
+    #positioningVertical(mouseCoord, element) {
         const elementCoord = element.getBoundingClientRect();
         const elementCenter = elementCoord.y + elementCoord.height / 2;
 
@@ -438,7 +444,7 @@ export default class BoardPage extends Component {
 
         if (
             e.target.closest('.list') &&
-            this.#draggingElement.classList.contains('list__card-wrapper')
+            this.#draggingElement.parentNode.classList.contains('list__card-wrapper')
         ) {
             if (
                 e.target.classList.contains('list__card') ||
@@ -447,7 +453,7 @@ export default class BoardPage extends Component {
                 e.target
                     .closest('.list__card-wrapper')
                     .insertAdjacentHTML(
-                        this.#positioningCard(e.clientY, e.target.closest('.list__card-wrapper')),
+                        this.#positioningVertical(e.clientY, e.target.closest('.list__card-wrapper')),
                         this.#draggingElement.parentNode.outerHTML,
                     );
             } else {
@@ -506,6 +512,31 @@ export default class BoardPage extends Component {
                 ids.push(parseInt(e.dataset.list));
             });
             dispatcher.dispatch(actionReorderLists({ ids }));
+        }
+        else if(e.target.closest('.check-item')&&this.#draggingElement.classList.contains('check-item')){
+            console.log('OK');
+            if (
+                e.target.closest('.card-information__checklist-wrapper')?.dataset.checklist !==
+                this.#draggingElement.dataset.checklist_id
+            ) {
+                console.log('Bad');
+                this.parent.querySelector('.temp-dragged')?.remove();
+
+                this.#draggingElement = null;
+                return;
+            }
+            e.target
+                .closest('.check-item').insertAdjacentHTML(
+                    this.#positioningVertical(e.clientY, e.target.closest('.check-item')),
+                    this.#draggingElement.outerHTML,
+                );
+                this.#draggingElement.remove();
+                const ids = [];
+                e.target.closest('.card-information__checklist-wrapper').querySelectorAll('.check-item').forEach((el)=>{
+                    ids.push(parseInt(el.dataset.checkitem_id));
+                });
+
+                dispatcher.dispatch(actionReorderChecklist({ ids }))
         }
         this.parent.querySelector('.temp-dragged')?.remove();
 
