@@ -389,12 +389,11 @@ export default class BoardPage extends Component {
     };
 
     #dragStartHandler = (e) => {
-        if (e.target.closest('.list__container') || e.target.closest('.list__card')) {
-            e.stopPropagation();
-
-            this.#draggingElement = e.target.closest('.list__card')
-                ? e.target.closest('.list__card')
-                : e.target.closest('.list__container');
+        if (
+            e.target.classList.contains('list') ||
+            e.target.classList.contains('list__card-wrapper')
+        ) {
+            [this.#draggingElement] = e.target.children;
 
             // const sizes = this.#draggingElement.getBoundingClientRect();
             // console.log(sizes);
@@ -408,8 +407,6 @@ export default class BoardPage extends Component {
             // this.parent.appendChild(draggable);
             // this.#draggingElement.parentNode.style.opacity = 0;
             this.#draggingElement.classList.add('draggable');
-        } else {
-            e.preventDefault();
         }
     };
 
@@ -436,7 +433,6 @@ export default class BoardPage extends Component {
         e.preventDefault();
 
         this.#draggingElement?.classList.remove('draggable');
-        console.log(this.#draggingElement);
 
         if (
             e.target.closest('.list') &&
@@ -459,7 +455,6 @@ export default class BoardPage extends Component {
                     .insertAdjacentHTML('beforeend', this.#draggingElement.parentNode.outerHTML);
             }
             const ids = [];
-            this.#draggingElement.parentNode.remove();
 
             e.target
                 .closest('.list')
@@ -492,6 +487,7 @@ export default class BoardPage extends Component {
                     task_id: cardId,
                 }),
             );
+            this.#draggingElement.parentNode.remove();
         } else if (
             e.target.closest('.list') &&
             this.#draggingElement.parentNode.classList.contains('list')
@@ -505,7 +501,7 @@ export default class BoardPage extends Component {
             this.#draggingElement.parentNode.remove();
             const ids = [];
             document.querySelectorAll('.list').forEach(e=>{ids.push(parseInt(e.dataset.list))});
-            dispatcher.dispatch(actionReorderLists(data));
+            dispatcher.dispatch(actionReorderLists({ids}));
         }
         this.parent.querySelector('.temp-dragged')?.remove();
 
