@@ -8,6 +8,7 @@ import CardContent from './cardContent/cardContent.js';
 import {
     actionCommentCard,
     actionDeleteCard,
+    actionGetFiles,
     actionUpdateCard,
 } from '../../actions/boardActions.js';
 import dispatcher from '../../modules/dispatcher.js';
@@ -434,9 +435,11 @@ export default class Card extends Component {
         return items;
     };
 
-    static getFiles = () => {
+    static getFiles = async () => {
         const card = document.querySelector('#card');
-        const files = workspaceStorage.getCardFilesById(parseInt(card.dataset.card, 10));
+        const files = await dispatcher.dispatch(
+            actionGetFiles({ id: parseInt(card.dataset.card, 10) }),
+        );
     };
 
     static clearCard = () => {
