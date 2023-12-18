@@ -161,19 +161,20 @@ export default class UploadAvatarModal extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const avatar = await readFileAsByteArray(this.avatarFile);
+        if (this.avatarFile) {
+            const avatar = await readFileAsByteArray(this.avatarFile);
 
-        dispatcher.dispatch(
-            actionUpdateAvatar({
-                avatar: Array.from(avatar.values()),
-                filename: this.filename,
-                mimetype: this.mimetype,
-            }),
-        );
+            dispatcher.dispatch(
+                actionUpdateAvatar({
+                    avatar: Array.from(avatar.values()),
+                    filename: this.filename,
+                    mimetype: this.mimetype,
+                }),
+            );
 
-        this.#clearFile();
-
-        this.#changeForm('none', 'flex');
+            this.#clearFile();
+            this.#changeForm('none', 'flex');
+        }
     };
 
     #resize = () => {

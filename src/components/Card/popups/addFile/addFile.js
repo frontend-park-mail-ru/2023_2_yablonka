@@ -152,20 +152,22 @@ export default class AddFile extends Component {
     #uploadFile = async (e) => {
         e.stopPropagation();
 
-        const cardId = this.parent.querySelector('#card').dataset.card;
-        const file = await readFileAsByteArray(this.file);
+        if (this.file) {
+            const cardId = this.parent.querySelector('#card').dataset.card;
+            const file = await readFileAsByteArray(this.file);
 
-        await dispatcher.dispatch(
-            actionAttachFile({
-                task_id: parseInt(cardId, 10),
-                filename: this.filename,
-                file: Array.from(file.values()),
-                mimetype: this.mimetype,
-            }),
-        );
+            await dispatcher.dispatch(
+                actionAttachFile({
+                    task_id: parseInt(cardId, 10),
+                    filename: this.filename,
+                    file: Array.from(file.values()),
+                    mimetype: this.mimetype,
+                }),
+            );
 
-        this.#clearFile();
-        this.#clearForm();
+            this.#clearFile();
+            this.#clearForm();
+        }
     };
 
     #clearForm = (e) => {
