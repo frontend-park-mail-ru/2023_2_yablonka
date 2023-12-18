@@ -154,7 +154,18 @@ export default class Profile extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Имя должно содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                    text: 'Фамилия должна содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                },
+            );
+        } else if (name.length > 32 || surname.length > 32) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('input[data-name=name]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Имя и фамилия должны быть не длиннее 50 символов',
                 },
             );
         } else {

@@ -274,6 +274,10 @@ class UserStorage extends BaseStorage {
             Profile.changeAvatar(body.body.avatar_url.url);
             emitter.trigger('changeSuccess');
         } else {
+            const oldUser = this.storage.get(this.userModel.body);
+            oldUser.body.user.avatar_url = 'img/avatar.jpg';
+            this.storage.set(this.userModel.body, oldUser);
+            Profile.changeAvatar('img/avatar.jpg');
             emitter.trigger('changeError');
         }
     }
