@@ -110,20 +110,20 @@ export const actionReorderList = (data) => ({
 
 export const actionReorderLists = (data) => ({
     type: 'reorderLists',
-    value: data
+    value: data,
 });
 
-export const actionReorderChecklist = (data)=>({
-    type:'reorderChecklist',
-    value:data
-})
+export const actionReorderChecklist = (data) => ({
+    type: 'reorderChecklist',
+    value: data,
+});
 
-export const actionAttachFile = (data)=>({
-    type:'attachFile',
-    value:data
-})
+export const actionAttachFile = (data) => ({
+    type: 'attachFile',
+    value: data,
+});
 
-export const actionGetFiles = (data)=>({
-    type:'getFiles',
-    value:data
-})
+export const actionGetFiles = (data) => ({
+    type: 'getFiles',
+    value: data,
+});

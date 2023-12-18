@@ -15,6 +15,7 @@ import AddDate from '../components/Card/popups/addDate/addDate.js';
 import AddBoardUsers from '../components/popups/addBoardUsers/addBoardUsers.js';
 import AddCardUsers from '../components/Card/popups/addUsers/addUsers.js';
 import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js';
+import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 
 /**
  * Класс для рендера страницы доски
@@ -71,7 +72,12 @@ class Board extends BaseView {
         this.addListeners();
 
         if (cID) {
-            Card.openByRedirect(cID);
+            if (workspaceStorage.getCardById(parseInt(cID, 10))) {
+                Card.openByRedirect(cID);
+            } else {
+                dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
+                dispatcher.dispatch(actionRedirect('/404', false));
+            }
         }
     }
 

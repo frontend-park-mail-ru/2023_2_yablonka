@@ -8,6 +8,8 @@ import popupEvent from '../components/core/popeventProcessing.js';
 import Card from '../components/Card/card.js';
 import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js';
 import BoardPage from '../pages/Board/board.js';
+import dispatcher from '../modules/dispatcher.js';
+import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -24,7 +26,7 @@ class WorkspaceStorage extends BaseStorage {
         comments: 'comments',
         checklists: 'checklists',
         items: 'items',
-        files:'files'
+        files: 'files',
     };
 
     /**
@@ -161,6 +163,9 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.comments, body.body.comments);
             this.storage.set(this.workspaceModel.checklists, body.body.checklists);
             this.storage.set(this.workspaceModel.items, body.body.checklist_items);
+        } else {
+            dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
+            dispatcher.dispatch(actionRedirect('/404', false));
         }
     }
 
@@ -334,19 +339,22 @@ class WorkspaceStorage extends BaseStorage {
                 cards[idx].list_position = index;
             });
             this.storage.set(this.workspaceModel.cards, cards);
-            
-            const lists=this.storage.get(this.workspaceModel.lists);
-            lists.forEach(el=>{
-                if(el.id===ids.old_list.id){
-                    el.cards.splice(el.cards.findIndex(c=>c==ids.task_id),1);
+
+            const lists = this.storage.get(this.workspaceModel.lists);
+            lists.forEach((el) => {
+                if (el.id === ids.old_list.id) {
+                    el.cards.splice(
+                        el.cards.findIndex((c) => c == ids.task_id),
+                        1,
+                    );
                 }
-            })
-            lists.forEach(el=>{
-                if(el.id===ids.new_list.id){
+            });
+            lists.forEach((el) => {
+                if (el.id === ids.new_list.id) {
                     el.cards = ids.new_list.task_ids;
                 }
-            })
-            this.storage.set(this.workspaceModel.lists,lists);
+            });
+            this.storage.set(this.workspaceModel.lists, lists);
         }
     }
 
@@ -1135,8 +1143,8 @@ class WorkspaceStorage extends BaseStorage {
      * @param {Number} id - id карточки
      * @returns {Array}
      */
-    getCardFilesById(id){
-        return this.storage.get(this.workspaceModel.files).filter(f=>f.task_id===id);
+    getCardFilesById(id) {
+        return this.storage.get(this.workspaceModel.files).filter((f) => f.task_id === id);
     }
 }
 
