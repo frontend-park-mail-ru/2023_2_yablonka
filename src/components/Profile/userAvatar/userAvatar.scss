@@ -1,9 +1,6 @@
-.user-reference__name {
-    overflow-wrap: break-word;
-    width: 300px;
-}
-
+.user-reference__name,
 .user-reference__surname {
     overflow-wrap: break-word;
     width: 300px;
+    color: var(--text-color-on-page);
 }
