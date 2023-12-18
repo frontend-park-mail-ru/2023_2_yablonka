@@ -27,12 +27,6 @@
         z-index: 0;
     }
 
-    .user-reference__name-and-surname {
-        font-size: 22px;
-        font-weight: 500;
-        color: var(--text-color-on-page);
-    }
-
     .user-reference__email {
         font-size: 16px;
         font-weight: 200;
@@ -112,12 +106,6 @@
         object-fit: cover;
         position: relative;
         z-index: 0;
-    }
-
-    .user-reference__name-and-surname {
-        font-size: 25px;
-        font-weight: 500;
-        color: var(--text-color-on-page);
     }
 
     .user-reference__email {
