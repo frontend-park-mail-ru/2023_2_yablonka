@@ -117,3 +117,13 @@ export const actionReorderChecklist = (data)=>({
     type:'reorderChecklist',
     value:data
 })
+
+export const actionAttachFile = (data)=>({
+    type:'attachFile',
+    value:data
+})
+
+export const actionGetFiles = (data)=>({
+    type:'getFiles',
+    value:data
+})

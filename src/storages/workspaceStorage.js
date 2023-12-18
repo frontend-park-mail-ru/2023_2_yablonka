@@ -24,6 +24,7 @@ class WorkspaceStorage extends BaseStorage {
         comments: 'comments',
         checklists: 'checklists',
         items: 'items',
+        files:'files'
     };
 
     /**
@@ -39,6 +40,7 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.comments, []);
         this.storage.set(this.workspaceModel.checklists, []);
         this.storage.set(this.workspaceModel.items, []);
+        this.storage.set(this.workspaceModel.files, []);
     }
 
     /**
@@ -460,6 +462,37 @@ class WorkspaceStorage extends BaseStorage {
 
             Card.clearCard();
         }
+    }
+
+    async getCardFiles(card) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/file/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            card,
+        );
+
+        let body;
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            this.storage.set(this.workspaceModel.files, body.body.files);
+        }
+    }
+
+    async attachFile(file) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/file/attach/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            file,
+        );
     }
 
     /**
@@ -1095,6 +1128,15 @@ class WorkspaceStorage extends BaseStorage {
     isUserInCard(cardId, userId) {
         const cardUsers = this.getCardUsers(cardId);
         return !!cardUsers.find((usr) => usr.user_id === userId);
+    }
+
+    /**
+     * Получение заданий карточки
+     * @param {Number} id - id карточки
+     * @returns {Array}
+     */
+    getCardFilesById(id){
+        return this.storage.get(this.workspaceModel.files).filter(f=>f.task_id===id);
     }
 }
 
