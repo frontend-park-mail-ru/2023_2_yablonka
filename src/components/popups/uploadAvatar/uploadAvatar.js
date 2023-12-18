@@ -175,15 +175,13 @@ export default class UploadAvatarModal extends Component {
 
         const avatar = await this.readFileAsByteArray(this.avatarFile);
 
-        if (!this.parent.querySelector('.profile-user-image').src.includes('avatar.jpg')) {
-            dispatcher.dispatch(
-                actionUpdateAvatar({
-                    avatar: Array.from(avatar.values()),
-                    filename: this.filename,
-                    mimetype: this.mimetype,
-                }),
-            );
-        }
+        dispatcher.dispatch(
+            actionUpdateAvatar({
+                avatar: Array.from(avatar.values()),
+                filename: this.filename,
+                mimetype: this.mimetype,
+            }),
+        );
 
         this.#clearFile();
 
