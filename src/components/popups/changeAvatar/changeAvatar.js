@@ -99,7 +99,7 @@ export default class ChangeAvatarPopup extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        if (!document?.querySelector('.profile-user-image').src.includes('avatar.jpg')) {
+        if (!document.querySelector('.profile-user-image').src.includes('avatar.jpg')) {
             await dispatcher.dispatch(actionDeleteAvatar());
         }
     }
