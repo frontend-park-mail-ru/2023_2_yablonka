@@ -1,9 +1,8 @@
 .create-workspace {
-    top: 15%;
-    left: 40%;
     width: 500px;
-    overflow: hidden;
+    overflow-x: hidden;
     z-index: 10;
+    overflow-y: auto;
 }
 
 .create-workspace-wrapper {

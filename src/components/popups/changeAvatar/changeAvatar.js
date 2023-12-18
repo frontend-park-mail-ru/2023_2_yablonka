@@ -38,6 +38,7 @@ export default class ChangeAvatarPopup extends Component {
         this.parent
             .querySelector('button[data-action="delete-avatar"]')
             .addEventListener('click', this.#deleteAvatar);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
@@ -47,6 +48,7 @@ export default class ChangeAvatarPopup extends Component {
         this.parent
             .querySelector('button[data-action="delete-avatar"]')
             .removeEventListener('click', this.#deleteAvatar);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #changeAvatarMenu = (e) => {
@@ -59,10 +61,38 @@ export default class ChangeAvatarPopup extends Component {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
+
+            const dialogSizes = dialog.getBoundingClientRect();
+            const btnSizes = e.target.closest('.change-avatar__button').getBoundingClientRect();
+
+            dialog.setAttribute(
+                'style',
+                `top: ${btnSizes.top + 50}px; left: ${Math.floor(
+                    btnSizes.left - dialogSizes.width / 2,
+                )}px`,
+            );
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
         }
+    };
+
+    #resize = () => {
+        const dialog = this.parent.querySelector('#change-avatar');
+
+        window.requestAnimationFrame(() => {
+            const dialogSizes = dialog.getBoundingClientRect();
+            const btnSizes = this.parent
+                .querySelector('.change-avatar__button')
+                .getBoundingClientRect();
+
+            dialog.setAttribute(
+                'style',
+                `top: ${btnSizes.top + 50}px; left: ${Math.floor(
+                    btnSizes.left - dialogSizes.width / 2,
+                )}px`,
+            );
+        });
     };
 
     async #deleteAvatar(e) {

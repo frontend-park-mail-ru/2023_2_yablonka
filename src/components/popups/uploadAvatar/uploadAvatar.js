@@ -58,6 +58,7 @@ export default class UploadAvatarModal extends Component {
         this.parent
             .querySelector('.upload-avatar-modal__button_upload')
             .addEventListener('click', this.#updateAvatar);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
@@ -80,6 +81,7 @@ export default class UploadAvatarModal extends Component {
         this.parent
             .querySelector('.upload-avatar-modal__button_upload')
             .removeEventListener('click', this.#updateAvatar);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #changeForm = (from, to) => {
@@ -105,6 +107,13 @@ export default class UploadAvatarModal extends Component {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.showModal();
+            const dialogSizes = dialog.getBoundingClientRect();
+            const windowSizes = this.parent.getBoundingClientRect();
+
+            dialog.setAttribute(
+                'style',
+                `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
+            );
             this.#clearFile();
         } else {
             popupEvent.deletePopup(dialog);
@@ -177,5 +186,19 @@ export default class UploadAvatarModal extends Component {
         this.#clearFile();
 
         this.#changeForm('none', 'flex');
+    };
+
+    #resize = () => {
+        const dialog = this.parent.querySelector('#upload-avatar');
+
+        window.requestAnimationFrame(() => {
+            const dialogSizes = dialog.getBoundingClientRect();
+            const windowSizes = this.parent.getBoundingClientRect();
+
+            dialog.setAttribute(
+                'style',
+                `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
+            );
+        });
     };
 }

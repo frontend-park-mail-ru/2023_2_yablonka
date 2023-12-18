@@ -40,3 +40,19 @@
     min-height: 25px;
     min-width: 100px;
 }
+
+@media screen and (max-width: 545px) {
+    .add-board-user {
+        width: 220px;
+    }
+
+    .add-board-user-content__buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-add-board-user_add,
+    .btn-add-board-user_delete {
+        width: 100%;
+    }
+}

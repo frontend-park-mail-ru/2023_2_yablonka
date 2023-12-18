@@ -83,3 +83,21 @@
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
 }
+
+@media screen and (max-width: 700px) {
+    .workspace__menu {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 545px) {
+    .sidebar-main {
+        display: none;
+    }
+
+    .user-workspaces {
+        width: 95%;
+    }
+}

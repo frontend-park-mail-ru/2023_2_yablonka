@@ -390,16 +390,18 @@ export default class BoardPage extends Component {
     };
 
     #dragStartHandler = (e) => {
-        if (e.target.closest('.list__container') || e.target.closest('.list__card') || e.target.closest('.check-item')) {
+        if (
+            e.target.closest('.list__container') ||
+            e.target.closest('.list__card') ||
+            e.target.closest('.check-item')
+        ) {
             e.stopPropagation();
-            if(e.target.closest('.check-item')){
+            if (e.target.closest('.check-item')) {
                 this.#draggingElement = e.target.closest('.check-item');
-            }else
-            {
-
-            this.#draggingElement = e.target.closest('.list__card')
-                ? e.target.closest('.list__card')
-                : e.target.closest('.list__container');
+            } else {
+                this.#draggingElement = e.target.closest('.list__card')
+                    ? e.target.closest('.list__card')
+                    : e.target.closest('.list__container');
             }
 
             // const sizes = this.#draggingElement.getBoundingClientRect();
@@ -453,7 +455,10 @@ export default class BoardPage extends Component {
                 e.target
                     .closest('.list__card-wrapper')
                     .insertAdjacentHTML(
-                        this.#positioningVertical(e.clientY, e.target.closest('.list__card-wrapper')),
+                        this.#positioningVertical(
+                            e.clientY,
+                            e.target.closest('.list__card-wrapper'),
+                        ),
                         this.#draggingElement.parentNode.outerHTML,
                     );
             } else {
@@ -471,7 +476,7 @@ export default class BoardPage extends Component {
 
             const oldListId = workspaceStorage.getCardById(parseInt(cardId, 10)).list_id;
             const oldListIds = [];
-            workspaceStorage.getListCards(oldListId).forEach(el=>{
+            workspaceStorage.getListCards(oldListId).forEach((el) => {
                 oldListIds.push(el.id);
             });
             this.#draggingElement.parentNode.remove();
@@ -483,7 +488,6 @@ export default class BoardPage extends Component {
                 });
 
             const listId = parseInt(e.target.closest('.list').dataset.list, 10);
-
 
             dispatcher.dispatch(
                 actionReorderList({
@@ -508,8 +512,10 @@ export default class BoardPage extends Component {
                 ids.push(parseInt(e.dataset.list));
             });
             dispatcher.dispatch(actionReorderLists({ ids }));
-        }
-        else if(e.target.closest('.check-item')&&this.#draggingElement.classList.contains('check-item')){
+        } else if (
+            e.target.closest('.check-item') &&
+            this.#draggingElement.classList.contains('check-item')
+        ) {
             console.log('OK');
             if (
                 e.target.closest('.card-information__checklist-wrapper')?.dataset.checklist !==
@@ -522,17 +528,21 @@ export default class BoardPage extends Component {
                 return;
             }
             e.target
-                .closest('.check-item').insertAdjacentHTML(
+                .closest('.check-item')
+                .insertAdjacentHTML(
                     this.#positioningVertical(e.clientY, e.target.closest('.check-item')),
                     this.#draggingElement.outerHTML,
                 );
-                this.#draggingElement.remove();
-                const ids = [];
-                e.target.closest('.card-information__checklist-wrapper').querySelectorAll('.check-item').forEach((el)=>{
-                    ids.push(parseInt(el.dataset.checkitem_id));
+            this.#draggingElement.remove();
+            const ids = [];
+            e.target
+                .closest('.card-information__checklist-wrapper')
+                .querySelectorAll('.check-item')
+                .forEach((el) => {
+                    ids.push(parseInt(el.dataset.checkitem_id, 10));
                 });
 
-                dispatcher.dispatch(actionReorderChecklist({ ids }))
+            dispatcher.dispatch(actionReorderChecklist({ ids }));
         }
         this.parent.querySelector('.temp-dragged')?.remove();
 

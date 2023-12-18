@@ -127,6 +127,10 @@
     color: var(--text-color-in-card);
 }
 
+.card-information__users-wrapper {
+    flex-wrap: wrap;
+}
+
 .card-information__card-description {
     background-color: var(--card-description-background-color);
     width: 100%;

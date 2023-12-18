@@ -91,3 +91,9 @@
     text-align: left;
     min-height: 35px;
 }
+
+@media screen and (max-width: 545px) {
+    .sidebar-main-wrapper {
+        display: none;
+    }
+}
