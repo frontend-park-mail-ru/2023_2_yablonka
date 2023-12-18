@@ -128,3 +128,32 @@
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
 }
+
+@media screen and (max-width: 545px){
+    .sidebar {
+        width: 150px;
+        height: 100%;
+        background-color: var(--sidebar-background);
+        backdrop-filter: blur(3px);
+    }
+    .board-action__name{
+        display: none;
+    }
+    .sidebar__board-members {
+        justify-content: space-between;
+        width: 60%;
+    }
+    
+    .sidebar__board-settings {
+        width: 60%;
+        justify-content: space-between;
+    }
+
+    .sidebar-boards-list__action {
+        justify-content: space-between;
+        width: 100%;
+        color: var(--text-color-on-page);
+        flex-direction: column;
+        height: 80px;
+    }
+}

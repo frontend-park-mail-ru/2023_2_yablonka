@@ -77,3 +77,16 @@
     min-height: 35px;
     min-width: 80px;
 }
+
+@media screen and (max-width: 545px) {
+    .board-menu__board-actions{
+        display: none;
+    }
+    
+}
+
+@media screen and (max-width: 370px) {
+    .add-board-to-favourite{
+        display: none;
+    }
+}
