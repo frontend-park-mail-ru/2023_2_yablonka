@@ -104,6 +104,7 @@ export default class Card extends Component {
         Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.updateUsers(parseInt(dialog.dataset.card, 10));
         Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+        Card.getFiles();
 
         if (!dialog.hasAttribute('open')) {
             popupEvent.addPopup(dialog);
@@ -145,6 +146,7 @@ export default class Card extends Component {
             Card.addDate(parseInt(dialog.dataset.card, 10));
             Card.updateUsers(parseInt(dialog.dataset.card, 10));
             Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+            Card.getFiles();
 
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
@@ -432,6 +434,11 @@ export default class Card extends Component {
         return items;
     };
 
+    static getFiles = () => {
+        const card = document.querySelector('#card');
+        const files = workspaceStorage.getCardFilesById(parseInt(card.dataset.card, 10));
+    };
+
     static clearCard = () => {
         const dialog = document.querySelector('#card');
         dialog.close();
@@ -447,6 +454,6 @@ export default class Card extends Component {
 
         const cardId = dialog.dataset.card;
         document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`).remove();
-        dialog.dataset.card = ''; 
+        dialog.dataset.card = '';
     };
 }

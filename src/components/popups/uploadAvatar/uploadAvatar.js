@@ -1,5 +1,6 @@
 import { actionUpdateAvatar } from '../../../actions/userActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
+import readFileAsByteArray from '../../../modules/files.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
 import template from './uploadAvatar.hbs';
@@ -17,19 +18,6 @@ export default class UploadAvatarModal extends Component {
     filename;
 
     mimetype;
-
-    readFileAsByteArray(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const arrayBuffer = reader.result;
-                const byteArray = new Uint8Array(arrayBuffer);
-                resolve(byteArray);
-            };
-            reader.onerror = reject;
-            reader.readAsArrayBuffer(file);
-        });
-    }
 
     /**
      * Рендерит компонент в DOM
@@ -173,7 +161,7 @@ export default class UploadAvatarModal extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const avatar = await this.readFileAsByteArray(this.avatarFile);
+        const avatar = await readFileAsByteArray(this.avatarFile);
 
         dispatcher.dispatch(
             actionUpdateAvatar({
