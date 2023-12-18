@@ -165,7 +165,7 @@ export default class Profile extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Имя и фамилия должны быть не длиннее 50 символов',
+                    text: 'Имя и фамилия должны быть не длиннее 32 символов',
                 },
             );
         } else {
