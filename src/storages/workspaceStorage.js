@@ -511,11 +511,11 @@ class WorkspaceStorage extends BaseStorage {
             file,
         );
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
-        if (status === 200){
+        if (status === 200) {
             const files = this.storage.get(this.workspaceModel.files);
-            files.splice(files.findIndex(f=>f.file_path===file.file_path));
+            files.splice(files.findIndex((f) => f.file_path === file.file_path));
             this.storage.set(this.workspaceModel.files, files);
         }
     }
@@ -878,6 +878,18 @@ class WorkspaceStorage extends BaseStorage {
             userStorage.storage.get(userStorage.userModel.csrf),
             file,
         );
+
+        const { status } = responsePromise;
+        if (status === 200) {
+            const oldFile = document
+                .querySelector(`a[href="${file.file_path}"]`)
+                .closest('.card-information__file-wrapper');
+            oldFile.remove();
+
+            if (!document.querySelectorAll('.card-information__file-wrapper').length) {
+                document.querySelector('.card-information__files').remove();
+            }
+        }
     }
 
     /**

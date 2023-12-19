@@ -4,7 +4,7 @@ import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
 import template from './addFile.hbs';
 import './addFile.scss';
-import { actionAttachFile } from '../../../../actions/boardActions.js';
+import { actionAttachFile, actionDeleteFile } from '../../../../actions/boardActions.js';
 
 /**
  * Попап для хедера
