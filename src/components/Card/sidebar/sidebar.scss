@@ -29,3 +29,20 @@
 .action-name {
     color: var(--text-color-in-card);
 }
+
+@media screen and (max-width: 500px) {
+    .card-actions__card-settings {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .card-actions__user-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .btn-card-settings__action,
+    .btn-user-actions__action {
+        width: 100%;
+    }
+}
