@@ -468,7 +468,7 @@ class WorkspaceStorage extends BaseStorage {
 
             this.storage.get(this.workspaceModel.cards).splice(idxCard, 1);
 
-            Card.clearCard();
+            Card.clearCard(true);
         }
     }
 

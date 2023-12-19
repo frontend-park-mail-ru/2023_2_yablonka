@@ -466,7 +466,7 @@ export default class Card extends Component {
         }
     };
 
-    static clearCard = () => {
+    static clearCard = (deleteCard) => {
         const dialog = document.querySelector('#card');
         dialog.close();
         popupEvent.deletePopup(dialog);
@@ -481,7 +481,9 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__files')?.remove();
 
         const cardId = dialog.dataset.card;
-        document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`).remove();
+        if (deleteCard) {
+            document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`).remove();
+        }
         dialog.dataset.card = '';
     };
 }
