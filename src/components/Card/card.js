@@ -124,10 +124,10 @@ export default class Card extends Component {
     };
 
     #openCard = (e) => {
-        if (e.target.closest('.list__card-wrapper')) {
-            e.preventDefault();
-            e.stopPropagation();
+        e.preventDefault();
 
+        if (e.target.closest('.list__card-wrapper')) {
+            e.stopPropagation();
             BoardPage.closeAllCreateMenu();
 
             const dialog = this.parent.querySelector('#card');
@@ -452,6 +452,8 @@ export default class Card extends Component {
             }
 
             const filesContainer = card.querySelector('.card-information__files-wrapper');
+            filesContainer.innerHTML = '';
+
             files.forEach((file) => {
                 filesContainer.insertAdjacentHTML(
                     'afterbegin',

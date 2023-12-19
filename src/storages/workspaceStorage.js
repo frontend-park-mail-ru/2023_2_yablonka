@@ -505,6 +505,7 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            
             Card.getFiles();
         }
     }
