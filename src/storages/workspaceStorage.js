@@ -506,7 +506,7 @@ class WorkspaceStorage extends BaseStorage {
     async deleteFile(file) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/file/remove/`,
-            'POST',
+            'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
             file,
         );
