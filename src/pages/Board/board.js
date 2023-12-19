@@ -47,7 +47,10 @@ export default class BoardPage extends Component {
                 workspaceName: workspaceStorage.getWorkspaceById(this.config.board.workspace_id)
                     .workspace_name,
                 workspace_id: this.config.board.workspace_id,
-                user_id: this.config.user.user_id,
+                is_owner: workspaceStorage.isOwner(
+                    this.config.user.user_id,
+                    this.config.board.board_id,
+                ),
             }).render(),
             boardMenu: new BoardMenu(null, {
                 board_id: this.config.board.board_id,

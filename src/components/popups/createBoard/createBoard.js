@@ -48,14 +48,11 @@ export default class CreateBoard extends Component {
 
     #blockCreateButton = (e) => {
         e.preventDefault();
-        const input = this.parent.querySelector('input[data-name="board-name"');
 
         if (e.target.value.length === 0) {
             this.parent.querySelector('.btn-create-board-pop-up').disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             this.parent.querySelector('.btn-create-board-pop-up').disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
