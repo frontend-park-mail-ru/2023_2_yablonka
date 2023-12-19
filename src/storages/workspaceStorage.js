@@ -524,7 +524,7 @@ class WorkspaceStorage extends BaseStorage {
             files.splice(files.findIndex((f) => f.file_path === file.file_path));
             this.storage.set(this.workspaceModel.files, files);
             const oldFile = document
-                .querySelector(`a[href="${file.file_path}"]`)
+                .querySelector(`a[href="/${file.file_path}"]`)
                 .closest('.card-information__file-wrapper');
             oldFile.remove();
 
