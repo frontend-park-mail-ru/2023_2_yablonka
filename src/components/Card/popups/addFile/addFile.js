@@ -1,4 +1,3 @@
-import workspaceStorage from '../../../../storages/workspaceStorage.js';
 import dispatcher from '../../../../modules/dispatcher.js';
 import readFileAsByteArray from '../../../../modules/files.js';
 import Component from '../../../core/basicComponent.js';
@@ -6,7 +5,6 @@ import popupEvent from '../../../core/popeventProcessing.js';
 import template from './addFile.hbs';
 import './addFile.scss';
 import { actionAttachFile } from '../../../../actions/boardActions.js';
-import userStorage from '../../../../storages/userStorage.js';
 
 /**
  * Попап для хедера
@@ -68,6 +66,7 @@ export default class AddFile extends Component {
         this.parent
             .querySelector('.btn-attach-file_cancel')
             .addEventListener('click', this.#clearForm);
+        this.parent.querySelector('#card').addEventListener('click', this.#deleteFile);
     }
 
     removeEventListeners() {
@@ -89,6 +88,7 @@ export default class AddFile extends Component {
         this.parent
             .querySelector('.btn-attach-file_cancel')
             .removeEventListener('click', this.#clearForm);
+        this.parent.querySelector('#card').removeEventListener('click', this.#deleteFile);
     }
 
     #openPopup = (e) => {
@@ -182,6 +182,22 @@ export default class AddFile extends Component {
         filename.textContent = '';
 
         this.#clearFile();
+    };
+
+    #deleteFile = async (e) => {
+        if (e.target.closest('.btn-file-actions_delete')) {
+            e.stopPropagation();
+
+            const file = e.target.closest('.card-information__file-wrapper');
+
+            await dispatcher.dispatch(
+                actionDeleteFile({
+                    file_path: file.querySelector('.card-file-download').href,
+                    original_name: file.querySelector('.card-information__filename').textContent,
+                    task_id: parseInt(e.target.closest('#card').dataset.card, 10),
+                }),
+            );
+        }
     };
 
     #clearFile = () => {

@@ -22,6 +22,8 @@ import CardUser from './atomic/cardUser/cardUser.js';
 import Checklist from './atomic/checklist/checklist.js';
 import CheckItem from './atomic/checkItem/checkItem.js';
 import BoardPage from '../../pages/Board/board.js';
+import FilesContainer from './filesContainer/filesContainer.js';
+import File from './atomic/file/file.js';
 
 /**
  * Попап для хедера
@@ -437,9 +439,27 @@ export default class Card extends Component {
 
     static getFiles = async () => {
         const card = document.querySelector('#card');
-        const files = await dispatcher.dispatch(
-            actionGetFiles({ id: parseInt(card.dataset.card, 10) }),
-        );
+        await dispatcher.dispatch(actionGetFiles({ id: parseInt(card.dataset.card, 10) }));
+
+        const files = workspaceStorage.storage.get(workspaceStorage.workspaceModel.files);
+
+        if (files) {
+            const comments = card.querySelector('.card-information__comments-wrapper');
+            comments.insertAdjacentHTML('beforebegin', new FilesContainer(null, {}).render());
+
+            const filesContainer = card.querySelector('.card-information__files-wrapper');
+            files.forEach((file) => {
+                filesContainer.insertAdjacentHTML(
+                    'afterbegin',
+                    new File(null, {
+                        date_created: file.date_created,
+                        file_path: file.file_path,
+                        original_name: file.original_name,
+                        task_id: file.task_id,
+                    }).render(),
+                );
+            });
+        }
     };
 
     static clearCard = () => {

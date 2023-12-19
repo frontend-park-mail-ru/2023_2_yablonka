@@ -1,0 +1,48 @@
+.card-information__file-wrapper {
+    width: 100%;
+    align-items: flex-start;
+    padding: 5px 10px 5px 0px;
+}
+
+.card-information__file-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.card-information__file-wrapper:hover {
+    background-color: var(--file-background-color-hover);
+}
+
+.card-information__file-description-wrapper {
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.card-information__filename {
+    max-width: 90%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.card-information__file-added-date {
+    color: var(--text-color-in-card);
+}
+
+.file-wrapper__background {
+    width: 150px;
+    height: 100px;
+    background-color: var(--file-background-color);
+    outline: none;
+    text-decoration: none;
+    color: var(--text-color-in-card);
+}
+
+.card-file-download {
+    color: var(--text-color-in-card);
+}
+
+.btn-file-actions_delete {
+    background-color: var(--delete-button-color);
+}

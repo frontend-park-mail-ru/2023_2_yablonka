@@ -147,46 +147,6 @@
     color: var(--text-color-in-card);
 }
 
-.card-information__files-wrapper {
-    color: var(--text-color-in-card);
-    position: relative;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.card-information__file-image {
-    width: 150px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.card-information__file-wrapper {
-    width: 100%;
-    align-items: flex-start;
-}
-
-.card-information__file-description-wrapper {
-    align-items: flex-start;
-}
-
-.btn-file-actions__update {
-    background-color: var(--btn-change-file-background);
-    min-width: 100px;
-    min-height: 20px;
-    color: var(--text-color-card-files-action-buttons);
-}
-
-.btn-file-actions__delete {
-    background-color: var(--btn-delete-file-background);
-    min-width: 100px;
-    min-height: 20px;
-    color: var(--text-color-card-files-action-buttons);
-}
-
-.card-information__file-added-date {
-    color: var(--text-color-in-card);
-}
-
 .card-information__comments-wrapper {
     position: relative;
     align-items: flex-start;
