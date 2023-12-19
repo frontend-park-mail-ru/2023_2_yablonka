@@ -393,11 +393,11 @@ export default class BoardPage extends Component {
         if (
             e.target.closest('.list__container') ||
             e.target.closest('.list__card') ||
-            e.target.closest('.check-item')
+            e.target.closest('.checkitem')
         ) {
             e.stopPropagation();
-            if (e.target.closest('.check-item')) {
-                this.#draggingElement = e.target.closest('.check-item');
+            if (e.target.closest('.checkitem')) {
+                this.#draggingElement = e.target.closest('.checkitem');
             } else {
                 this.#draggingElement = e.target.closest('.list__card')
                     ? e.target.closest('.list__card')
@@ -509,12 +509,12 @@ export default class BoardPage extends Component {
             this.#draggingElement.parentNode.remove();
             const ids = [];
             document.querySelectorAll('.list').forEach((e) => {
-                ids.push(parseInt(e.dataset.list));
+                ids.push(parseInt(e.dataset.list, 10));
             });
             dispatcher.dispatch(actionReorderLists({ ids }));
         } else if (
-            e.target.closest('.check-item') &&
-            this.#draggingElement.classList.contains('check-item')
+            e.target.closest('.checkitem') &&
+            this.#draggingElement.classList.contains('checkitem')
         ) {
             console.log('OK');
             if (
@@ -528,16 +528,16 @@ export default class BoardPage extends Component {
                 return;
             }
             e.target
-                .closest('.check-item')
+                .closest('.checkitem')
                 .insertAdjacentHTML(
-                    this.#positioningVertical(e.clientY, e.target.closest('.check-item')),
+                    this.#positioningVertical(e.clientY, e.target.closest('.checkitem')),
                     this.#draggingElement.outerHTML,
                 );
             this.#draggingElement.remove();
             const ids = [];
             e.target
                 .closest('.card-information__checklist-wrapper')
-                .querySelectorAll('.check-item')
+                .querySelectorAll('.checkitem')
                 .forEach((el) => {
                     ids.push(parseInt(el.dataset.checkitem_id, 10));
                 });
