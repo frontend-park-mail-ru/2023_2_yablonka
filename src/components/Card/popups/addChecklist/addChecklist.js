@@ -293,6 +293,9 @@ export default class AddChecklist extends Component {
         const dialog = document.querySelector('#card');
         const checklistsLocation = dialog.querySelector('.card-information__checklists');
 
+        // if (!checklistsLocation) {
+        //     const 
+        // }
         checklistsLocation.style.display = 'flex';
         checklistsLocation.insertAdjacentHTML(
             'afterbegin',
