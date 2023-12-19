@@ -67,6 +67,7 @@ export default class AddFile extends Component {
             .querySelector('.btn-attach-file_cancel')
             .addEventListener('click', this.#clearForm);
         this.parent.querySelector('#card').addEventListener('click', this.#deleteFile);
+        this.parent.querySelector('#card').addEventListener('click', this.#uploadFileByUser);
     }
 
     removeEventListeners() {
@@ -89,6 +90,7 @@ export default class AddFile extends Component {
             .querySelector('.btn-attach-file_cancel')
             .removeEventListener('click', this.#clearForm);
         this.parent.querySelector('#card').removeEventListener('click', this.#deleteFile);
+        this.parent.querySelector('#card').removeEventListener('click', this.#uploadFileByUser);
     }
 
     #openPopup = (e) => {
@@ -182,6 +184,12 @@ export default class AddFile extends Component {
         filename.textContent = '';
 
         this.#clearFile();
+    };
+
+    #uploadFileByUser = (e) => {
+        if (e.target.closest('.card-information__file-wrapper') && e.target.closest('a')) {
+            e.stopImmediatePropagation();
+        }
     };
 
     #deleteFile = async (e) => {

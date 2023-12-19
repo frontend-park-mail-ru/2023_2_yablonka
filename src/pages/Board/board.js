@@ -215,6 +215,7 @@ export default class BoardPage extends Component {
         if (e.target.closest('button')?.classList.contains('btn-create_cancel')) {
             e.preventDefault();
             e.stopPropagation();
+
             const entityNode =
                 e.target.closest('li[data-entity=list]') ||
                 e.target.closest('div[data-entity=card]');
@@ -263,6 +264,7 @@ export default class BoardPage extends Component {
         if (entityNode?.classList.contains('new-entity')) {
             e.preventDefault();
             e.stopPropagation();
+            
             const { entity } = entityNode.dataset;
 
             const btn = entityNode.querySelector(`.btn-create_confirm`);

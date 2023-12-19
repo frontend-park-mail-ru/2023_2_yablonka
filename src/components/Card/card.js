@@ -127,6 +127,7 @@ export default class Card extends Component {
         if (e.target.closest('.list__card-wrapper')) {
             e.preventDefault();
             e.stopPropagation();
+
             BoardPage.closeAllCreateMenu();
 
             const dialog = this.parent.querySelector('#card');
@@ -170,10 +171,10 @@ export default class Card extends Component {
     };
 
     #closeCardByBackground = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
         if (e.target === e.currentTarget) {
-            e.preventDefault();
-            e.stopPropagation();
-            
             popupEvent.closeAllPopups();
             Card.updateHistory();
             Card.clearCard();
