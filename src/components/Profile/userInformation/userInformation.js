@@ -3,6 +3,7 @@ import Button from '../../atomic/button/button';
 import Textarea from '../../atomic/textarea/textarea';
 import Component from '../../core/basicComponent';
 import template from './userInformation.hbs';
+import './userInformation.scss';
 /**
  * слои-обертки
  * @class

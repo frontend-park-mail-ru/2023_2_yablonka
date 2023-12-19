@@ -17,11 +17,12 @@
 
 .check-item__name {
     align-self: flex-start;
+    max-width: 80%;
 }
 
 .check-item-name__text {
     color: var(--text-color-on-page);
-    max-width: 400px;
+    max-width: 80%;
     overflow-x: auto;
     overflow-y: hidden;
 }

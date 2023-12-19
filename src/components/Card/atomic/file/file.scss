@@ -5,9 +5,17 @@
 }
 
 .card-information__file-image {
-    width: 150px;
+    max-width: 150px;
+    min-width: 150px;
     height: 100px;
     object-fit: cover;
+}
+
+.file-wrapper__filename {
+    max-width: 90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .card-information__file-wrapper:hover {
@@ -45,4 +53,10 @@
 
 .btn-file-actions_delete {
     background-color: var(--delete-button-color);
+}
+
+@media screen and (min-width: 670px) {
+    .card-information__file-wrapper {
+        flex-direction: column;
+    }
 }

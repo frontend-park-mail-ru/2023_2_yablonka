@@ -505,7 +505,6 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            
             Card.getFiles();
         }
     }
@@ -1125,8 +1124,9 @@ class WorkspaceStorage extends BaseStorage {
      * @param {Number} id - id юзера
      * @returns
      */
-    isOwner(id) {
-        return this.storage.get(this.workspaceModel.boards)[0].owner_id === id;
+    isOwner(userId, boardId) {
+        const board = this.getBoardById(boardId);
+        return board.owner_id === userId;
     }
 
     /**

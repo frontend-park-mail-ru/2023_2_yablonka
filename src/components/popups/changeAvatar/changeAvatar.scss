@@ -2,5 +2,18 @@
     width: 230px;
     overflow: hidden;
     color: var(--text-color-on-page);
-    background-color: rgba(22, 26, 29,1);
+    background-color: rgba(22, 26, 29, 1);
+}
+
+.popover-change-avatar {
+    width: 230px;
+    background-color: rgba(22, 26, 29, 1);
+    border-radius: 10px;
+    overflow: hidden;
+    color: var(--text-color-on-page);
+}
+
+.popover-change-avatar-wrapper {
+    padding: 5px;
+    gap: 5px;
 }
