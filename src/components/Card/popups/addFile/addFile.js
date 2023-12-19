@@ -192,7 +192,9 @@ export default class AddFile extends Component {
 
             await dispatcher.dispatch(
                 actionDeleteFile({
-                    file_path: file.querySelector('.card-file-download').href,
+                    file_path: file
+                        .querySelector('.card-file-download')
+                        .href.replace(window.origin, ''),
                     original_name: file.querySelector('.card-information__filename').textContent,
                     task_id: parseInt(e.target.closest('#card').dataset.card, 10),
                 }),
