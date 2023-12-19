@@ -167,6 +167,7 @@ export default class Card extends Component {
 
         popupEvent.closeAllPopups();
         Card.updateHistory();
+        Card.clearCard();
     };
 
     #closeCardByBackground = (e) => {
@@ -176,6 +177,7 @@ export default class Card extends Component {
         if (e.target === e.currentTarget) {
             popupEvent.closeAllPopups();
             Card.updateHistory();
+            Card.clearCard();
         }
         popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
     };
@@ -448,7 +450,7 @@ export default class Card extends Component {
                 const comments = card.querySelector('.card-information__comments-wrapper');
                 comments.insertAdjacentHTML('beforebegin', new FilesContainer(null, {}).render());
             }
-            
+
             const filesContainer = card.querySelector('.card-information__files-wrapper');
             files.forEach((file) => {
                 filesContainer.insertAdjacentHTML(
