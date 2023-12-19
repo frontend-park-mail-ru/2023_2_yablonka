@@ -186,10 +186,9 @@ export default class BoardPage extends Component {
     }
 
     #addNewEntity = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
         if (e.target.closest('button')?.classList.contains('add-new-entity')) {
+            e.preventDefault();
+            e.stopPropagation();
             BoardPage.closeAllCreateMenu();
 
             const entityNode =
@@ -213,10 +212,9 @@ export default class BoardPage extends Component {
     };
 
     #closeNewEntity = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
         if (e.target.closest('button')?.classList.contains('btn-create_cancel')) {
+            e.preventDefault();
+            e.stopPropagation();
             const entityNode =
                 e.target.closest('li[data-entity=list]') ||
                 e.target.closest('div[data-entity=card]');
@@ -259,13 +257,12 @@ export default class BoardPage extends Component {
     };
 
     #blockCreateNewEntityBtn = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
         const entityNode =
             e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
 
         if (entityNode?.classList.contains('new-entity')) {
+            e.preventDefault();
+            e.stopPropagation();
             const { entity } = entityNode.dataset;
 
             const btn = entityNode.querySelector(`.btn-create_confirm`);
@@ -285,22 +282,22 @@ export default class BoardPage extends Component {
     };
 
     #cancelCreateNewEntityBtn = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
         const entityNodeCancelBtn = e.target.closest('button');
 
         if (entityNodeCancelBtn?.classList.contains('btn-create_cancel')) {
+            e.preventDefault();
+            e.stopPropagation();
+
             this.#closeNewEntity(e);
             this.#blockCreateNewEntityBtn(e);
         }
     };
 
     #createEntity = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
         if (e.target.closest('.btn-create_confirm')) {
+            e.preventDefault();
+            e.stopPropagation();
+
             const entityNode =
                 e.target.closest('li[data-entity=list]') ||
                 e.target.closest('div[data-entity=card]');
@@ -509,7 +506,7 @@ export default class BoardPage extends Component {
             this.#draggingElement.parentNode.remove();
             const ids = [];
             document.querySelectorAll('.list').forEach((e) => {
-                ids.push(parseInt(e.dataset.list));
+                ids.push(parseInt(e.dataset.list, 10));
             });
             dispatcher.dispatch(actionReorderLists({ ids }));
         } else if (
