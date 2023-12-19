@@ -1,4 +1,4 @@
-import Component from '../../../core/basicComponent.js';
+import Component from '../../core/basicComponent.js';
 import template from './filesContainer.hbs';
 import './filesContainer.scss';
 
