@@ -55,7 +55,7 @@
     background-color: var(--delete-button-color);
 }
 
-@media screen and (min-width: 670px) {
+@media screen and (max-width: 670px) {
     .card-information__file-wrapper {
         flex-direction: column;
     }
