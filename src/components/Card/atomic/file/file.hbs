@@ -3,7 +3,7 @@
         href='{{this.url}}'
         target='_blank'
         class='flex-centered border-radius-5 file-wrapper__background'
-        download
+        download='{{this.file}}'
     ><span
             class='font-size-22 font-weight-bold file-wrapper__filename'
         >{{this.fileExtension}}</span>
@@ -14,7 +14,7 @@
                 class='flex-row-centered gap-5 border-radius-5 card-file-download'
                 href='{{this.url}}'
                 target='_blank'
-                download
+                download='{{this.file}}'
             >
                 <span
                     class='font-size-14 font-weight-500 card-information__filename'

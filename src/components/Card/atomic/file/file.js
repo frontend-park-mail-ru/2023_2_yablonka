@@ -17,7 +17,8 @@ export default class File extends Component {
             url: this.config.file_path,
             filename: this.config.original_name,
             creationDate: this.config.date_created,
-            fileExtension: this.config.file_path.match(/\..+$/)[0],
+            fileExtension: this.config.file_path.match(/\.\w+$/)[0],
+            file: this.config.file_path.match(/\/\w+\.\w+$/)[0],
         });
     }
 }
