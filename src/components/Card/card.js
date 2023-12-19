@@ -443,10 +443,12 @@ export default class Card extends Component {
 
         const files = workspaceStorage.storage.get(workspaceStorage.workspaceModel.files);
 
-        if (files) {
-            const comments = card.querySelector('.card-information__comments-wrapper');
-            comments.insertAdjacentHTML('beforebegin', new FilesContainer(null, {}).render());
-
+        if (files.length) {
+            if (!document.querySelector('.card-information__files')) {
+                const comments = card.querySelector('.card-information__comments-wrapper');
+                comments.insertAdjacentHTML('beforebegin', new FilesContainer(null, {}).render());
+            }
+            
             const filesContainer = card.querySelector('.card-information__files-wrapper');
             files.forEach((file) => {
                 filesContainer.insertAdjacentHTML(
@@ -474,6 +476,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__card-description').value = '';
         dialog.querySelector('.card-information__checklists').innerHTML = '';
         dialog.querySelector('.card-information__users-comments').innerHTML = '';
+        dialog.querySelector('.card-information__files')?.remove();
 
         const cardId = dialog.dataset.card;
         document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`).remove();
