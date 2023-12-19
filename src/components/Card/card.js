@@ -124,9 +124,8 @@ export default class Card extends Component {
     };
 
     #openCard = (e) => {
-        e.preventDefault();
-
         if (e.target.closest('.list__card-wrapper')) {
+            e.preventDefault();
             e.stopPropagation();
             BoardPage.closeAllCreateMenu();
 
@@ -171,10 +170,10 @@ export default class Card extends Component {
     };
 
     #closeCardByBackground = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
         if (e.target === e.currentTarget) {
+            e.preventDefault();
+            e.stopPropagation();
+            
             popupEvent.closeAllPopups();
             Card.updateHistory();
             Card.clearCard();
