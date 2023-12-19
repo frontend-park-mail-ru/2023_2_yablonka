@@ -25,7 +25,7 @@ class PopupEvent {
     };
 
     closeAllPopups = (e) => {
-        if (e) {
+        if (e && !e.target.closest('a').hasAttribute('download')) {
             e.preventDefault();
             e.stopPropagation();
 
