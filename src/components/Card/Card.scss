@@ -42,6 +42,10 @@
 }
 
 @media screen and (max-width: 500px) {
+    .card-data__card-information {
+        width: 100%;
+    }
+
     .card-modal__card-data {
         flex-direction: column-reverse;
         gap: 20px;

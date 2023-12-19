@@ -16,9 +16,14 @@ export default class File extends Component {
         return template({
             url: this.config.file_path,
             filename: this.config.original_name,
-            creationDate: this.config.date_created,
+            creationDate: this.#processDateToLocale(this.config.date_created),
             fileExtension: this.config.file_path.match(/\.\w+$/)[0],
             file: this.config.file_path.match(/\w+\.\w+$/)[0],
         });
     }
+
+    #processDateToLocale = (creationDate) => {
+        const date = new Date(creationDate);
+        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${date.getHours()}:${date.getMinutes()}`;
+    };
 }
