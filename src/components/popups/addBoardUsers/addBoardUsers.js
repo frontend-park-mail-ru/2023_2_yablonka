@@ -124,7 +124,7 @@ export default class AddBoardUsers extends Component {
             if (action === 'add-user' && !workspaceStorage.checkUserInBoard(userEmail)) {
                 if (
                     !workspaceStorage.isOwner(
-                        workspaceStorage.getUserByEmail(userEmail).user_id,
+                        workspaceStorage.getUserByEmail(userEmail)?.user_id,
                         boardId,
                     )
                 ) {

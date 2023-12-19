@@ -219,3 +219,11 @@
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
 }
+
+@media screen and (max-width: 800px) {
+    .card-information__name-and-tags-wrapper {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+}

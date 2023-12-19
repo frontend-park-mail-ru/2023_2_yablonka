@@ -22,7 +22,7 @@
 
 .check-item-name__text {
     color: var(--text-color-on-page);
-    max-width: 80%;
+    width: fit-content;
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -33,4 +33,20 @@
 
 .btn-check-item_delete:hover {
     background: var(--delete-checklist-button-hover);
+}
+
+.check-item-name__text ::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+}
+
+.check-item-name__text ::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.check-item-name__text ::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
 }
