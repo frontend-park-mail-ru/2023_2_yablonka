@@ -1125,7 +1125,7 @@ class WorkspaceStorage extends BaseStorage {
      * @returns
      */
     isOwner(userId, boardId) {
-        const board = this.getBoardById(boardId);
+        const board = this.getBoardById(parseInt(boardId, 10));
         return board.owner_id === userId;
     }
 

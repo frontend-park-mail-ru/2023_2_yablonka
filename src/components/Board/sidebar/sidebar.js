@@ -21,7 +21,6 @@ export default class Sidebar extends Component {
             workspaceIcon: Array.from(this.config.workspaceName)[0],
             workspaceName: this.config.workspaceName,
             boards: this.#getWorkspaceBoards(this.config.workspace_id),
-            isOwner: workspaceStorage.isOwner(this.config.user_id),
         });
     }
 

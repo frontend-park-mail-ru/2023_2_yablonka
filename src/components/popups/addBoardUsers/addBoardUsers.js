@@ -1,6 +1,7 @@
 import { actionAddUserBoard, actionRemoveUserBoard } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
 import Validator from '../../../modules/validator.js';
+import userStorage from '../../../storages/userStorage.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Component from '../../core/basicComponent.js';
@@ -121,7 +122,12 @@ export default class AddBoardUsers extends Component {
                 10,
             );
             if (action === 'add-user' && !workspaceStorage.checkUserInBoard(userEmail)) {
-                if (!workspaceStorage.isOwner(userEmail)) {
+                if (
+                    !workspaceStorage.isOwner(
+                        workspaceStorage.getUserByEmail(userEmail).user_id,
+                        boardId,
+                    )
+                ) {
                     dispatcher.dispatch(
                         actionAddUserBoard({
                             user_email: userEmail,

@@ -22,7 +22,7 @@ export default class BoardSettings extends Component {
             'beforeend',
             template({
                 ID: this.config.board_id,
-                isOwner: workspaceStorage.isOwner(this.config.user_id, this.config.board_id),
+                isOwner: this.config.is_owner,
             }),
         );
     }
