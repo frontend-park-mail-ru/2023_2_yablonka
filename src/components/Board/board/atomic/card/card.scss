@@ -3,7 +3,6 @@
     display: block;
 }
 
-
 .list__card {
     width: 100%;
     background-color: var(--card-item-background-color);
@@ -11,4 +10,8 @@
 
 .card-name {
     color: var(--text-color-on-page);
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }

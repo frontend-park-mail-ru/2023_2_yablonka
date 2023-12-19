@@ -36,7 +36,8 @@
 }
 
 .btn-add-board-user_delete {
-    background-color: var(--delete-button-color);
+    background-color: var(--btn-file-delete);
+    color: var(--text-color-in-card);
     min-height: 25px;
     min-width: 100px;
 }
