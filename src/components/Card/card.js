@@ -453,7 +453,7 @@ export default class Card extends Component {
                     'afterbegin',
                     new File(null, {
                         date_created: file.date_created,
-                        file_path: file.file_path,
+                        file_path: `/${file.file_path}`,
                         original_name: file.original_name,
                         task_id: file.task_id,
                     }).render(),
