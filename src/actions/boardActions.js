@@ -127,3 +127,8 @@ export const actionGetFiles = (data) => ({
     type: 'getFiles',
     value: data,
 });
+
+export const actionDeleteFile = (data) => ({
+    type:'deleteFile',
+    value:data
+})

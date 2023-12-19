@@ -503,6 +503,23 @@ class WorkspaceStorage extends BaseStorage {
         );
     }
 
+    async deleteFile(file) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/file/remove/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            file,
+        );
+
+        const {status} = responsePromise;
+
+        if (status === 200){
+            const files = this.storage.get(this.workspaceModel.files);
+            files.splice(files.findIndex(f=>f.file_path===file.file_path));
+            this.storage.set(this.workspaceModel.files, files);
+        }
+    }
+
     /**
      * Создание нового чеклиста
      * @param {Object} checklist - данные нового чеклиста
