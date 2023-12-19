@@ -24,6 +24,7 @@ import CheckItem from './atomic/checkItem/checkItem.js';
 import BoardPage from '../../pages/Board/board.js';
 import FilesContainer from './filesContainer/filesContainer.js';
 import File from './atomic/file/file.js';
+import ChecklistsContainer from './checklistsContainer/checklistsContainer.js';
 
 /**
  * Попап для хедера
@@ -396,14 +397,19 @@ export default class Card extends Component {
 
     static addChecklists = (cardId, clear) => {
         const dialog = document.querySelector('#card');
-        const checklistsLocation = dialog.querySelector('.card-information__checklists');
         const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));
 
         if (checklists.length) {
-            checklistsLocation.style.display = 'flex';
-            if (clear) {
-                checklistsLocation.innerHTML = '';
-            }
+            // checklistsLocation.style.display = 'flex';
+            const description = dialog.querySelector('.card-information__description-wrapper');
+            console.log(1, description);
+            description.insertAdjacentHTML('afterend', new ChecklistsContainer(null, {}).render());
+
+            const checklistsLocation = dialog.querySelector('.card-information__checklists');
+            console.log(checklistsLocation);
+            // if (clear) {
+            //     checklistsLocation.innerHTML = '';
+            // }
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',
