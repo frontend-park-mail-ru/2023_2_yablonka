@@ -107,7 +107,7 @@ export default class Card extends Component {
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.updateUsers(parseInt(dialog.dataset.card, 10));
-        Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+        Card.addChecklists(parseInt(dialog.dataset.card, 10));
         Card.getFiles();
 
         if (!dialog.hasAttribute('open')) {
@@ -149,7 +149,7 @@ export default class Card extends Component {
             Card.#addComments(parseInt(dialog.dataset.card, 10));
             Card.addDate(parseInt(dialog.dataset.card, 10));
             Card.updateUsers(parseInt(dialog.dataset.card, 10));
-            Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+            Card.addChecklists(parseInt(dialog.dataset.card, 10));
             Card.getFiles();
 
             if (!dialog.hasAttribute('open')) {
@@ -395,21 +395,16 @@ export default class Card extends Component {
         }
     };
 
-    static addChecklists = (cardId, clear) => {
+    static addChecklists = (cardId) => {
         const dialog = document.querySelector('#card');
         const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));
 
         if (checklists.length) {
-            // checklistsLocation.style.display = 'flex';
             const description = dialog.querySelector('.card-information__description-wrapper');
-            console.log(1, description);
             description.insertAdjacentHTML('afterend', new ChecklistsContainer(null, {}).render());
 
             const checklistsLocation = dialog.querySelector('.card-information__checklists');
-            console.log(checklistsLocation);
-            // if (clear) {
-            //     checklistsLocation.innerHTML = '';
-            // }
+   
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',

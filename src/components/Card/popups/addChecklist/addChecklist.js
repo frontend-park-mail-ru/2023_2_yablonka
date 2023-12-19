@@ -241,12 +241,12 @@ export default class AddChecklist extends Component {
     };
 
     #setCheckItemCheck = async (e) => {
-        e.stopPropagation();
-
-        const input = e.target.closest('.input-check-item__checkbox');
+        const input = e.target.closest('.input-checkitem__checkbox');
 
         if (input) {
-            const checklistItem = e.target.closest('.check-item');
+            e.stopPropagation();
+
+            const checklistItem = e.target.closest('.checkitem');
             const checklistItemId = parseInt(checklistItem.dataset.checkitem_id, 10);
 
             let check;
@@ -266,21 +266,20 @@ export default class AddChecklist extends Component {
                     list_position: workspaceStorage.getChecklistItems(
                         parseInt(checklistItem.dataset.checklist_id, 10),
                     ).length,
-                    name: checklistItem.querySelector('.check-item-name__text').textContent,
+                    name: checklistItem.querySelector('.checkitem-name__text').textContent,
                 }),
             );
         }
     };
 
     #deleteCheckItem = async (e) => {
-        e.stopPropagation();
-
-        const btn = e.target.closest('.btn-check-item_delete');
+        const btn = e.target.closest('.btn-checkitem_delete');
 
         if (btn) {
+            e.stopPropagation();
             e.preventDefault();
 
-            const checklist = e.target.closest('.check-item');
+            const checklist = e.target.closest('.checkitem');
             const checklistItemId = parseInt(checklist.dataset.checkitem_id, 10);
             await dispatcher.dispatch(actionDeleteChecklistItem({ id: checklistItemId }));
         }
@@ -293,7 +292,7 @@ export default class AddChecklist extends Component {
             const description = document.querySelector('.card-information__description-wrapper');
             description.insertAdjacentHTML('afterend', new ChecklistsContainer(null, {}).render());
         }
-        // checklistsLocation.style.display = 'flex';
+
         const checklistsLocation = dialog.querySelector('.card-information__checklists');
 
         checklistsLocation.insertAdjacentHTML(
@@ -340,7 +339,7 @@ export default class AddChecklist extends Component {
     static deleteCheckItem = (checkItemId) => {
         const dialog = document.querySelector('#card');
         const checklistItemsObject = dialog.querySelector(
-            `.check-item[data-checkitem_id="${checkItemId}"]`,
+            `.checkitem[data-checkitem_id="${checkItemId}"]`,
         );
         const checklistItemsContainer = checklistItemsObject.parentElement;
 
