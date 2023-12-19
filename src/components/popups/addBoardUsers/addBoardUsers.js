@@ -100,11 +100,9 @@ export default class AddBoardUsers extends Component {
         if (input.value.length === 0) {
             btnAdd.disabled = true;
             btnDelete.disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             btnAdd.disabled = false;
             btnDelete.disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
@@ -154,7 +152,12 @@ export default class AddBoardUsers extends Component {
                 });
             }
             if (action === 'delete-user' && workspaceStorage.checkUserInBoard(userEmail)) {
-                if (!workspaceStorage.isOwner(userEmail)) {
+                if (
+                    !workspaceStorage.isOwner(
+                        workspaceStorage.getUserByEmail(userEmail)?.user_id,
+                        boardId,
+                    )
+                ) {
                     dispatcher.dispatch(
                         actionRemoveUserBoard({
                             user_id: workspaceStorage.getUserByEmail(userEmail).user_id,

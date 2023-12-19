@@ -52,7 +52,8 @@
 }
 
 .btn-file-actions_delete {
-    background-color: var(--delete-button-color);
+    background-color: var(--btn-file-delete);
+    color: var(--text-color-in-card);
 }
 
 @media screen and (max-width: 670px) {

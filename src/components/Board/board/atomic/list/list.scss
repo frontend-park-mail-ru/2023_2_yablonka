@@ -90,10 +90,10 @@
     color: #c0c9f4;
     outline: none;
     background-color: var(--input-background-color);
-    box-shadow: inset 0 0 0 2px var(--need-text-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
 }
 
 .input-new-card-name:focus {
     background-color: var(--input-background-color);
-    box-shadow: inset 0 0 0 2px var(--need-text-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
 }

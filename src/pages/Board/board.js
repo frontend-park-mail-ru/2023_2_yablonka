@@ -248,10 +248,8 @@ export default class BoardPage extends Component {
                 menuForm.style.display = 'none';
 
                 const btn = menu.node.querySelector(`.btn-create_confirm`);
-                const input = menu.node.querySelector(`.input-new-${menu.entity}-name`);
 
                 btn.disabled = true;
-                input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
             });
 
             this.#openedCreateMenu = [];
@@ -273,13 +271,8 @@ export default class BoardPage extends Component {
 
             if (input.value.length === 0) {
                 btn.disabled = true;
-                input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
             } else {
                 btn.disabled = false;
-                input.setAttribute(
-                    'style',
-                    'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)',
-                );
             }
         }
     };
