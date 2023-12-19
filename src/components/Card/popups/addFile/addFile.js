@@ -188,7 +188,7 @@ export default class AddFile extends Component {
 
     #uploadFileByUser = (e) => {
         if (e.target.closest('.card-information__file-wrapper') && e.target.closest('a')) {
-            e.stopImmediatePropagation();
+            e.stopPropagation();
         }
     };
 
