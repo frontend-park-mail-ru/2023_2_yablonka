@@ -479,7 +479,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__date-wrapper').innerHTML = '';
         dialog.querySelector('.card-information__users-wrapper').innerHTML = '';
         dialog.querySelector('.card-information__card-description').value = '';
-        dialog.querySelector('.card-information__checklists').remove();
+        dialog.querySelector('.card-information__checklists')?.remove();
         dialog.querySelector('.card-information__users-comments').innerHTML = '';
         dialog.querySelector('.card-information__files')?.remove();
 
