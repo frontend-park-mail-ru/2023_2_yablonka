@@ -20,9 +20,15 @@ export default class CardDate extends Component {
 
     #getCardTimeInformation = (cardId) => {
         const card = workspaceStorage.getCardById(parseInt(cardId, 10));
-        const start = card.start ? card.start.split('T')[0] : false;
-        const end = card.end ? card.end.split('T')[0] : false;
+        const start = card.start ? new Date(card.start) : false;
+        const end = card.end ? new Date(card.end) : false;
 
-        return { start, end };
+        return {
+            start: start ? this.#processDateToLocaleTime(start) : false,
+            end: end ? this.#processDateToLocaleTime(end) : false,
+        };
     };
+
+    #processDateToLocaleTime = (date) =>
+        `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
 }
