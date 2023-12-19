@@ -517,6 +517,14 @@ class WorkspaceStorage extends BaseStorage {
             const files = this.storage.get(this.workspaceModel.files);
             files.splice(files.findIndex((f) => f.file_path === file.file_path));
             this.storage.set(this.workspaceModel.files, files);
+            const oldFile = document
+            .querySelector(`a[href="${file.file_path}"]`)
+            .closest('.card-information__file-wrapper');
+        oldFile.remove();
+
+        if (!document.querySelectorAll('.card-information__file-wrapper').length) {
+            document.querySelector('.card-information__files').remove();
+        }
         }
     }
 
@@ -847,48 +855,6 @@ class WorkspaceStorage extends BaseStorage {
             currentCardUserIds.splice(ind, 1);
 
             Card.updateUsers(parseInt(data.task_id, 10));
-        }
-    }
-
-    async addFileCard(file) {
-        const responsePromise = await AJAX(
-            `${apiPath + apiVersion}task/file/add/`,
-            'POST',
-            userStorage.storage.get(userStorage.userModel.csrf),
-            file,
-        );
-
-        let body = {};
-
-        try {
-            body = await responsePromise.json();
-        } catch (error) {
-            body = {};
-        }
-
-        const { status } = responsePromise;
-        if (status === 200) {
-        }
-    }
-
-    async removeFileCard(file) {
-        const responsePromise = await AJAX(
-            `${apiPath + apiVersion}task/file/remove/`,
-            'DELETE',
-            userStorage.storage.get(userStorage.userModel.csrf),
-            file,
-        );
-
-        const { status } = responsePromise;
-        if (status === 200) {
-            const oldFile = document
-                .querySelector(`a[href="${file.file_path}"]`)
-                .closest('.card-information__file-wrapper');
-            oldFile.remove();
-
-            if (!document.querySelectorAll('.card-information__file-wrapper').length) {
-                document.querySelector('.card-information__files').remove();
-            }
         }
     }
 
