@@ -79,6 +79,9 @@ class Board extends BaseView {
             ],
         );
 
+        this.render();
+        this.addListeners();
+
         if (cID) {
             if (workspaceStorage.getCardById(parseInt(cID, 10))) {
                 Card.openByRedirect(cID);
@@ -88,9 +91,6 @@ class Board extends BaseView {
                 return;
             }
         }
-
-        this.render();
-        this.addListeners();
 
         BoardSettings.resizeBoardName();
         ListSettings.resizeListsName();
