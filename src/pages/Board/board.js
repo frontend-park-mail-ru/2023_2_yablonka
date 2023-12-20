@@ -68,22 +68,9 @@ export default class BoardPage extends Component {
      * Добавляет обработчики событий
      */
     addEventListeners() {
-        this.parent.querySelector('.logo-wrapper').addEventListener('click', this.toBoardsHandler);
         this.parent.querySelectorAll('.link-sidebar-boards-list__board').forEach((link) => {
             link.addEventListener('click', this.toBoardHandler);
         });
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .addEventListener('click', this.toBoardsHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=logout]')
-            .addEventListener('click', this.logoutHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=profile]')
-            .addEventListener('click', this.toProfileHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=security]')
-            .addEventListener('click', this.toSecurityHandler);
         this.parent.addEventListener('click', this.#addNewEntity);
         this.parent.addEventListener('click', BoardPage.closeAllCreateMenu);
         this.parent.addEventListener('input', this.#blockCreateNewEntityBtn);
@@ -103,24 +90,9 @@ export default class BoardPage extends Component {
      * Убирает обработчики событий
      */
     removeEventListeners() {
-        this.parent
-            .querySelector('.logo-wrapper')
-            .removeEventListener('click', this.toBoardsHandler);
         this.parent.querySelectorAll('.link-sidebar-boards-list__board').forEach((link) => {
             link.removeEventListener('click', this.toBoardHandler);
         });
-        this.parent
-            .querySelector('.profile-link[data-action=logout]')
-            .removeEventListener('click', this.logoutHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .removeEventListener('click', this.toBoardsHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=profile]')
-            .removeEventListener('click', this.toProfileHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=security]')
-            .removeEventListener('click', this.toSecurityHandler);
 
         this.parent.removeEventListener('click', this.#addNewEntity);
         this.parent.removeEventListener('click', BoardPage.closeAllCreateMenu);
@@ -138,25 +110,6 @@ export default class BoardPage extends Component {
     }
 
     /**
-     * Handler события нажатия на ссылку для перехода на log out
-     * @param {Event} e - Событие
-     */
-    logoutHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionLogout());
-    }
-
-    /**
-     * Handler события нажатия на ссылку для перехода на страницу доски
-     * @param {Event} e - Событие
-     */
-    toBoardsHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/main', false));
-    }
-
-    /**
      * Handler события нажатия на ссылку для перехода на страницу досок
      * @param {Event} e - Событие
      */
@@ -166,26 +119,6 @@ export default class BoardPage extends Component {
         dispatcher.dispatch(
             actionRedirect(e.target.closest('a').href.replace(window.location.origin, ''), false),
         );
-    }
-
-    /**
-     * Handler события нажатия на ссылку для перехода на страницу смены пароля
-     * @param {Event} e - Событие
-     */
-    toSecurityHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/security', false));
-    }
-
-    /**
-     * Handler события нажатия на ссылку для перехода на страницу профиля
-     * @param {Event} e - Событие
-     */
-    toProfileHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/profile', false));
     }
 
     #addNewEntity = (e) => {

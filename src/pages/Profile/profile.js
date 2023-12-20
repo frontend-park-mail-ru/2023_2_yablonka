@@ -1,5 +1,4 @@
 import {
-    actionLogout,
     actionNavigate,
     actionRedirect,
     actionUpdatePassword,
@@ -63,26 +62,11 @@ export default class Profile extends Component {
      */
     addEventListeners() {
         this.parent
-            .querySelector('.profile-link[data-action=profile]')
-            .addEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=security]')
-            .addEventListener('click', this.goSecurityHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .addEventListener('click', this.toMainPageHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=logout]')
-            .addEventListener('click', this.logoutHandler);
-        this.parent
             .querySelector('.profile-navigation__security')
             .addEventListener('click', this.goSecurityHandler);
         this.parent
             .querySelector('.profile-navigation__user-information')
             .addEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.header-menu__logo')
-            .addEventListener('click', this.toMainPageHandler);
         this.parent
             .querySelector('button[data-action=update-profile]')
             ?.addEventListener('click', this.#changeProfileHandler);
@@ -99,26 +83,11 @@ export default class Profile extends Component {
      */
     removeEventListeners() {
         this.parent
-            .querySelector('.profile-link[data-action=profile]')
-            .removeEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=security]')
-            .removeEventListener('click', this.goSecurityHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .removeEventListener('click', this.toMainPageHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=logout]')
-            .removeEventListener('click', this.logoutHandler);
-        this.parent
             .querySelector('.profile-navigation__security')
             .removeEventListener('click', this.goSecurityHandler);
         this.parent
             .querySelector('.profile-navigation__user-information')
             .removeEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.header-menu__logo')
-            .removeEventListener('click', this.toMainPageHandler);
         this.parent
             .querySelector('button[data-action=update-profile]')
             ?.removeEventListener('click', this.changeProfileHandler);
@@ -221,16 +190,6 @@ export default class Profile extends Component {
     };
 
     /**
-     * Handler события нажатия на ссылку для перехода на страницу досок
-     * @param {Event} e - Событие
-     */
-    toMainPageHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/main', false));
-    }
-
-    /**
      * Запись в историю части с профилем отправка события на рендер части со сменой пароля
      * @param {Event} e - событие
      */
@@ -248,15 +207,6 @@ export default class Profile extends Component {
         e.preventDefault();
         dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
         dispatcher.dispatch(actionRedirect('/profile', '', false));
-    }
-
-    /**
-     * Handler события нажатия на ссылку для перехода на log out
-     * @param {Event} e - Событие
-     */
-    logoutHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionLogout());
     }
 
     static changeAvatar = (avatarUrl) => {
