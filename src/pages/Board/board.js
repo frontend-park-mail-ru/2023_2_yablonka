@@ -219,12 +219,12 @@ export default class BoardPage extends Component {
     };
 
     #cancelCreateNewEntityBtn = (e) => {
-        e?.preventDefault();
-        e?.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
         const entityNodeCancelBtn = e.target.closest('button');
 
-        if (entityNodeCancelBtn?.classList.contains('btn-create_cancel') || !e) {
+        if (entityNodeCancelBtn?.classList.contains('btn-create_cancel')) {
             this.#closeNewEntity(e);
             this.#blockCreateNewEntityBtn(e);
         }
@@ -233,14 +233,12 @@ export default class BoardPage extends Component {
     #proccessKeydownWithEntity = (e) => {
         const entityNode =
             e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
-        console.log(e.key);
-        console.log(123);
 
         if (entityNode) {
             e.stopPropagation();
             if (e.key === 'Enter' && entityNode.querySelector('input').value) {
                 e.preventDefault();
-                this.#createEntity();
+                this.#createEntity(e);
             }
             if (e.key === 'Escape') {
                 e.preventDefault();
@@ -250,10 +248,10 @@ export default class BoardPage extends Component {
     };
 
     #createEntity = (e) => {
-        e?.preventDefault();
-        e?.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-        if (e.target.closest('.btn-create_confirm') || !e) {
+        if (e.target.closest('.btn-create_confirm') || e?.key === 'Enter') {
             const entityNode =
                 e.target.closest('li[data-entity=list]') ||
                 e.target.closest('div[data-entity=card]');
