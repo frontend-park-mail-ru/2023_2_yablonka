@@ -46,16 +46,17 @@ class Board extends BaseView {
         this.boardID = bID;
         this.cardID = cID;
 
-        if (cID && !workspaceStorage.getCardById(parseInt(cID, 10))) {
-            dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
-            dispatcher.dispatch(actionRedirect('/404', false));
-        }
-
         await dispatcher.dispatch(actionGetWorkspaces());
         await dispatcher.dispatch(actionGetBoard(parseInt(this.boardID, 10)));
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
         const board = workspaceStorage.getBoardById(parseInt(this.boardID, 10));
+        
+        if (!board  || board.workspace_id !== parseInt(wsID, 10)) {
+            await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
+            await dispatcher.dispatch(actionRedirect('/404', false));
+            return;
+        }
 
         this.components.push(new BoardPage(this.root, { user, board }));
 
@@ -81,8 +82,14 @@ class Board extends BaseView {
         this.render();
         this.addListeners();
 
-        if (cID && workspaceStorage.getCardById(parseInt(cID, 10))) {
-            Card.openByRedirect(cID);
+        if (cID) {
+            if (workspaceStorage.getCardById(parseInt(cID, 10))) {
+                Card.openByRedirect(cID);
+            } else {
+                await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
+                await dispatcher.dispatch(actionRedirect('/404', false));
+                return;
+            }
         }
 
         BoardSettings.resizeBoardNameInput();
