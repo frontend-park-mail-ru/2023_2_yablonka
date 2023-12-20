@@ -64,6 +64,12 @@ export default class Card extends Component {
             .addEventListener('keydown', this.#enterButtonHandler);
         this.parent
             .querySelector('.card-information__card-description')
+            .addEventListener('keydown', this.#enterButtonHandler);
+        this.parent
+            .querySelector('.card-information__card-description')
+            .addEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__card-description')
             .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
@@ -91,6 +97,12 @@ export default class Card extends Component {
             .removeEventListener('keydown', this.#enterButtonHandler);
         this.parent
             .querySelector('.card-information__card-description')
+            .removeEventListener('keydown', this.#enterButtonHandler);
+        this.parent
+            .querySelector('.card-information__card-description')
+            .removeEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__card-description')
             .removeEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
@@ -112,6 +124,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__card-name').textContent = card.name;
         dialog.querySelector('.card-information-list-name__title').textContent = list.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
+        Card.resizeCardDescription();
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
@@ -154,6 +167,7 @@ export default class Card extends Component {
             dialog.querySelector('.card-information__card-name').textContent = card.name;
             dialog.querySelector('.card-information-list-name__title').textContent = list.name;
             dialog.querySelector('.card-information__card-description').value = card.description;
+            Card.resizeCardDescription();
 
             Card.#addComments(parseInt(dialog.dataset.card, 10));
             Card.addDate(parseInt(dialog.dataset.card, 10));
@@ -208,8 +222,14 @@ export default class Card extends Component {
         e.stopPropagation();
 
         if (e.key === 'Enter') {
-            e.preventDefault();
-            e.target.blur();
+            if (e.target.closest('.card-information__card-name')) {
+                e.preventDefault();
+                e.target.closest('.card-information__card-name').blur();
+            }
+            if (!e.shiftKey && e.target.closest('.card-information__card-description')) {
+                e.preventDefault();
+                e.target.closest('.card-information__card-description').blur();
+            }
         }
     };
 
@@ -219,7 +239,8 @@ export default class Card extends Component {
         const dialog = this.parent.querySelector('#card');
 
         const name = dialog.querySelector('.card-information__card-name').textContent;
-        const description = dialog.querySelector('.card-information__card-description').value;
+        const description = dialog.querySelector('.card-information__card-description');
+        const text = description.value;
         const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
         const card = workspaceStorage.getCardById(cardId, 10);
 
@@ -243,7 +264,7 @@ export default class Card extends Component {
                     name,
                     start: card.start,
                     end: card.end,
-                    description,
+                    description: text.slice(0, 1024),
                     list_position: parseInt(card.list_position, 10),
                 }),
             );
@@ -260,8 +281,20 @@ export default class Card extends Component {
 
         cardInList.querySelector('.card-name').textContent = card.name ? card.name : '';
 
-        name.value = card.name ? card.name : '';
+        name.textContent = card.name ? card.name : '';
         description.value = card.description ? card.description : '';
+        Card.resizeCardDescription();
+    };
+
+    static resizeCardDescription = (e) => {
+        if (!e || e.target.closest('.card-information__card-description')) {
+            e?.stopPropagation();
+            const description = document.querySelector('.card-information__card-description');
+            description.setAttribute(
+                'style',
+                `height:${([...description.value.matchAll(/\n/g)].length + 3) * 20}px`,
+            );
+        }
     };
 
     #createComment = async (e) => {

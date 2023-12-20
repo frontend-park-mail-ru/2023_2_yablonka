@@ -11,6 +11,7 @@
     color: var(--text-color-in-card);
     position: relative;
     align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 .card-information__name-wrapper {
@@ -137,9 +138,13 @@
     max-height: 180px;
     overflow-y: auto;
     overflow-x: hidden;
-    resize: vertical;
+    resize: none;
     outline: none;
     color: var(--text-color-in-card);
+}
+
+.card-information__card-description:focus {
+    border: 2px solid var(--text-color-on-page);
 }
 
 .card-information__card-description::placeholder {
