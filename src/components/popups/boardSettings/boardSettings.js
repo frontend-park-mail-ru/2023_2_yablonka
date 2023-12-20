@@ -123,10 +123,15 @@ export default class BoardSettings extends Component {
     static resizeBoardNameInput = () => {
         window.requestAnimationFrame(() => {
             const input = document.querySelector('.board-name__input');
-            const maxWidth = Math.floor(
-                document.querySelector('.board-menu__team').getBoundingClientRect().left -
-                    input.getBoundingClientRect().left,
-            );
+            const windowSize = window.innerWidth;
+            const boardMenuRightElementSizes = document
+                .querySelector('.board__menu_right')
+                .getBoundingClientRect();
+            const maxWidth =
+                windowSize -
+                boardMenuRightElementSizes.width -
+                input.getBoundingClientRect().left -
+                20;
             input.parentElement.setAttribute('style', `max-width: ${maxWidth}px`);
         });
     };
