@@ -244,8 +244,7 @@ export default class BoardPage extends Component {
                 this.#blockCreateNewEntityBtn(e);
 
                 if (entity === 'list') {
-                    const boardId = this.parent.querySelector('.input-board-name__input').dataset
-                        .board;
+                    const boardId = this.parent.querySelector('.board-name__input').dataset.board;
 
                     dispatcher.dispatch(
                         actionCreateList({

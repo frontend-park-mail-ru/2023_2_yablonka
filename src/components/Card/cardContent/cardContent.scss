@@ -194,13 +194,13 @@
     margin: 10px;
 }
 
-.card-information__users-comments {
-    width: 100%;
-}
-
 .card-information__comment-text::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
+}
+
+.card-information__users-comments {
+    width: 100%;
 }
 
 .card-information__card-name::-webkit-scrollbar {
