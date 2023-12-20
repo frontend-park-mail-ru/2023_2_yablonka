@@ -61,10 +61,10 @@ export default class Card extends Component {
             .addEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
-            .addEventListener('keydown', this.#changeNameAndDescription);
+            .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
-            .addEventListener('keydown', this.#changeNameAndDescription);
+            .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__add-comment-text')
             .addEventListener('keydown', this.#createComment);
@@ -85,10 +85,13 @@ export default class Card extends Component {
             .removeEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-description')
-            .removeEventListener('keydown', this.#changeNameAndDescription);
+            .removeEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
-            .removeEventListener('keydown', this.#changeNameAndDescription);
+            .removeEventListener('blur', this.#changeNameAndDescription);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .removeEventListener('keydown', this.#createComment);
     }
 
     static openByRedirect = (id) => {
@@ -205,8 +208,10 @@ export default class Card extends Component {
         const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
         const card = workspaceStorage.getCardById(cardId, 10);
 
-        if (cardId && e.key === 'Enter') {
-            e.preventDefault();
+        if (cardId) {
+            if (e.target.closest('.card-information__card-name')) {
+                e.preventDefault();
+            }
             dispatcher.dispatch(
                 actionNavigate(
                     `${
@@ -404,7 +409,7 @@ export default class Card extends Component {
             description.insertAdjacentHTML('afterend', new ChecklistsContainer(null, {}).render());
 
             const checklistsLocation = dialog.querySelector('.card-information__checklists');
-   
+
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',

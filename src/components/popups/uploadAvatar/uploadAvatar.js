@@ -111,8 +111,6 @@ export default class UploadAvatarModal extends Component {
     };
 
     #closeModal = (e) => {
-        // const dialog = this.parent.querySelector('#upload-avatar');
-
         if (e.target === e.currentTarget) {
             this.#changeForm('none', 'flex');
             popupEvent.closeAllPopups();
@@ -174,6 +172,7 @@ export default class UploadAvatarModal extends Component {
 
             this.#clearFile();
             this.#changeForm('none', 'flex');
+            popupEvent.closeAllPopups();
         }
     };
 
