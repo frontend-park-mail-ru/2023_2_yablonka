@@ -247,7 +247,7 @@ export default class BoardPage extends Component {
         }
     };
 
-    #createEntity = (e) => {
+    #createEntity = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
@@ -262,13 +262,10 @@ export default class BoardPage extends Component {
             const { value } = input;
 
             if (Validator.validateObjectName(value)) {
-                this.#closeNewEntity(e);
-                this.#blockCreateNewEntityBtn(e);
-
                 if (entity === 'list') {
                     const boardId = this.parent.querySelector('.board-name__input').dataset.board;
 
-                    dispatcher.dispatch(
+                    await dispatcher.dispatch(
                         actionCreateList({
                             board_id: parseInt(boardId, 10),
                             name: value,
@@ -279,7 +276,7 @@ export default class BoardPage extends Component {
                 } else {
                     const listId = e.target.closest('.list').dataset.list;
 
-                    dispatcher.dispatch(
+                    await dispatcher.dispatch(
                         actionCreateCard({
                             list_id: parseInt(listId, 10),
                             name: value,
@@ -288,6 +285,7 @@ export default class BoardPage extends Component {
                         }),
                     );
                 }
+                BoardPage.closeAllCreateMenu();
             } else {
                 NotificationMessage.showNotification(input, false, true, {
                     fontSize: 12,
