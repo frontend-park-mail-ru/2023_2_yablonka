@@ -51,8 +51,8 @@ class Board extends BaseView {
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
         const board = workspaceStorage.getBoardById(parseInt(this.boardID, 10));
-        
-        if (!board  || board.workspace_id !== parseInt(wsID, 10)) {
+
+        if (!board || board.workspace_id !== parseInt(wsID, 10)) {
             await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
             await dispatcher.dispatch(actionRedirect('/404', false));
             return;
@@ -79,9 +79,6 @@ class Board extends BaseView {
             ],
         );
 
-        this.render();
-        this.addListeners();
-
         if (cID) {
             if (workspaceStorage.getCardById(parseInt(cID, 10))) {
                 Card.openByRedirect(cID);
@@ -92,7 +89,11 @@ class Board extends BaseView {
             }
         }
 
-        BoardSettings.resizeBoardNameInput();
+        this.render();
+        this.addListeners();
+
+        BoardSettings.resizeBoardName();
+        ListSettings.resizeListsName();
     }
 
     /**

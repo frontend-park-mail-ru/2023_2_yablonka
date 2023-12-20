@@ -28,7 +28,8 @@ export default class ListSettings extends Component {
         this.parent
             .querySelector('.btn-delete-list')
             .addEventListener('click', this.#deleteListHandler);
-        this.parent.querySelector('.board').addEventListener('keydown', this.#changeNameHandler);
+        this.parent.querySelector('.board').addEventListener('focusout', this.#changeListName);
+        this.parent.querySelector('.board').addEventListener('keydown', this.#enterButtonHandler);
     }
 
     removeEventListeners() {
@@ -39,7 +40,10 @@ export default class ListSettings extends Component {
         this.parent
             .querySelector('.btn-delete-list')
             .addEventListener('click', this.#deleteListHandler);
-        this.parent.querySelector('.board').removeEventListener('keydown', this.#changeNameHandler);
+        this.parent.querySelector('.board').removeEventListener('focusout', this.#changeListName);
+        this.parent
+            .querySelector('.board')
+            .removeEventListener('keydown', this.#enterButtonHandler);
     }
 
     #renameList = () => {
@@ -97,20 +101,31 @@ export default class ListSettings extends Component {
         }
     };
 
-    #resize = () => {
-        const dialog = this.parent.querySelector('#list-settings');
+    #enterButtonHandler = (e) => {
+        e.stopPropagation();
 
-        if (dialog.dataset.workspace) {
-            const btnCoordinates = this.parent
-                .querySelector(`.btn-change-list[data-list="${dialog.dataset.workspace}"]`)
-                .getBoundingClientRect();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
-                }px`,
-            );
+        if (e.key === 'Enter' && e.target.closest('.list__title')) {
+            e.preventDefault();
+            e.target.closest('.list__title').blur();
         }
+    };
+
+    static resizeListsName = () => {
+        window.requestAnimationFrame(() => {
+            document.querySelectorAll('.list__title-wrapper').forEach((listName) => {
+                const name = listName.querySelector('.list__title');
+                const settingsBtn = listName.querySelector('.btn-change-list');
+
+                name.setAttribute(
+                    'style',
+                    `max-width: ${
+                        settingsBtn.getBoundingClientRect().left -
+                        name.getBoundingClientRect().left -
+                        10
+                    }px`,
+                );
+            });
+        });
     };
 
     #deleteListHandler = (e) => {
@@ -124,28 +139,25 @@ export default class ListSettings extends Component {
         }
     };
 
-    #changeNameHandler = async (e) => {
-        e.stopPropagation();
-
+    #changeListName = async (e) => {
         if (e.target.closest('.list__title')) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const listId = e.target.closest('.list').dataset.list;
-                const { name, listPosition } = workspaceStorage.getListById(parseInt(listId, 10));
+            e.stopPropagation();
+            e.preventDefault();
+            
+            const listId = e.target.closest('.list').dataset.list;
+            const { name, listPosition } = workspaceStorage.getListById(parseInt(listId, 10));
 
-                const { textContent } = e.target;
-
-                if (textContent !== '' && textContent !== name) {
-                    await dispatcher.dispatch(
-                        actionUpdateList({
-                            id: parseInt(listId, 10),
-                            name: textContent,
-                            list_position: listPosition,
-                        }),
-                    );
-                } else {
-                    e.target.textContent = name;
-                }
+            const newName = e.target.closest('.list__title').textContent;
+            if (newName !== '' && newName !== name) {
+                await dispatcher.dispatch(
+                    actionUpdateList({
+                        id: parseInt(listId, 10),
+                        name: newName,
+                        list_position: listPosition,
+                    }),
+                );
+            } else {
+                e.target.textContent = name;
             }
         }
     };

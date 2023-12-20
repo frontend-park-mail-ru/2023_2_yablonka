@@ -295,13 +295,6 @@ export default class BoardPage extends Component {
         }
     };
 
-    static updateList = (list) => {
-        const lst = document.querySelector(`.list[data-list="${list.id}"]`);
-        const name = lst.querySelector('.list__title');
-        name.textContent = list.name;
-        name.focus();
-    };
-
     static deleteList = (listId) => {
         const list = document.querySelector(`.list[data-list="${listId}"]`);
         list.remove();
@@ -331,18 +324,6 @@ export default class BoardPage extends Component {
                     ? e.target.closest('.list__card')
                     : e.target.closest('.list__container');
             }
-
-            // const sizes = this.#draggingElement.getBoundingClientRect();
-            // console.log(sizes);
-            // const draggable = this.#draggingElement.cloneNode(true);
-            // draggable.classList.add(...['dragged', 'temp-dragged']);
-            // draggable.setAttribute(
-            //     'style',
-            //     `position: absolute; width: ${sizes.width}px; heigth: ${sizes.heigth}px`,
-            // );
-            // e.dataTransfer.setDragImage(draggable, 0, 0);
-            // this.parent.appendChild(draggable);
-            // this.#draggingElement.parentNode.style.opacity = 0;
             this.#draggingElement.classList.add('draggable');
         } else {
             e.preventDefault();
@@ -444,14 +425,11 @@ export default class BoardPage extends Component {
             e.target.closest('.checkitem') &&
             this.#draggingElement.classList.contains('checkitem')
         ) {
-            console.log('OK');
             if (
                 e.target.closest('.card-information__checklist-wrapper')?.dataset.checklist !==
                 this.#draggingElement.dataset.checklist_id
             ) {
-                console.log('Bad');
                 this.parent.querySelector('.temp-dragged')?.remove();
-
                 this.#draggingElement = null;
                 return;
             }

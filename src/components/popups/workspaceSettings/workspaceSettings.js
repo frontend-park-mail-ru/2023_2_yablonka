@@ -95,19 +95,21 @@ export default class WorkspaceSettings extends Component {
     };
 
     #resize = () => {
-        const dialog = document.querySelector('#workspace-settings');
+        window.requestAnimationFrame(() => {
+            const dialog = document.querySelector('#workspace-settings');
 
-        if (dialog.dataset.workspace) {
-            const btnCoordinates = document
-                .querySelector(
-                    `.btn-change-workspace[data-workspace="${dialog.dataset.workspace}"]`,
-                )
-                .getBoundingClientRect();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
-            );
-        }
+            if (dialog.dataset.workspace) {
+                const btnCoordinates = document
+                    .querySelector(
+                        `.btn-change-workspace[data-workspace="${dialog.dataset.workspace}"]`,
+                    )
+                    .getBoundingClientRect();
+                dialog.setAttribute(
+                    'style',
+                    `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
+                );
+            }
+        });
     };
 
     deleteWorkspaceHandler = () => {

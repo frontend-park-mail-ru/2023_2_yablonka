@@ -42,7 +42,7 @@ export default class BoardSettings extends Component {
         this.parent
             .querySelector('.board-name__input')
             .addEventListener('keydown', this.#enterButtonHandler);
-        window.addEventListener('resize', BoardSettings.resizeBoardNameInput);
+        window.addEventListener('resize', BoardSettings.resizeBoardName);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -62,7 +62,7 @@ export default class BoardSettings extends Component {
         this.parent
             .querySelector('.board-name__input')
             .removeEventListener('keydown', this.#enterButtonHandler);
-        window.removeEventListener('resize', BoardSettings.resizeBoardNameInput);
+        window.removeEventListener('resize', BoardSettings.resizeBoardName);
         window.removeEventListener('resize', this.#resize);
     }
 
@@ -114,13 +114,13 @@ export default class BoardSettings extends Component {
     #enterButtonHandler = (e) => {
         e.stopPropagation();
 
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && e.target.closest('.board-name__input')) {
             e.preventDefault();
-            e.target.blur();
+            e.target.closest('.board-name__input').blur();
         }
     };
 
-    static resizeBoardNameInput = () => {
+    static resizeBoardName = () => {
         window.requestAnimationFrame(() => {
             const input = document.querySelector('.board-name__input');
             const windowSize = window.innerWidth;
@@ -170,7 +170,7 @@ export default class BoardSettings extends Component {
                 e.target.value = value;
             } else {
                 e.target.value = name;
-                BoardSettings.resizeBoardNameInput();
+                BoardSettings.resizeBoardName();
             }
         }
     };
