@@ -76,6 +76,7 @@ export default class BoardPage extends Component {
         this.parent.addEventListener('input', this.#blockCreateNewEntityBtn);
         this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.addEventListener('click', this.#createEntity);
+        this.parent.addEventListener('keydown', this.#proccessKeydownWithEntity);
 
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
         this.parent.addEventListener('dragstart', this.#dragStartHandler, false);
@@ -99,6 +100,7 @@ export default class BoardPage extends Component {
         this.parent.removeEventListener('input', this.#blockCreateNewEntityBtn);
         this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.removeEventListener('click', this.#createEntity);
+        this.parent.removeEventListener('keydown', this.#proccessKeydownWithEntity);
 
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
         this.parent.removeEventListener('dragstart', this.#dragStartHandler, false);
@@ -149,7 +151,10 @@ export default class BoardPage extends Component {
     };
 
     #closeNewEntity = (e) => {
-        if (e.target.closest('button')?.classList.contains('btn-create_cancel')) {
+        if (
+            e.target.closest('button')?.classList.contains('btn-create_cancel') ||
+            e?.key === 'Escape'
+        ) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -214,22 +219,41 @@ export default class BoardPage extends Component {
     };
 
     #cancelCreateNewEntityBtn = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        e?.preventDefault();
+        e?.stopPropagation();
 
         const entityNodeCancelBtn = e.target.closest('button');
 
-        if (entityNodeCancelBtn?.classList.contains('btn-create_cancel')) {
+        if (entityNodeCancelBtn?.classList.contains('btn-create_cancel') || !e) {
             this.#closeNewEntity(e);
             this.#blockCreateNewEntityBtn(e);
         }
     };
 
-    #createEntity = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+    #proccessKeydownWithEntity = (e) => {
+        const entityNode =
+            e.target.closest('li[data-entity=list]') || e.target.closest('div[data-entity=card]');
+        console.log(e.key);
+        console.log(123);
 
-        if (e.target.closest('.btn-create_confirm')) {
+        if (entityNode) {
+            e.stopPropagation();
+            if (e.key === 'Enter' && entityNode.querySelector('input').value) {
+                e.preventDefault();
+                this.#createEntity();
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                this.#closeNewEntity(e);
+            }
+        }
+    };
+
+    #createEntity = (e) => {
+        e?.preventDefault();
+        e?.stopPropagation();
+
+        if (e.target.closest('.btn-create_confirm') || !e) {
             const entityNode =
                 e.target.closest('li[data-entity=list]') ||
                 e.target.closest('div[data-entity=card]');

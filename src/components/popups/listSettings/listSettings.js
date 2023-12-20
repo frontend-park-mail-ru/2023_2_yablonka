@@ -102,9 +102,8 @@ export default class ListSettings extends Component {
     };
 
     #enterButtonHandler = (e) => {
-        e.stopPropagation();
-
         if (e.key === 'Enter' && e.target.closest('.list__title')) {
+            e.stopPropagation();
             e.preventDefault();
             e.target.closest('.list__title').blur();
         }
@@ -143,7 +142,7 @@ export default class ListSettings extends Component {
         if (e.target.closest('.list__title')) {
             e.stopPropagation();
             e.preventDefault();
-            
+
             const listId = e.target.closest('.list').dataset.list;
             const { name, listPosition } = workspaceStorage.getListById(parseInt(listId, 10));
 
