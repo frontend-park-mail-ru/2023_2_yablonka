@@ -1,8 +1,8 @@
 export const hrefRegExp = /(^\w+:.+:\d+)|(^\w+:\/\/.+\/)/;
 
-export const navigationPagesHrefRegExp = /^\/[a-zA-Z0-9]+$/;
+export const navigationPagesHrefRegExp = /^\/[a-zA-Z]+$/;
 
-export const boardHrefRegExp = /^\/workspace\/\w+\/board\/\w+(\/card\/\w+)?$/;
+export const boardHrefRegExp = /^\/workspace\/\d+\/board\/\d+(\/card\/\d+)?$/;
 
 export const validateObjectNameRegExp = /^[a-zA-Z0-9$@!?#^:;%'"\\*_а-яА-ЯёЁ][a-zA-Z0-9$@!?#^:;%'"\\*_а-яА-ЯёЁ ]*$/;
 

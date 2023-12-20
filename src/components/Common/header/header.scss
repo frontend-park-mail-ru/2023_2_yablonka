@@ -11,7 +11,6 @@
 }
 
 @media screen and (max-width: 800px) {
-    /*Я хз почему это так работает*/
     .header-menu__paragraph:nth-of-type(3) {
         display: none;
     }
@@ -90,12 +89,17 @@
     background-color: var(--search-background-color);
     height: 80%;
     z-index: 10;
+    border: 2px solid var(--text-color-in-search);
 }
 
 .search-input__text {
     background-color: transparent;
     outline: none;
     border: none;
-    color: var(--text-color-in-search);
     transition: ease-in 0.15s;
+    color: var(--text-color-in-search);
+}
+
+.search-input__text::placeholder {
+    color: var(--text-color-in-search);
 }

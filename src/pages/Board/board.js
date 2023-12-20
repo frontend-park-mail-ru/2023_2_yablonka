@@ -149,10 +149,10 @@ export default class BoardPage extends Component {
     };
 
     #closeNewEntity = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
         if (e.target.closest('button')?.classList.contains('btn-create_cancel')) {
+            e.preventDefault();
+            e.stopPropagation();
+
             const entityNode =
                 e.target.closest('li[data-entity=list]') ||
                 e.target.closest('div[data-entity=card]');

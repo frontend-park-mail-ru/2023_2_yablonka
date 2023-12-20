@@ -10,11 +10,7 @@ import './header.scss';
  */
 export default class Header extends Component {
     #innerConfig = {
-        menuParagraphs: [
-            {
-                title: 'Проекты',
-            },
-        ],
+        menuParagraphs: [],
     };
 
     /**

@@ -46,6 +46,11 @@ class Board extends BaseView {
         this.boardID = bID;
         this.cardID = cID;
 
+        if (cID && !workspaceStorage.getCardById(parseInt(cID, 10))) {
+            dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
+            dispatcher.dispatch(actionRedirect('/404', false));
+        }
+
         await dispatcher.dispatch(actionGetWorkspaces());
         await dispatcher.dispatch(actionGetBoard(parseInt(this.boardID, 10)));
 
@@ -76,14 +81,11 @@ class Board extends BaseView {
         this.render();
         this.addListeners();
 
-        if (cID) {
-            if (workspaceStorage.getCardById(parseInt(cID, 10))) {
-                Card.openByRedirect(cID);
-            } else {
-                dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
-                dispatcher.dispatch(actionRedirect('/404', false));
-            }
+        if (cID && workspaceStorage.getCardById(parseInt(cID, 10))) {
+            Card.openByRedirect(cID);
         }
+
+        BoardSettings.resizeBoardNameInput();
     }
 
     /**

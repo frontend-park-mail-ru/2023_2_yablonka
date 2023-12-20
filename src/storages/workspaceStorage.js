@@ -344,7 +344,7 @@ class WorkspaceStorage extends BaseStorage {
             lists.forEach((el) => {
                 if (el.id === ids.old_list.id) {
                     el.cards.splice(
-                        el.cards.findIndex((c) => c == ids.task_id),
+                        el.cards.findIndex((c) => parseInt(c, 10) === parseInt(ids.task_id, 10)),
                         1,
                     );
                 }

@@ -18,11 +18,14 @@ class Page404 extends BaseView {
     async renderPage() {
         document.title = 'Tabula: Not found';
 
-        if(navigator.onLline){
-            actionRedirect('/main',false);
+        if (navigator.onLline) {
+            actionRedirect('/main', false);
         }
 
-        const redirectionPage = userStorage.storage.get(userStorage.userModel.status) === 200 ? 'На главную' : 'Авторизоваться';
+        const redirectionPage =
+            userStorage.storage.get(userStorage.userModel.status) === 200
+                ? 'На главную'
+                : 'Авторизоваться';
 
         this.components.push(new Error404(this.root, { redirectionPage }));
 

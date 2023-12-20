@@ -60,6 +60,9 @@ export default class Card extends Component {
             .querySelector('button[data-action=delete-card]')
             .addEventListener('click', this.#deleteCard);
         this.parent
+            .querySelector('.card-information__card-name')
+            .addEventListener('keydown', this.#enterButtonHandler);
+        this.parent
             .querySelector('.card-information__card-description')
             .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
@@ -83,6 +86,9 @@ export default class Card extends Component {
         this.parent
             .querySelector('button[data-action=delete-card]')
             .removeEventListener('click', this.#deleteCard);
+        this.parent
+            .querySelector('.card-information__card-name')
+            .removeEventListener('keydown', this.#enterButtonHandler);
         this.parent
             .querySelector('.card-information__card-description')
             .removeEventListener('blur', this.#changeNameAndDescription);
@@ -198,7 +204,16 @@ export default class Card extends Component {
         }
     };
 
-    #changeNameAndDescription = (e) => {
+    #enterButtonHandler = (e) => {
+        e.stopPropagation();
+
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.target.blur();
+        }
+    };
+
+    #changeNameAndDescription = async (e) => {
         e.stopPropagation();
 
         const dialog = this.parent.querySelector('#card');
@@ -211,8 +226,9 @@ export default class Card extends Component {
         if (cardId) {
             if (e.target.closest('.card-information__card-name')) {
                 e.preventDefault();
+                e.target.closest('.card-information__card-name').blur();
             }
-            dispatcher.dispatch(
+            await dispatcher.dispatch(
                 actionNavigate(
                     `${
                         window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0]
@@ -221,7 +237,7 @@ export default class Card extends Component {
                     false,
                 ),
             );
-            dispatcher.dispatch(
+            await dispatcher.dispatch(
                 actionUpdateCard({
                     id: cardId,
                     name,

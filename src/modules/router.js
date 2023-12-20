@@ -71,12 +71,13 @@ class Router {
      */
     matchView(href) {
         if (href.match(navigationPagesHrefRegExp)) {
+            console.log(123);
             return href;
         }
         if (href.match(boardHrefRegExp)) {
             return '/board';
         }
-        return '/signin';
+        return '/404';
     }
 
     /**

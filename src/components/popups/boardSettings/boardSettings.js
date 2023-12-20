@@ -17,7 +17,6 @@ export default class BoardSettings extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.#resizeBoardNameInput();
         this.parent.insertAdjacentHTML(
             'beforeend',
             template({
@@ -42,7 +41,7 @@ export default class BoardSettings extends Component {
             .addEventListener('change', this.#changeBoardName);
         this.parent
             .querySelector('.input-board-name__input')
-            .addEventListener('input', this.#resizeBoardNameInput);
+            .addEventListener('input', BoardSettings.resizeBoardNameInput);
         this.parent
             .querySelector('.input-board-name__input')
             .addEventListener('focus', this.#changeBackgroundBoardNameInput);
@@ -67,7 +66,7 @@ export default class BoardSettings extends Component {
             .removeEventListener('change', this.#changeBoardName);
         this.parent
             .querySelector('.input-board-name__input')
-            .removeEventListener('input', this.#resizeBoardNameInput);
+            .removeEventListener('input', BoardSettings.resizeBoardNameInput);
         this.parent
             .querySelector('.input-board-name__input')
             .removeEventListener('focus', this.#changeBackgroundBoardNameInput);
@@ -123,22 +122,23 @@ export default class BoardSettings extends Component {
         );
     };
 
-    #resizeBoardNameInput = (e) => {
+    static resizeBoardNameInput = (e) => {
         if (e?.type === 'input' || !e) {
             let input;
             if (e) {
                 e.stopPropagation();
-                input = e.target;
+                input = e.target.closest('.input-board-name__input');
             } else {
-                input = this.parent.querySelector('.input-board-name__input');
+                input = document.querySelector('.input-board-name__input');
             }
             const letters = Array.from(input.value);
             const numbers = letters.filter((el) => /\d/.test(el));
             const characters = letters.filter((el) => !/\d/.test(el));
 
-            const width = Math.floor(numbers.length * 12.5 + characters.length * 11) + 20;
+            let width = Math.floor(numbers.length * 12.5 + characters.length * 13);
+            width = width < 26 ? 26 : width;
             const maxWidth = Math.floor(
-                this.parent.querySelector('.board-menu__team').getBoundingClientRect().left -
+                document.querySelector('.board-menu__team').getBoundingClientRect().left -
                     input.getBoundingClientRect().left,
             );
             input.parentElement.setAttribute(
@@ -197,8 +197,8 @@ export default class BoardSettings extends Component {
             e.target.value = value;
         } else {
             e.target.value = name;
+            BoardSettings.resizeBoardNameInput();
         }
-        input.focus();
         input.blur();
     };
 }

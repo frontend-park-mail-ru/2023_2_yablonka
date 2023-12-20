@@ -29,9 +29,7 @@ export default class WorkspaceSettings extends Component {
         this.parent
             .querySelector('.btn-delete-workspace')
             .addEventListener('click', this.deleteWorkspaceHandler);
-        this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.addEventListener('keydown', this.#changeNameHandler);
-        });
+        this.parent.addEventListener('keydown', this.#changeNameHandler);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -45,14 +43,12 @@ export default class WorkspaceSettings extends Component {
         this.parent
             .querySelector('.btn-delete-workspace')
             .removeEventListener('click', this.deleteWorkspaceHandler);
-        this.parent.querySelectorAll('.workspace__name').forEach((name) => {
-            name.removeEventListener('keydown', this.#changeNameHandler);
-        });
+        this.parent.removeEventListener('keydown', this.#changeNameHandler);
         window.removeEventListener('resize', this.#resize);
     }
 
     #renameWorkspace = () => {
-        const dialog = document.querySelector('#workspace-settings');
+        const dialog = this.parent.querySelector('#workspace-settings');
 
         if (dialog.dataset.workspace) {
             const workspaceName = document.querySelector(
@@ -69,7 +65,7 @@ export default class WorkspaceSettings extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-        const dialog = document.querySelector('#workspace-settings');
+        const dialog = this.parent.querySelector('#workspace-settings');
 
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
         const workspaceId = e.target.closest('button').dataset.workspace;
@@ -80,9 +76,7 @@ export default class WorkspaceSettings extends Component {
             dialog.show();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
-                }px`,
+                `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
             );
         } else {
             popupEvent.deletePopup(dialog);
@@ -93,9 +87,7 @@ export default class WorkspaceSettings extends Component {
                 dialog.show();
                 dialog.setAttribute(
                     'style',
-                    `top: ${btnCoordinates.top - 10}px; left: ${
-                        btnCoordinates.left + btnCoordinates.width + 20
-                    }px`,
+                    `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
                 );
             }
         }
@@ -113,9 +105,7 @@ export default class WorkspaceSettings extends Component {
                 .getBoundingClientRect();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
-                }px`,
+                `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
             );
         }
     };
@@ -132,28 +122,29 @@ export default class WorkspaceSettings extends Component {
     };
 
     #changeNameHandler = (e) => {
-        e.stopPropagation();
-        console.log(1);
+        if (e.target.closest('.workspace__name')) {
+            e.stopPropagation();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const { textContent } = e.target;
+                const workspaceID = e.target.dataset.workspace;
+                const workspaceDescription = workspaceStorage.storage
+                    .get(workspaceStorage.workspaceModel.body)
+                    .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === workspaceID);
 
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const { textContent } = e.target;
-            const workspaceID = e.target.dataset.workspace;
-            const workspaceDescription = workspaceStorage.storage
-                .get(workspaceStorage.workspaceModel.body)
-                .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === workspaceID);
+                e.target.blur();
 
-            e.target.blur();
+                this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent =
+                    textContent;
 
-            this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent = textContent;
-
-            dispatcher.dispatch(
-                actionUpdateWorkspace({
-                    id: parseInt(workspaceID, 10),
-                    name: textContent,
-                    description: workspaceDescription,
-                }),
-            );
+                dispatcher.dispatch(
+                    actionUpdateWorkspace({
+                        id: parseInt(workspaceID, 10),
+                        name: textContent,
+                        description: workspaceDescription,
+                    }),
+                );
+            }
         }
     };
 }
