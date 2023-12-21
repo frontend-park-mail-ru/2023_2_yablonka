@@ -32,22 +32,23 @@
     overflow-x: auto;
     overflow-y: hidden;
     text-wrap: nowrap;
+    padding-bottom: 2px;
 }
 
 .card-information__filename::-webkit-scrollbar {
-    height: 2px;
-    width: 2px;
+    height: 4px;
+    width: 4px;
 }
 
 .card-information__filename::-webkit-scrollbar-track {
     background: #00000026;
-    border-radius: 2px;
+    border-radius: 4px;
     margin: 0px;
 }
 
 .card-information__filename::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .card-information__file-added-date {
