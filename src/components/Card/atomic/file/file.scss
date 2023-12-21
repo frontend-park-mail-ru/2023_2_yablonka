@@ -28,10 +28,26 @@
 }
 
 .card-information__filename {
-    max-width: 90%;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    max-width: 240px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-wrap: nowrap;
+}
+
+.card-information__filename ::-webkit-scrollbar {
+    height: 2px;
+    width: 2px;
+}
+
+.card-information__filename ::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 2px;
+    margin: 0px;
+}
+
+.card-information__filename ::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 2px;
 }
 
 .card-information__file-added-date {
