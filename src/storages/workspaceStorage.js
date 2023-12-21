@@ -27,6 +27,7 @@ class WorkspaceStorage extends BaseStorage {
         checklists: 'checklists',
         items: 'items',
         files: 'files',
+        history: 'history'
     };
 
     /**
@@ -43,6 +44,7 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.checklists, []);
         this.storage.set(this.workspaceModel.items, []);
         this.storage.set(this.workspaceModel.files, []);
+        this.storage.set(this.workspaceModel.history, []);
     }
 
     /**
@@ -1145,6 +1147,26 @@ class WorkspaceStorage extends BaseStorage {
      */
     getCardFilesById(id) {
         return this.storage.get(this.workspaceModel.files).filter((f) => f.task_id === id);
+    }
+
+    getBoardHistory(){
+       // return this.storage.get(this.workspaceModel.history);
+       return [{id:1, message:"msg1", date: new Date(), user:{
+        email:"1@email.com",
+        name: "1.1",
+        surname:"1.2",
+        avatar_url:"/img/avatar.jpg"
+       }}, {id:2, message:"msg2", date: new Date(), user:{
+        email:"2@email.com",
+        name: "2.1",
+        surname:"2.2",
+        avatar_url:"/img/avatar.jpg"
+       }}, {id:3, message:"msg3", date: new Date(), user:{
+        email:"3@email.com",
+        name: "3.1",
+        surname:"3.2",
+        avatar_url:"/img/avatar.jpg"
+       }}]
     }
 }
 
