@@ -62,6 +62,9 @@ export default class AddChecklist extends Component {
         this.parent
             .querySelector('.card-data__card-information')
             .addEventListener('click', this.#setCheckItemCheck);
+        this.parent
+            .querySelector('.card-data__card-information')
+            .addEventListener('keydown', this.#proccessKeydownWithChecklist);
     }
 
     removeEventListeners() {
@@ -95,6 +98,9 @@ export default class AddChecklist extends Component {
         this.parent
             .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#setCheckItemCheck);
+        this.parent
+            .querySelector('.card-data__card-information')
+            .removeEventListener('keydown', this.#proccessKeydownWithChecklist);
     }
 
     #openPopup = (e) => {
@@ -189,21 +195,22 @@ export default class AddChecklist extends Component {
 
             btn.style.display = 'none';
             btn.nextElementSibling.style.display = 'flex';
+            btn.nextElementSibling.querySelector('.input-checklist-new-item__input').focus();
         }
     };
 
     #createChecklistItemClose = (e) => {
         const btn = e.target.closest('.btn-checklist-new-item_cancel');
 
-        if (btn) {
+        if (btn || e.key === 'Escape') {
             e.stopPropagation();
             e.preventDefault();
-            this.#createChecklistItemCloseHelper(btn);
+            this.#createChecklistItemCloseHelper(e);
         }
     };
 
-    #createChecklistItemCloseHelper = (btn) => {
-        const input = btn.closest('.checklist-new-item');
+    #createChecklistItemCloseHelper = (e) => {
+        const input = e.target.closest('.checklist-new-item');
         input.querySelector('.input-checklist-new-item__input').value = '';
         input.style.display = 'none';
         input.previousElementSibling.style.display = 'flex';
@@ -212,7 +219,7 @@ export default class AddChecklist extends Component {
     #createChecklistItem = async (e) => {
         const btn = e.target.closest('.btn-checklist-new-item_save');
 
-        if (btn) {
+        if (btn || e.key === 'Enter') {
             e.stopPropagation();
             e.preventDefault();
             const checklist = e.target.closest('.card-information__checklist-wrapper');
@@ -229,7 +236,7 @@ export default class AddChecklist extends Component {
                         name,
                     }),
                 );
-                this.#createChecklistItemCloseHelper(btn.nextElementSibling);
+                this.#createChecklistItemCloseHelper(e);
             } else {
                 NotificationMessage.showNotification(input, false, true, {
                     fontSize: 12,
@@ -347,6 +354,23 @@ export default class AddChecklist extends Component {
 
         if (!checklistItemsContainer.childElementCount) {
             checklistItemsContainer.setAttribute('style', 'display: none');
+        }
+    };
+
+    #proccessKeydownWithChecklist = (e) => {
+        e.stopPropagation();
+        const checklistName = e.target.closest('.input-checklist-new-item__input');
+
+        if (checklistName) {
+            e.stopPropagation();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.#createChecklistItem(e);
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                this.#createChecklistItemClose(e);
+            }
         }
     };
 }
