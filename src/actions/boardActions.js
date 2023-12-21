@@ -131,4 +131,14 @@ export const actionGetFiles = (data) => ({
 export const actionDeleteFile = (data) => ({
     type:'deleteFile',
     value:data
+});
+
+export const actionSubmitHistoryAction = (data) => ({
+    type:'submitAction',
+    value:data
+})
+
+export const actionGetHistory = (data) => ({
+    type:'getHistory',
+    value:data
 })

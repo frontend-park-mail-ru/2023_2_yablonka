@@ -864,6 +864,38 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    async getHistory(board){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}board/history/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            board,
+        );
+
+        const {status} = responsePromise;
+
+        let body;
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+        
+        if(status===200){
+            this.storage.set(this.workspaceModel.history, body.body.history);
+        }
+    }
+
+    async submitHistoryAction(action){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}board/history/submit/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            action,
+        );
+
+    }
+
     /**
      * Добавление доски в хранилище
      * @param {Object} board - объект добавляемой в хранилище доски

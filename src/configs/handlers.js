@@ -50,7 +50,10 @@ const handlers = [
     { type: 'reorderChecklist', method: workspaceStorage.reorderChecklistItems.bind(workspaceStorage) },
     {type: 'attachFile', method:workspaceStorage.attachFile.bind(workspaceStorage)},
     {type:'getFiles', method:workspaceStorage.getCardFiles.bind(workspaceStorage)},
-    {type: 'deleteFile', method:workspaceStorage.deleteFile.bind(workspaceStorage)}
+    {type: 'deleteFile', method:workspaceStorage.deleteFile.bind(workspaceStorage)},
+    {type: 'submitAction', method:workspaceStorage.submitHistoryAction.bind(workspaceStorage)},
+    {type: 'getHistory', method:workspaceStorage.getHistory.bind(workspaceStorage)},
+
 ];
 
 export default handlers;
