@@ -897,6 +897,22 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     /**
+     * Добавление доски в хранилище
+     * @param {Object} board - объект добавляемой в хранилище доски
+     */
+    addBoard(board) {
+        const idx = this.storage
+            .get(this.workspaceModel.boards)
+            .findIndex((brd) => brd.board_id === board.board_id);
+        const boards = this.storage.get(this.workspaceModel.boards);
+        if (idx !== -1) {
+            boards.splice(idx, 1);
+        }
+        boards.push(board);
+        this.storage.set(this.workspaceModel.boards, boards);
+    }
+
+    /**
      * Получение workspace по его id
      * @param {Number} id - id рабочего пространства
      * @returns {Object} - объект рабочего пространства
