@@ -54,7 +54,7 @@ export default class BoardHistory extends Component {
                     btnSizes.left - dialogSizes.width,
                     20,
                 )}px;
-                 height: ${window.innerHeight - (btnSizes.top + 40)}px;
+                 height: ${window.innerHeight - (btnSizes.top + 60)}px;
                  width: ${window.innerWidth > 360 ? 330 : 300}px`,
             );
         } else {
@@ -98,7 +98,7 @@ export default class BoardHistory extends Component {
                     btnSizes.left - dialogSizes.width,
                     20,
                 )}px;
-                 height: ${window.innerHeight - (btnSizes.top + 40)}px;
+                 height: ${window.innerHeight - (btnSizes.top + 60)}px;
                  width: ${window.innerWidth > 360 ? 330 : 300}px`,
             );
         });

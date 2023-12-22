@@ -225,8 +225,8 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const oldBoard = this.getBoardById(board.id);
             if (oldBoard.name !== board.name) {
-                oldBoard.name = board.name;
                 await sendChange(board.id, `Переименовал доску ${oldBoard.name} на ${board.name}`);
+                oldBoard.name = board.name;
 
                 document
                     .querySelector(`.link-sidebar-boards-list__board[data-board="${board.id}"]`)
@@ -284,12 +284,13 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             const lst = this.getListById(parseInt(list.id, 10));
-            lst.name = list.name;
             const boardId = parseInt(
                 document.querySelector('.board-name__input').dataset.board,
                 10,
             );
-            await sendChange(boardId, `Переименовал список ${list.name} на ${lst.name}`);
+            await sendChange(boardId, `Переименовал список ${lst.name} на ${list.name}`);
+
+            lst.name = list.name;
         }
     }
 
@@ -517,10 +518,7 @@ class WorkspaceStorage extends BaseStorage {
                 document.querySelector('.board-name__input').dataset.board,
                 10,
             );
-            await sendChange(
-                boardId,
-                `Удалили карточку ${card.name} в списке ${list.name}`,
-            );
+            await sendChange(boardId, `Удалили карточку ${card.name} в списке ${list.name}`);
 
             list.cards.forEach((cardId) => {
                 const listCard = this.getCardById(parseInt(cardId, 10));
@@ -615,7 +613,7 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Удалил файл ${file.filename} из карточке ${card.name} в списке ${
+                `Удалил файл ${file.original_name} из карточке ${card.name} в списке ${
                     this.getListById(card.list_id).name
                 }`,
             );
@@ -670,7 +668,7 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Создал чек-лист ${checklist.name} к карточке ${card.name} в списке ${
+                `Создал чек-лист ${checklist.name} в карточке ${card.name} в списке ${
                     this.getListById(card.list_id).name
                 }`,
             );
@@ -713,19 +711,19 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            const boardChecklists = this.storage.get(this.workspaceModel.checklists);
-            const cardChecklists = this.getCardById(
-                this.getChecklistById(checklist.id).task_id,
-            ).checklists;
+            const checklst = this.getChecklistById(checklist.id);
+            const card = this.getCardById(checklst.task_id);
 
-            const card = this.getCardById(checklist.task_id);
+            const boardChecklists = this.storage.get(this.workspaceModel.checklists);
+            const cardChecklists = card.checklists;
+
             const boardId = parseInt(
                 document.querySelector('.board-name__input').dataset.board,
                 10,
             );
             await sendChange(
                 boardId,
-                `Удалил чек-лист ${checklist.name} к карточке ${card.name} в списке ${
+                `Удалил чек-лист ${checklist.name} в карточке ${card.name} в списке ${
                     this.getListById(card.list_id).name
                 }`,
             );
@@ -803,14 +801,16 @@ class WorkspaceStorage extends BaseStorage {
             const oldChecklistItem = this.getChecklistItemById(checklistItem.id);
             if (oldChecklistItem.done !== checklistItem.done) {
                 oldChecklistItem.done = checklistItem.done;
-                const card = this.getCardById(oldChecklistItem.task_id);
+                const card = this.getCardById(
+                    this.getChecklistById(oldChecklistItem.checklist_id).task_id,
+                );
                 const boardId = parseInt(
                     document.querySelector('.board-name__input').dataset.board,
                     10,
                 );
                 await sendChange(
                     boardId,
-                    `Обновил пункт ${checklistItem.name} в чек-листе ${
+                    `Обновил пункт ${oldChecklistItem.name} в чек-листе ${
                         oldChecklistItem.name
                     } карточки ${card.name} в списке ${this.getListById(card.list_id).name}`,
                 );
@@ -863,6 +863,18 @@ class WorkspaceStorage extends BaseStorage {
             );
             const { items } = checklist;
 
+            const card = this.getCardById(checklist.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалил пункт ${this.getChecklistItemById(checklistItem.id).name} в чек-листе ${
+                    checklist.name
+                } карточки ${card.name} в списке ${this.getListById(card.list_id).name}`,
+            );
+
             const checklistItemInd = checklistItems.findIndex(
                 (item) => parseInt(item.id, 10) === parseInt(checklistItem.id, 10),
             );
@@ -872,18 +884,6 @@ class WorkspaceStorage extends BaseStorage {
                 (item) => parseInt(item, 10) === parseInt(checklistItem.id, 10),
             );
             items.splice(itemId, 1);
-
-            const card = this.getCardById(checklist.task_id);
-            const boardId = parseInt(
-                document.querySelector('.board-name__input').dataset.board,
-                10,
-            );
-            await sendChange(
-                boardId,
-                `Удалил пункт ${checklistItem.name} в чек-листе ${checklist.name} карточки ${
-                    card.name
-                } в списке ${this.getListById(card.list_id).name}`,
-            );
 
             AddChecklist.deleteCheckItem(parseInt(checklistItem.id, 10));
         }

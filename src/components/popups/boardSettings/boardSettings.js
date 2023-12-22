@@ -136,16 +136,22 @@ export default class BoardSettings extends Component {
         });
     };
 
-    #deleteBoard = () => {
+    #deleteBoard = async () => {
         const dialog = this.parent.querySelector('#board-settings');
 
         if (dialog.dataset.board) {
             const boardId = parseInt(dialog.dataset.board, 10);
+            const workspaceId = parseInt(
+                this.parent.querySelector('.sidebar__workspace-information').dataset.workspace,
+                10,
+            );
             popupEvent.deletePopup(dialog);
             dialog.close();
 
-            dispatcher.dispatch(actionDeleteBoard(parseInt(boardId, 10)));
-            dispatcher.dispatch(actionRedirect('/main', true));
+            await dispatcher.dispatch(
+                actionDeleteBoard({ workspace_id: workspaceId, board_id: boardId }),
+            );
+            await dispatcher.dispatch(actionRedirect('/main', true));
         }
     };
 
