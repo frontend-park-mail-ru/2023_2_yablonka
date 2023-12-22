@@ -371,7 +371,7 @@ export default class BoardPage extends Component {
         return mouseCoord < elementCenter ? 'beforebegin' : 'afterend';
     }
 
-    #dropHandler = (e) => {
+    #dropHandler = async (e) => {
         e.preventDefault();
 
         this.#draggingElement?.classList.remove('draggable');
@@ -399,6 +399,7 @@ export default class BoardPage extends Component {
                     .querySelector('.list__content')
                     .insertAdjacentHTML('beforeend', this.#draggingElement.parentNode.outerHTML);
             }
+            
             const ids = [];
 
             const cardId = parseInt(
@@ -421,7 +422,7 @@ export default class BoardPage extends Component {
 
             const listId = parseInt(e.target.closest('.list').dataset.list, 10);
 
-            dispatcher.dispatch(
+            await dispatcher.dispatch(
                 actionReorderList({
                     old_list: { id: oldListId, task_ids: oldListIds },
                     new_list: { id: listId, task_ids: ids },
@@ -439,11 +440,13 @@ export default class BoardPage extends Component {
                     this.#draggingElement.parentNode.outerHTML,
                 );
             this.#draggingElement.parentNode.remove();
+
             const ids = [];
+
             document.querySelectorAll('.list').forEach((e) => {
                 ids.push(parseInt(e.dataset.list, 10));
             });
-            dispatcher.dispatch(actionReorderLists({ ids }));
+            await dispatcher.dispatch(actionReorderLists({ ids }));
         } else if (
             e.target.closest('.checkitem') &&
             this.#draggingElement.classList.contains('checkitem')
@@ -463,7 +466,9 @@ export default class BoardPage extends Component {
                     this.#draggingElement.outerHTML,
                 );
             this.#draggingElement.remove();
+
             const ids = [];
+
             e.target
                 .closest('.card-information__checklist-wrapper')
                 .querySelectorAll('.checkitem')
@@ -471,7 +476,7 @@ export default class BoardPage extends Component {
                     ids.push(parseInt(el.dataset.checkitem_id, 10));
                 });
 
-            dispatcher.dispatch(actionReorderChecklist({ ids }));
+            await dispatcher.dispatch(actionReorderChecklist({ ids }));
         }
         this.parent.querySelector('.temp-dragged')?.remove();
 
