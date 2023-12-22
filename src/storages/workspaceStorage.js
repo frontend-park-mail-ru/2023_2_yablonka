@@ -534,6 +534,15 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
+    async createTag(tag){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}task/file/remove/`,
+            'DELETE',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            file,
+        );
+    }
+
     /**
      * Создание нового чеклиста
      * @param {Object} checklist - данные нового чеклиста
@@ -1181,7 +1190,7 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.files).filter((f) => f.task_id === id);
     }
 
-    getBoardHistory(){
+    getBoardHistory(id){
        // return this.storage.get(this.workspaceModel.history);
        return [{id:1, message:"msg1", date: new Date(), user:{
         email:"1@email.com",
