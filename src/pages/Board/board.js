@@ -42,7 +42,10 @@ export default class BoardPage extends Component {
     render() {
         const page = {
             thumbnail_url: this.config.board.thumbnail_url,
-            header: new Header(null, { avatar: this.config.user.avatar_url }).render(),
+            header: new Header(null, {
+                avatar: this.config.user.avatar_url,
+                isBoard: true,
+            }).render(),
             sidebar: new Sidebar(null, {
                 workspaceName: workspaceStorage.getWorkspaceById(this.config.board.workspace_id)
                     .workspace_name,

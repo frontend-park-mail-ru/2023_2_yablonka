@@ -86,7 +86,7 @@ export default class CreateWorkspace extends Component {
 
         const dialog = this.parent.querySelector('#create-workspace');
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeAllPopups(e);
             popupEvent.addPopup(dialog);
             dialog.showModal();

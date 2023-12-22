@@ -76,19 +76,15 @@
 }
 
 .btn-avatar,
-.btn-notification {
+.btn-board-history {
     background-color: transparent;
     transition: ease-in-out 0.2s ease-in-out;
 }
 
-.notification__image {
-    rotate: 20deg;
-}
 
 .search-input {
     background-color: var(--search-background-color);
     height: 80%;
-    z-index: 10;
     border: 2px solid var(--text-color-in-search);
 }
 

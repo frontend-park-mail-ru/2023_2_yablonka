@@ -49,6 +49,11 @@
 }
 
 @media screen and (max-width: 550px) {
+    .user-reference__name,
+    .user-reference__surname {
+        text-align: center;
+    }
+
     .input-profile {
         background: #070f17;
         color: #b0b0b0;

@@ -11,6 +11,7 @@
 .card-name {
     color: var(--text-color-on-page);
     width: 100%;
+    display: flex;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

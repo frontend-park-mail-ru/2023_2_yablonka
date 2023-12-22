@@ -1,0 +1,11 @@
+.board-history-wrapper {
+    height: 100%;
+}
+
+.board-history__list {
+    background-color: var(--card-background);
+    list-style: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+}

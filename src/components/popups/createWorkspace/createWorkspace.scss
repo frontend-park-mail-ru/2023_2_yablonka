@@ -1,12 +1,11 @@
 .create-workspace {
     width: 500px;
     overflow-x: hidden;
-    z-index: 10;
     overflow-y: auto;
+    background-color: var(--pop-up-background-color);
 }
 
 .create-workspace-wrapper {
-    background-color: var(--pop-up-background-color);
     padding: 25px 50px;
 }
 

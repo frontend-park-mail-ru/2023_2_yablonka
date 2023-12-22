@@ -1,12 +1,18 @@
-<li>
-<div class="history__item-wrapper">
-<div class="avatar-wrapper">
-<img src="{{this.avatar_url}}" alt="not found" class="actor-avatar">
-</div>
-<div class="content-wrapper">
-<span class="content__user-email">{{this.email}}</span>
-<span class="content__action-message">{{this.message}}</span>
-<span class="content__action-datetime">{{this.datetime}}</span>
-</div>
-</div>
+<li class='history__item-wrapper'>
+    <div class='flex-row-centered gap-10 padding-5-10 history__item'>
+        <div class='box-32-32 flex-centered avatar-wrapper'>
+            <img src='/{{this.avatar_url}}' alt='avatar' class='strach-layout actor-avatar' />
+        </div>
+        <div class='flex-column-centered gap-10 history-item__content-wrapper'>
+            <span
+                class='font-size-16 font-weight-500 history-item__user-email'
+            >{{this.email}}</span>
+            <span
+                class='font-size-14 font-weight-200 history-item__action-message'
+            >{{this.message}}</span>
+            <span
+                class='font-size-14 font-weight-500 history-item__action-datetime'
+            >{{this.creationDate}}</span>
+        </div>
+    </div>
 </li>

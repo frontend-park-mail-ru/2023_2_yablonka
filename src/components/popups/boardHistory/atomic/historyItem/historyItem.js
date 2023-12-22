@@ -1,3 +1,13 @@
+import Component from '../../../../core/basicComponent.js';
+import template from './historyItem.hbs';
+import './historyItem.scss';
+
+/**
+ * Компонент сообщения в истории действий на доске
+ * @class
+ * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
+ * @param {Object} config - Объект с конфигурацией компонента.
+ */
 export default class HistoryItem extends Component {
     /**
      * Рендерит компонент в DOM
@@ -7,7 +17,7 @@ export default class HistoryItem extends Component {
             avatar: this.config.avatar_url,
             email: this.config.email,
             message: this.config.message,
-            datetime: this.config.datetime
+            creationDate: this.config.creationDate,
         });
     }
 }
