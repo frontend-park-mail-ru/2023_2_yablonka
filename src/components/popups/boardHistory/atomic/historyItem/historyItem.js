@@ -17,7 +17,12 @@ export default class HistoryItem extends Component {
             avatar: this.config.avatar_url,
             email: this.config.email,
             message: this.config.message,
-            creationDate: this.config.creationDate,
+            creationDate: this.#processDateToLocalTime(this.config.creationDate),
         });
     }
+
+    #processDateToLocalTime = (creationDate) => {
+        const date = new Date(creationDate);
+        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${date.getHours()}:${date.getMinutes()}`;
+    };
 }

@@ -1,9 +1,8 @@
-.actor-avatar {
-    border-radius: 100%;
+.history__user {
+    min-width: 32px;
 }
 
 .history__item-wrapper {
-    width: 300px;
     border-bottom: 1px solid var(--history-item-border-color);
 }
 
