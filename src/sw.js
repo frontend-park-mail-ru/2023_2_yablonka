@@ -14,8 +14,8 @@ const tryNetwork = (req) =>
             (res) => {
                 const responseClone = res.clone();
                 caches.open(CacheKey).then((cache) => {
-                    cache.put(req, responseClone);
-                });
+                    cache.put(req, responseClone).catch();
+                }).catch();
                 resolve(res);
             },
             (error) => {
@@ -25,7 +25,7 @@ const tryNetwork = (req) =>
                     reject(new Error('No internet connection'));
                 }
             },
-        );
+        ).catch();
     });
 
 const getFromCache = (req) =>
