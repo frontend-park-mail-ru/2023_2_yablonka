@@ -8,7 +8,7 @@ import dispatcher from './dispatcher.js';
  * @param {Number} id - id доски
  * @param {String} message - текст сообщения
  */
-export default sendMessage = async (id, message) => {
+export default sendChange= async (id, message) => {
 
     dispatcher.dispatch(actionSubmitHistoryAction({actions:message, board_id:parseInt(id)}))
 
