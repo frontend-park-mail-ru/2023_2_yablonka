@@ -1314,7 +1314,7 @@ class WorkspaceStorage extends BaseStorage {
 
         lists = lists.filter(l=>l.cards.length>0);
 
-        return lists;
+        return lists.sort((a,b)=>a.list_position-b.list_position);
     }
 }
 
