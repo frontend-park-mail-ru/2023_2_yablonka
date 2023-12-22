@@ -15,10 +15,6 @@
     border-bottom: none;
 }
 
-.avatar-wrapper {
-    width: fit-content;
-}
-
 .history-item__content-wrapper {
     align-items: flex-start;
 }
@@ -29,7 +25,7 @@
 }
 
 .history-item__action-message {
-    word-break: break-all;
+    text-wrap: pretty;
     color: var(--text-color-on-page);
 }
 

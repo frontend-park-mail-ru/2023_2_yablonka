@@ -308,6 +308,12 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(boardId, `Удалил список ${list.name}`);
+
             const lists = this.storage.get(this.workspaceModel.lists);
             const idx = lists.findIndex((lst) => lst.id === parseInt(list.id, 10));
             lists.splice(idx, 1);
@@ -315,12 +321,6 @@ class WorkspaceStorage extends BaseStorage {
             lists.forEach((lst, position) => {
                 lst.list_position = position;
             });
-
-            const boardId = parseInt(
-                document.querySelector('.board-name__input').dataset.board,
-                10,
-            );
-            await sendChange(boardId, `Удалил список ${list.name}`);
 
             BoardPage.deleteList(parseInt(list.id, 10));
         }
@@ -513,6 +513,15 @@ class WorkspaceStorage extends BaseStorage {
             const deletedCard = this.getCardById(card.id);
             const list = this.getListById(deletedCard.list_id);
 
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалили карточку ${card.name} в списке ${this.getListById(card.list_id).name}`,
+            );
+
             list.cards.forEach((cardId) => {
                 const listCard = this.getCardById(parseInt(cardId, 10));
                 if (listCard.list_position > deletedCard.list_position) {
@@ -527,15 +536,6 @@ class WorkspaceStorage extends BaseStorage {
                 .findIndex((item) => item.id === card.id);
 
             this.storage.get(this.workspaceModel.cards).splice(idxCard, 1);
-
-            const boardId = parseInt(
-                document.querySelector('.board-name__input').dataset.board,
-                10,
-            );
-            await sendChange(
-                boardId,
-                `Удалили карточку ${card.name} в списке ${this.getListById(card.list_id).name}`,
-            );
 
             Card.clearCard(true);
         }
@@ -718,17 +718,6 @@ class WorkspaceStorage extends BaseStorage {
                 this.getChecklistById(checklist.id).task_id,
             ).checklists;
 
-            const boardChecklistInd = boardChecklists.findIndex(
-                (checklistElement) =>
-                    parseInt(checklistElement.id, 10) === parseInt(checklist.id, 10),
-            );
-            boardChecklists.splice(boardChecklistInd, 1);
-
-            const cardChecklistInd = cardChecklists.findIndex(
-                (checklistId) => parseInt(checklistId, 10) === parseInt(checklist.id, 10),
-            );
-            cardChecklists.splice(cardChecklistInd, 1);
-
             const card = this.getCardById(checklist.task_id);
             const boardId = parseInt(
                 document.querySelector('.board-name__input').dataset.board,
@@ -740,6 +729,17 @@ class WorkspaceStorage extends BaseStorage {
                     this.getListById(card.list_id).name
                 }`,
             );
+
+            const boardChecklistInd = boardChecklists.findIndex(
+                (checklistElement) =>
+                    parseInt(checklistElement.id, 10) === parseInt(checklist.id, 10),
+            );
+            boardChecklists.splice(boardChecklistInd, 1);
+
+            const cardChecklistInd = cardChecklists.findIndex(
+                (checklistId) => parseInt(checklistId, 10) === parseInt(checklist.id, 10),
+            );
+            cardChecklists.splice(cardChecklistInd, 1);
 
             AddChecklist.deleteChecklist(parseInt(checklist.id, 10));
         }
@@ -1005,6 +1005,18 @@ class WorkspaceStorage extends BaseStorage {
 
             currentCardUserIds.sort((f, s) => parseInt(f, 10) < parseInt(s, f));
 
+            const card = this.getCardById(data.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Добавил пользователя ${this.getUserById(data.user_id).email} на карточку ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
+            );
+
             Card.updateUsers(parseInt(data.task_id, 10));
         }
     }
@@ -1033,6 +1045,18 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             currentCardUserIds.splice(ind, 1);
+
+            const card = this.getCardById(data.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалил пользователя ${this.getUserById(data.user_id).email} из карточки ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
+            );
 
             Card.updateUsers(parseInt(data.task_id, 10));
         }
