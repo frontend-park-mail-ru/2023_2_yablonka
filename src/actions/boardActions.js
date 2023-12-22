@@ -142,3 +142,28 @@ export const actionGetHistory = (data) => ({
     type:'getHistory',
     value:data
 })
+
+export const actionDetachTag = (data) => ({
+    type: 'detachTag',
+    value: data,
+});
+
+export const actionAttachTag = (data) => ({
+    type:'attachTag',
+    value:data
+});
+
+export const actionUpdateTag = (data) => ({
+    type:'updateTag',
+    value:data
+})
+
+export const actionCreateTag = (data) => ({
+    type:'createTag',
+    value:data
+})
+
+export const actionDeleteTag = (data) => ({
+    type:'deleteTag',
+    value:data
+})

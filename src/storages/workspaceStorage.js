@@ -27,7 +27,8 @@ class WorkspaceStorage extends BaseStorage {
         checklists: 'checklists',
         items: 'items',
         files: 'files',
-        history: 'history'
+        history: 'history',
+        tags: 'tags'
     };
 
     /**
@@ -45,6 +46,7 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.items, []);
         this.storage.set(this.workspaceModel.files, []);
         this.storage.set(this.workspaceModel.history, []);
+        this.storage.set(this.workspaceModel.tags, []);
     }
 
     /**
@@ -536,11 +538,119 @@ class WorkspaceStorage extends BaseStorage {
 
     async createTag(tag){
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}task/file/remove/`,
+            `${apiPath + apiVersion}tag/create/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        let body;
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
+        const {status} = responsePromise;
+
+        if(status===200){
+            const tags = this.workspaceStorage.get(this.workspaceModel.tags);
+            tags.push(body.body.tag);
+            this.workspaceStorage.set(this.workspaceModel.tags, tags);
+        }
+    }
+
+    async attachTag(tag){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/add_to_task/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        const {status} = responsePromise;
+
+        if(status===200){
+            const cards = this.workspaceStorage.get(this.workspaceModel.cards);
+            cards.forEach(c=>{
+                if(c.id===tag.task_id){
+                    c.tags.push(toString(tag.tag_id));
+                }
+            })
+            this.workspaceStorage.set(this.workspaceModel.cards, cards);
+        }
+    }
+
+    async detachTag(tag){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/remove_from_task/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        const {status} = responsePromise;
+
+        if(status===200){
+            const cards = this.workspaceStorage.get(this.workspaceModel.cards);
+
+            cards.forEach(c=>{
+                if(c.id===tag.task_id){
+                    const delInd = c.tags.findIndex(t=>t==tag.tag_id);
+                    c.tags.splice(delInd, 1);
+                }
+            })
+
+            this.workspaceStorage.set(this.workspaceModel.cards, cards);
+        }
+    }
+
+    async updateTag(tag){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/update/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        const {status} = responsePromise;
+
+        if(status===200){
+            const tags = this.workspaceStorage.get(this.workspaceModel.tags);
+            tags.forEach(t=>{
+                if (t.id===tag.id){
+                    t.name=tag.name;
+                }
+            })
+            this.workspaceStorage.set(this.workspaceModel.tags, tags);
+        }
+    }
+
+    async deleteTag(tag){
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/delete/`,
             'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
-            file,
+            tag,
         );
+
+        const {status} = responsePromise;
+
+        if(status===200){
+            const tags = this.workspaceStorage.get(this.workspaceModel.tags);
+            const tagDelInd = tags.findIndex(t=>t.id===tag.tag_id);
+            tags.splice(tagDelInd,1);
+            this.workspaceStorage.set(this.workspaceModel.tags, tags);
+
+            const cards = this.workspaceStorage.get(this.workspaceModel.cards);
+
+            cards.forEach(c=>{
+                    const delInd = c.tags.findIndex(t=>t==tag.tag_id);
+                    c.tags.splice(delInd, 1);
+            })
+
+            this.workspaceStorage.set(this.workspaceModel.cards, cards);
+        }
     }
 
     /**
