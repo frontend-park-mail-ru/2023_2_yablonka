@@ -312,7 +312,7 @@ class WorkspaceStorage extends BaseStorage {
                 document.querySelector('.board-name__input').dataset.board,
                 10,
             );
-            await sendChange(boardId, `Удалил список ${list.name}`);
+            await sendChange(boardId, `Удалил список ${this.getListById(list.id).name}`);
 
             const lists = this.storage.get(this.workspaceModel.lists);
             const idx = lists.findIndex((lst) => lst.id === parseInt(list.id, 10));
@@ -519,7 +519,7 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Удалили карточку ${card.name} в списке ${this.getListById(card.list_id).name}`,
+                `Удалили карточку ${card.name} в списке ${list.name}`,
             );
 
             list.cards.forEach((cardId) => {

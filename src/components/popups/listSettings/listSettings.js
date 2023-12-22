@@ -127,14 +127,14 @@ export default class ListSettings extends Component {
         });
     };
 
-    #deleteListHandler = (e) => {
+    #deleteListHandler = async (e) => {
         const dialog = e.target.closest('#list-settings');
         if (dialog.dataset.list) {
             const listId = parseInt(dialog.dataset.list, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
 
-            dispatcher.dispatch(actionDeleteList({ id: listId }));
+            await dispatcher.dispatch(actionDeleteList({ id: listId }));
         }
     };
 
