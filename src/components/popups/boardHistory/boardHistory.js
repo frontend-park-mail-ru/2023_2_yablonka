@@ -55,7 +55,7 @@ export default class BoardHistory extends Component {
                     20,
                 )}px;
                  height: ${window.innerHeight - (btnSizes.top + 40)}px;
-                 width: ${window.innerWidth > 360 ? 330 : 300}`,
+                 width: ${window.innerWidth > 360 ? 330 : 300}px`,
             );
         } else {
             popupEvent.deletePopup(dialog);
@@ -99,7 +99,7 @@ export default class BoardHistory extends Component {
                     20,
                 )}px;
                  height: ${window.innerHeight - (btnSizes.top + 40)}px;
-                 width: ${window.innerWidth > 360 ? 330 : 300}`,
+                 width: ${window.innerWidth > 360 ? 330 : 300}px`,
             );
         });
     };
