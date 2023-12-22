@@ -1300,24 +1300,21 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.files).filter((f) => f.task_id === id);
     }
 
-    getBoardHistory(id){
-       // return this.storage.get(this.workspaceModel.history);
-       return [{id:1, message:"msg1", date: new Date(), user:{
-        email:"1@email.com",
-        name: "1.1",
-        surname:"1.2",
-        avatar_url:"/img/avatar.jpg"
-       }}, {id:2, message:"msg2", date: new Date(), user:{
-        email:"2@email.com",
-        name: "2.1",
-        surname:"2.2",
-        avatar_url:"/img/avatar.jpg"
-       }}, {id:3, message:"msg3", date: new Date(), user:{
-        email:"3@email.com",
-        name: "3.1",
-        surname:"3.2",
-        avatar_url:"/img/avatar.jpg"
-       }}]
+    getBoardHistory(){
+       return this.storage.get(this.workspaceModel.history);
+    }
+
+    filterCardsByTag(id){
+        const cards = this.storage.get(this.workspaceModel.cards).filter(c=>
+            c.tags.includes(id));
+
+        let lists = this.storage.get(this.workspaceModel.lists).forEach(l=>{
+            l.cards=cards.filter(c=>c.list_id===l.id).sort((a,b)=>a.list_position-b.list_position);
+        });
+
+        lists = lists.filter(l=>l.cards.length>0);
+
+        return lists;
     }
 }
 
