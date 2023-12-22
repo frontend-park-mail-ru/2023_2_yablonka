@@ -49,8 +49,11 @@ export default class BoardHistory extends Component {
 
             dialog.setAttribute(
                 'style',
-                `top: ${btnSizes.top + 20}px; left: ${btnSizes.left - dialogSizes.width}px;
-                 heigth: ${window.innerHeight - (btnSizes.top + 20)}px`,
+                `top: ${btnSizes.top + 30}px; left: ${Math.max(
+                    btnSizes.left - dialogSizes.width,
+                    20,
+                )}px;
+                 max-height: ${window.innerHeight - (btnSizes.top + 40)}px`,
             );
         } else {
             popupEvent.deletePopup(dialog);
@@ -59,9 +62,8 @@ export default class BoardHistory extends Component {
     };
 
     #loadHistory = () => {
-        const boardId = parseInt(this.parent.querySelector('.board-name__input').dataset.board, 10);
         const boardHistory = this.parent.querySelector('.board-history__list');
-        const historyItems = workspaceStorage.getBoardHistory(boardId);
+        const historyItems = workspaceStorage.getBoardHistory();
 
         boardHistory.innerHTML = '';
         historyItems.forEach((item) => {
@@ -87,8 +89,11 @@ export default class BoardHistory extends Component {
 
             dialog.setAttribute(
                 'style',
-                `top: ${btnSizes.top + 20}px; left: ${btnSizes.left - dialogSizes.width}px;
-                 max-heigth: ${window.innerHeight - (btnSizes.top + 20)}px`,
+                `top: ${btnSizes.top + 30}px; left: ${Math.max(
+                    btnSizes.left - dialogSizes.width,
+                    20,
+                )}px;
+                 max-height: ${window.innerHeight - (btnSizes.top + 40)}px`,
             );
         });
     };
