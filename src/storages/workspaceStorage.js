@@ -10,6 +10,7 @@ import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js
 import BoardPage from '../pages/Board/board.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionNavigate, actionRedirect } from '../actions/userActions.js';
+import sendChange from '../modules/sendChange.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -27,7 +28,7 @@ class WorkspaceStorage extends BaseStorage {
         checklists: 'checklists',
         items: 'items',
         files: 'files',
-        history: 'history'
+        history: 'history',
     };
 
     /**
@@ -186,6 +187,8 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            const body = await responsePromise.json();
+            await sendChange(body.body.board.board_id, `Создал доску ${body.body.board.name}`);
             emitter.trigger('rerender');
         } else if (status === 403) {
             emitter.trigger('noaccess');
@@ -534,7 +537,7 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
-    async createTag(tag){
+    async createTag(tag) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}task/file/remove/`,
             'DELETE',
@@ -873,7 +876,7 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
-    async getHistory(board){
+    async getHistory(board) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/history/`,
             'POST',
@@ -881,7 +884,7 @@ class WorkspaceStorage extends BaseStorage {
             board,
         );
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
         let body;
         try {
@@ -889,20 +892,19 @@ class WorkspaceStorage extends BaseStorage {
         } catch (error) {
             body = {};
         }
-        
-        if(status===200){
+
+        if (status === 200) {
             this.storage.set(this.workspaceModel.history, body.body.history);
         }
     }
 
-    async submitHistoryAction(action){
+    async submitHistoryAction(action) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/history/submit/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             action,
         );
-
     }
 
     /**
@@ -1190,8 +1192,8 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.files).filter((f) => f.task_id === id);
     }
 
-    getBoardHistory(){
-       return this.storage.get(this.workspaceModel.history);
+    getBoardHistory() {
+        return this.storage.get(this.workspaceModel.history);
     }
 }
 
