@@ -1321,6 +1321,10 @@ class WorkspaceStorage extends BaseStorage {
         const tagIds = this.storage.get(this.workspaceModel.cards).find(c=>c.id===id).tags;
         return this.storage.get(this.workspaceModel.tags).filter(t=>tagIds.includes(toString(t.id)));
     }
+
+    checkTagOnBoard(name){
+        return !!this.storage.get(this.workspaceModel.tags).find(t=>t.name===name);
+    }
 }
 
 const workspaceStorage = new WorkspaceStorage();
