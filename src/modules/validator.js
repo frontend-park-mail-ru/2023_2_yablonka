@@ -31,11 +31,10 @@ export default class Validator {
     static validateRepeatPasswords = (passwordOne, passwordTwo) => passwordOne === passwordTwo;
 
     /**
-     * Проверяет пароли на совпадение
+     * Проверяет текст на корректность
      *
-     * @param {string} passwordOne - Строка с паролем
-     * @param {string} passwordTwo - Строка с повторённым паролем
-     * @return {boolean} - false, если неправильный, true, если правильный
+     * @param {string} text - Строка с текстом
+     * @return {boolean} - false, если некорректный, true, если корректный
      */
-    static validateObjectName = (name) => validateObjectNameRegExp.test(name);
+    static validateObjectName = (text) => validateObjectNameRegExp.test(text);
 }

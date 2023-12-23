@@ -5,10 +5,8 @@ import Component from '../../core/basicComponent';
 import template from './userInformation.hbs';
 import './userInformation.scss';
 /**
- * слои-обертки
+ * Класс с компонентом для смены информации пользователя
  * @class
- * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
- * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UserInformation extends Component {
     #innerConfig = {
@@ -52,7 +50,7 @@ export default class UserInformation extends Component {
     };
 
     /**
-     * Рендерит компонент в DOM
+     * Рендерит компонент
      */
     render() {
         return template({
@@ -69,6 +67,11 @@ export default class UserInformation extends Component {
         });
     }
 
+    /**
+     * Функция для получения отредеренного массива c компонентами формы
+     * @param {array} inputsData - данные input для рендера компонента формы
+     * @return {array} inputs - массив с отрендеренными компонентами формы
+     */
     #renderForm(inputsData) {
         const inputs = [];
         Object.entries(inputsData).forEach(([_, input]) => {

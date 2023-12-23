@@ -5,8 +5,6 @@ import template from './form.hbs';
 /**
  * слои-обертки
  * @class
- * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
- * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Form extends Component {
     #innerConfig = {
@@ -38,7 +36,7 @@ export default class Form extends Component {
     };
 
     /**
-     * Рендерит компонент в DOM
+     * Рендерит компонент
      */
     render() {
         const inputs = this.#renderForm({
@@ -53,6 +51,11 @@ export default class Form extends Component {
         return template({ inputs, forgottenPasswordLink });
     }
 
+    /**
+     * Функция для обработки события изменения пароля пользователя
+     * @param {inputsData} inputsData - данные input для рендера поля формы
+     * @return {inputs} inputs - массив с отрендеренными компонентами input полей формы
+     */
     #renderForm(inputsData) {
         const inputs = [];
         Object.entries(inputsData).forEach(([_, input]) => {

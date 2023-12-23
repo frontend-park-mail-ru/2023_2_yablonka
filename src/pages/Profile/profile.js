@@ -99,6 +99,10 @@ export default class Profile extends Component {
         emitter.unbind('logout', this.close);
     }
 
+    /**
+     * Функция для обработки события изменения данных профиля
+     * @param {Event} e - Событие
+     */
     #changeProfileHandler = async (e) => {
         e.preventDefault();
         const name = this.parent.querySelector('input[data-name=name]').value;
@@ -148,6 +152,10 @@ export default class Profile extends Component {
         }
     };
 
+    /**
+     * Функция для обработки события изменения пароля пользователя
+     * @param {Event} e - Событие
+     */
     #changePasswordHandler = async (e) => {
         e.preventDefault();
 

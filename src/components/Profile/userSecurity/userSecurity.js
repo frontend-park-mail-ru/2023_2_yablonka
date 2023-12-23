@@ -3,10 +3,8 @@ import FormInput from '../../Common/formInput/formInput.js';
 import Button from '../../atomic/button/button.js';
 import template from './userSecurity.hbs';
 /**
- * слои-обертки
+ * Класс с компонентом для смены пароля
  * @class
- * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
- * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UserSecurity extends Component {
     #innerConfig = {
@@ -53,6 +51,11 @@ export default class UserSecurity extends Component {
         });
     }
 
+    /**
+     * Функция для получения отредеренного массива c компонентами формы
+     * @param {array} inputsData - данные input для рендера компонента формы
+     * @return {array} inputs - массив с отрендеренными компонентами формы
+     */
     #renderForm(inputsData) {
         const inputs = [];
         Object.entries(inputsData).forEach(([_, input]) => {

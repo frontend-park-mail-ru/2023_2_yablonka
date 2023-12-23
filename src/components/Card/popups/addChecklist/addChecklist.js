@@ -31,6 +31,9 @@ export default class AddChecklist extends Component {
         this.parent.insertAdjacentHTML('beforeend', template(this.config));
     }
 
+    /**
+     * Функция, добавляющая обработчики событий
+     */
     addEventListeners() {
         this.parent
             .querySelector('button[data-action=manage-card-checklist]')
@@ -67,6 +70,9 @@ export default class AddChecklist extends Component {
             .addEventListener('keydown', this.#proccessKeydownWithChecklist);
     }
 
+    /**
+     * Функция, удаляющая обработчики событий
+     */
     removeEventListeners() {
         this.parent
             .querySelector('button[data-action=manage-card-checklist]')
@@ -103,6 +109,9 @@ export default class AddChecklist extends Component {
             .removeEventListener('keydown', this.#proccessKeydownWithChecklist);
     }
 
+    /**
+     * Функция, добавляющая обработчики событий
+     */
     #openPopup = (e) => {
         e.preventDefault();
         e.stopPropagation();
