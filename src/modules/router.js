@@ -16,7 +16,6 @@ class Router {
         this.views = new Map();
         this.signedInViews = new Map();
 
-
         emitter.bind('rerender', this.reRenderPage.bind(this));
 
         routes.forEach((route) => {
@@ -31,7 +30,7 @@ class Router {
     /**
      * Функция, которая рендерит страницу оффлайна
      */
-    goOffline(){
+    goOffline() {
         this.currentPage.clear();
         offline.renderPage();
     }
@@ -72,12 +71,13 @@ class Router {
      */
     matchView(href) {
         if (href.match(navigationPagesHrefRegExp)) {
+            console.log(123);
             return href;
         }
         if (href.match(boardHrefRegExp)) {
             return '/board';
         }
-        return '/signin';
+        return '/404';
     }
 
     /**

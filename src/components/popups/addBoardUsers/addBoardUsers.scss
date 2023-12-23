@@ -16,7 +16,7 @@
     width: 90%;
     min-height: 32px;
     background-color: var(--input-background-color);
-    box-shadow: inset 0 0 0 2px var(--need-text-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
 }
 
 .add-board-user-content__buttons {
@@ -36,7 +36,24 @@
 }
 
 .btn-add-board-user_delete {
-    background-color: var(--delete-button-color);
+    background-color: var(--btn-file-delete);
+    color: var(--text-color-in-card);
     min-height: 25px;
     min-width: 100px;
+}
+
+@media screen and (max-width: 545px) {
+    .add-board-user {
+        width: 220px;
+    }
+
+    .add-board-user-content__buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-add-board-user_add,
+    .btn-add-board-user_delete {
+        width: 100%;
+    }
 }

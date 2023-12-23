@@ -2,7 +2,7 @@
     width: 100%;
 }
 
-.check-item {
+.checkitem {
     justify-content: space-between;
     min-height: 25px;
     background-color: var(--checkitem-background-color);
@@ -10,26 +10,44 @@
     position: relative;
 }
 
-.input-check-item__checkbox {
+.input-checkitem__checkbox {
     position: absolute;
     left: -30px;
 }
 
-.check-item__name {
+.checkitem__name {
     align-self: flex-start;
+    max-width: 90%;
 }
 
-.check-item-name__text {
+.checkitem-name__text {
     color: var(--text-color-on-page);
-    max-width: 400px;
+    width: fit-content;
     overflow-x: auto;
     overflow-y: hidden;
+    padding-bottom: 1px;
 }
 
-.btn-check-item_delete {
+.btn-checkitem_delete {
     background: transparent;
 }
 
-.btn-check-item_delete:hover {
+.btn-checkitem_delete:hover {
     background: var(--delete-checklist-button-hover);
+}
+
+.checkitem-name__text::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+}
+
+.checkitem-name__text::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 3px;
+    margin: 0px;
+}
+
+.checkitem-name__text::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 3px;
 }

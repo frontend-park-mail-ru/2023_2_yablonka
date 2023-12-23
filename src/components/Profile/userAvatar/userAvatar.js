@@ -1,5 +1,7 @@
 import Component from '../../core/basicComponent';
 import template from './userAvatar.hbs';
+import './userAvatar.scss';
+
 /**
  * слои-обертки
  * @class

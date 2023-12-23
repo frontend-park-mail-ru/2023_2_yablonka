@@ -1,11 +1,14 @@
-<dialog id='change-avatar' class='border-radius-10 pop-up-change-avatar' aria-modal='false' popover>
+<dialog id='change-avatar' class='border-radius-10 pop-up-change-avatar' aria-modal='false'>
     <div
         class='flex-centered flex-column-centered strach-layout padding-5-10 pop-up-change-avatar-wrapper'
     >
         {{#each buttons as |button|}}
             <div class='font-size-15 flex-start border-radius-5 padding-0-10 navigation__item'>
-                <button data-open="true" class='btn font-size-15 btn-profile' data-action='{{button.action}}'><span
-                    >{{button.title}}</span></button>
+                <button
+                    data-open='true'
+                    class='btn font-size-15 btn-profile'
+                    data-action='{{button.action}}'
+                ><span>{{button.title}}</span></button>
             </div>
         {{/each}}
     </div>

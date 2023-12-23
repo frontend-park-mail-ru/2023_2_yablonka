@@ -8,7 +8,7 @@ import CardContent from './cardContent/cardContent.js';
 import {
     actionCommentCard,
     actionDeleteCard,
-    actionDeleteChecklist,
+    actionGetFiles,
     actionUpdateCard,
 } from '../../actions/boardActions.js';
 import dispatcher from '../../modules/dispatcher.js';
@@ -21,6 +21,10 @@ import NotificationMessage from '../Common/notification/notificationMessage.js';
 import CardUser from './atomic/cardUser/cardUser.js';
 import Checklist from './atomic/checklist/checklist.js';
 import CheckItem from './atomic/checkItem/checkItem.js';
+import BoardPage from '../../pages/Board/board.js';
+import FilesContainer from './filesContainer/filesContainer.js';
+import File from './atomic/file/file.js';
+import ChecklistsContainer from './checklistsContainer/checklistsContainer.js';
 
 /**
  * Попап для хедера
@@ -29,6 +33,8 @@ import CheckItem from './atomic/checkItem/checkItem.js';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class Card extends Component {
+    draggingElement;
+
     /**
      * Рендерит компонент в DOM
      */
@@ -43,38 +49,38 @@ export default class Card extends Component {
     }
 
     addEventListeners() {
-        this.parent.querySelectorAll('.list__card-wrapper').forEach((card) => {
-            card.addEventListener('click', this.#openCard);
-            card.addEventListener('click', this.#resize);
-        });
+        this.parent.querySelector('.board').addEventListener('click', this.#openCard);
         this.parent
             .querySelector('.btn-card-modal__exit-wrapper')
             .addEventListener('click', this.#closeCardByBtn);
         this.parent.querySelector('#card').addEventListener('click', this.#closeCardByBackground);
         window.addEventListener('resize', this.#resize);
 
-        this.parent.querySelectorAll('.list__card-wrapper').forEach((card) => {
-            card.addEventListener('click', this.#openCard);
-        });
         this.parent
             .querySelector('button[data-action=delete-card]')
             .addEventListener('click', this.#deleteCard);
         this.parent
+            .querySelector('.card-information__card-name')
+            .addEventListener('keydown', this.#enterButtonHandler);
+        this.parent
             .querySelector('.card-information__card-description')
-            .addEventListener('keydown', this.#changeNameAndDescription);
+            .addEventListener('keydown', this.#enterButtonHandler);
+        this.parent
+            .querySelector('.card-information__card-description')
+            .addEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__card-description')
+            .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
-            .addEventListener('keydown', this.#changeNameAndDescription);
+            .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__add-comment-text')
             .addEventListener('keydown', this.#createComment);
     }
 
     removeEventListeners() {
-        this.parent.querySelectorAll('.list__card-wrapper').forEach((card) => {
-            card.removeEventListener('click', this.#openCard);
-            card.removeEventListener('click', this.#resize);
-        });
+        this.parent.querySelector('.board').removeEventListener('click', this.#openCard);
         this.parent
             .querySelector('.btn-card-modal__exit-wrapper')
             .removeEventListener('click', this.#closeCardByBtn);
@@ -87,11 +93,23 @@ export default class Card extends Component {
             .querySelector('button[data-action=delete-card]')
             .removeEventListener('click', this.#deleteCard);
         this.parent
+            .querySelector('.card-information__card-name')
+            .removeEventListener('keydown', this.#enterButtonHandler);
+        this.parent
             .querySelector('.card-information__card-description')
-            .removeEventListener('keydown', this.#changeNameAndDescription);
+            .removeEventListener('keydown', this.#enterButtonHandler);
+        this.parent
+            .querySelector('.card-information__card-description')
+            .removeEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__card-description')
+            .removeEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
-            .removeEventListener('keydown', this.#changeNameAndDescription);
+            .removeEventListener('blur', this.#changeNameAndDescription);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .removeEventListener('keydown', this.#createComment);
     }
 
     static openByRedirect = (id) => {
@@ -106,21 +124,21 @@ export default class Card extends Component {
         dialog.querySelector('.card-information__card-name').textContent = card.name;
         dialog.querySelector('.card-information-list-name__title').textContent = list.name;
         dialog.querySelector('.card-information__card-description').value = card.description;
+        Card.resizeCardDescription();
 
         Card.#addComments(parseInt(dialog.dataset.card, 10));
         Card.addDate(parseInt(dialog.dataset.card, 10));
         Card.updateUsers(parseInt(dialog.dataset.card, 10));
-        Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+        Card.addChecklists(parseInt(dialog.dataset.card, 10));
+        Card.getFiles();
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.addPopup(dialog);
             dialog.showModal();
 
             const dialogSizes = dialog.getBoundingClientRect();
             const windowSizes = document.querySelector('.page').getBoundingClientRect();
-            // Math.floor(
-            //     (windowSizes.height - dialogSizes.height) / 2,
-            // )
+
             dialog.setAttribute(
                 'style',
                 `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
@@ -130,33 +148,40 @@ export default class Card extends Component {
 
     #openCard = (e) => {
         e.preventDefault();
-        e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#card');
+        if (e.target.closest('.list__card-wrapper')) {
+            e.stopPropagation();
+            BoardPage.closeAllCreateMenu();
 
-        const card = workspaceStorage.getCardById(
-            parseInt(e.target.closest('.list__card-wrapper').dataset.card, 10),
-        );
-        const list = workspaceStorage.getListById(
-            parseInt(e.target.closest('.list').dataset.list, 10),
-        );
+            const dialog = this.parent.querySelector('#card');
 
-        dialog.dataset.card = card.id;
+            const card = workspaceStorage.getCardById(
+                parseInt(e.target.closest('.list__card-wrapper').dataset.card, 10),
+            );
+            const list = workspaceStorage.getListById(
+                parseInt(e.target.closest('.list').dataset.list, 10),
+            );
 
-        dialog.querySelector('.card-information__card-name').textContent = card.name;
-        dialog.querySelector('.card-information-list-name__title').textContent = list.name;
-        dialog.querySelector('.card-information__card-description').value = card.description;
+            dialog.dataset.card = card.id;
 
-        Card.#addComments(parseInt(dialog.dataset.card, 10));
-        Card.addDate(parseInt(dialog.dataset.card, 10));
-        Card.updateUsers(parseInt(dialog.dataset.card, 10));
-        Card.addChecklists(parseInt(dialog.dataset.card, 10), true);
+            dialog.querySelector('.card-information__card-name').textContent = card.name;
+            dialog.querySelector('.card-information-list-name__title').textContent = list.name;
+            dialog.querySelector('.card-information__card-description').value = card.description;
+            Card.resizeCardDescription();
 
-        if (dialog.getAttribute('open') === null) {
-            popupEvent.closeAllPopups();
-            popupEvent.addPopup(dialog);
-            dialog.showModal();
-            Card.updateHistory(card.id);
+            Card.#addComments(parseInt(dialog.dataset.card, 10));
+            Card.addDate(parseInt(dialog.dataset.card, 10));
+            Card.updateUsers(parseInt(dialog.dataset.card, 10));
+            Card.addChecklists(parseInt(dialog.dataset.card, 10));
+            Card.getFiles();
+
+            if (!dialog.hasAttribute('open')) {
+                popupEvent.closeAllPopups();
+                popupEvent.addPopup(dialog);
+                dialog.showModal();
+                Card.updateHistory(card.id);
+                this.#resize();
+            }
         }
     };
 
@@ -166,6 +191,7 @@ export default class Card extends Component {
 
         popupEvent.closeAllPopups();
         Card.updateHistory();
+        Card.clearCard();
     };
 
     #closeCardByBackground = (e) => {
@@ -175,6 +201,7 @@ export default class Card extends Component {
         if (e.target === e.currentTarget) {
             popupEvent.closeAllPopups();
             Card.updateHistory();
+            Card.clearCard();
         }
         popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
     };
@@ -191,34 +218,53 @@ export default class Card extends Component {
         }
     };
 
-    #changeNameAndDescription = (e) => {
+    #enterButtonHandler = (e) => {
+        e.stopPropagation();
+
+        if (e.key === 'Enter') {
+            if (e.target.closest('.card-information__card-name')) {
+                e.preventDefault();
+                e.target.closest('.card-information__card-name').blur();
+            }
+            if (!e.shiftKey && e.target.closest('.card-information__card-description')) {
+                e.preventDefault();
+                e.target.closest('.card-information__card-description').blur();
+            }
+        }
+    };
+
+    #changeNameAndDescription = async (e) => {
         e.stopPropagation();
 
         const dialog = this.parent.querySelector('#card');
 
         const name = dialog.querySelector('.card-information__card-name').textContent;
-        const description = dialog.querySelector('.card-information__card-description').value;
+        const description = dialog.querySelector('.card-information__card-description');
+        const text = description.value;
         const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
         const card = workspaceStorage.getCardById(cardId, 10);
 
-        if (cardId && e.key === 'Enter') {
-            e.preventDefault();
-            dispatcher.dispatch(
+        if (cardId) {
+            if (e.target.closest('.card-information__card-name')) {
+                e.preventDefault();
+                e.target.closest('.card-information__card-name').blur();
+            }
+            await dispatcher.dispatch(
                 actionNavigate(
                     `${
-                        window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0]
-                    }_card_${cardId}`,
+                        window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0]
+                    }/card/${cardId}`,
                     '',
                     false,
                 ),
             );
-            dispatcher.dispatch(
+            await dispatcher.dispatch(
                 actionUpdateCard({
                     id: cardId,
                     name,
                     start: card.start,
                     end: card.end,
-                    description,
+                    description: text.slice(0, 1024),
                     list_position: parseInt(card.list_position, 10),
                 }),
             );
@@ -227,13 +273,28 @@ export default class Card extends Component {
 
     static changeNameAndDescriptionHelper = (cardId) => {
         const card = workspaceStorage.getCardById(parseInt(cardId, 10));
+        const cardInList = document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`);
 
         const dialog = document.querySelector('#card');
         const name = dialog.querySelector('.card-information__card-name');
         const description = dialog.querySelector('.card-information__card-description');
 
-        name.value = card.name ? card.name : '';
+        cardInList.querySelector('.card-name').textContent = card.name ? card.name : '';
+
+        name.textContent = card.name ? card.name : '';
         description.value = card.description ? card.description : '';
+        Card.resizeCardDescription();
+    };
+
+    static resizeCardDescription = (e) => {
+        if (!e || e.target.closest('.card-information__card-description')) {
+            e?.stopPropagation();
+            const description = document.querySelector('.card-information__card-description');
+            description.setAttribute(
+                'style',
+                `height:${([...description.value.matchAll(/\n/g)].length + 3) * 20}px`,
+            );
+        }
     };
 
     #createComment = async (e) => {
@@ -275,9 +336,7 @@ export default class Card extends Component {
         window.requestAnimationFrame(() => {
             const dialogSizes = dialog.getBoundingClientRect();
             const windowSizes = this.parent.getBoundingClientRect();
-            // Math.floor(
-            //     (windowSizes.height - dialogSizes.height) / 2,
-            // )
+
             dialog.setAttribute(
                 'style',
                 `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
@@ -290,8 +349,8 @@ export default class Card extends Component {
             dispatcher.dispatch(
                 actionNavigate(
                     `${
-                        window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0]
-                    }_card_${cardId}`,
+                        window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0]
+                    }/card/${cardId}`,
                     '',
                     false,
                 ),
@@ -299,7 +358,7 @@ export default class Card extends Component {
         } else {
             dispatcher.dispatch(
                 actionNavigate(
-                    window.location.pathname.match(/^\/workspace_\d+_board_\d+/)[0],
+                    window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0],
                     '',
                     false,
                 ),
@@ -390,16 +449,16 @@ export default class Card extends Component {
         }
     };
 
-    static addChecklists = (cardId, clear) => {
+    static addChecklists = (cardId) => {
         const dialog = document.querySelector('#card');
-        const checklistsLocation = dialog.querySelector('.card-information__checklists');
         const checklists = workspaceStorage.getCardChecklists(parseInt(cardId, 10));
 
         if (checklists.length) {
-            checklistsLocation.style.display = 'flex';
-            if (clear) {
-                checklistsLocation.innerHTML = '';
-            }
+            const description = dialog.querySelector('.card-information__description-wrapper');
+            description.insertAdjacentHTML('afterend', new ChecklistsContainer(null, {}).render());
+
+            const checklistsLocation = dialog.querySelector('.card-information__checklists');
+
             checklists.forEach((checklist) => {
                 checklistsLocation.insertAdjacentHTML(
                     'beforeend',
@@ -433,5 +492,55 @@ export default class Card extends Component {
             );
         });
         return items;
+    };
+
+    static getFiles = async () => {
+        const card = document.querySelector('#card');
+        await dispatcher.dispatch(actionGetFiles({ id: parseInt(card.dataset.card, 10) }));
+
+        const files = workspaceStorage.storage.get(workspaceStorage.workspaceModel.files);
+
+        if (files.length) {
+            if (!document.querySelector('.card-information__files')) {
+                const comments = card.querySelector('.card-information__comments-wrapper');
+                comments.insertAdjacentHTML('beforebegin', new FilesContainer(null, {}).render());
+            }
+
+            const filesContainer = card.querySelector('.card-information__files-wrapper');
+            filesContainer.innerHTML = '';
+
+            files.forEach((file) => {
+                filesContainer.insertAdjacentHTML(
+                    'afterbegin',
+                    new File(null, {
+                        date_created: file.date_created,
+                        file_path: `/${file.file_path}`,
+                        original_name: file.original_name,
+                        task_id: file.task_id,
+                    }).render(),
+                );
+            });
+        }
+    };
+
+    static clearCard = (deleteCard) => {
+        const dialog = document.querySelector('#card');
+        dialog.close();
+        popupEvent.deletePopup(dialog);
+
+        dialog.querySelector('.card-information__card-name').textContent = '';
+        dialog.querySelector('.card-information-list-name__title').textContent = '';
+        dialog.querySelector('.card-information__date-wrapper').innerHTML = '';
+        dialog.querySelector('.card-information__users-wrapper').innerHTML = '';
+        dialog.querySelector('.card-information__card-description').value = '';
+        dialog.querySelector('.card-information__checklists')?.remove();
+        dialog.querySelector('.card-information__users-comments').innerHTML = '';
+        dialog.querySelector('.card-information__files')?.remove();
+
+        const cardId = dialog.dataset.card;
+        if (deleteCard) {
+            document.querySelector(`.list__card-wrapper[data-card="${cardId}"]`).remove();
+        }
+        dialog.dataset.card = '';
     };
 }

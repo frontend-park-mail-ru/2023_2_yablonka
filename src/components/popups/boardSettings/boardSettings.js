@@ -17,12 +17,11 @@ export default class BoardSettings extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        this.#resizeBoardNameInput();
         this.parent.insertAdjacentHTML(
             'beforeend',
             template({
                 ID: this.config.board_id,
-                isOwner: workspaceStorage.isOwner(this.config.user_id),
+                isOwner: this.config.is_owner,
             }),
         );
     }
@@ -38,17 +37,12 @@ export default class BoardSettings extends Component {
             .querySelector('.btn-delete-board')
             ?.addEventListener('click', this.#deleteBoard);
         this.parent
-            .querySelector('.input-board-name__input')
-            .addEventListener('change', this.#changeBoardName);
+            .querySelector('.board-name__input')
+            .addEventListener('blur', this.#changeBoardName);
         this.parent
-            .querySelector('.input-board-name__input')
-            .addEventListener('input', this.#resizeBoardNameInput);
-        this.parent
-            .querySelector('.input-board-name__input')
-            .addEventListener('focus', this.#changeBackgoundBoardNameInput);
-        this.parent
-            .querySelector('.input-board-name__input')
-            .addEventListener('blur', this.#changeBackgoundBoardNameInput);
+            .querySelector('.board-name__input')
+            .addEventListener('keydown', this.#enterButtonHandler);
+        window.addEventListener('resize', BoardSettings.resizeBoardName);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -63,26 +57,20 @@ export default class BoardSettings extends Component {
             .querySelector('.btn-delete-board')
             ?.removeEventListener('click', this.#deleteBoard);
         this.parent
-            .querySelector('.input-board-name__input')
-            .removeEventListener('change', this.#changeBoardName);
+            .querySelector('.board-name__input')
+            .removeEventListener('blur', this.#changeBoardName);
         this.parent
-            .querySelector('.input-board-name__input')
-            .removeEventListener('input', this.#resizeBoardNameInput);
-        this.parent
-            .querySelector('.input-board-name__input')
-            .removeEventListener('focus', this.#changeBackgoundBoardNameInput);
-        this.parent
-            .querySelector('.input-board-name__input')
-            .removeEventListener('blur', this.#changeBackgoundBoardNameInput);
-
-        window.addEventListener('resize', this.#resize);
+            .querySelector('.board-name__input')
+            .removeEventListener('keydown', this.#enterButtonHandler);
+        window.removeEventListener('resize', BoardSettings.resizeBoardName);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #renameBoard = () => {
         const dialog = this.parent.querySelector('#board-settings');
 
-        const boardName = this.parent.querySelector('.board-menu__board-name');
-        boardName.focus();
+        const input = this.parent.querySelector('.board-name__input');
+        input.focus();
 
         popupEvent.deletePopup(dialog);
         dialog.close();
@@ -94,7 +82,8 @@ export default class BoardSettings extends Component {
 
         const dialog = this.parent.querySelector('#board-settings');
 
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
+        const btn = e.target.closest('button');
+        const btnCoordinates = btn.getBoundingClientRect();
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
@@ -102,7 +91,7 @@ export default class BoardSettings extends Component {
             dialog.show();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.right - 200}px`,
+                `top: ${btnCoordinates.top - 20}px; left: ${btnCoordinates.left + 60}px`,
             );
         } else {
             popupEvent.deletePopup(dialog);
@@ -118,86 +107,77 @@ export default class BoardSettings extends Component {
             .getBoundingClientRect();
         dialog.setAttribute(
             'style',
-            `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.right - 200}px`,
+            `top: ${btnCoordinates.top - 20}px; left: ${btnCoordinates.left + 60}px`,
         );
     };
 
-    #resizeBoardNameInput = (e) => {
-        if (e?.type === 'input' || !e) {
-            let input;
-            if (e) {
-                e.stopPropagation();
-                input = e.target;
-            } else {
-                input = this.parent.querySelector('.input-board-name__input');
-            }
-            const letters = Array.from(input.value);
-            const numbers = letters.filter((el) => /\d/.test(el));
-            const characters = letters.filter((el) => !/\d/.test(el));
-
-            const width = Math.floor(numbers.length * 12.5 + characters.length * 10.5) + 20;
-            const maxWidth = Math.floor(
-                this.parent.querySelector('.board-menu__team').getBoundingClientRect().left -
-                    input.getBoundingClientRect().left,
-            );
-            input.parentElement.setAttribute(
-                'style',
-                `max-width: ${width < maxWidth ? width : maxWidth}px`,
-            );
-        }
-    };
-
-    #changeBackgoundBoardNameInput = (e) => {
+    #enterButtonHandler = (e) => {
         e.stopPropagation();
 
-        if (e.type === 'focus' || e.type === 'blur') {
-            const wrapper = e.target.parentElement;
-
-            if (wrapper.dataset.active === 'false') {
-                wrapper.dataset.active = 'true';
-                wrapper.classList.add('board-name__input-wrapper_active');
-            } else {
-                wrapper.dataset.active = 'false';
-                wrapper.classList.remove('board-name__input-wrapper_active');
-            }
+        if (e.key === 'Enter' && e.target.closest('.board-name__input')) {
+            e.preventDefault();
+            e.target.closest('.board-name__input').blur();
         }
     };
 
-    #deleteBoard = () => {
+    static resizeBoardName = () => {
+        window.requestAnimationFrame(() => {
+            const input = document.querySelector('.board-name__input');
+            const windowSize = window.innerWidth;
+            const boardMenuRightElementSizes = document
+                .querySelector('.board__menu_right')
+                .getBoundingClientRect();
+            const maxWidth =
+                windowSize -
+                boardMenuRightElementSizes.width -
+                input.getBoundingClientRect().left -
+                20;
+            input.parentElement.setAttribute('style', `max-width: ${maxWidth}px`);
+        });
+    };
+
+    #deleteBoard = async () => {
         const dialog = this.parent.querySelector('#board-settings');
 
         if (dialog.dataset.board) {
             const boardId = parseInt(dialog.dataset.board, 10);
+            const workspaceId = parseInt(
+                this.parent.querySelector('.sidebar__workspace-information').dataset.workspace,
+                10,
+            );
             popupEvent.deletePopup(dialog);
             dialog.close();
 
-            dispatcher.dispatch(actionDeleteBoard(parseInt(boardId, 10)));
-            dispatcher.dispatch(actionRedirect('/main', true));
+            await dispatcher.dispatch(
+                actionDeleteBoard({ workspace_id: workspaceId, board_id: boardId }),
+            );
+            await dispatcher.dispatch(actionRedirect('/main', true));
         }
     };
 
     #changeBoardName = async (e) => {
-        e.stopPropagation();
-        e.preventDefault();
+        if (e.target.closest('.board-name__input')) {
+            e.stopPropagation();
+            e.preventDefault();
 
-        const input = e.target.closest('.input-board-name__input');
-        const boardId = input.dataset.board;
-        const { name } = workspaceStorage.getBoardById(parseInt(boardId, 10));
+            const input = e.target.closest('.board-name__input');
+            const boardId = input.dataset.board;
+            const { name } = workspaceStorage.getBoardById(parseInt(boardId, 10));
 
-        const { value } = e.target;
+            const value = input.textContent;
 
-        if (value !== '' && value !== name) {
-            await dispatcher.dispatch(
-                actionUpdateBoard({
-                    id: parseInt(boardId, 10),
-                    name: value.slice(0, 33),
-                }),
-            );
-            e.target.value = value;
-        } else {
-            e.target.value = name;
+            if (value !== '' && value !== name) {
+                await dispatcher.dispatch(
+                    actionUpdateBoard({
+                        id: parseInt(boardId, 10),
+                        name: value.slice(0, 33),
+                    }),
+                );
+                e.target.value = value;
+            } else {
+                e.target.value = name;
+                BoardSettings.resizeBoardName();
+            }
         }
-        input.focus();
-        input.blur();
     };
 }

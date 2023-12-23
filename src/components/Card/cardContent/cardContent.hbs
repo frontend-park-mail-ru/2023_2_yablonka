@@ -5,7 +5,7 @@
                 <img class='box-24-24 card-information__icon' src='/svg/card-name.svg' />
                 <span
                     contenteditable='true'
-                    class='border-radius-5 padding-0-10 font-size-20 font-weight-500 card-information__card-name'
+                    class='border-radius-5 padding-0-5 font-size-20 font-weight-500 card-information__card-name'
                 ></span>
             </div>
             <span class='font-size-14 font-weight-200 card-information__list-name'>в колонке&nbsp<u
@@ -16,7 +16,6 @@
         </div>
         <div class='flex-row-centered gap-5 card-information__users-wrapper'>
         </div>
-        <span class=''></span>
     </div>
     <div class='flex-column-centered gap-15 card-information__description-wrapper'>
         <div class='flex-row-centered description-wrapper__title'>
@@ -32,47 +31,8 @@
             placeholder='Описание карточки...'
         ></textarea>
     </div>
-    <div class='flex-column-centered gap-25 card-information__checklists'>
-    </div>
-    {{! <div class='flex-column-centered gap-15 card-information__files-wrapper'>
-                <div class='card-information__files-title'>
-                    <img class='box-24-24 card-information__icon' src='/svg/paperclip.svg' />
-                    <span
-                        class='font-size-20 font-weight-500 card-information__card-description-title'
-                    >Вложения</span>
-                </div>
-                <div class='flex-row-centered gap-20 card-information__file-wrapper'>
-                    <img
-                        class='box-24-24 border-radius-5 card-information__file-image'
-                        src='/img/Design.png'
-                        alt='file'
-                    />vfomen
-                    <div
-                        class='flex-column-centered gap-15 card-information__file-description-wrapper'
-                    >
-                        <span
-                            class='font-size-14 font-weight-500 card-information__file-name'
-                        >background.jpg</span>
-                        <span
-                            class='font-size-14 font-weight-200 card-information__file-added-date'
-                        >
-                            Добавлено 11.11.2011
-                        </span>
-                        <div class='flex-row-centered gap-20 card-information__file-actions'>
-                            <button
-                                class='padding-5-10 font-size-16 font-weight-500 border-radius-5 btn btn-file-actions__update'
-                            >
-                                Изменить
-                            </button>
-                            <button
-                                class='padding-5-10 font-size-16 font-weight-500 border-radius-5 btn btn-file-actions__delete'
-                            >
-                                Удалить
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div> }}
+    {{!-- <div class='flex-column-centered gap-25 card-information__checklists'>
+    </div> --}}
     <div class='flex-column-centered gap-20 card-information__comments-wrapper'>
         <div class='flex-row-centered card-information__comments-title'>
             <div class='flex-row-centered comments-wrapper__title'>
@@ -84,9 +44,9 @@
         </div>
         <div class='card-information__add-comment'>
             <img
-                src='/img/{{this.avatar}}'
+                src='{{this.avatar}}'
                 alt='avatar'
-                class='box-32-32 card-information__add-comment-avatar'
+                class='avatar box-32-32 card-information__add-comment-avatar'
             />
             <textarea
                 class='font-size-12 font-weight-300 padding-5-10 border-radius-5 card-information__add-comment-text'

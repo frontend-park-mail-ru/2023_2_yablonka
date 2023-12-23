@@ -5,7 +5,7 @@
 }
 
 .sidebar-main {
-    width: 30%;
+    width: 35%;
     min-width: 200px;
     height: 100%;
     align-items: flex-end;
@@ -87,6 +87,13 @@
 
 .btn-create-workspace__title {
     white-space: break-spaces;
-    line-height: 10px;
+    line-height: normal;
     text-align: left;
+    min-height: 35px;
+}
+
+@media screen and (max-width: 545px) {
+    .sidebar-main-wrapper {
+        display: none;
+    }
 }

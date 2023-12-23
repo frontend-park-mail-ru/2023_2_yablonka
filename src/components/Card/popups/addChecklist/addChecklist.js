@@ -13,6 +13,7 @@ import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
 import CheckItem from '../../atomic/checkItem/checkItem.js';
 import Checklist from '../../atomic/checklist/checklist.js';
+import ChecklistsContainer from '../../checklistsContainer/checklistsContainer.js';
 import template from './addChecklist.hbs';
 import './addChecklist.scss';
 
@@ -47,23 +48,26 @@ export default class AddChecklist extends Component {
             .querySelector('.input-card-checklist__input')
             .addEventListener('input', this.#blockButton);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .addEventListener('click', this.#deleteChecklist);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .addEventListener('click', this.#createChecklistItemShow);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .addEventListener('click', this.#createChecklistItemClose);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .addEventListener('click', this.#createChecklistItem);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .addEventListener('click', this.#deleteCheckItem);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .addEventListener('click', this.#setCheckItemCheck);
+        this.parent
+            .querySelector('.card-data__card-information')
+            .addEventListener('keydown', this.#proccessKeydownWithChecklist);
     }
 
     /**
@@ -83,23 +87,26 @@ export default class AddChecklist extends Component {
             .querySelector('.input-card-checklist__input')
             .removeEventListener('input', this.#blockButton);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#deleteChecklist);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#createChecklistItemShow);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#createChecklistItemClose);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#createChecklistItem);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#deleteCheckItem);
         this.parent
-            .querySelector('.card-information__checklists')
+            .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#setCheckItemCheck);
+        this.parent
+            .querySelector('.card-data__card-information')
+            .removeEventListener('keydown', this.#proccessKeydownWithChecklist);
     }
 
     /**
@@ -179,10 +186,9 @@ export default class AddChecklist extends Component {
     };
 
     #deleteChecklist = async (e) => {
-        e.stopPropagation();
-
         const checklist = e.target.closest('.card-information__checklist-wrapper');
         if (e.target.closest('.btn-delete-checklist')) {
+            e.stopPropagation();
             e.preventDefault();
 
             const checklistId = parseInt(checklist.dataset.checklist, 10);
@@ -191,41 +197,39 @@ export default class AddChecklist extends Component {
     };
 
     #createChecklistItemShow = (e) => {
-        e.stopPropagation();
-
         const btn = e.target.closest('.btn-add-checklist-element');
         if (btn) {
             e.preventDefault();
+            e.stopPropagation();
 
             btn.style.display = 'none';
             btn.nextElementSibling.style.display = 'flex';
+            btn.nextElementSibling.querySelector('.input-checklist-new-item__input').focus();
         }
     };
 
     #createChecklistItemClose = (e) => {
-        e.stopPropagation();
-
         const btn = e.target.closest('.btn-checklist-new-item_cancel');
 
-        if (btn) {
+        if (btn || e.key === 'Escape') {
+            e.stopPropagation();
             e.preventDefault();
-            this.#createChecklistItemCloseHelper(btn);
+            this.#createChecklistItemCloseHelper(e);
         }
     };
 
-    #createChecklistItemCloseHelper = (btn) => {
-        const input = btn.closest('.checklist-new-item');
+    #createChecklistItemCloseHelper = (e) => {
+        const input = e.target.closest('.checklist-new-item');
         input.querySelector('.input-checklist-new-item__input').value = '';
         input.style.display = 'none';
         input.previousElementSibling.style.display = 'flex';
     };
 
     #createChecklistItem = async (e) => {
-        e.stopPropagation();
-
         const btn = e.target.closest('.btn-checklist-new-item_save');
 
-        if (btn) {
+        if (btn || e.key === 'Enter') {
+            e.stopPropagation();
             e.preventDefault();
             const checklist = e.target.closest('.card-information__checklist-wrapper');
             const checklistId = parseInt(checklist.dataset.checklist, 10);
@@ -241,7 +245,7 @@ export default class AddChecklist extends Component {
                         name,
                     }),
                 );
-                this.#createChecklistItemCloseHelper(btn.nextElementSibling);
+                this.#createChecklistItemCloseHelper(e);
             } else {
                 NotificationMessage.showNotification(input, false, true, {
                     fontSize: 12,
@@ -253,12 +257,12 @@ export default class AddChecklist extends Component {
     };
 
     #setCheckItemCheck = async (e) => {
-        e.stopPropagation();
-
-        const input = e.target.closest('.input-check-item__checkbox');
+        const input = e.target.closest('.input-checkitem__checkbox');
 
         if (input) {
-            const checklistItem = e.target.closest('.check-item');
+            e.stopPropagation();
+
+            const checklistItem = e.target.closest('.checkitem');
             const checklistItemId = parseInt(checklistItem.dataset.checkitem_id, 10);
 
             let check;
@@ -278,21 +282,20 @@ export default class AddChecklist extends Component {
                     list_position: workspaceStorage.getChecklistItems(
                         parseInt(checklistItem.dataset.checklist_id, 10),
                     ).length,
-                    name: checklistItem.querySelector('.check-item-name__text').textContent,
+                    name: checklistItem.querySelector('.checkitem-name__text').textContent,
                 }),
             );
         }
     };
 
     #deleteCheckItem = async (e) => {
-        e.stopPropagation();
-
-        const btn = e.target.closest('.btn-check-item_delete');
+        const btn = e.target.closest('.btn-checkitem_delete');
 
         if (btn) {
+            e.stopPropagation();
             e.preventDefault();
 
-            const checklist = e.target.closest('.check-item');
+            const checklist = e.target.closest('.checkitem');
             const checklistItemId = parseInt(checklist.dataset.checkitem_id, 10);
             await dispatcher.dispatch(actionDeleteChecklistItem({ id: checklistItemId }));
         }
@@ -300,9 +303,14 @@ export default class AddChecklist extends Component {
 
     static addChecklist = (checklist) => {
         const dialog = document.querySelector('#card');
+
+        if (!dialog.querySelector('.card-information__checklists')) {
+            const description = document.querySelector('.card-information__description-wrapper');
+            description.insertAdjacentHTML('afterend', new ChecklistsContainer(null, {}).render());
+        }
+
         const checklistsLocation = dialog.querySelector('.card-information__checklists');
 
-        checklistsLocation.style.display = 'flex';
         checklistsLocation.insertAdjacentHTML(
             'afterbegin',
             new Checklist(null, {
@@ -323,7 +331,7 @@ export default class AddChecklist extends Component {
         checklistObject.remove();
 
         if (!checklistContainer.childElementCount) {
-            checklistContainer.setAttribute('style', 'display: none');
+            document.querySelector('.card-information__checklists').remove();
         }
     };
 
@@ -347,7 +355,7 @@ export default class AddChecklist extends Component {
     static deleteCheckItem = (checkItemId) => {
         const dialog = document.querySelector('#card');
         const checklistItemsObject = dialog.querySelector(
-            `.check-item[data-checkitem_id="${checkItemId}"]`,
+            `.checkitem[data-checkitem_id="${checkItemId}"]`,
         );
         const checklistItemsContainer = checklistItemsObject.parentElement;
 
@@ -355,6 +363,23 @@ export default class AddChecklist extends Component {
 
         if (!checklistItemsContainer.childElementCount) {
             checklistItemsContainer.setAttribute('style', 'display: none');
+        }
+    };
+
+    #proccessKeydownWithChecklist = (e) => {
+        e.stopPropagation();
+        const checklistName = e.target.closest('.input-checklist-new-item__input');
+
+        if (checklistName) {
+            e.stopPropagation();
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.#createChecklistItem(e);
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                this.#createChecklistItemClose(e);
+            }
         }
     };
 }

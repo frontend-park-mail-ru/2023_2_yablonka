@@ -1,3 +1,5 @@
+import { actionLogout, actionNavigate, actionRedirect } from '../../../actions/userActions.js';
+import dispatcher from '../../../modules/dispatcher.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
 import template from './navigation.hbs';
@@ -52,12 +54,40 @@ export default class Navigation extends Component {
         this.parent
             .querySelector('.btn-avatar')
             .addEventListener('click', this.#navigationPopupAction);
+        this.parent.querySelector('.logo-wrapper').addEventListener('click', this.#toBoardsHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=boards]')
+            .addEventListener('click', this.#toBoardsHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=logout]')
+            .addEventListener('click', this.#logoutHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=profile]')
+            .addEventListener('click', this.#toProfileHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=security]')
+            .addEventListener('click', this.#toSecurityHandler);
     }
 
     removeEventListeners() {
         this.parent
             .querySelector('.btn-avatar')
             .removeEventListener('click', this.#navigationPopupAction);
+        this.parent
+            .querySelector('.logo-wrapper')
+            .removeEventListener('click', this.#toBoardsHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=boards]')
+            .removeEventListener('click', this.#toBoardsHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=logout]')
+            .removeEventListener('click', this.#logoutHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=profile]')
+            .removeEventListener('click', this.#toProfileHandler);
+        this.parent
+            .querySelector('.profile-link[data-action=security]')
+            .removeEventListener('click', this.#toSecurityHandler);
     }
 
     #navigationPopupAction = (e) => {
@@ -74,5 +104,44 @@ export default class Navigation extends Component {
             popupEvent.deletePopup(dialog);
             dialog.close();
         }
+    };
+
+    /**
+     * Handler события нажатия на ссылку для перехода на log out
+     * @param {Event} e - Событие
+     */
+    #logoutHandler = (e) => {
+        e.preventDefault();
+        dispatcher.dispatch(actionLogout());
+    };
+
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу досок
+     * @param {Event} e - Событие
+     */
+    #toBoardsHandler = (e) => {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/main', false));
+    };
+
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу смены пароля
+     * @param {Event} e - Событие
+     */
+    #toSecurityHandler = (e) => {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/security', false));
+    };
+
+    /**
+     * Handler события нажатия на ссылку для перехода на страницу профиля
+     * @param {Event} e - Событие
+     */
+    #toProfileHandler = (e) => {
+        e.preventDefault();
+        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
+        dispatcher.dispatch(actionRedirect('/profile', false));
     };
 }

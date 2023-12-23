@@ -1,0 +1,57 @@
+<div class='flex-row-centered gap-20 border-radius-5 card-information__file-wrapper'>
+    <a
+        draggable='false'
+        href='{{this.url}}'
+        target='_blank'
+        class='flex-centered border-radius-5 file-wrapper__background'
+        download='{{this.file}}'
+    ><span
+            class='font-size-22 font-weight-bold file-wrapper__filename'
+        >{{this.fileExtension}}</span>
+    </a>
+    <div class='flex-column-centered gap-15 card-information__file-description-wrapper'>
+        <div class='flex-centered card-information_filename-wrapper'>
+            <a
+                draggable='false'
+                class='flex-row-centered gap-5 border-radius-5 card-file-download'
+                href='{{this.url}}'
+                target='_blank'
+                download='{{this.file}}'
+            >
+                <span
+                    class='font-size-14 font-weight-500 card-information__filename'
+                >{{this.filename}}</span>
+                <svg
+                    width='800px'
+                    height='800px'
+                    viewBox='0 0 24 24'
+                    fill=''
+                    class='box-24-24'
+                    xmlns='http://www.w3.org/2000/svg'
+                >
+                    <g id='Arrow / Arrow_Up_Right_SM'>
+                        <path
+                            id='Vector'
+                            d='M8 16L16 8M16 8H10M16 8V14'
+                            stroke='#535e6b'
+                            stroke-width='2'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        />
+                    </g>
+                </svg>
+            </a>
+        </div>
+        <span class='font-size-14 font-weight-200 card-information__file-added-date'>
+            Добавлено
+            {{this.creationDate}}
+        </span>
+        <div class='flex-row-centered gap-20 card-information__file-actions'>
+            <button
+                class='padding-5-10 font-size-16 font-weight-500 border-radius-5 btn btn-file-actions_delete'
+            >
+                Удалить
+            </button>
+        </div>
+    </div>
+</div>

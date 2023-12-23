@@ -1,0 +1,37 @@
+.history__user {
+    min-width: 32px;
+}
+
+.history__item-wrapper {
+    border-bottom: 1px solid var(--history-item-border-color);
+}
+
+.history__item {
+    align-items: flex-start;
+    background-color: var(--card-background);
+}
+
+.history__item-wrapper:last-child {
+    border-bottom: none;
+}
+
+.history-item__content-wrapper {
+    align-items: flex-start;
+}
+
+.history-item__user-email,
+.history-item__action-datetime {
+    color: var(--text-color-on-page);
+}
+
+.history-item__action-message {
+    text-wrap: pretty;
+    color: var(--text-color-on-page);
+}
+
+.history-item__user-email {
+    color: var(--text-color-on-page);
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

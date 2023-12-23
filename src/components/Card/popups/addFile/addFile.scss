@@ -1,0 +1,60 @@
+.card-file::backdrop {
+    background: transparent;
+}
+
+.card-file {
+    background-color: var(--card-background-popups);
+    width: 250px;
+}
+
+.card-file__content {
+    width: 100%;
+}
+
+.card-file__title {
+    color: var(--text-color-on-page);
+    align-self: center;
+}
+
+.card-file__filename {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    color: var(--text-color-on-page);
+    transition: 0.5s ease-in-out;
+}
+
+.upload-card-file {
+    width: 100%;
+}
+
+.btn-upload-file {
+    width: 100%;
+    background-color: var(--btn-upload-file);
+    color: var(--text-color-on-page);
+}
+
+.input-upload-file {
+    display: none;
+}
+
+.card-file__buttons {
+    width: 70%;
+}
+
+.btn-attach-file_upload {
+    width: 100%;
+    background-color: var(--action-button-color);
+}
+
+.btn-attach-file_upload:active {
+    background-color: var(--action-active-button-color);
+    color: var(--text-color-on-page);
+}
+
+.btn-attach-file_cancel {
+    width: 100%;
+    background-color: var(--btn-upload-file-cancel);
+}

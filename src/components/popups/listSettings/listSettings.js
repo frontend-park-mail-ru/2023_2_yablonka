@@ -1,6 +1,6 @@
 import { actionDeleteList, actionUpdateList } from '../../../actions/boardActions.js';
-import { actionDeleteWorkspace } from '../../../actions/workspaceActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
+import BoardPage from '../../../pages/Board/board.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
@@ -21,33 +21,29 @@ export default class ListSettings extends Component {
     }
 
     addEventListeners() {
-        this.parent.querySelectorAll('.btn-change-list').forEach((btn) => {
-            btn.addEventListener('click', this.#openSettings);
-        });
+        this.parent.querySelector('.board').addEventListener('click', this.#openSettings);
         this.parent
             .querySelector('.btn-change-list-name')
             .addEventListener('click', this.#renameList);
         this.parent
             .querySelector('.btn-delete-list')
             .addEventListener('click', this.#deleteListHandler);
-        this.parent.querySelectorAll('.list__title').forEach((name) => {
-            name.addEventListener('keydown', this.#changeNameHandler);
-        });
+        this.parent.querySelector('.board').addEventListener('focusout', this.#changeListName);
+        this.parent.querySelector('.board').addEventListener('keydown', this.#enterButtonHandler);
     }
 
     removeEventListeners() {
-        this.parent.querySelectorAll('.btn-change-list').forEach((btn) => {
-            btn.removeEventListener('click', this.#openSettings);
-        });
+        this.parent.querySelector('.board').removeEventListener('click', this.#openSettings);
         this.parent
             .querySelector('.btn-change-list-name')
             .removeEventListener('click', this.#renameList);
-        this.parent.querySelectorAll('.list__title').forEach((name) => {
-            name.addEventListener('keydown', this.#changeNameHandler);
-        });
         this.parent
             .querySelector('.btn-delete-list')
             .addEventListener('click', this.#deleteListHandler);
+        this.parent.querySelector('.board').removeEventListener('focusout', this.#changeListName);
+        this.parent
+            .querySelector('.board')
+            .removeEventListener('keydown', this.#enterButtonHandler);
     }
 
     #renameList = () => {
@@ -66,28 +62,17 @@ export default class ListSettings extends Component {
 
     #openSettings = (e) => {
         e.preventDefault();
-        e.stopPropagation();
+        if (e.target.closest('.btn-change-list')) {
+            e.stopPropagation();
+            BoardPage.closeAllCreateMenu();
 
-        const dialog = this.parent.querySelector('#list-settings');
+            const dialog = this.parent.querySelector('#list-settings');
 
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
-        const listId = e.target.closest('button').dataset.list;
+            const btn = e.target.closest('button');
+            const btnCoordinates = btn.getBoundingClientRect();
+            const listId = parseInt(btn.closest('button').dataset.list, 10);
 
-        popupEvent.closeAllPopups();
-        if (dialog.getAttribute('open') === null) {
-            popupEvent.closeAllPopups();
-            popupEvent.addPopup(dialog);
-            dialog.show();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
-                }px`,
-            );
-        } else {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-            if (listId !== dialog.dataset.list) {
+            if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
@@ -97,53 +82,76 @@ export default class ListSettings extends Component {
                         btnCoordinates.left + btnCoordinates.width + 20
                     }px`,
                 );
+            } else {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+                if (listId !== parseInt(dialog.dataset.list, 10)) {
+                    popupEvent.closeAllPopups();
+                    popupEvent.addPopup(dialog);
+                    dialog.show();
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top - 10}px; left: ${
+                            btnCoordinates.left + btnCoordinates.width + 20
+                        }px`,
+                    );
+                }
             }
-        }
-        dialog.dataset.list = listId;
-    };
-
-    #resize = () => {
-        const dialog = this.parent.querySelector('#list-settings');
-
-        if (dialog.dataset.workspace) {
-            const btnCoordinates = this.parent
-                .querySelector(`.btn-change-list[data-list="${dialog.dataset.workspace}"]`)
-                .getBoundingClientRect();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 20
-                }px`,
-            );
+            dialog.dataset.list = listId;
         }
     };
 
-    #deleteListHandler = () => {
-        const dialog = this.parent.querySelector('#list-settings');
+    #enterButtonHandler = (e) => {
+        if (e.key === 'Enter' && e.target.closest('.list__title')) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.target.closest('.list__title').blur();
+        }
+    };
+
+    static resizeListsName = () => {
+        window.requestAnimationFrame(() => {
+            document.querySelectorAll('.list__title-wrapper').forEach((listName) => {
+                const name = listName.querySelector('.list__title');
+                const settingsBtn = listName.querySelector('.btn-change-list');
+
+                name.setAttribute(
+                    'style',
+                    `max-width: ${
+                        settingsBtn.getBoundingClientRect().left -
+                        name.getBoundingClientRect().left -
+                        10
+                    }px`,
+                );
+            });
+        });
+    };
+
+    #deleteListHandler = async (e) => {
+        const dialog = e.target.closest('#list-settings');
         if (dialog.dataset.list) {
             const listId = parseInt(dialog.dataset.list, 10);
             popupEvent.deletePopup(dialog);
             dialog.close();
 
-            dispatcher.dispatch(actionDeleteList(listId));
+            await dispatcher.dispatch(actionDeleteList({ id: listId }));
         }
     };
 
-    #changeNameHandler = async (e) => {
-        e.stopPropagation();
-
-        if (e.key === 'Enter') {
+    #changeListName = async (e) => {
+        if (e.target.closest('.list__title')) {
+            e.stopPropagation();
             e.preventDefault();
+
             const listId = e.target.closest('.list').dataset.list;
             const { name, listPosition } = workspaceStorage.getListById(parseInt(listId, 10));
 
-            const { textContent } = e.target;
-
-            if (textContent !== '' && textContent !== name) {
+            const newName = e.target.closest('.list__title').textContent;
+            if (newName !== '' && newName !== name) {
                 await dispatcher.dispatch(
                     actionUpdateList({
                         id: parseInt(listId, 10),
-                        name: textContent,
+                        name: newName,
                         list_position: listPosition,
                     }),
                 );

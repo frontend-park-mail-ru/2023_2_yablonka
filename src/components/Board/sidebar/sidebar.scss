@@ -55,12 +55,19 @@
 
 .sidebar__board-settings {
     width: 100%;
+    justify-content: space-between;
 }
 
 .btn-board-sidebar {
     width: 32px;
     height: 32px;
     background-color: var(--create-workspace-board-background);
+}
+
+.btn-board-actions,
+.btn-board-settings {
+    height: 32px;
+    width: 32px;
 }
 
 .sidebar__boards-list {
@@ -120,4 +127,32 @@
 .sidebar-boards-list__board-name::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
+}
+
+@media screen and (max-width: 545px) {
+    .sidebar {
+        width: 150px;
+        height: 100%;
+        background-color: var(--sidebar-background);
+        backdrop-filter: blur(3px);
+    }
+    .board-action__name {
+        display: none;
+    }
+    .sidebar__board-members,
+    .sidebar__board-settings {
+        justify-content: space-between;
+        width: 85%;
+    }
+
+    .board-action__image {
+        margin-left: 10px;
+    }
+
+    .sidebar-boards-list__action {
+        justify-content: space-between;
+        width: 85%;
+        font-size: 14px;
+        gap: 5px;
+    }
 }

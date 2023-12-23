@@ -1,5 +1,4 @@
 import {
-    actionLogout,
     actionNavigate,
     actionRedirect,
     actionUpdatePassword,
@@ -63,26 +62,11 @@ export default class Profile extends Component {
      */
     addEventListeners() {
         this.parent
-            .querySelector('.profile-link[data-action=profile]')
-            .addEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=security]')
-            .addEventListener('click', this.goSecurityHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .addEventListener('click', this.toMainPageHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=logout]')
-            .addEventListener('click', this.logoutHandler);
-        this.parent
             .querySelector('.profile-navigation__security')
             .addEventListener('click', this.goSecurityHandler);
         this.parent
             .querySelector('.profile-navigation__user-information')
             .addEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.header-menu__logo')
-            .addEventListener('click', this.toMainPageHandler);
         this.parent
             .querySelector('button[data-action=update-profile]')
             ?.addEventListener('click', this.#changeProfileHandler);
@@ -99,26 +83,11 @@ export default class Profile extends Component {
      */
     removeEventListeners() {
         this.parent
-            .querySelector('.profile-link[data-action=profile]')
-            .removeEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=security]')
-            .removeEventListener('click', this.goSecurityHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=boards]')
-            .removeEventListener('click', this.toMainPageHandler);
-        this.parent
-            .querySelector('.profile-link[data-action=logout]')
-            .removeEventListener('click', this.logoutHandler);
-        this.parent
             .querySelector('.profile-navigation__security')
             .removeEventListener('click', this.goSecurityHandler);
         this.parent
             .querySelector('.profile-navigation__user-information')
             .removeEventListener('click', this.goProfileHandler);
-        this.parent
-            .querySelector('.header-menu__logo')
-            .removeEventListener('click', this.toMainPageHandler);
         this.parent
             .querySelector('button[data-action=update-profile]')
             ?.removeEventListener('click', this.changeProfileHandler);
@@ -158,7 +127,18 @@ export default class Profile extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Имя должно содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                    text: 'Фамилия должна содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                },
+            );
+        } else if (name.length > 32 || surname.length > 32) {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('input[data-name=name]').parentNode,
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Имя и фамилия должны быть не длиннее 32 символов',
                 },
             );
         } else {
@@ -204,7 +184,7 @@ export default class Profile extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Пароли не совпадают',
+                    text: 'Новые пароли не совпадают',
                 },
             );
         } else {
@@ -216,16 +196,6 @@ export default class Profile extends Component {
             dispatcher.dispatch(actionUpdatePassword(user));
         }
     };
-
-    /**
-     * Handler события нажатия на ссылку для перехода на страницу досок
-     * @param {Event} e - Событие
-     */
-    toMainPageHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
-        dispatcher.dispatch(actionRedirect('/main', false));
-    }
 
     /**
      * Запись в историю части с профилем отправка события на рендер части со сменой пароля
@@ -247,14 +217,11 @@ export default class Profile extends Component {
         dispatcher.dispatch(actionRedirect('/profile', '', false));
     }
 
-    /**
-     * Handler события нажатия на ссылку для перехода на log out
-     * @param {Event} e - Событие
-     */
-    logoutHandler(e) {
-        e.preventDefault();
-        dispatcher.dispatch(actionLogout());
-    }
+    static changeAvatar = (avatarUrl) => {
+        document.querySelector('.profile-user-image').src = `/${avatarUrl}`;
+        document.querySelector('.btn-avatar__image').src = `/${avatarUrl}`;
+        document.querySelector('.pop-up-menu__avatar-image').src = `/${avatarUrl}`;
+    };
 
     /**
      * Закрытие страницы и редирект на страницу логина

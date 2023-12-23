@@ -10,7 +10,7 @@
 .workspaces {
     position: absolute;
     top: 0;
-    bottom: 40px;
+    bottom: 30px;
     align-self: flex-start;
     align-items: flex-start;
     width: 95%;
@@ -40,4 +40,10 @@
 .workspaces::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
     border-radius: 5px;
+}
+
+@media screen and (max-width: 545px) {
+    .user-workspaces {
+        width: 90%;
+    }
 }

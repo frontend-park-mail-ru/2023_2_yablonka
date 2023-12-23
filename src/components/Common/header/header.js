@@ -10,11 +10,7 @@ import './header.scss';
  */
 export default class Header extends Component {
     #innerConfig = {
-        menuParagraphs: [
-            {
-                title: 'Проекты',
-            },
-        ],
+        menuParagraphs: [],
     };
 
     /**
@@ -24,6 +20,7 @@ export default class Header extends Component {
         return template({
             avatar: this.config.avatar ? this.config.avatar : 'avatar.jpg',
             ...this.#innerConfig,
+            isBoard: this.config.isBoard,
         });
     }
 }

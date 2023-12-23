@@ -102,3 +102,43 @@ export const actionRemoveUserCard = (data) => ({
     type: 'removeUserCard',
     value: data,
 });
+
+export const actionReorderList = (data) => ({
+    type: 'reorderList',
+    value: data,
+});
+
+export const actionReorderLists = (data) => ({
+    type: 'reorderLists',
+    value: data,
+});
+
+export const actionReorderChecklist = (data) => ({
+    type: 'reorderChecklist',
+    value: data,
+});
+
+export const actionAttachFile = (data) => ({
+    type: 'attachFile',
+    value: data,
+});
+
+export const actionGetFiles = (data) => ({
+    type: 'getFiles',
+    value: data,
+});
+
+export const actionDeleteFile = (data) => ({
+    type:'deleteFile',
+    value:data
+});
+
+export const actionSubmitHistoryAction = (data) => ({
+    type:'submitAction',
+    value:data
+})
+
+export const actionGetHistory = (data) => ({
+    type:'getHistory',
+    value:data
+})

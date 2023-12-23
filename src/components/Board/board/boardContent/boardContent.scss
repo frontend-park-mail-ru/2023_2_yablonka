@@ -54,24 +54,24 @@
     color: #c0c9f4;
     outline: none;
     background-color: var(--input-background-color);
-    box-shadow: inset 0 0 0 2px var(--need-text-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
 }
 
 .input-new-list-name:focus {
     background-color: var(--input-background-color);
-    box-shadow: inset 0 0 0 2px var(--need-text-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
 }
 
-.btn-create-list_confirm {
+.btn-create_confirm {
     background-color: var(--action-button-color);
     min-height: 35px;
 }
 
-.btn-create-list_cancel {
+.btn-create_cancel {
     background: transparent;
 }
 
-.btn-create-list_cancel:hover {
+.btn-create_cancel:hover {
     background-color: var(--hover-navigation-paragraph);
 }
 

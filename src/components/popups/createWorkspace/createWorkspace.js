@@ -41,6 +41,7 @@ export default class CreateWorkspace extends Component {
         this.parent
             .querySelector('input[data-name=workspace-name]')
             .addEventListener('input', this.#blockCreateButton);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
@@ -62,6 +63,7 @@ export default class CreateWorkspace extends Component {
         this.parent
             .querySelector('input[data-name=workspace-name]')
             .removeEventListener('input', this.#blockCreateButton);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #blockCreateButton = (e) => {
@@ -84,10 +86,17 @@ export default class CreateWorkspace extends Component {
 
         const dialog = this.parent.querySelector('#create-workspace');
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeAllPopups(e);
             popupEvent.addPopup(dialog);
             dialog.showModal();
+            const dialogSizes = dialog.getBoundingClientRect();
+            const windowSizes = this.parent.getBoundingClientRect();
+
+            dialog.setAttribute(
+                'style',
+                `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
+            );
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
@@ -130,5 +139,19 @@ export default class CreateWorkspace extends Component {
                 text: 'Неккоректное название рабочего пространства',
             });
         }
+    };
+
+    #resize = () => {
+        const dialog = this.parent.querySelector('#create-workspace');
+
+        window.requestAnimationFrame(() => {
+            const dialogSizes = dialog.getBoundingClientRect();
+            const windowSizes = this.parent.getBoundingClientRect();
+
+            dialog.setAttribute(
+                'style',
+                `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
+            );
+        });
     };
 }

@@ -1,6 +1,7 @@
 import { actionAddUserBoard, actionRemoveUserBoard } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
 import Validator from '../../../modules/validator.js';
+import userStorage from '../../../storages/userStorage.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Component from '../../core/basicComponent.js';
@@ -26,6 +27,9 @@ export default class AddBoardUsers extends Component {
             .querySelector('.btn-share-action')
             .addEventListener('click', this.#openAddUserPopup);
         this.parent
+            .querySelector('.btn-add-user-to-board')
+            .addEventListener('click', this.#openAddUserPopup);
+        this.parent
             .querySelector('.btn-add-board-user_add')
             .addEventListener('click', this.#manageUser);
         this.parent
@@ -40,6 +44,9 @@ export default class AddBoardUsers extends Component {
         this.parent
             .querySelector('.btn-share-action')
             .removeEventListener('click', this.#openAddUserPopup);
+        this.parent
+            .querySelector('.btn-add-user-to-board')
+            .addEventListener('click', this.#openAddUserPopup);
         this.parent
             .querySelector('.btn-add-board-user_add')
             .removeEventListener('click', this.#manageUser);
@@ -57,16 +64,25 @@ export default class AddBoardUsers extends Component {
 
         const dialog = this.parent.querySelector('#add-board-user');
 
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
+        const btn = e.target.closest('button');
+        const btnCoordinates = btn.getBoundingClientRect();
+
+        let top;
+        let left;
+
+        if (btn.classList.contains('btn-add-user-to-board')) {
+            top = btnCoordinates.top - 10;
+            left = btnCoordinates.left + 60;
+        } else {
+            top = btnCoordinates.top + 60;
+            left = btnCoordinates.left - 65;
+        }
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 100}px`,
-            );
+            dialog.setAttribute('style', `top: ${top}px; left: ${left}px`);
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
@@ -84,11 +100,9 @@ export default class AddBoardUsers extends Component {
         if (input.value.length === 0) {
             btnAdd.disabled = true;
             btnDelete.disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             btnAdd.disabled = false;
             btnDelete.disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
@@ -102,11 +116,16 @@ export default class AddBoardUsers extends Component {
 
         if (Validator.validateEmail(userEmail)) {
             const boardId = parseInt(
-                this.parent.querySelector('.board-menu__board-name').dataset.board,
+                this.parent.querySelector('.board-name__input').dataset.board,
                 10,
             );
             if (action === 'add-user' && !workspaceStorage.checkUserInBoard(userEmail)) {
-                if (!workspaceStorage.isOwner(userEmail)) {
+                if (
+                    !workspaceStorage.isOwner(
+                        workspaceStorage.getUserByEmail(userEmail)?.user_id,
+                        boardId,
+                    )
+                ) {
                     dispatcher.dispatch(
                         actionAddUserBoard({
                             user_email: userEmail,
@@ -133,7 +152,12 @@ export default class AddBoardUsers extends Component {
                 });
             }
             if (action === 'delete-user' && workspaceStorage.checkUserInBoard(userEmail)) {
-                if (!workspaceStorage.isOwner(userEmail)) {
+                if (
+                    !workspaceStorage.isOwner(
+                        workspaceStorage.getUserByEmail(userEmail)?.user_id,
+                        boardId,
+                    )
+                ) {
                     dispatcher.dispatch(
                         actionRemoveUserBoard({
                             user_id: workspaceStorage.getUserByEmail(userEmail).user_id,

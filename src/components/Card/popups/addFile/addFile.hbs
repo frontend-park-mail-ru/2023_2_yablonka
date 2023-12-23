@@ -1,0 +1,37 @@
+<dialog id='card-file' class='padding-10-20 border-radius-10 card-file'>
+    <div class='flex-column-centered gap-30 card-file__content'>
+        <span class='font-size-18 font-weight-500 card-file__title'>Вложения</span>
+        <span
+            style='display: none;'
+            class='font-size-16 font-weight-500 card-file__filename'
+        ></span>
+        <form
+            id='upload-card-file'
+            class='upload-card-file'
+            enctype='multipart/form-data'
+            method='POST'
+            action='/task/file/attach/'
+        >
+            <button
+                type='button'
+                data-action='choose'
+                class='btn btn-upload-file padding-5-10 border-radius-5 font-size-16 font-weight-bold'
+                form='upload-card-file'
+            >
+                <span>Загрузите файл<input
+                        type='file'
+                        accept='{{this.fileTypes}}'
+                        class='input input-upload-file'
+                        name='user-file'
+                    /></span>
+            </button>
+        </form>
+        <div class='flex-column-centered gap-10 card-file__buttons'>
+            <button
+                class='border-radius-5 padding-5-10 font-size-16 font-weight-500 btn btn-attach-file_upload'
+            >Прикрепить</button><button
+                class='border-radius-5 padding-5-10 font-size-16 font-weight-500 btn btn-attach-file_cancel'
+            >Отмена</button>
+        </div>
+    </div>
+</dialog>

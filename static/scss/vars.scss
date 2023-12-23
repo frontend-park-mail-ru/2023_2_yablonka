@@ -6,7 +6,7 @@
     --text-color-on-page-inactive: #c0c9f44f;
     --text-color-in-card: #c0c9f4;
     --text-color-in-create-popups: #b6c2cf;
-    --text-color-in-search: #938989;
+    --text-color-in-search: #b6c2cf9f;
     --text-color-name-contrast: #ffffff;
     --text-color-forgotten-password: rgba(199, 199, 199);
     --text-color-upload-avatar-title: #747474;
@@ -50,17 +50,22 @@
     --change-workspace-button-background-color: #1a3056ad;
     --change-workspace-button-hover-background-color: #293a5aad;
     --change-workspace-button-active-background-color: #273b5cad;
-    --search-background-color: #000000;
+    --search-background-color: #00000021;
     --add-new-list-background-color: #2a3066;
     --card-description-background-color: #414b56;
     --btn-change-file-background: #08991e;
-    --btn-delete-file-background: #f46285;
+    --btn-upload-file: #a1bdd914;
+    --btn-upload-file-cancel: #f46285;
+    --btn-file-delete: #a1bdd914;
     --btn-card-action-background: #414b56;
     --btn-card-action-background-hover: #415655;
     --btn-close-card-background: #414b56;
     --delete-checklist-button: #a1bdd914;
     --delete-checklist-button-hover: #bbd2e921;
     --checkitem-background-color: #86b7e728;
+    --file-background-color: #414b56;
+    --file-background-color-hover: #454c531f;
+    --tag-background-color: #323a42;
 
     --router-btn-border-color: #ffffff;
     --main-btn-border-color: #c0c9f4;
@@ -69,6 +74,7 @@
     --sign-text-shadow: rgba(255, 255, 255, 25%);
     --add-new-list-border-color: #c0c9f4;
     --input-active-border-color: #c0c9f4;
+    --history-item-border-color: #b6c2cf9f;
 
     --add-new-column-background-color: #2a3066;
     --input-border-color: #38424d;
@@ -229,6 +235,10 @@
 
 .padding-0-10 {
     padding: 0px 10px;
+}
+
+.padding-10-0 {
+    padding: 10px 0px;
 }
 
 .padding-0-5 {
@@ -430,6 +440,10 @@
 
 .font-weight-bold {
     font-weight: bold;
+}
+
+.border-radius-4 {
+    border-radius: 4px;
 }
 
 .border-radius-5 {

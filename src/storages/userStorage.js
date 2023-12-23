@@ -3,6 +3,7 @@ import AJAX from '../modules/ajax.js';
 import { apiPath, apiVersion } from '../configs/configs.js';
 import emitter from '../modules/actionTrigger.js';
 import NotificationMessage from '../components/Common/notification/notificationMessage.js';
+import Profile from '../pages/Profile/profile.js';
 
 /**
  * Хранилище объекта "пользователь"
@@ -211,7 +212,7 @@ class UserStorage extends BaseStorage {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Не удалось изменить пароль',
+                    text: 'Неверный пароль',
                 },
             );
         }
@@ -240,11 +241,43 @@ class UserStorage extends BaseStorage {
         const { status } = responsePromise;
         if (status === 200) {
             const oldUser = this.storage.get(this.userModel.body);
-            oldUser.body.user.avatar_url = body.avatar_url;
+            oldUser.body.user.avatar_url = body.body.avatar_url.url;
             this.storage.set(this.userModel.body, oldUser);
-            emitter.trigger('rerender');
+            Profile.changeAvatar(body.body.avatar_url.url);
             emitter.trigger('changeSuccess');
         } else {
+            emitter.trigger('changeError');
+        }
+    }
+
+    async deleteAvatar() {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}user/edit/delete_avatar/`,
+            'DELETE',
+            this.storage.get(this.userModel.csrf),
+            {},
+        );
+
+        let body = {};
+
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
+        const { status } = responsePromise;
+        if (status === 200) {
+            const oldUser = this.storage.get(this.userModel.body);
+            oldUser.body.user.avatar_url = body.body.avatar_url.url;
+            this.storage.set(this.userModel.body, oldUser);
+            Profile.changeAvatar(body.body.avatar_url.url);
+            emitter.trigger('changeSuccess');
+        } else {
+            const oldUser = this.storage.get(this.userModel.body);
+            oldUser.body.user.avatar_url = 'img/avatar.jpg';
+            this.storage.set(this.userModel.body, oldUser);
+            Profile.changeAvatar('img/avatar.jpg');
             emitter.trigger('changeError');
         }
     }

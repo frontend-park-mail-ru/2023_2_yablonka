@@ -15,6 +15,9 @@ import AddDate from '../components/Card/popups/addDate/addDate.js';
 import AddBoardUsers from '../components/popups/addBoardUsers/addBoardUsers.js';
 import AddCardUsers from '../components/Card/popups/addUsers/addUsers.js';
 import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js';
+import { actionNavigate, actionRedirect } from '../actions/userActions.js';
+import AddFile from '../components/Card/popups/addFile/addFile.js';
+import BoardHistory from '../components/popups/boardHistory/boardHistory.js';
 
 /**
  * Класс для рендера страницы доски
@@ -50,6 +53,12 @@ class Board extends BaseView {
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
         const board = workspaceStorage.getBoardById(parseInt(this.boardID, 10));
 
+        if (!board || board.workspace_id !== parseInt(wsID, 10)) {
+            await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
+            await dispatcher.dispatch(actionRedirect('/404', false));
+            return;
+        }
+
         this.components.push(new BoardPage(this.root, { user, board }));
 
         this.components.push(
@@ -57,13 +66,18 @@ class Board extends BaseView {
                 new Navigation(this.root, user),
                 new CreateWorkspace(this.root, {}),
                 new CreateBoard(this.root, {}),
-                new BoardSettings(this.root, { user_id: user.user_id, board_id: this.boardID }),
+                new BoardSettings(this.root, {
+                    is_owner: workspaceStorage.isOwner(user.user_id, parseInt(this.boardID, 10)),
+                    board_id: this.boardID,
+                }),
                 new ListSettings(this.root, {}),
                 new Card(this.root, { avatar: user.avatar_url }),
                 new AddDate(this.root, {}),
                 new AddCardUsers(this.root, {}),
                 new AddBoardUsers(this.root, {}),
                 new AddChecklist(this.root, {}),
+                new AddFile(this.root, {}),
+                new BoardHistory(this.root, {}),
             ],
         );
 
@@ -71,8 +85,17 @@ class Board extends BaseView {
         this.addListeners();
 
         if (cID) {
-            Card.openByRedirect(cID);
+            if (workspaceStorage.getCardById(parseInt(cID, 10))) {
+                Card.openByRedirect(cID);
+            } else {
+                await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
+                await dispatcher.dispatch(actionRedirect('/404', false));
+                return;
+            }
         }
+
+        BoardSettings.resizeBoardName();
+        ListSettings.resizeListsName();
     }
 
     /**

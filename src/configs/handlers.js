@@ -43,6 +43,17 @@ const handlers = [
     { type: 'addUserCard', method: workspaceStorage.addUserCard.bind(workspaceStorage) },
     { type: 'removeUserCard', method: workspaceStorage.removeUserCard.bind(workspaceStorage) },
     { type: 'goOffline', method: router.goOffline.bind(router) },
+    { type: 'reorderList', method: workspaceStorage.reorderList.bind(workspaceStorage) },
+    { type: 'deleteAvatar', method: userStorage.deleteAvatar.bind(userStorage) },
+    { type: 'reorderLists', method: workspaceStorage.reorderLists.bind(workspaceStorage) },
+    { type: 'reorderChecklist', method: workspaceStorage.reorderChecklistItems.bind(workspaceStorage) },
+    { type: 'reorderChecklist', method: workspaceStorage.reorderChecklistItems.bind(workspaceStorage) },
+    {type: 'attachFile', method:workspaceStorage.attachFile.bind(workspaceStorage)},
+    {type:'getFiles', method:workspaceStorage.getCardFiles.bind(workspaceStorage)},
+    {type: 'deleteFile', method:workspaceStorage.deleteFile.bind(workspaceStorage)},
+    {type: 'submitAction', method:workspaceStorage.submitHistoryAction.bind(workspaceStorage)},
+    {type: 'getHistory', method:workspaceStorage.getHistory.bind(workspaceStorage)},
+
 ];
 
 export default handlers;

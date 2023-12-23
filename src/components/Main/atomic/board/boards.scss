@@ -4,4 +4,6 @@
 
 .workspace-board__title {
     color: var(--text-color-name-contrast);
+    max-width: 90%;
+    overflow-wrap: break-word;
 }

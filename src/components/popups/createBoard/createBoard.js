@@ -48,14 +48,11 @@ export default class CreateBoard extends Component {
 
     #blockCreateButton = (e) => {
         e.preventDefault();
-        const input = this.parent.querySelector('input[data-name="board-name"');
 
         if (e.target.value.length === 0) {
             this.parent.querySelector('.btn-create-board-pop-up').disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             this.parent.querySelector('.btn-create-board-pop-up').disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
@@ -65,39 +62,57 @@ export default class CreateBoard extends Component {
 
         const dialog = this.parent.querySelector('#create-board');
 
-        const btnCoordinates = e.target.parentElement.getBoundingClientRect();
+        const btn = e.target.closest('button');
+        const btnCoordinates = btn.getBoundingClientRect();
         const workspaceId = e.target.parentElement.dataset.workspace;
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.show();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 120}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 30
-                }px`,
-            );
-            dialog.setAttribute('data-workspace', workspaceId);
-        } else {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-            if (workspaceId !== dialog.dataset.workspace) {
-                popupEvent.closeAllPopups();
-                popupEvent.addPopup(dialog);
-                dialog.show();
+            if (e.target.closest('.btn-create-board')) {
+                dialog.setAttribute(
+                    'style',
+                    `top: ${btnCoordinates.top - 120}px; left: ${btnCoordinates.left + 50}px`,
+                );
+                dialog.setAttribute('data-workspace', workspaceId);
+            } else {
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top - 120}px; left: ${
                         btnCoordinates.left + btnCoordinates.width + 30
                     }px`,
                 );
+                dialog.setAttribute('data-workspace', workspaceId);
+            }
+        } else {
+            popupEvent.deletePopup(dialog);
+            dialog.close();
+            if (workspaceId !== dialog.dataset.workspace && workspaceId) {
+                popupEvent.closeAllPopups();
+                popupEvent.addPopup(dialog);
+                dialog.show();
+                if (e.target.closest('.btn-create-board')) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top - 120}px; left: ${btnCoordinates.left + 50}px`,
+                    );
+                    dialog.setAttribute('data-workspace', workspaceId);
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top - 120}px; left: ${
+                            btnCoordinates.left + btnCoordinates.width + 0
+                        }px`,
+                    );
+                    dialog.setAttribute('data-workspace', workspaceId);
+                }
                 dialog.dataset.workspace = workspaceId;
             }
         }
     };
 
-    #createBoard = (e) => {
+    #createBoard = async (e) => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -110,7 +125,7 @@ export default class CreateBoard extends Component {
             popupEvent.deletePopup(dialog);
             dialog.close();
 
-            dispatcher.dispatch(
+            await dispatcher.dispatch(
                 actionCreateBoard({
                     name: boardName.value,
                     workspace_id: parseInt(workspaceID, 10),
@@ -134,7 +149,7 @@ export default class CreateBoard extends Component {
                 .getBoundingClientRect();
             dialog.setAttribute(
                 'style',
-                `top: ${btnCoordinates.top - 10}px; left: ${
+                `top: ${btnCoordinates.top - 120}px; left: ${
                     btnCoordinates.left + btnCoordinates.width + 30
                 }px`,
             );
