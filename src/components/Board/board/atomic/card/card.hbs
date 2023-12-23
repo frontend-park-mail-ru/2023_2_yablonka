@@ -1,5 +1,17 @@
 <li data-card='{{this.ID}}' class='list__card-wrapper'>
-    <div class='border-radius-8 padding-10-15 list__card' draggable='true'>
+    <div
+        class='flex-column-centered gap-10 border-radius-8 padding-10-15 list__card'
+        draggable='true'
+    >
         <span class='font-size-16 font-weight-500 card-name'>{{this.name}}</span>
+        {{#if this.tags}}
+            <div class='flex-row-centered gap-10 list-card__tags'>
+                {{#each tags as |tag|}}
+                    <button class='flex-centered border-radius-4 padding-0-10 list-card__tag'><span
+                            class='font-weight-500 font-size-12 list-card-tag__text'
+                        >{{tag}}</span></button>
+                {{/each}}
+            </div>
+        {{/if}}
     </div>
 </li>
