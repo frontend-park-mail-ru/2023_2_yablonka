@@ -23,6 +23,8 @@ export default class HistoryItem extends Component {
 
     #processDateToLocalTime = (creationDate) => {
         const date = new Date(creationDate);
-        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${date.getHours()}:${date.getMinutes()}`;
+        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${date.getHours()}:${
+            (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
+        }`;
     };
 }
