@@ -77,7 +77,7 @@ export default class WorkspaceSettings extends Component {
                 dialog.show();
                 dialog.setAttribute(
                     'style',
-                    `top: ${btnCoordinates.top + 40}px; left: ${btnCoordinates.left - 20}px`,
+                    `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
                 );
             } else {
                 popupEvent.deletePopup(dialog);
@@ -89,7 +89,7 @@ export default class WorkspaceSettings extends Component {
                     dialog.show();
                     dialog.setAttribute(
                         'style',
-                        `top: ${btnCoordinates.top + 40}px; left: ${btnCoordinates.left - 20}px`,
+                        `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
                     );
                 }
             }
@@ -109,7 +109,7 @@ export default class WorkspaceSettings extends Component {
                     .getBoundingClientRect();
                 dialog.setAttribute(
                     'style',
-                    `top: ${btnCoordinates.top + 40}px; left: ${btnCoordinates.left - 20}px`,
+                    `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
                 );
             }
         });

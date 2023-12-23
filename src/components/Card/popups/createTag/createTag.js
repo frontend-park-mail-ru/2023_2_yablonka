@@ -25,11 +25,9 @@ export default class CreateTag extends Component {
     addEventListeners() {
         this.parent.querySelector('#card').addEventListener('click', this.#openPopup);
         this.parent
-            .querySelector('#create-tag')
+            .querySelector('#tag-create')
             .addEventListener('click', this.#closePopupByBackground);
-        this.parent
-            .querySelector('.btn-create-tag')
-            .addEventListener('click', this.#createTag);
+        this.parent.querySelector('.btn-create-tag').addEventListener('click', this.#createTag);
         this.parent
             .querySelector('.input-card-checklist__input')
             .addEventListener('input', this.#blockButton);
@@ -38,39 +36,39 @@ export default class CreateTag extends Component {
     removeEventListeners() {
         this.parent.querySelector('#card').removeEventListener('click', this.#openPopup);
         this.parent
-            .querySelector('#create-tag')
+            .querySelector('#tag-create')
             .removeEventListener('click', this.#closePopupByBackground);
-        this.parent
-            .querySelector('.btn-create-tag')
-            .removeEventListener('click', this.#createTag);
+        this.parent.querySelector('.btn-create-tag').removeEventListener('click', this.#createTag);
         this.parent
             .querySelector('.input-card-checklist__input')
             .removeEventListener('input', this.#blockButton);
     }
 
     #openPopup = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        if (e.target.closest('.btn-add-new-tag')) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#create-tag');
-        const btn = e.target.closest('.btn-add-new-tag');
+            const dialog = this.parent.querySelector('#tag-create');
+            const btn = e.target.closest('.btn-add-new-tag');
 
-        if (!dialog.hasAttribute('open')) {
-            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
-            popupEvent.addPopup(dialog);
-            dialog.showModal();
+            if (!dialog.hasAttribute('open')) {
+                popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+                popupEvent.addPopup(dialog);
+                dialog.showModal();
 
-            const btnSizes = btn.getBoundingClientRect();
-            const dialogSizes = dialog.getBoundingClientRect();
-            dialog.setAttribute(
-                'style',
-                `top: ${Math.floor(btnSizes.top - dialogSizes.height / 4)}px; left: ${
-                    btnSizes.left + btnSizes.width + 20
-                }px`,
-            );
-        } else {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+                const btnSizes = btn.getBoundingClientRect();
+                const dialogSizes = dialog.getBoundingClientRect();
+                dialog.setAttribute(
+                    'style',
+                    `top: ${Math.floor(btnSizes.top - dialogSizes.height / 4)}px; left: ${
+                        btnSizes.left + btnSizes.width + 20
+                    }px`,
+                );
+            } else {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+            }
         }
     };
 

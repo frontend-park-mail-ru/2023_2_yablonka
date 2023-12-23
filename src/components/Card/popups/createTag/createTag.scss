@@ -1,22 +1,22 @@
-.create-tag::backdrop {
+.tag-create::backdrop {
     background: transparent;
 }
 
-.create-tag {
+.tag-create {
     background-color: var(--card-background-popups);
-    width: 250px;
+    width: 220px;
 }
 
-.card-checklist__content {
+.card-tag__content {
     width: 100%;
 }
 
-.card-checklist__title {
+.card-tag__title {
     color: var(--text-color-on-page);
     align-self: center;
 }
 
-.input-card-checklist__input {
+.input-card-tag__input {
     outline: none;
     color: var(--text-color-on-page);
     width: 100%;
