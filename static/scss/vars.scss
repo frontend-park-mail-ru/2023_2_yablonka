@@ -65,6 +65,7 @@
     --checkitem-background-color: #86b7e728;
     --file-background-color: #414b56;
     --file-background-color-hover: #454c531f;
+    --tag-background-color: #323a42;
 
     --router-btn-border-color: #ffffff;
     --main-btn-border-color: #c0c9f4;
@@ -234,6 +235,10 @@
 
 .padding-0-10 {
     padding: 0px 10px;
+}
+
+.padding-10-0 {
+    padding: 10px 0px;
 }
 
 .padding-0-5 {
@@ -435,6 +440,10 @@
 
 .font-weight-bold {
     font-weight: bold;
+}
+
+.border-radius-4 {
+    border-radius: 4px;
 }
 
 .border-radius-5 {
