@@ -16,6 +16,7 @@ export default class Card extends Component {
         return template({
             name: this.config.name,
             ID: this.config.id,
+            tags: this.config.tags,
         });
     }
 }

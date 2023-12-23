@@ -16,3 +16,18 @@
     white-space: nowrap;
     overflow: hidden;
 }
+
+
+.list-card__tags {
+    width: 100%;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.list-card__tag {
+    background-color: var(--tag-background-color);
+}
+
+.list-card-tag__text {
+    color: var(--text-color-on-page);
+}
