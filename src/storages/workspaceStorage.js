@@ -1316,6 +1316,11 @@ class WorkspaceStorage extends BaseStorage {
 
         return lists.sort((a,b)=>a.list_position-b.list_position);
     }
+
+    getCardTags(id){
+        const tagIds = this.storage.get(this.workspaceModel.cards).find(c=>c.id===id).tags;
+        return this.storage.get(this.workspaceModel.tags).filter(t=>tagIds.includes(toString(t.id)));
+    }
 }
 
 const workspaceStorage = new WorkspaceStorage();
