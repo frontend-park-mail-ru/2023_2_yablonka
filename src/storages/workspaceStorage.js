@@ -972,6 +972,8 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             popupEvent.closeAllPopups();
+            this.submitHistoryAction({board_id:user.board_id,
+            actions: `Добавил пользователя ${user.user_email} на доску`});
             emitter.trigger('rerender');
         } else if (status === 401) {
             const email = document.querySelector('.input-add-board-user-content__input');
@@ -1000,6 +1002,8 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             popupEvent.closeAllPopups();
+            this.submitHistoryAction({board_id:user.board_id,
+                actions: `Удалил пользователя ${this.getUserById(user.user_id).email} с доски`});
             emitter.trigger('rerender');
         }
     }
