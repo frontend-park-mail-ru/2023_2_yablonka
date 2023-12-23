@@ -1,0 +1,36 @@
+.create-tag::backdrop {
+    background: transparent;
+}
+
+.create-tag {
+    background-color: var(--card-background-popups);
+    width: 250px;
+}
+
+.card-checklist__content {
+    width: 100%;
+}
+
+.card-checklist__title {
+    color: var(--text-color-on-page);
+    align-self: center;
+}
+
+.input-card-checklist__input {
+    outline: none;
+    color: var(--text-color-on-page);
+    width: 100%;
+    min-height: 32px;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
+}
+
+.btn-create-tag {
+    width: 100%;
+    background-color: var(--action-button-color);
+}
+
+.btn-create-tag:active {
+    background-color: var(--action-active-button-color);
+    color: var(--text-color-on-page);
+}

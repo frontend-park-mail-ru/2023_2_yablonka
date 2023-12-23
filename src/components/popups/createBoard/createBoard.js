@@ -112,7 +112,7 @@ export default class CreateBoard extends Component {
         }
     };
 
-    #createBoard = (e) => {
+    #createBoard = async (e) => {
         e.stopPropagation();
         e.preventDefault();
 
@@ -125,7 +125,7 @@ export default class CreateBoard extends Component {
             popupEvent.deletePopup(dialog);
             dialog.close();
 
-            dispatcher.dispatch(
+            await dispatcher.dispatch(
                 actionCreateBoard({
                     name: boardName.value,
                     workspace_id: parseInt(workspaceID, 10),
