@@ -1322,8 +1322,8 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.tags).filter(t=>tagIds.includes(toString(t.id)));
     }
 
-    checkTagOnBoard(name){
-        return !!this.storage.get(this.workspaceModel.tags).find(t=>t.name===name);
+    getTagOnBoard(name){
+        return this.storage.get(this.workspaceModel.tags).find(t=>t.name===name);
     }
 }
 
