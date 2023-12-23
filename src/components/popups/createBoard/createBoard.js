@@ -21,9 +21,7 @@ export default class CreateBoard extends Component {
     }
 
     addEventListeners() {
-        this.parent.querySelectorAll('.btn-create-board')?.forEach((btn) => {
-            btn.addEventListener('click', this.#openCreateBoard);
-        });
+        this.parent.addEventListener('click', this.#openCreateBoard);
         this.parent
             .querySelector('input[data-name=board-name]')
             .addEventListener('input', this.#blockCreateButton);
@@ -34,9 +32,7 @@ export default class CreateBoard extends Component {
     }
 
     removeEventListeners() {
-        this.parent.querySelectorAll('.btn-create-board')?.forEach((btn) => {
-            btn.removeEventListener('click', this.#openCreateBoard);
-        });
+        this.parent.removeEventListener('click', this.#openCreateBoard);
         this.parent
             .querySelector('input[data-name=board-name')
             .removeEventListener('input', this.#blockCreateButton);
@@ -57,38 +53,17 @@ export default class CreateBoard extends Component {
     };
 
     #openCreateBoard = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        if (e.target.closest('.btn-create-board') || e.target.closest('.btn-board-sidebar')) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#create-board');
+            const dialog = this.parent.querySelector('#create-board');
 
-        const btn = e.target.closest('button');
-        const btnCoordinates = btn.getBoundingClientRect();
-        const workspaceId = e.target.parentElement.dataset.workspace;
+            const btn = e.target.closest('.btn-create-board');
+            const btnCoordinates = btn.getBoundingClientRect();
+            const workspaceId = btn.dataset.workspace;
 
-        if (dialog.getAttribute('open') === null) {
-            popupEvent.closeAllPopups();
-            popupEvent.addPopup(dialog);
-            dialog.show();
-            if (e.target.closest('.btn-create-board')) {
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.top - 120}px; left: ${btnCoordinates.left + 50}px`,
-                );
-                dialog.setAttribute('data-workspace', workspaceId);
-            } else {
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.top - 120}px; left: ${
-                        btnCoordinates.left + btnCoordinates.width + 30
-                    }px`,
-                );
-                dialog.setAttribute('data-workspace', workspaceId);
-            }
-        } else {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-            if (workspaceId !== dialog.dataset.workspace && workspaceId) {
+            if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
@@ -102,12 +77,37 @@ export default class CreateBoard extends Component {
                     dialog.setAttribute(
                         'style',
                         `top: ${btnCoordinates.top - 120}px; left: ${
-                            btnCoordinates.left + btnCoordinates.width + 0
+                            btnCoordinates.left + btnCoordinates.width + 30
                         }px`,
                     );
                     dialog.setAttribute('data-workspace', workspaceId);
                 }
-                dialog.dataset.workspace = workspaceId;
+            } else {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+                if (workspaceId !== dialog.dataset.workspace && workspaceId) {
+                    popupEvent.closeAllPopups();
+                    popupEvent.addPopup(dialog);
+                    dialog.show();
+                    if (e.target.closest('.btn-create-board')) {
+                        dialog.setAttribute(
+                            'style',
+                            `top: ${btnCoordinates.top - 120}px; left: ${
+                                btnCoordinates.left + 50
+                            }px`,
+                        );
+                        dialog.setAttribute('data-workspace', workspaceId);
+                    } else {
+                        dialog.setAttribute(
+                            'style',
+                            `top: ${btnCoordinates.top - 120}px; left: ${
+                                btnCoordinates.left + btnCoordinates.width
+                            }px`,
+                        );
+                        dialog.setAttribute('data-workspace', workspaceId);
+                    }
+                    dialog.dataset.workspace = workspaceId;
+                }
             }
         }
     };

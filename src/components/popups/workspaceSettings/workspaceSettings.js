@@ -20,9 +20,7 @@ export default class WorkspaceSettings extends Component {
     }
 
     addEventListeners() {
-        this.parent.querySelectorAll('.btn-change-workspace').forEach((btn) => {
-            btn.addEventListener('click', this.#openSettings);
-        });
+        this.parent.querySelector('.user-workspaces').addEventListener('click', this.#openSettings);
         this.parent
             .querySelector('.btn-change-workspace-name')
             .addEventListener('click', this.#renameWorkspace);
@@ -34,9 +32,9 @@ export default class WorkspaceSettings extends Component {
     }
 
     removeEventListeners() {
-        this.parent.querySelectorAll('.btn-change-workspace').forEach((btn) => {
-            btn.removeEventListener('click', this.#openSettings);
-        });
+        this.parent
+            .querySelector('.user-workspaces')
+            .removeEventListener('click', this.#openSettings);
         this.parent
             .querySelector('.btn-change-workspace-name')
             .removeEventListener('click', this.#renameWorkspace);
@@ -62,36 +60,41 @@ export default class WorkspaceSettings extends Component {
     };
 
     #openSettings = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        if (e.target.closest('.btn-change-workspace')) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#workspace-settings');
+            const dialog = this.parent.querySelector('#workspace-settings');
 
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
-        const workspaceId = e.target.closest('button').dataset.workspace;
+            const btn = e.target.closest('.btn-change-workspace');
 
-        if (dialog.getAttribute('open') === null) {
-            popupEvent.closeAllPopups();
-            popupEvent.addPopup(dialog);
-            dialog.show();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
-            );
-        } else {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
-            if (workspaceId !== dialog.dataset.workspace) {
+            const btnCoordinates = btn.getBoundingClientRect();
+            const workspaceId = parseInt(btn.dataset.workspace, 10);
+            console.log(dialog.hasAttribute('open'));
+            if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
                 dialog.setAttribute(
                     'style',
-                    `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
+                    `top: ${btnCoordinates.top + 40}px; left: ${btnCoordinates.left - 20}px`,
                 );
+            } else {
+                popupEvent.deletePopup(dialog);
+                console.log(1);
+                dialog.close();
+                if (workspaceId !== parseInt(dialog.dataset.workspace, 10)) {
+                    popupEvent.closeAllPopups();
+                    popupEvent.addPopup(dialog);
+                    dialog.show();
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + 40}px; left: ${btnCoordinates.left - 20}px`,
+                    );
+                }
             }
+            dialog.dataset.workspace = workspaceId;
         }
-        dialog.dataset.workspace = workspaceId;
     };
 
     #resize = () => {
@@ -106,7 +109,7 @@ export default class WorkspaceSettings extends Component {
                     .getBoundingClientRect();
                 dialog.setAttribute(
                     'style',
-                    `top: ${btnCoordinates.top + 30}px; left: ${btnCoordinates.left}px`,
+                    `top: ${btnCoordinates.top + 40}px; left: ${btnCoordinates.left - 20}px`,
                 );
             }
         });
