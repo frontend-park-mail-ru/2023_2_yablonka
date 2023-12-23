@@ -7,7 +7,7 @@
     overflow: hidden;
 }
 
-.card-information__name-and-tags-wrapper {
+.card-information__main {
     color: var(--text-color-in-card);
     position: relative;
     align-items: flex-start;
@@ -37,6 +37,15 @@
 .card-information__icon {
     position: absolute;
     left: -35px;
+}
+
+.card-information__tags {
+    position: relative;
+    align-items: flex-start;
+}
+
+.card-information__card-tags {
+    align-items: flex-start;
 }
 
 .card-information__description-wrapper {
@@ -129,6 +138,10 @@
 
 .card-information__users-wrapper {
     flex-wrap: wrap;
+}
+
+.btn-add-new-tag {
+    background-color: var(--create-workspace-board-background);
 }
 
 .card-information__card-description {
@@ -225,7 +238,7 @@
 }
 
 @media screen and (max-width: 800px) {
-    .card-information__name-and-tags-wrapper {
+    .card-information__main {
         flex-direction: column;
         gap: 10px;
     }
@@ -255,4 +268,18 @@
     .btn-user-actions__action {
         width: 100%;
     }
+}
+
+.card-tag {
+    height: 32px;
+    width: fit-content;
+    background-color: var(--tag-background-color);
+}
+
+.card-tag:last-child {
+    margin-right: 5px;
+}
+
+.card-tag__text {
+    color: var(--text-color-in-card);
 }

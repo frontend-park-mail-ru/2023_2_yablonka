@@ -18,6 +18,7 @@ import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js
 import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 import AddFile from '../components/Card/popups/addFile/addFile.js';
 import BoardHistory from '../components/popups/boardHistory/boardHistory.js';
+import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 
 /**
  * Класс для рендера страницы доски
@@ -78,6 +79,7 @@ class Board extends BaseView {
                 new AddChecklist(this.root, {}),
                 new AddFile(this.root, {}),
                 new BoardHistory(this.root, {}),
+                new TagSettings(this.root, {}),
             ],
         );
 

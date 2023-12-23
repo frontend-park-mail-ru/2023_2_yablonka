@@ -1,5 +1,5 @@
 <div class='flex-column-centered gap-40 card-data__card-information'>
-    <div class='flex-row-centered gap-10 card-information__name-and-tags-wrapper'>
+    <div class='flex-row-centered gap-10 card-information__main'>
         <div class='flex-column-centered gap-10 card-information__name-wrapper'>
             <div class='flex-row-centered name-wrapper__title'>
                 <img class='box-24-24 card-information__icon' src='/svg/card-name.svg' />
@@ -17,6 +17,36 @@
         <div class='flex-row-centered gap-5 card-information__users-wrapper'>
         </div>
     </div>
+    <div class='flex-column-centered gap-15 card-information__tags'>
+        <div class='flex-row-centered description-wrapper__title'>
+            <img class='box-24-24 card-information__icon' src='/svg/filter.svg' />
+            <span
+                class='font-size-16 font-weight-500 card-information__card-description-title'
+            >Метки
+            </span>
+        </div>
+        <div class='flex-row-centered card-information__card-tags'>
+            <div class='card-tags__content'><button
+                    class='flex-centered border-radius-5 padding-0-10 card-tag'
+                >
+                    <span class='font-weight-500 font-size-14 card-tag__text'>Тестовый тег</span>
+                </button>
+            </div>
+            <button class='box-32-32 flex-centered border-radius-5 btn-add-new-tag'>
+                <svg
+                    width='16'
+                    height='16'
+                    viewBox='0 0 16 16'
+                    fill='#c0c9f4'
+                    xmlns='http://www.w3.org/2000/svg'
+                >
+                    <path
+                        d='M8.88163 0.666626C9.15077 0.666626 9.40889 0.765398 9.5992 0.941214C9.78951 1.11703 9.89642 1.35549 9.89642 1.60413V7.22913H15.9852C16.2543 7.22913 16.5125 7.3279 16.7028 7.50371C16.8931 7.67953 17 7.91799 17 8.16663C17 8.41527 16.8931 8.65372 16.7028 8.82954C16.5125 9.00535 16.2543 9.10413 15.9852 9.10413H9.89642V14.7291C9.89642 14.9778 9.78951 15.2162 9.5992 15.392C9.40889 15.5679 9.15077 15.6666 8.88163 15.6666C8.61249 15.6666 8.35437 15.5679 8.16406 15.392C7.97375 15.2162 7.86683 14.9778 7.86683 14.7291V9.10413H1.77806C1.50892 9.10413 1.2508 9.00535 1.06049 8.82954C0.870176 8.65372 0.76326 8.41527 0.76326 8.16663C0.76326 7.91799 0.870176 7.67953 1.06049 7.50371C1.2508 7.3279 1.50892 7.22913 1.77806 7.22913H7.86683V1.60413C7.86683 1.35549 7.97375 1.11703 8.16406 0.941214C8.35437 0.765398 8.61249 0.666626 8.88163 0.666626Z'
+                    />
+                </svg>
+            </button>
+        </div>
+    </div>
     <div class='flex-column-centered gap-15 card-information__description-wrapper'>
         <div class='flex-row-centered description-wrapper__title'>
             <img class='box-24-24 card-information__icon' src='/svg/card-description.svg' />
@@ -31,8 +61,8 @@
             placeholder='Описание карточки...'
         ></textarea>
     </div>
-    {{!-- <div class='flex-column-centered gap-25 card-information__checklists'>
-    </div> --}}
+    {{! <div class='flex-column-centered gap-25 card-information__checklists'>
+    </div> }}
     <div class='flex-column-centered gap-20 card-information__comments-wrapper'>
         <div class='flex-row-centered card-information__comments-title'>
             <div class='flex-row-centered comments-wrapper__title'>

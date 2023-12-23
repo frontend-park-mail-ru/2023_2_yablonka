@@ -1,0 +1,22 @@
+.tag-settings {
+    width: 180px;
+    background-color: var(--pop-up-background-color);
+}
+
+.tag-settings::backdrop {
+    background-color: transparent;
+}
+
+.btn-filter-cards,
+.btn-unpin-tag,
+.btn-delete-tag {
+    width: 100%;
+    color: var(--text-color-on-page);
+    background-color: var(--pop-up-background-color);
+}
+
+.btn-filter-cards:hover,
+.btn-unpin-tag:hover,
+.btn-delete-tag:hover {
+    background-color: var(--hover-navigation-paragraph);
+}
