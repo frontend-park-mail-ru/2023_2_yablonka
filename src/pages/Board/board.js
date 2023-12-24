@@ -23,6 +23,8 @@ import List from '../../components/Board/board/atomic/list/list.js';
 import Card from '../../components/Board/board/atomic/card/card.js';
 import CardTag from '../../components/Board/board/atomic/cardTag/cardTag.js';
 import TagsContainer from '../../components/Board/board/atomic/tagsContainer/tagsContainer.js';
+import AddNewList from '../../components/Board/board/atomic/addNewList/addNewList.js';
+import TagSettings from '../../components/Card/popups/tagSettings/tagSettings.js';
 
 /**
  * слои-обертки
@@ -82,6 +84,10 @@ export default class BoardPage extends Component {
         this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.addEventListener('click', this.#createEntity);
         this.parent.addEventListener('keydown', this.#proccessKeydownWithEntity);
+        this.parent.addEventListener('click', this.#filterCards);
+        this.parent
+            .querySelector('.btn-filter-action')
+            .addEventListener('click', this.#resetFilters);
 
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
         this.parent.addEventListener('dragstart', this.#dragStartHandler, false);
@@ -106,6 +112,10 @@ export default class BoardPage extends Component {
         this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.removeEventListener('click', this.#createEntity);
         this.parent.removeEventListener('keydown', this.#proccessKeydownWithEntity);
+        this.parent.removeEventListener('click', this.#filterCards);
+        this.parent
+            .querySelector('.btn-filter-action')
+            .removeEventListener('click', this.#resetFilters);
 
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
         this.parent.removeEventListener('dragstart', this.#dragStartHandler, false);
@@ -540,6 +550,30 @@ export default class BoardPage extends Component {
                 tagsContainer.remove();
             }
         }
+    };
+
+    #filterCards = (e) => {
+        if (e.target.closest('.btn-list-card__tag')) {
+            e.stopPropagation();
+            e.preventDefault();
+            TagSettings.filterCards(e);
+        }
+    };
+
+    #resetFilters = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const listsContainer = this.parent.querySelector('.board__lists');
+        const resetFilterBtn = e.target.closest('.btn-filter-action');
+        resetFilterBtn.setAttribute('disabled', '');
+
+        listsContainer.innerHTML = '';
+        workspaceStorage.getBoardLists().forEach((list) => {
+            listsContainer.insertAdjacentHTML('beforeend', new List(null, list).render());
+        });
+        listsContainer.insertAdjacentHTML('beforeend', new AddNewList(null, {}).render());
+        TagSettings.filteredTag = '';
     };
 
     /**

@@ -30,7 +30,7 @@ export default class BoardContent extends Component {
                     name: list.name,
                     id: list.id,
                     list_position: list.list_position,
-                    cards: workspaceStorage.getListCards(list.id),
+                    cards: list.cards,
                 }).render(),
             );
         });

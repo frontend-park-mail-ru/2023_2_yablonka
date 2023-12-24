@@ -150,10 +150,10 @@ export default class Card extends Component {
     };
 
     #openCard = (e) => {
-        e.preventDefault();
-
-        if (e.target.closest('.list__card-wrapper')) {
+        if (e.target.closest('.list__card-wrapper') && !e.target.closest('.btn-list-card__tag')) {
             e.stopPropagation();
+            e.preventDefault();
+
             BoardPage.closeAllCreateMenu();
 
             const dialog = this.parent.querySelector('#card');

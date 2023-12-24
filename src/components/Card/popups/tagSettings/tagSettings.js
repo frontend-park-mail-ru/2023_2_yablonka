@@ -1,6 +1,7 @@
 import { actionDeleteTag, actionDetachTag } from '../../../../actions/boardActions.js';
 import dispatcher from '../../../../modules/dispatcher.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
+import List from '../../../Board/board/atomic/list/list.js';
 import Component from '../../../core/basicComponent.js';
 import popupEvent from '../../../core/popeventProcessing.js';
 import template from './tagSettings.hbs';
@@ -12,6 +13,8 @@ import './tagSettings.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class TagSettings extends Component {
+    static filteredTag;
+
     /**
      * Рендерит компонент в DOM
      */
@@ -24,7 +27,9 @@ export default class TagSettings extends Component {
         this.parent
             .querySelector('#tag-settings')
             .addEventListener('click', this.#closePopupByBackground);
-        this.parent.querySelector('.btn-filter-cards').addEventListener('click', this.#filterCards);
+        this.parent
+            .querySelector('.btn-filter-cards')
+            .addEventListener('click', TagSettings.filterCards);
         this.parent.querySelector('.btn-unpin-tag').addEventListener('click', this.#unpinTag);
         this.parent.querySelector('.btn-delete-tag').addEventListener('click', this.#deleteTag);
     }
@@ -36,7 +41,7 @@ export default class TagSettings extends Component {
             .removeEventListener('click', this.#closePopupByBackground);
         this.parent
             .querySelector('.btn-filter-cards')
-            .removeEventListener('click', this.#filterCards);
+            .removeEventListener('click', TagSettings.filterCards);
         this.parent.querySelector('.btn-unpin-tag').removeEventListener('click', this.#unpinTag);
         this.parent.querySelector('.btn-delete-tag').removeEventListener('click', this.#deleteTag);
     }
@@ -124,13 +129,26 @@ export default class TagSettings extends Component {
         tagElement.remove();
     };
 
-    #filterCards = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
+    static filterCards = (e) => {
+        e?.stopPropagation();
+        e?.preventDefault();
 
-        const { tag } = this.parent.querySelector('#tag-settings').dataset;
-        console.log(tag);
-        const filteredLists = workspaceStorage.filterCardsByTag(tag);
-        console.log(filteredLists);
+        const resetFilterBtn = document.querySelector('.btn-filter-action');
+        resetFilterBtn.removeAttribute('disabled');
+
+        const { tag } =
+            e.target.closest('.btn-list-card__tag')?.dataset ??
+            document.querySelector('#tag-settings').dataset;
+        if (e) {
+            TagSettings.filteredTag = tag;
+        }
+
+        const filteredLists = workspaceStorage.filterCardsByTag(TagSettings.filteredTag);
+        const listsContainer = document.querySelector('.board__lists');
+
+        listsContainer.innerHTML = '';
+        filteredLists.forEach((list) => {
+            listsContainer.insertAdjacentHTML('beforeend', new List(null, list).render());
+        });
     };
 }

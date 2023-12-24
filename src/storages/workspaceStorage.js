@@ -10,6 +10,7 @@ import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js
 import BoardPage from '../pages/Board/board.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionNavigate, actionRedirect } from '../actions/userActions.js';
+import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -617,6 +618,7 @@ class WorkspaceStorage extends BaseStorage {
             const detachedTag = this.getTagById(parseInt(tag.tag_id, 10));
             Card.removeTag(detachedTag);
             BoardPage.removeTag({ ...detachedTag, task_id: tag.task_id });
+            TagSettings.filterCards();
         }
     }
 
@@ -655,11 +657,11 @@ class WorkspaceStorage extends BaseStorage {
             const deletedTag = this.getTagById(parseInt(tag.tag_id, 10));
             Card.removeTag(deletedTag);
             BoardPage.deleteTag(deletedTag);
+            TagSettings.filterCards();
 
             const tags = this.storage.get(this.workspaceModel.tags);
             const tagDelInd = tags.findIndex((t) => t.id === tag.tag_id);
             tags.splice(tagDelInd, 1);
-            this.storage.set(this.workspaceModel.tags, tags);
 
             const cards = this.storage.get(this.workspaceModel.cards);
 
@@ -1328,7 +1330,7 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.cards)
             .filter((c) => c.tags.includes(id));
 
-        let lists = this.storage.get(this.workspaceModel.lists).map((l) => {
+        let lists = structuredClone(this.storage.get(this.workspaceModel.lists)).map((l) => {
             l.cards = cards
                 .filter((c) => c.list_id === l.id)
                 .sort((a, b) => a.list_position - b.list_position);
