@@ -24,6 +24,7 @@ export default class TagSettings extends Component {
         this.parent
             .querySelector('#tag-settings')
             .addEventListener('click', this.#closePopupByBackground);
+        this.parent.querySelector('.btn-filter-cards').addEventListener('click', this.#filterCards);
         this.parent.querySelector('.btn-unpin-tag').addEventListener('click', this.#unpinTag);
         this.parent.querySelector('.btn-delete-tag').addEventListener('click', this.#deleteTag);
     }
@@ -33,6 +34,9 @@ export default class TagSettings extends Component {
         this.parent
             .querySelector('#tag-settings')
             .removeEventListener('click', this.#closePopupByBackground);
+        this.parent
+            .querySelector('.btn-filter-cards')
+            .removeEventListener('click', this.#filterCards);
         this.parent.querySelector('.btn-unpin-tag').removeEventListener('click', this.#unpinTag);
         this.parent.querySelector('.btn-delete-tag').removeEventListener('click', this.#deleteTag);
     }
@@ -118,7 +122,15 @@ export default class TagSettings extends Component {
         const tagElement = dialog.querySelector(`.card-tag[data-tag="${tag.name}"]`);
 
         tagElement.remove();
+    };
 
-        
+    #filterCards = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const { tag } = this.parent.querySelector('#tag-settings').dataset;
+        console.log(tag);
+        const filteredLists = workspaceStorage.filterCardsByTag(tag);
+        console.log(filteredLists);
     };
 }
