@@ -1325,11 +1325,13 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     getCardTags(id) {
-        const tagIds = this.storage.get(this.workspaceModel.cards).find((c) => c.id === id).tags;
+        const tagIds = this.storage.get(this.workspaceModel.cards).find((c) => c.id === id).tags.map(i=>parseInt(i));
+        
         console.log(tagIds);
         const tags = this.storage
             .get(this.workspaceModel.tags)
-            .filter((t) => tagIds.includes(toString(t.id)));
+            .filter((t) => tagIds.includes(t.id));
+            console.log(tags);
         return [...tags];
     }
 
