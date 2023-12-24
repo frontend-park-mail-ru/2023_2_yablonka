@@ -1,0 +1,58 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  composite-ci:
+    name: Lint and build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          cache: 'npm'  
+
+      - name: Install project
+        uses: npm ci
+      
+      - name: Run linter
+        run: npm run lintcheck
+   
+      - name: Build the app
+        run: npm run build
+
+  deploy:
+    name: Deploy to server
+    needs: composite-ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add known host
+        run: |
+          mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Create SSH Key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > key.pem
+          chmod 400 key.pem
+
+      - name: SSH and deploy
+        run: |
+          ssh -i key.pem ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
+          ${{ secrets.AUTH_COMMAND }}
+          cd ${{ secrets.REPO_PATH }}
+          git switch ${{ github.head_ref }} && git pull
+          npm i
+          npm run build
+          ENDSSH
+
+      
+
+          
