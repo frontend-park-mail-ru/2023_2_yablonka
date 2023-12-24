@@ -1336,7 +1336,7 @@ class WorkspaceStorage extends BaseStorage {
             .get(this.workspaceModel.tags)
             .filter((t) => tagIds.includes(t.id));
             console.log(tags);
-        return [...tags];
+        return [...tags].sort();
     }
 
     getTagOnBoard(name) {
