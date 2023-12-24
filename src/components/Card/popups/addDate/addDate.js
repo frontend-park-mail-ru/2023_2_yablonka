@@ -86,8 +86,8 @@ export default class AddDate extends Component {
                 endDate.value =
                     endTime < startTime
                         ? new Date(startTime.setDate(startTime.getDate() + 1))
-                              .toISOString()
-                              .split('T')[0]
+                            .toISOString()
+                            .split('T')[0]
                         : end;
             }
 
@@ -95,8 +95,8 @@ export default class AddDate extends Component {
                 startDate.value =
                     startTime > endTime
                         ? new Date(endTime.setDate(endTime.getDate() - 1))
-                              .toISOString()
-                              .split('T')[0]
+                            .toISOString()
+                            .split('T')[0]
                         : start;
             }
         }

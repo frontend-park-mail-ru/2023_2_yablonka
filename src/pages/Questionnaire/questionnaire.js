@@ -6,7 +6,6 @@ import {
 } from '../../actions/userActions.js';
 import QuestionnaireContent from '../../components/Questionnaire/questionnaireContent/questionnaireContent.js';
 import Component from '../../components/core/basicComponent.js';
-import emitter from '../../modules/actionTrigger.js';
 import dispatcher from '../../modules/dispatcher.js';
 import template from './questionnaire.hbs';
 import './questionnaire.scss';

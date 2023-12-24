@@ -90,7 +90,6 @@ export default class CreateTag extends Component {
 
         if (Validator.validateObjectName(name)) {
             const tag = workspaceStorage.getTagOnBoard(name);
-            console.log(workspaceStorage.storage.get(workspaceStorage.workspaceModel.tags));
             if (tag) {
                 await dispatcher.dispatch(
                     actionAttachTag({
@@ -103,22 +102,23 @@ export default class CreateTag extends Component {
                     this.parent.querySelector('.board-name__input').dataset.board,
                     10,
                 );
-                await dispatcher.dispatch(
-                    actionCreateTag({
-                        name,
-                        task_id: cardId,
-                        board_id: boardId,
-                        color: '#323a42',
-                    }),
-                );
+                if (name.length > 10) {
+                    NotificationMessage.showNotification(input, false, true, {
+                        fontSize: 12,
+                        fontWeight: 200,
+                        text: 'Название тега должен быть не больше 10 символов',
+                    });
+                } else {
+                    await dispatcher.dispatch(
+                        actionCreateTag({
+                            name,
+                            task_id: cardId,
+                            board_id: boardId,
+                            color: '#323a42',
+                        }),
+                    );
+                }
             }
-        }
-        if (name.length > 10) {
-            NotificationMessage.showNotification(input, false, true, {
-                fontSize: 12,
-                fontWeight: 200,
-                text: 'Название тега должен быть не больше 10 символов',
-            });
         } else {
             NotificationMessage.showNotification(input, false, true, {
                 fontSize: 12,

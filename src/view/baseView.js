@@ -12,7 +12,8 @@ export default class BaseView {
         this.root = document.querySelector('.page');
     }
 
-    /**Рендер компонентов */
+    /**
+     * Рендер компонентов */
     render() {
         this.components.forEach((cmp) => cmp.render());
     }
@@ -24,7 +25,6 @@ export default class BaseView {
         this.root.addEventListener('click', popupEvent.closeAllPopups);
         this.components.forEach((cmp) => cmp.addEventListeners());
         this.root.removeAttribute('style');
-        
     }
 
     /**

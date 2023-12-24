@@ -1,6 +1,5 @@
 // components
 import { actionRedirect } from '../actions/userActions.js';
-import emitter from '../modules/actionTrigger.js';
 import Error404 from '../pages/404/error404.js';
 // storages
 import userStorage from '../storages/userStorage.js';

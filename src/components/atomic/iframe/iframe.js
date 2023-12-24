@@ -1,4 +1,3 @@
-import emitter from '../../../modules/actionTrigger.js';
 import Component from '../../core/basicComponent.js';
 import template from './iframe.hbs';
 import './iframe.scss';
