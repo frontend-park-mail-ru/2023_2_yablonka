@@ -19,11 +19,7 @@ export default class UserWorkspaces extends Component {
             this.config?.yourWorkspaces ? this.config.yourWorkspaces : [],
             true,
         );
-        const guestWorkspaces = this.#getWorkspaces(
-            this.config.guestWorkspaces ? this.config.guestWorkspaces : [],
-            false,
-        );
-        return template({ userWorkspaces, guestWorkspaces });
+        return template({ userWorkspaces });
     }
 
     #getWorkspaces(workspacesData, owner) {

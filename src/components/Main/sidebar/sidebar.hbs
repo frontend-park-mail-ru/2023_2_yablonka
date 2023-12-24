@@ -2,10 +2,12 @@
     <div class='flex-column-centered gap-10 sidebar-main'>
         <div class='flex-column-centered gap-10 padding-0-10 sidebar-main__menu'>
             <button
+                data-workspaces='user'
                 class='font-size-16 font-weight-500 padding-5-10 border-radius-8 flex-row-centered gap-10 btn btn-sidebar-boards-menu btn-sidebar-boards-menu_selected'
             ><img class='box-24-24' src='/svg/board.svg' alt='boards' /><span>Ваши пространства</span>
             </button>
             <button
+                data-workspaces='guest'
                 class='font-size-16 font-weight-500 padding-5-10 border-radius-8 flex-row-centered gap-10 btn btn-sidebar-boards-menu'
             >
                 <img class='box-24-24' src='/svg/files.svg' alt='templates' /><span>Гостевые
@@ -37,7 +39,8 @@
                                 />
                             </svg>
 
-                            <span class='flex-centered btn-create-workspace__title'>Создайте рабочее пространство</span>
+                            <span class='flex-centered btn-create-workspace__title'>Создайте рабочее
+                                пространство</span>
                         </button>
                     </li>
                 </ol>
