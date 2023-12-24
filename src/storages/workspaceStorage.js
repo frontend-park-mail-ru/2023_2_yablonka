@@ -1322,15 +1322,17 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.history);
     }
 
-    filterCardsByTag(id) {
+    filterCardsByTag(name) {
+        const id = `${this.getTagOnBoard(name).id}`;
         const cards = this.storage
             .get(this.workspaceModel.cards)
             .filter((c) => c.tags.includes(id));
 
-        let lists = this.storage.get(this.workspaceModel.lists).forEach((l) => {
+        let lists = this.storage.get(this.workspaceModel.lists).map((l) => {
             l.cards = cards
                 .filter((c) => c.list_id === l.id)
                 .sort((a, b) => a.list_position - b.list_position);
+            return l;
         });
 
         lists = lists.filter((l) => l.cards.length > 0);
