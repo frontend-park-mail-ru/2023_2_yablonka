@@ -1,3 +1,4 @@
+import workspaceStorage from '../../../../../storages/workspaceStorage';
 import Component from '../../../../core/basicComponent';
 import template from './card.hbs';
 import './card.scss';
@@ -16,7 +17,19 @@ export default class Card extends Component {
         return template({
             name: this.config.name,
             ID: this.config.id,
-            tags: this.config.tags,
+            tags: this.#getCardTags(this.config.id),
         });
     }
+
+    #getCardTags = (cardId) => {
+        const cardTags = [];
+
+        const tags = workspaceStorage.getCardTags(parseInt(cardId, 10));
+
+        tags.forEach((tag) => {
+            cardTags.push(tag.name);
+        });
+
+        return cardTags;
+    };
 }

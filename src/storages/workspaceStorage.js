@@ -585,7 +585,7 @@ class WorkspaceStorage extends BaseStorage {
     async detachTag(tag) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}tag/remove_from_task/`,
-            'POST',
+            'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
             tag,
         );
@@ -1325,13 +1325,15 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     getCardTags(id) {
-        const tagIds = this.storage.get(this.workspaceModel.cards).find((c) => c.id === id)?.tags.map(i=>parseInt(i));
+        const tagIds = this.storage
+            .get(this.workspaceModel.cards)
+            .find((c) => c.id === id)
+            .tags?.map((i) => parseInt(i, 10));
 
-        if(!tagIds){
+        if (!tagIds) {
             return [];
         }
-        
-        console.log(tagIds);
+
         const tags = this.storage
             .get(this.workspaceModel.tags)
             .filter((t) => tagIds.includes(t.id));
@@ -1343,8 +1345,8 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.tags).find((t) => t.name === name);
     }
 
-    getTagById(id){
-        return this.storage.get(this.workspaceModel.tags).find(t=>t.id===id);
+    getTagById(id) {
+        return this.storage.get(this.workspaceModel.tags).find((t) => t.id === id);
     }
 }
 

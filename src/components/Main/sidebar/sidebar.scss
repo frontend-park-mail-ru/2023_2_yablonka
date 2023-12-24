@@ -24,6 +24,7 @@
 }
 
 .btn-sidebar-boards-menu_selected {
+    transition: 0.3s ;
     background-color: var(--action-active-button-color);
     color: var(--text-color-on-page);
 }

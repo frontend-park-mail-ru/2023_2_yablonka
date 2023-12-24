@@ -26,6 +26,7 @@ import FilesContainer from './filesContainer/filesContainer.js';
 import File from './atomic/file/file.js';
 import ChecklistsContainer from './checklistsContainer/checklistsContainer.js';
 import Tag from './atomic/tag/tag.js';
+import AddTag from './atomic/addTag/addTag.js';
 
 /**
  * Попап для хедера
@@ -531,14 +532,27 @@ export default class Card extends Component {
         const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
 
         const tagsContainer = card.querySelector('.card-tags__content');
-        console.log(tags);
         tags.forEach((tag) =>
             tagsContainer.insertAdjacentHTML(
+                'beforeend',
                 new Tag(null, {
                     tagName: tag.name,
                 }).render(),
             ),
         );
+        Card.addTagCreateButton();
+    };
+
+    static addTagCreateButton = () => {
+        const card = document.querySelector('#card');
+        const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
+
+        if (tags.length < 3) {
+            card.querySelector('.card-information__card-tags').insertAdjacentHTML(
+                'beforeend',
+                new AddTag(null, {}).render(),
+            );
+        }
     };
 
     static clearCard = (deleteCard) => {
@@ -550,6 +564,8 @@ export default class Card extends Component {
         dialog.querySelector('.card-information-list-name__title').textContent = '';
         dialog.querySelector('.card-information__date-wrapper').innerHTML = '';
         dialog.querySelector('.card-information__users-wrapper').innerHTML = '';
+        dialog.querySelector('.card-tags__content').innerHTML = '';
+        dialog.querySelector('.btn-add-new-tag')?.remove();
         dialog.querySelector('.card-information__card-description').value = '';
         dialog.querySelector('.card-information__checklists')?.remove();
         dialog.querySelector('.card-information__users-comments').innerHTML = '';
