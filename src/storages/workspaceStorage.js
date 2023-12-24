@@ -614,7 +614,9 @@ class WorkspaceStorage extends BaseStorage {
                 }
             });
 
-            this.storage.set(this.workspaceModel.cards, cards);
+            const detachedTag = this.getTagById(parseInt(tag.tag_id, 10));
+            Card.removeTag(detachedTag);
+            BoardPage.removeTag({ ...detachedTag, task_id: tag.task_id });
         }
     }
 
@@ -650,6 +652,10 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            const deletedTag = this.getTagById(parseInt(tag.tag_id, 10));
+            Card.removeTag(deletedTag);
+            BoardPage.deleteTag(deletedTag);
+
             const tags = this.storage.get(this.workspaceModel.tags);
             const tagDelInd = tags.findIndex((t) => t.id === tag.tag_id);
             tags.splice(tagDelInd, 1);
@@ -663,8 +669,6 @@ class WorkspaceStorage extends BaseStorage {
                 );
                 c.tags.splice(delInd, 1);
             });
-
-            this.storage.set(this.workspaceModel.cards, cards);
         }
     }
 

@@ -485,7 +485,6 @@ export default class BoardPage extends Component {
     };
 
     static addTag = (tag) => {
-        console.log(tag);
         const card = document.querySelector(`.list__card-wrapper[data-card="${tag.task_id}"]`);
         const tags = workspaceStorage.getCardTags(parseInt(tag.task_id, 10));
 
@@ -510,6 +509,36 @@ export default class BoardPage extends Component {
                     'afterend',
                     new CardTag(null, { tagName: tag.name }).render(),
                 );
+        }
+    };
+
+    static deleteTag = (tag) => {
+        const board = document.querySelector('.board__lists');
+
+        board.querySelectorAll('.list__card-wrapper').forEach((item) => {
+            const tagsContainer = item.querySelector('.list-card__tags');
+            if (tagsContainer) {
+                tagsContainer
+                    .querySelector(`.btn-list-card__tag[data-tag="${tag.name}"]`)
+                    ?.remove();
+                if (!tagsContainer.childElementCount) {
+                    tagsContainer.remove();
+                }
+            }
+        });
+    };
+
+    static removeTag = (tag) => {
+        const board = document.querySelector('.board__lists');
+
+        const card = board.querySelector(`.list__card-wrapper[data-card="${tag.task_id}"]`);
+        const tagsContainer = card.querySelector('.list-card__tags');
+
+        if (tagsContainer) {
+            tagsContainer.querySelector(`.btn-list-card__tag[data-tag="${tag.name}"]`).remove();
+            if (!tagsContainer.childElementCount) {
+                tagsContainer.remove();
+            }
         }
     };
 

@@ -562,7 +562,7 @@ export default class Card extends Component {
         const prevTag =
             tags.findIndex((item) => parseInt(tag.id, 10) === parseInt(item.id, 10)) - 1;
         const tagsContainer = card.querySelector('.card-information__card-tags');
-        
+
         if (prevTag < 0) {
             tagsContainer.insertAdjacentHTML(
                 'afterbegin',
@@ -577,6 +577,15 @@ export default class Card extends Component {
 
         if (tags.length >= 3) {
             card.querySelector('.btn-add-new-tag').remove();
+        }
+    };
+
+    static removeTag = (tag) => {
+        const card = document.querySelector('#card');
+        card.querySelector(`.card-tag[data-tag="${tag.name}"]`).remove();
+
+        if (!card.querySelector('.btn-add-new-tag')) {
+            Card.addTagCreateButton();
         }
     };
 
