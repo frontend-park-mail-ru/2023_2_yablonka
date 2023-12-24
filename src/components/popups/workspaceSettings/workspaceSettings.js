@@ -22,12 +22,9 @@ export default class WorkspaceSettings extends Component {
     addEventListeners() {
         this.parent.querySelector('.user-workspaces').addEventListener('click', this.#openSettings);
         this.parent
-            .querySelector('.btn-change-workspace-name')
-            .addEventListener('click', this.#renameWorkspace);
-        this.parent
             .querySelector('.btn-delete-workspace')
-            .addEventListener('click', this.deleteWorkspaceHandler);
-        this.parent.addEventListener('keydown', this.#changeNameHandler);
+            .addEventListener('click', this.deleteWorkspace);
+        this.parent.addEventListener('focusout', this.#renameWorkspace);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -36,26 +33,26 @@ export default class WorkspaceSettings extends Component {
             .querySelector('.user-workspaces')
             .removeEventListener('click', this.#openSettings);
         this.parent
-            .querySelector('.btn-change-workspace-name')
-            .removeEventListener('click', this.#renameWorkspace);
-        this.parent
             .querySelector('.btn-delete-workspace')
-            .removeEventListener('click', this.deleteWorkspaceHandler);
-        this.parent.removeEventListener('keydown', this.#changeNameHandler);
+            .removeEventListener('click', this.deleteWorkspace);
+        this.parent.removeEventListener('focusout', this.#renameWorkspace);
         window.removeEventListener('resize', this.#resize);
     }
 
-    #renameWorkspace = () => {
+    static ChangeWorkspaceName = (workspaceName) => {
         const dialog = this.parent.querySelector('#workspace-settings');
 
         if (dialog.dataset.workspace) {
-            const workspaceName = document.querySelector(
-                `span[data-workspace="${dialog.dataset.workspace}"]`,
+            const workspaceParagraph = document.querySelector(
+                `.workspace-paragraph[data-workspace="${dialog.dataset.workspace}"]`,
             );
-            workspaceName.focus();
+            workspaceParagraph.textContent = workspaceName;
+            [workspaceParagraph.previousElementSibling.textContent] = workspaceName;
 
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+            const workspaceLogo = document.querySelector(
+                `.workspace-logo[data-workspace="${dialog.dataset.workspace}"]`,
+            );
+            [workspaceLogo.previousElementSibling.textContent] = workspaceName;
         }
     };
 
@@ -70,7 +67,7 @@ export default class WorkspaceSettings extends Component {
 
             const btnCoordinates = btn.getBoundingClientRect();
             const workspaceId = parseInt(btn.dataset.workspace, 10);
-            console.log(dialog.hasAttribute('open'));
+
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
@@ -81,7 +78,6 @@ export default class WorkspaceSettings extends Component {
                 );
             } else {
                 popupEvent.deletePopup(dialog);
-                console.log(1);
                 dialog.close();
                 if (workspaceId !== parseInt(dialog.dataset.workspace, 10)) {
                     popupEvent.closeAllPopups();
@@ -115,38 +111,49 @@ export default class WorkspaceSettings extends Component {
         });
     };
 
-    deleteWorkspaceHandler = () => {
+    deleteWorkspace = async (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         const dialog = this.parent.querySelector('#workspace-settings');
         if (dialog.dataset.workspace) {
-            const workspaceId = dialog.dataset.workspace;
             popupEvent.deletePopup(dialog);
             dialog.close();
 
-            dispatcher.dispatch(actionDeleteWorkspace(workspaceId));
+            await dispatcher.dispatch(
+                actionDeleteWorkspace({ workspace_id: parseInt(dialog.dataset.workspace, 10) }),
+            );
         }
     };
 
-    #changeNameHandler = (e) => {
+    #proccessKeydownWithRename = (e) => {
         if (e.target.closest('.workspace__name')) {
             e.stopPropagation();
             if (e.key === 'Enter') {
                 e.preventDefault();
-                const { textContent } = e.target;
-                const workspaceID = e.target.dataset.workspace;
-                const workspaceDescription = workspaceStorage.storage
-                    .get(workspaceStorage.workspaceModel.body)
-                    .body.workspaces.yourWorkspaces.find((ws) => ws.workspace_id === workspaceID);
-
                 e.target.blur();
+            }
+        }
+    };
 
-                this.parent.querySelector(`span[data-paragraph="${workspaceID}"]`).textContent =
-                    textContent;
+    #renameWorkspace = async (e) => {
+        if (e.target.closest('.workspace__name')) {
+            e.stopPropagation();
+            e.preventDefault();
+            const name = e.target.closest('.workspace__name').textContent;
+            const workspaceID = parseInt(
+                e.target.closest('.workspace__name').dataset.workspace,
+                10,
+            );
 
-                dispatcher.dispatch(
+            const workspace = workspaceStorage.getWorkspaceById(workspaceID);
+            if (workspace.name === '' || workspace.name === name) {
+                e.target.closest.querySelector('.workspace__name').textContent = workspace.name;
+            } else {
+                await dispatcher.dispatch(
                     actionUpdateWorkspace({
                         id: parseInt(workspaceID, 10),
-                        name: textContent,
-                        description: workspaceDescription,
+                        name,
+                        description: workspace.description,
                     }),
                 );
             }

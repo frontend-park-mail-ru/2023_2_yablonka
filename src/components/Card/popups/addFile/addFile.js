@@ -42,7 +42,7 @@ export default class AddFile extends Component {
         this.parent.insertAdjacentHTML(
             'beforeend',
             template({
-                fileTypes: this.fileTypes.reduce((acc, type) => `${acc}, ${type}`),
+                fileTypes: this.fileTypes.join(', '),
             }),
         );
     }

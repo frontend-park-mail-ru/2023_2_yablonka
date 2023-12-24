@@ -89,19 +89,42 @@ export default class CreateTag extends Component {
         const name = input.value;
 
         if (Validator.validateObjectName(name)) {
-            await dispatcher.dispatch(
-                actionCreateTag({
-                    name,
-                    task_id: cardId,
-                    list_position: workspaceStorage.getCardChecklists(cardId).length,
-                }),
-            );
+            const tag = workspaceStorage.getTagOnBoard(name);
+            if (tag) {
+                await dispatcher.dispatch(
+                    actionAttachTag({
+                        tag_id: parseInt(tag.id, 10),
+                        task_id: cardId,
+                    }),
+                );
+            } else {
+                const boardId = parseInt(
+                    this.parent.querySelector('.board-name__input').dataset.board,
+                    10,
+                );
+                await dispatcher.dispatch(
+                    actionCreateTag({
+                        name,
+                        task_id: cardId,
+                        board_id: boardId,
+                        color: '#323a42',
+                    }),
+                );
+            }
         } else {
-            NotificationMessage.showNotification(input, false, true, {
-                fontSize: 12,
-                fontWeight: 200,
-                text: 'Неккоректное название',
-            });
+            if (name.length <= 10) {
+                NotificationMessage.showNotification(input, false, true, {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Название тега должен быть не больше 10 символов',
+                });
+            } else {
+                NotificationMessage.showNotification(input, false, true, {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Неккоректное название',
+                });
+            }
         }
     };
 
