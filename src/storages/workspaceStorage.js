@@ -403,7 +403,7 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const body = await responsePromise.json();
             const list = this.getListById(parseInt(body.body.task.list_id, 10));
-
+            body.body.task.tags = [];
             this.storage.get(this.workspaceModel.cards).push(body.body.task);
             list.cards.push(`${body.body.task.id}`);
 
