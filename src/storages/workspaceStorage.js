@@ -28,7 +28,7 @@ class WorkspaceStorage extends BaseStorage {
         items: 'items',
         files: 'files',
         history: 'history',
-        tags: 'tags'
+        tags: 'tags',
     };
 
     /**
@@ -167,6 +167,7 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.comments, body.body.comments);
             this.storage.set(this.workspaceModel.checklists, body.body.checklists);
             this.storage.set(this.workspaceModel.items, body.body.checklist_items);
+            this.storage.set(this.workspaceModel.tags, body.body.tags);
         } else {
             dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
             dispatcher.dispatch(actionRedirect('/404', false));
@@ -536,7 +537,7 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
-    async createTag(tag){
+    async createTag(tag) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}tag/create/`,
             'POST',
@@ -551,16 +552,16 @@ class WorkspaceStorage extends BaseStorage {
             body = {};
         }
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
-        if(status===200){
-            const tags = this.workspaceStorage.get(this.workspaceModel.tags);
+        if (status === 200) {
+            const tags = this.storage.get(this.workspaceModel.tags);
             tags.push(body.body.tag);
-            this.workspaceStorage.set(this.workspaceModel.tags, tags);
+            console.log(body);
         }
     }
 
-    async attachTag(tag){
+    async attachTag(tag) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}tag/add_to_task/`,
             'POST',
@@ -568,20 +569,20 @@ class WorkspaceStorage extends BaseStorage {
             tag,
         );
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
-        if(status===200){
-            const cards = this.workspaceStorage.get(this.workspaceModel.cards);
-            cards.forEach(c=>{
-                if(c.id===tag.task_id){
+        if (status === 200) {
+            const cards = this.storage.get(this.workspaceModel.cards);
+            cards.forEach((c) => {
+                if (c.id === tag.task_id) {
                     c.tags.push(toString(tag.tag_id));
                 }
-            })
-            this.workspaceStorage.set(this.workspaceModel.cards, cards);
+            });
+            this.storage.set(this.workspaceModel.cards, cards);
         }
     }
 
-    async detachTag(tag){
+    async detachTag(tag) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}tag/remove_from_task/`,
             'POST',
@@ -589,23 +590,25 @@ class WorkspaceStorage extends BaseStorage {
             tag,
         );
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
-        if(status===200){
-            const cards = this.workspaceStorage.get(this.workspaceModel.cards);
+        if (status === 200) {
+            const cards = this.storage.get(this.workspaceModel.cards);
 
-            cards.forEach(c=>{
-                if(c.id===tag.task_id){
-                    const delInd = c.tags.findIndex(t=>t==tag.tag_id);
+            cards.forEach((c) => {
+                if (c.id === tag.task_id) {
+                    const delInd = c.tags.findIndex(
+                        (t) => parseInt(t, 10) === parseInt(tag.tag_id, 10),
+                    );
                     c.tags.splice(delInd, 1);
                 }
-            })
+            });
 
-            this.workspaceStorage.set(this.workspaceModel.cards, cards);
+            this.storage.set(this.workspaceModel.cards, cards);
         }
     }
 
-    async updateTag(tag){
+    async updateTag(tag) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}tag/update/`,
             'POST',
@@ -613,20 +616,20 @@ class WorkspaceStorage extends BaseStorage {
             tag,
         );
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
-        if(status===200){
-            const tags = this.workspaceStorage.get(this.workspaceModel.tags);
-            tags.forEach(t=>{
-                if (t.id===tag.id){
-                    t.name=tag.name;
+        if (status === 200) {
+            const tags = this.storage.get(this.workspaceModel.tags);
+            tags.forEach((t) => {
+                if (t.id === tag.id) {
+                    t.name = tag.name;
                 }
-            })
+            });
             this.workspaceStorage.set(this.workspaceModel.tags, tags);
         }
     }
 
-    async deleteTag(tag){
+    async deleteTag(tag) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}tag/delete/`,
             'DELETE',
@@ -634,22 +637,24 @@ class WorkspaceStorage extends BaseStorage {
             tag,
         );
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
-        if(status===200){
-            const tags = this.workspaceStorage.get(this.workspaceModel.tags);
-            const tagDelInd = tags.findIndex(t=>t.id===tag.tag_id);
-            tags.splice(tagDelInd,1);
-            this.workspaceStorage.set(this.workspaceModel.tags, tags);
+        if (status === 200) {
+            const tags = this.storage.get(this.workspaceModel.tags);
+            const tagDelInd = tags.findIndex((t) => t.id === tag.tag_id);
+            tags.splice(tagDelInd, 1);
+            this.storage.set(this.workspaceModel.tags, tags);
 
-            const cards = this.workspaceStorage.get(this.workspaceModel.cards);
+            const cards = this.storage.get(this.workspaceModel.cards);
 
-            cards.forEach(c=>{
-                    const delInd = c.tags.findIndex(t=>t==tag.tag_id);
-                    c.tags.splice(delInd, 1);
-            })
+            cards.forEach((c) => {
+                const delInd = c.tags.findIndex(
+                    (t) => parseInt(t, 10) === parseInt(tag.tag_id, 10),
+                );
+                c.tags.splice(delInd, 1);
+            });
 
-            this.workspaceStorage.set(this.workspaceModel.cards, cards);
+            this.storage.set(this.workspaceModel.cards, cards);
         }
     }
 
@@ -983,7 +988,7 @@ class WorkspaceStorage extends BaseStorage {
         }
     }
 
-    async getHistory(board){
+    async getHistory(board) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/history/`,
             'POST',
@@ -991,7 +996,7 @@ class WorkspaceStorage extends BaseStorage {
             board,
         );
 
-        const {status} = responsePromise;
+        const { status } = responsePromise;
 
         let body;
         try {
@@ -999,20 +1004,19 @@ class WorkspaceStorage extends BaseStorage {
         } catch (error) {
             body = {};
         }
-        
-        if(status===200){
+
+        if (status === 200) {
             this.storage.set(this.workspaceModel.history, body.body.history);
         }
     }
 
-    async submitHistoryAction(action){
+    async submitHistoryAction(action) {
         const responsePromise = await AJAX(
             `${apiPath + apiVersion}board/history/submit/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
             action,
         );
-
     }
 
     /**
@@ -1300,30 +1304,36 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.files).filter((f) => f.task_id === id);
     }
 
-    getBoardHistory(){
-       return this.storage.get(this.workspaceModel.history);
+    getBoardHistory() {
+        return this.storage.get(this.workspaceModel.history);
     }
 
-    filterCardsByTag(id){
-        const cards = this.storage.get(this.workspaceModel.cards).filter(c=>
-            c.tags.includes(id));
+    filterCardsByTag(id) {
+        const cards = this.storage
+            .get(this.workspaceModel.cards)
+            .filter((c) => c.tags.includes(id));
 
-        let lists = this.storage.get(this.workspaceModel.lists).forEach(l=>{
-            l.cards=cards.filter(c=>c.list_id===l.id).sort((a,b)=>a.list_position-b.list_position);
+        let lists = this.storage.get(this.workspaceModel.lists).forEach((l) => {
+            l.cards = cards
+                .filter((c) => c.list_id === l.id)
+                .sort((a, b) => a.list_position - b.list_position);
         });
 
-        lists = lists.filter(l=>l.cards.length>0);
+        lists = lists.filter((l) => l.cards.length > 0);
 
-        return lists.sort((a,b)=>a.list_position-b.list_position);
+        return lists.sort((a, b) => a.list_position - b.list_position);
     }
 
-    getCardTags(id){
-        const tagIds = this.storage.get(this.workspaceModel.cards).find(c=>c.id===id).tags;
-        return this.storage.get(this.workspaceModel.tags).filter(t=>tagIds.includes(toString(t.id)));
+    getCardTags(id) {
+        const tagIds = this.storage.get(this.workspaceModel.cards).find((c) => c.id === id).tags;
+        console.log(tagIds);
+        return this.storage
+            .get(this.workspaceModel.tags)
+            .filter((t) => tagIds.includes(toString(t.id)));
     }
 
-    getTagOnBoard(name){
-        return this.storage.get(this.workspaceModel.tags).find(t=>t.name===name);
+    getTagOnBoard(name) {
+        return this.storage.get(this.workspaceModel.tags).find((t) => t.name === name);
     }
 }
 

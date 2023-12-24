@@ -22,6 +22,9 @@ export default class WorkspaceSettings extends Component {
     addEventListeners() {
         this.parent.querySelector('.user-workspaces').addEventListener('click', this.#openSettings);
         this.parent
+            .querySelector('.user-workspaces')
+            .addEventListener('keydown', this.#proccessKeydownWithRename);
+        this.parent
             .querySelector('.btn-delete-workspace')
             .addEventListener('click', this.deleteWorkspace);
         this.parent.addEventListener('focusout', this.#renameWorkspace);
@@ -32,6 +35,9 @@ export default class WorkspaceSettings extends Component {
         this.parent
             .querySelector('.user-workspaces')
             .removeEventListener('click', this.#openSettings);
+        this.parent
+            .querySelector('.user-workspaces')
+            .removeEventListener('keydown', this.#proccessKeydownWithRename);
         this.parent
             .querySelector('.btn-delete-workspace')
             .removeEventListener('click', this.deleteWorkspace);
@@ -144,7 +150,7 @@ export default class WorkspaceSettings extends Component {
                 e.target.closest('.workspace__name').dataset.workspace,
                 10,
             );
-
+            console.log(workspaceStorage.getWorkspaceById(workspaceID));
             const workspace = workspaceStorage.getWorkspaceById(workspaceID);
             if (workspace.name === '' || workspace.name === name) {
                 e.target.closest.querySelector('.workspace__name').textContent = workspace.name;

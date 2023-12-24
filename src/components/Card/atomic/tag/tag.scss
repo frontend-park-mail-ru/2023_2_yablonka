@@ -1,0 +1,13 @@
+.card-tag {
+    height: 32px;
+    width: fit-content;
+    background-color: var(--tag-background-color);
+}
+
+.card-tag:last-child {
+    margin-right: 5px;
+}
+
+.card-tag__text {
+    color: var(--text-color-in-card);
+}

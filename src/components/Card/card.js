@@ -25,6 +25,7 @@ import BoardPage from '../../pages/Board/board.js';
 import FilesContainer from './filesContainer/filesContainer.js';
 import File from './atomic/file/file.js';
 import ChecklistsContainer from './checklistsContainer/checklistsContainer.js';
+import Tag from './atomic/tag/tag.js';
 
 /**
  * Попап для хедера
@@ -131,6 +132,7 @@ export default class Card extends Component {
         Card.updateUsers(parseInt(dialog.dataset.card, 10));
         Card.addChecklists(parseInt(dialog.dataset.card, 10));
         Card.getFiles();
+        Card.getTags();
 
         if (!dialog.hasAttribute('open')) {
             popupEvent.addPopup(dialog);
@@ -174,6 +176,7 @@ export default class Card extends Component {
             Card.updateUsers(parseInt(dialog.dataset.card, 10));
             Card.addChecklists(parseInt(dialog.dataset.card, 10));
             Card.getFiles();
+            Card.getTags();
 
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
@@ -521,6 +524,21 @@ export default class Card extends Component {
                 );
             });
         }
+    };
+
+    static getTags = () => {
+        const card = document.querySelector('#card');
+        const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
+
+        const tagsContainer = card.querySelector('.card-tags__content');
+        console.log(tags);
+        tags.forEach((tag) =>
+            tagsContainer.insertAdjacentHTML(
+                new Tag(null, {
+                    tagName: tag.name,
+                }).render(),
+            ),
+        );
     };
 
     static clearCard = (deleteCard) => {

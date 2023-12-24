@@ -1,4 +1,4 @@
-import { actionCreateTag } from '../../../../actions/boardActions.js';
+import { actionAttachTag, actionCreateTag } from '../../../../actions/boardActions.js';
 import dispatcher from '../../../../modules/dispatcher.js';
 import Validator from '../../../../modules/validator.js';
 import workspaceStorage from '../../../../storages/workspaceStorage.js';
@@ -86,10 +86,11 @@ export default class CreateTag extends Component {
 
         const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
         const input = this.parent.querySelector('.input-card-tag__input');
-        const name = input.value;
+        const name = input.value.trim();
 
         if (Validator.validateObjectName(name)) {
             const tag = workspaceStorage.getTagOnBoard(name);
+            console.log(workspaceStorage.storage.get(workspaceStorage.workspaceModel.tags));
             if (tag) {
                 await dispatcher.dispatch(
                     actionAttachTag({
@@ -111,20 +112,19 @@ export default class CreateTag extends Component {
                     }),
                 );
             }
+        }
+        if (name.length > 10) {
+            NotificationMessage.showNotification(input, false, true, {
+                fontSize: 12,
+                fontWeight: 200,
+                text: 'Название тега должен быть не больше 10 символов',
+            });
         } else {
-            if (name.length <= 10) {
-                NotificationMessage.showNotification(input, false, true, {
-                    fontSize: 12,
-                    fontWeight: 200,
-                    text: 'Название тега должен быть не больше 10 символов',
-                });
-            } else {
-                NotificationMessage.showNotification(input, false, true, {
-                    fontSize: 12,
-                    fontWeight: 200,
-                    text: 'Неккоректное название',
-                });
-            }
+            NotificationMessage.showNotification(input, false, true, {
+                fontSize: 12,
+                fontWeight: 200,
+                text: 'Неккоректное название',
+            });
         }
     };
 
