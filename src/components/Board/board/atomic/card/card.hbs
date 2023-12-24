@@ -7,9 +7,7 @@
         {{#if this.tags}}
             <div class='flex-row-centered gap-10 list-card__tags'>
                 {{#each tags as |tag|}}
-                    <button class='flex-centered border-radius-4 padding-0-10 list-card__tag'><span
-                            class='font-weight-500 font-size-12 list-card-tag__text'
-                        >{{tag}}</span></button>
+                    {{{tag}}}
                 {{/each}}
             </div>
         {{/if}}

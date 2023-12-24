@@ -21,6 +21,7 @@ import './board.scss';
 import popupEvent from '../../components/core/popeventProcessing.js';
 import List from '../../components/Board/board/atomic/list/list.js';
 import Card from '../../components/Board/board/atomic/card/card.js';
+import CardTag from '../../components/Board/board/atomic/cardTag/cardTag.js';
 
 /**
  * слои-обертки
@@ -480,6 +481,26 @@ export default class BoardPage extends Component {
 
     #dragoverHandler = (e) => {
         e.preventDefault();
+    };
+
+    static addTag = (tag) => {
+        const card = document.querySelector(`.list__card-wrapper[data-card="${tag.task_id}"]`);
+        const tags = workspaceStorage.getCardTags(parseInt(tag.task_id, 10));
+
+        const prevTag = tags.findIndex((item) => parseInt(tag.id, 10) > parseInt(item, 10));
+        const tagsContainer = card.querySelector('.list-card__tags');
+
+        if (prevTag !== -1) {
+            tagsContainer.childNodes[prevTag].insertAdjacentHTML(
+                'aftereend',
+                new CardTag(null, { tagName: tag.name }).render(),
+            );
+        } else {
+            tagsContainer.insertAdjacentHTML(
+                'beforebegin',
+                new CardTag(null, { tagName: tag.name }).render(),
+            );
+        }
     };
 
     /**

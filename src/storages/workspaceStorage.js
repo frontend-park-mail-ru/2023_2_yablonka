@@ -556,8 +556,11 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             const tags = this.storage.get(this.workspaceModel.tags);
+            const card = this.getCardById(parseInt(body.body.tag.task_id, 10));
             tags.push(body.body.tag);
-            console.log(body);
+            card.tags.push(`${body.body.tag.id}`);
+
+            Card.addTag(body.body.tag);
         }
     }
 
@@ -575,10 +578,11 @@ class WorkspaceStorage extends BaseStorage {
             const cards = this.storage.get(this.workspaceModel.cards);
             cards.forEach((c) => {
                 if (c.id === tag.task_id) {
-                    c.tags.push(toString(tag.tag_id));
+                    c.tags.push(`${tag.tag_id}`);
                 }
             });
-            this.storage.set(this.workspaceModel.cards, cards);
+            
+            Card.addTag(this.getTagById(parseInt(tag.tag_id, 10)));
         }
     }
 
@@ -1337,7 +1341,7 @@ class WorkspaceStorage extends BaseStorage {
         const tags = this.storage
             .get(this.workspaceModel.tags)
             .filter((t) => tagIds.includes(t.id));
-        return [...tags].sort();
+        return [...tags].sort((first, second) => parseInt(first.id, 10) < parseInt(second.id, 10));
     }
 
     getTagOnBoard(name) {

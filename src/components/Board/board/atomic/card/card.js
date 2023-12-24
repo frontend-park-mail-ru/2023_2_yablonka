@@ -1,5 +1,6 @@
 import workspaceStorage from '../../../../../storages/workspaceStorage';
 import Component from '../../../../core/basicComponent';
+import CardTag from '../cardTag/cardTag';
 import template from './card.hbs';
 import './card.scss';
 
@@ -27,7 +28,7 @@ export default class Card extends Component {
         const tags = workspaceStorage.getCardTags(parseInt(cardId, 10));
 
         tags.forEach((tag) => {
-            cardTags.push(tag.name);
+            cardTags.push(new CardTag(null, { tagName: tag.name }).render());
         });
 
         return cardTags;

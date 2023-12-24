@@ -531,7 +531,7 @@ export default class Card extends Component {
         const card = document.querySelector('#card');
         const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
 
-        const tagsContainer = card.querySelector('.card-tags__content');
+        const tagsContainer = card.querySelector('.card-information__card-tags');
         tags.forEach((tag) =>
             tagsContainer.insertAdjacentHTML(
                 'beforeend',
@@ -555,6 +555,25 @@ export default class Card extends Component {
         }
     };
 
+    static addTag = (tag) => {
+        const card = document.querySelector('#card');
+        const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
+
+        const prevTag = tags.findIndex((item) => parseInt(tag.id, 10) === parseInt(item.id, 10)) - 1;
+        const tagsContainer = card.querySelector('.card-information__card-tags');
+        if (prevTag < 0) {
+            tagsContainer.insertAdjacentHTML(
+                'afterbegin',
+                new Tag(null, { tagName: tag.name }).render(),
+            );
+        } else {
+            tagsContainer.children[prevTag].insertAdjacentHTML(
+                'afterend',
+                new Tag(null, { tagName: tag.name }).render(),
+            );
+        }
+    };
+
     static clearCard = (deleteCard) => {
         const dialog = document.querySelector('#card');
         dialog.close();
@@ -564,8 +583,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information-list-name__title').textContent = '';
         dialog.querySelector('.card-information__date-wrapper').innerHTML = '';
         dialog.querySelector('.card-information__users-wrapper').innerHTML = '';
-        dialog.querySelector('.card-tags__content').innerHTML = '';
-        dialog.querySelector('.btn-add-new-tag')?.remove();
+        dialog.querySelector('.card-information__card-tags').innerHTML = '';
         dialog.querySelector('.card-information__card-description').value = '';
         dialog.querySelector('.card-information__checklists')?.remove();
         dialog.querySelector('.card-information__users-comments').innerHTML = '';
