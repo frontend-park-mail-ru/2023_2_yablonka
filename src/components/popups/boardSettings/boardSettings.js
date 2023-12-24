@@ -112,11 +112,20 @@ export default class BoardSettings extends Component {
     };
 
     #enterButtonHandler = (e) => {
-        e.stopPropagation();
-
-        if (e.key === 'Enter' && e.target.closest('.board-name__input')) {
-            e.preventDefault();
-            e.target.closest('.board-name__input').blur();
+        if (e.target.closest('.board-name__input')) {
+            if (e.key === 'Enter') {
+                e.stopPropagation();
+                e.preventDefault();
+                e.target.closest('.board-name__input').blur();
+            } else if (e.key === 'Escape') {
+                e.stopPropagation();
+                e.preventDefault();
+                const boardName = e.target.closest('.board-name__input');
+                boardName.textContent = workspaceStorage.getBoardById(
+                    parseInt(boardName.dataset.board, 10),
+                ).name;
+                boardName.blur();
+            }
         }
     };
 

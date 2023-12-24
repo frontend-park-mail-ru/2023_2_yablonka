@@ -63,10 +63,10 @@ export default class Card extends Component {
             .addEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-name')
-            .addEventListener('keydown', this.#enterButtonHandler);
+            .addEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
-            .addEventListener('keydown', this.#enterButtonHandler);
+            .addEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
             .addEventListener('input', Card.resizeCardDescription);
@@ -96,10 +96,10 @@ export default class Card extends Component {
             .removeEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-name')
-            .removeEventListener('keydown', this.#enterButtonHandler);
+            .removeEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
-            .removeEventListener('keydown', this.#enterButtonHandler);
+            .removeEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
             .removeEventListener('input', Card.resizeCardDescription);
@@ -222,7 +222,7 @@ export default class Card extends Component {
         }
     };
 
-    #enterButtonHandler = (e) => {
+    #processKeydownHandler = (e) => {
         e.stopPropagation();
 
         if (e.key === 'Enter') {
@@ -233,6 +233,22 @@ export default class Card extends Component {
             if (!e.shiftKey && e.target.closest('.card-information__card-description')) {
                 e.preventDefault();
                 e.target.closest('.card-information__card-description').blur();
+            }
+        } else if (e.key === 'Escape') {
+            const card = workspaceStorage.getCardById(
+                parseInt(this.parent.querySelector('#card').dataset.card, 10),
+            );
+            if (e.target.closest('.card-information__card-name')) {
+                e.preventDefault();
+                const cardName = e.target.closest('.card-information__card-name');
+                cardName.textContent = card.name;
+                cardName.blur();
+            }
+            if (!e.shiftKey && e.target.closest('.card-information__card-description')) {
+                e.preventDefault();
+                const cardDescription = e.target.closest('.card-information__card-description');
+                cardDescription.value = card.description;
+                cardDescription.blur();
             }
         }
     };
@@ -248,20 +264,7 @@ export default class Card extends Component {
         const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
         const card = workspaceStorage.getCardById(cardId, 10);
 
-        if (cardId) {
-            if (e.target.closest('.card-information__card-name')) {
-                e.preventDefault();
-                e.target.closest('.card-information__card-name').blur();
-            }
-            await dispatcher.dispatch(
-                actionNavigate(
-                    `${
-                        window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0]
-                    }/card/${cardId}`,
-                    '',
-                    false,
-                ),
-            );
+        if (cardId && card.name !== name && card.description !== text) {
             await dispatcher.dispatch(
                 actionUpdateCard({
                     id: cardId,
