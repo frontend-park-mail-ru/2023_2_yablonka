@@ -559,7 +559,8 @@ export default class Card extends Component {
         const card = document.querySelector('#card');
         const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
 
-        const prevTag = tags.findIndex((item) => parseInt(tag.id, 10) === parseInt(item.id, 10)) - 1;
+        const prevTag =
+            tags.findIndex((item) => parseInt(tag.id, 10) === parseInt(item.id, 10)) - 1;
         const tagsContainer = card.querySelector('.card-information__card-tags');
         if (prevTag < 0) {
             tagsContainer.insertAdjacentHTML(

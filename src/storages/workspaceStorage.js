@@ -561,6 +561,7 @@ class WorkspaceStorage extends BaseStorage {
             card.tags.push(`${body.body.tag.id}`);
 
             Card.addTag(body.body.tag);
+            BoardPage.addTag(body.body.tag);
         }
     }
 
@@ -581,8 +582,13 @@ class WorkspaceStorage extends BaseStorage {
                     c.tags.push(`${tag.tag_id}`);
                 }
             });
-            
-            Card.addTag(this.getTagById(parseInt(tag.tag_id, 10)));
+
+            const attachedTag = {
+                ...this.getTagById(parseInt(tag.tag_id, 10)),
+                task_id: tag.task_id,
+            };
+            Card.addTag(attachedTag);
+            BoardPage.addTag(attachedTag);
         }
     }
 

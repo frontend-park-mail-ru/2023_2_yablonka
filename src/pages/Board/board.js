@@ -22,6 +22,7 @@ import popupEvent from '../../components/core/popeventProcessing.js';
 import List from '../../components/Board/board/atomic/list/list.js';
 import Card from '../../components/Board/board/atomic/card/card.js';
 import CardTag from '../../components/Board/board/atomic/cardTag/cardTag.js';
+import TagsContainer from '../../components/Board/board/atomic/tagsContainer/tagsContainer.js';
 
 /**
  * слои-обертки
@@ -484,22 +485,31 @@ export default class BoardPage extends Component {
     };
 
     static addTag = (tag) => {
+        console.log(tag);
         const card = document.querySelector(`.list__card-wrapper[data-card="${tag.task_id}"]`);
         const tags = workspaceStorage.getCardTags(parseInt(tag.task_id, 10));
 
-        const prevTag = tags.findIndex((item) => parseInt(tag.id, 10) > parseInt(item, 10));
-        const tagsContainer = card.querySelector('.list-card__tags');
-
-        if (prevTag !== -1) {
-            tagsContainer.childNodes[prevTag].insertAdjacentHTML(
-                'aftereend',
-                new CardTag(null, { tagName: tag.name }).render(),
+        const prevTag =
+            tags.findIndex((item) => parseInt(tag.id, 10) === parseInt(item.id, 10)) - 1;
+        const cardContent = card.querySelector('.list__card');
+        if (prevTag < 0) {
+            cardContent.insertAdjacentHTML(
+                'beforeend',
+                new TagsContainer(null, { id: null }).render(),
             );
+            cardContent
+                .querySelector('.list-card__tags')
+                .insertAdjacentHTML(
+                    'afterbegin',
+                    new CardTag(null, { tagName: tag.name }).render(),
+                );
         } else {
-            tagsContainer.insertAdjacentHTML(
-                'beforebegin',
-                new CardTag(null, { tagName: tag.name }).render(),
-            );
+            cardContent
+                .querySelector('.list-card__tags')
+                .children[prevTag].insertAdjacentHTML(
+                    'afterend',
+                    new CardTag(null, { tagName: tag.name }).render(),
+                );
         }
     };
 
