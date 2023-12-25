@@ -328,7 +328,7 @@ export default class Card extends Component {
 
     static resizeCardComment = (e) => {
         if (e.target.closest('.card-information__add-comment-text')) {
-            e?.stopPropagation();
+            e.stopPropagation();
             const comment = document.querySelector('.card-information__add-comment-text');
             comment.setAttribute(
                 'style',
