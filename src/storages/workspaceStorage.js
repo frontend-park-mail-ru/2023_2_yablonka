@@ -11,6 +11,7 @@ import BoardPage from '../pages/Board/board.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
+import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -133,7 +134,12 @@ class WorkspaceStorage extends BaseStorage {
 
         const { status } = responsePromise;
 
-        if (status !== 200) {
+        if (status === 200) {
+            const workspace = this.getWorkspaceById(parseInt(newWorkspace.id, 10));
+            workspace.workspace_name = newWorkspace.name;
+            workspace.description = newWorkspace.description;
+            WorkspaceSettings.changeWorkspaceName(newWorkspace);
+        } else {
             emitter.trigger('rerender');
         }
     }
@@ -1401,7 +1407,7 @@ class WorkspaceStorage extends BaseStorage {
         return this.storage.get(this.workspaceModel.tags).find((t) => t.id === id);
     }
 
-    #sanitizeItems() {
+    #sanitizeItems = () => {
         const lists = this.storage.get(this.workspaceModel.lists);
         lists.forEach((list) => {
             list.cards = [...new Set(list.cards)];
@@ -1419,7 +1425,7 @@ class WorkspaceStorage extends BaseStorage {
         checklists.forEach((checklist) => {
             checklist.items = [...new Set(checklist.items)];
         });
-    }
+    };
 }
 
 const workspaceStorage = new WorkspaceStorage();

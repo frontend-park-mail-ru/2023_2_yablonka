@@ -25,8 +25,11 @@ export default class WorkspaceSettings extends Component {
             .querySelector('.user-workspaces')
             .addEventListener('keydown', this.#proccessKeydownWithRename);
         this.parent
+            .querySelector('.btn-change-workspace-name')
+            .addEventListener('click', this.#renameWorkspaceHandler);
+        this.parent
             .querySelector('.btn-delete-workspace')
-            .addEventListener('click', this.deleteWorkspace);
+            .addEventListener('click', this.#deleteWorkspace);
         this.parent.addEventListener('focusout', this.#renameWorkspace);
         window.addEventListener('resize', this.#resize);
     }
@@ -39,27 +42,26 @@ export default class WorkspaceSettings extends Component {
             .querySelector('.user-workspaces')
             .removeEventListener('keydown', this.#proccessKeydownWithRename);
         this.parent
+            .querySelector('.btn-change-workspace-name')
+            .removeEventListener('click', this.#renameWorkspaceHandler);
+        this.parent
             .querySelector('.btn-delete-workspace')
-            .removeEventListener('click', this.deleteWorkspace);
+            .removeEventListener('click', this.#deleteWorkspace);
         this.parent.removeEventListener('focusout', this.#renameWorkspace);
         window.removeEventListener('resize', this.#resize);
     }
 
-    static ChangeWorkspaceName = (workspaceName) => {
-        const dialog = this.parent.querySelector('#workspace-settings');
+    static changeWorkspaceName = (workspace) => {
+        const workspaceParagraph = document.querySelector(
+            `.workspace-paragraph[data-paragraph="${workspace.id}"]`,
+        );
+        workspaceParagraph.textContent = workspace.name;
+        [workspaceParagraph.previousElementSibling.textContent] = workspace.name;
 
-        if (dialog.dataset.workspace) {
-            const workspaceParagraph = document.querySelector(
-                `.workspace-paragraph[data-workspace="${dialog.dataset.workspace}"]`,
-            );
-            workspaceParagraph.textContent = workspaceName;
-            [workspaceParagraph.previousElementSibling.textContent] = workspaceName;
-
-            const workspaceLogo = document.querySelector(
-                `.workspace-logo[data-workspace="${dialog.dataset.workspace}"]`,
-            );
-            [workspaceLogo.previousElementSibling.textContent] = workspaceName;
-        }
+        const workspaceLogo = document.querySelector(
+            `.workspace__name[data-workspace="${workspace.id}"]`,
+        );
+        [workspaceLogo.previousElementSibling.textContent] = workspace.name;
     };
 
     #openSettings = (e) => {
@@ -117,16 +119,15 @@ export default class WorkspaceSettings extends Component {
         });
     };
 
-    deleteWorkspace = async (e) => {
+    #deleteWorkspace = async (e) => {
         e.stopPropagation();
         e.preventDefault();
         const dialog = this.parent.querySelector('#workspace-settings');
-        if (dialog.dataset.workspace) {
+        if (dialog.dataset.workspace !== '') {
             popupEvent.deletePopup(dialog);
             dialog.close();
-
             await dispatcher.dispatch(
-                actionDeleteWorkspace({ workspace_id: parseInt(dialog.dataset.workspace, 10) }),
+                actionDeleteWorkspace(parseInt(dialog.dataset.workspace, 10)),
             );
         }
     };
@@ -136,24 +137,46 @@ export default class WorkspaceSettings extends Component {
             e.stopPropagation();
             if (e.key === 'Enter') {
                 e.preventDefault();
-                e.target.blur();
+                e.target.closest('.workspace__name').blur();
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                const workspaceName = e.target.closest('.workspace__name');
+                const workspace = workspaceStorage.getWorkspaceById(
+                    parseInt(workspaceName.dataset.workspace, 10),
+                );
+                workspaceName.textContent = workspace.workspace_name;
+                workspaceName.blur();
             }
         }
+    };
+
+    #renameWorkspaceHandler = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const dialog = this.parent.querySelector('#workspace-settings');
+
+        this.parent
+            .querySelector(`.workspace__name[data-workspace="${dialog.dataset.workspace}"]`)
+            .focus();
+
+        popupEvent.deletePopup(dialog);
+        dialog.close();
     };
 
     #renameWorkspace = async (e) => {
         if (e.target.closest('.workspace__name')) {
             e.stopPropagation();
             e.preventDefault();
-            const name = e.target.closest('.workspace__name').textContent;
+            const name = e.target.closest('.workspace__name').textContent.trim();
             const workspaceID = parseInt(
                 e.target.closest('.workspace__name').dataset.workspace,
                 10,
             );
-            console.log(workspaceStorage.getWorkspaceById(workspaceID));
             const workspace = workspaceStorage.getWorkspaceById(workspaceID);
-            if (workspace.name === '' || workspace.name === name) {
-                e.target.closest.querySelector('.workspace__name').textContent = workspace.name;
+            if (name === '' || workspace.workspace_name === name) {
+                e.target.closest('.workspace__name').textContent = workspace.workspace_name;
             } else {
                 await dispatcher.dispatch(
                     actionUpdateWorkspace({
