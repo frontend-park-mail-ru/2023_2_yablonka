@@ -110,7 +110,7 @@ export default class CreateTag extends Component {
                     NotificationMessage.showNotification(input, false, true, {
                         fontSize: 12,
                         fontWeight: 200,
-                        text: 'Название тега должен быть не больше 10 символов',
+                        text: 'Название тега должно быть не больше 10 символов',
                     });
                 } else {
                     await dispatcher.dispatch(
