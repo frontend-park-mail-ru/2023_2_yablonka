@@ -690,6 +690,17 @@ class WorkspaceStorage extends BaseStorage {
             const dialog = document.querySelector('#tag-create');
             popupEvent.deletePopup(dialog);
             dialog.close();
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-card-tag__input'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось создать тег',
+                },
+            );
         }
     }
 
@@ -734,6 +745,17 @@ class WorkspaceStorage extends BaseStorage {
             const dialog = document.querySelector('#tag-create');
             popupEvent.deletePopup(dialog);
             dialog.close();
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-card-tag__input'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Тег уже прикреплён к карточке',
+                },
+            );
         }
     }
 
@@ -848,7 +870,7 @@ class WorkspaceStorage extends BaseStorage {
             const dialog = document.querySelector('#tag-settings');
 
             dialog.dataset.tag = '';
-            if (TagSettings.filteredTag) {
+            if (TagSettings.filteredTag === deletedTag.name) {
                 TagSettings.filteredTag = '';
                 TagSettings.filterCards();
             }
