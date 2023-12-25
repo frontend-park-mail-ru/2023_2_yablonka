@@ -533,7 +533,7 @@ class WorkspaceStorage extends BaseStorage {
                 document.querySelector('.board-name__input').dataset.board,
                 10,
             );
-            await sendChange(boardId, `Удалили карточку ${card.name} в списке ${list.name}`);
+            await sendChange(boardId, `Удалил карточку ${deletedCard.name} в списке ${list.name}`);
 
             list.cards.forEach((cardId) => {
                 const listCard = this.getCardById(parseInt(cardId, 10));
