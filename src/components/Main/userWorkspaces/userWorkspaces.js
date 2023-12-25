@@ -5,10 +5,8 @@ import template from './userWorkspaces.hbs';
 import './userWorkspaces.scss';
 
 /**
- * Контейнер для досок
+ * Компонент рабочих пространств
  * @class
- * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
- * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class UserWorkspaces extends Component {
     /**
@@ -22,6 +20,12 @@ export default class UserWorkspaces extends Component {
         return template({ userWorkspaces });
     }
 
+    /**
+     * Функция для получения отредеренного массива рабочих пространств
+     * @param {string} inputsData - данные input для рендера поля формы
+     * @param {Boolean} owner - является ли пользователь вдадельцем рабочего пространства
+     * @return {array} workspaces - массив с отрендеренными компонентами рабочих пространств
+     */
     #getWorkspaces(workspacesData, owner) {
         const workspaces = [];
         workspacesData.forEach((workspace) => {
@@ -40,6 +44,12 @@ export default class UserWorkspaces extends Component {
         return workspaces;
     }
 
+    /**
+     * Функция для получения отредеренного массива досок рабочего пространства
+     * @param {string} boardsData - данные board для рендера компоненты доски
+     * @param {Number} workspaceId - id рабочего пространства, для которого рендерятся доски
+     * @return {array} boards - массив с отрендеренными компонентами досок рабочего пространства
+     */
     #getBoards(boardsData, workspaceId) {
         const boards = [];
         boardsData.forEach((board) => {

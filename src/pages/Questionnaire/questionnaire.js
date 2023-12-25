@@ -77,6 +77,10 @@ export default class QuestionnairePage extends Component {
         this.removeButtonEventListeners();
     }
 
+    /**
+     * Функция для обработки события выбора рейтинга
+     * @param {Event} e - Событие
+     */
     #activateRating = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -108,6 +112,10 @@ export default class QuestionnairePage extends Component {
         });
     };
 
+    /**
+     * Функция для обработки события перехода на следующий вопрос
+     * @param {Function} Function - функция callback
+     */
     #nextQuestion = (callback) => {
         this.questionNumber += 1;
         if (this.questionNumber < this.config.questions.length) {
@@ -128,6 +136,9 @@ export default class QuestionnairePage extends Component {
         }
     };
 
+    /**
+     * Функция-хэлпер для обработки события после переключения на послений вопрос
+     */
     #lastPage = () => {
         this.parent.querySelector('.questionnaire__title').textContent = 'Спасибо за ответы :)';
 
@@ -137,6 +148,10 @@ export default class QuestionnairePage extends Component {
         this.#closeIframeTimeout();
     };
 
+    /**
+     * Функция для обработки события изменения данных профиля
+     * @return {Number} Number - значение рейтинга
+     */
     #calculateRating = () => {
         let rating = 0;
         this.parent.querySelectorAll('.btn-rating').forEach((el) => {
@@ -147,6 +162,9 @@ export default class QuestionnairePage extends Component {
         return rating;
     };
 
+    /**
+     * Функция для обработки события отправки рейтинга
+     */
     #sendRating = () => {
         dispatcher.dispatch(
             actionAnswerQuestion({
@@ -156,12 +174,18 @@ export default class QuestionnairePage extends Component {
         );
     };
 
+    /**
+     * Функция-хэлпер, выставлябщая задержку перед закрытием iframe
+     */
     #closeIframeTimeout = () => {
         setTimeout(() => {
             parent.document.querySelector(`#${this.id}`).setAttribute('style', 'display: none');
         }, 1000);
     };
 
+    /**
+     * Функция-хэлпер, выставлябщая задержку перед закрытием iframe
+     */
     #closeIframe = (e) => {
         e.preventDefault();
         e.stopPropagation();

@@ -13,13 +13,15 @@ export default class BaseView {
     }
 
     /**
+
      * Рендер компонентов */
+
     render() {
         this.components.forEach((cmp) => cmp.render());
     }
 
     /**
-     * Добавить листенеры
+     * функция добавлениея обработчиков событий каждого из компонентов
      */
     addListeners() {
         this.root.addEventListener('click', popupEvent.closeAllPopups);
@@ -28,7 +30,7 @@ export default class BaseView {
     }
 
     /**
-     * Убрать листенеры
+     * функция удаления обработчиков событий каждого из компонентов
      */
     removeListeners() {
         this.root.removeEventListener('click', popupEvent.closeAllPopups);
@@ -36,7 +38,7 @@ export default class BaseView {
     }
 
     /**
-     * Очистка страницы
+     * функция очистки страницы перед рендером
      */
     clear() {
         this.root.setAttribute('style', 'filter: blur(10px)');

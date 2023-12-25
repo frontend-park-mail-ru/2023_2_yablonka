@@ -1,16 +1,13 @@
 import Component from '../../../core/basicComponent.js';
 import template from './workspaceParagraph.hbs';
 /**
- * слои-обертки
+ * Класс компонента списка рабочих пространств
  * @class
- * @param {HTMLElement} parent - Родительский элемент, в который будет вставлен компонент.
- * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class ContainerMain extends Component {
     /**
-     * Рендерит компонент в DOM
+     * Рендерит
      */
-
     render() {
         return template(this.config);
     }

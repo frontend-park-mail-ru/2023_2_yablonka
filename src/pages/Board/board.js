@@ -411,6 +411,7 @@ export default class BoardPage extends Component {
                     .querySelector('.list__content')
                     .insertAdjacentHTML('beforeend', this.#draggingElement.parentNode.outerHTML);
             }
+            
             const ids = [];
 
             const cardId = parseInt(
@@ -451,7 +452,9 @@ export default class BoardPage extends Component {
                     this.#draggingElement.parentNode.outerHTML,
                 );
             this.#draggingElement.parentNode.remove();
+
             const ids = [];
+
             this.parent.querySelectorAll('.list').forEach((el) => {
                 ids.push(parseInt(el.dataset.list, 10));
             });
@@ -475,7 +478,9 @@ export default class BoardPage extends Component {
                     this.#draggingElement.outerHTML,
                 );
             this.#draggingElement.remove();
+
             const ids = [];
+
             e.target
                 .closest('.card-information__checklist-wrapper')
                 .querySelectorAll('.checkitem')

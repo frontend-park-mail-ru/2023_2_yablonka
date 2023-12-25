@@ -1,3 +1,4 @@
+import { actionGetHistory } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
 import userStorage from '../../../storages/userStorage.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
@@ -49,8 +50,12 @@ export default class BoardHistory extends Component {
 
             dialog.setAttribute(
                 'style',
-                `top: ${btnSizes.top + 20}px; left: ${btnSizes.left - dialogSizes.width}px;
-                 heigth: ${window.innerHeight - (btnSizes.top + 20)}px`,
+                `top: ${btnSizes.top + 35}px; left: ${Math.max(
+                    btnSizes.left - dialogSizes.width,
+                    20,
+                )}px;
+                 height: ${window.innerHeight - (btnSizes.top + 60)}px;
+                 width: ${window.innerWidth > 360 ? 330 : 300}px`,
             );
         } else {
             popupEvent.deletePopup(dialog);
@@ -58,10 +63,12 @@ export default class BoardHistory extends Component {
         }
     };
 
-    #loadHistory = () => {
+    #loadHistory = async () => {
         const boardId = parseInt(this.parent.querySelector('.board-name__input').dataset.board, 10);
+        await dispatcher.dispatch(actionGetHistory({ board_id: boardId }));
+
         const boardHistory = this.parent.querySelector('.board-history__list');
-        const historyItems = workspaceStorage.getBoardHistory(boardId);
+        const historyItems = workspaceStorage.getBoardHistory();
 
         boardHistory.innerHTML = '';
         historyItems.forEach((item) => {
@@ -70,8 +77,8 @@ export default class BoardHistory extends Component {
                 new HistoryItem(null, {
                     avatar_url: item.user.avatar_url,
                     email: item.user.email,
-                    message: item.message,
-                    creationDate: item.date,
+                    message: item.actions,
+                    creationDate: item.timestamp,
                 }).render(),
             );
         });
@@ -87,8 +94,12 @@ export default class BoardHistory extends Component {
 
             dialog.setAttribute(
                 'style',
-                `top: ${btnSizes.top + 20}px; left: ${btnSizes.left - dialogSizes.width}px;
-                 max-heigth: ${window.innerHeight - (btnSizes.top + 20)}px`,
+                `top: ${btnSizes.top + 35}px; left: ${Math.max(
+                    btnSizes.left - dialogSizes.width,
+                    20,
+                )}px;
+                 height: ${window.innerHeight - (btnSizes.top + 60)}px;
+                 width: ${window.innerWidth > 360 ? 330 : 300}px`,
             );
         });
     };

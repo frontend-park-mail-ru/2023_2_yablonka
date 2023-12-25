@@ -24,6 +24,8 @@ export default class File extends Component {
 
     #processDateToLocale = (creationDate) => {
         const date = new Date(creationDate);
-        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${date.getHours()}:${date.getMinutes()}`;
+        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${date.getHours()}:${
+            (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
+        }`;
     };
 }

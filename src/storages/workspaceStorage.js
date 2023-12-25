@@ -12,6 +12,8 @@ import dispatcher from '../modules/dispatcher.js';
 import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
+import sendChange from '../modules/sendChange.js';
+
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -197,6 +199,11 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            const body = await responsePromise.json();
+            await sendChange(
+                body.body.board.board_id,
+                `Создал доску ${body.body.board.name}`,
+            );
             emitter.trigger('rerender');
         } else if (status === 403) {
             emitter.trigger('noaccess');
@@ -233,7 +240,9 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const oldBoard = this.getBoardById(board.id);
             if (oldBoard.name !== board.name) {
+                await sendChange(board.id, `Переименовал доску ${oldBoard.name} на ${board.name}`);
                 oldBoard.name = board.name;
+
                 document
                     .querySelector(`.link-sidebar-boards-list__board[data-board="${board.id}"]`)
                     .querySelector('.sidebar-boards-list__board-name').textContent = board.name;
@@ -266,6 +275,10 @@ class WorkspaceStorage extends BaseStorage {
                 list_position: body.body.list.list_position,
                 board_id: body.body.list.board_id,
             };
+            await sendChange(
+                body.body.list.board_id,
+                `Создал список ${body.body.list.name}`,
+            );
 
             this.storage.get(this.workspaceModel.lists).push(newList);
             BoardPage.addNewList(newList);
@@ -289,6 +302,15 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             const lst = this.getListById(parseInt(list.id, 10));
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Переименовал список ${lst.name} на ${list.name}`,
+            );
+
             lst.name = list.name;
         }
     }
@@ -308,6 +330,12 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(boardId, `Удалил список ${this.getListById(list.id).name}`);
+
             const lists = this.storage.get(this.workspaceModel.lists);
             const idx = lists.findIndex((lst) => lst.id === parseInt(list.id, 10));
             lists.splice(idx, 1);
@@ -365,6 +393,20 @@ class WorkspaceStorage extends BaseStorage {
                     el.cards = ids.new_list.task_ids;
                 }
             });
+
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Переместил карточку ${
+                    this.getCardById(ids.task_id).name
+                } из списка ${
+                    this.getListById(ids.old_list.id).name
+                } в список ${this.getListById(ids.new_list.id).name}`,
+            );
+
             this.storage.set(this.workspaceModel.lists, lists);
         }
     }
@@ -414,6 +456,17 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.get(this.workspaceModel.cards).push(body.body.task);
             list.cards.push(`${body.body.task.id}`);
 
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Создал карточку ${body.body.task.name} в списке ${
+                    this.getListById(body.body.task.list_id).name
+                }`,
+            );
+
             BoardPage.addNewCard(body.body.task);
         }
     }
@@ -437,10 +490,30 @@ class WorkspaceStorage extends BaseStorage {
             if (oldCard.start !== card.start || oldCard.end !== card.end) {
                 oldCard.start = card.start;
                 oldCard.end = card.end;
+                const boardId = parseInt(
+                    document.querySelector('.board-name__input').dataset.board,
+                    10,
+                );
+                await sendChange(
+                    boardId,
+                    `Обновил сроки выполнения у карточки ${
+                        card.name
+                    } в списке ${this.getListById(oldCard.list_id).name}`,
+                );
                 Card.addDate(card.id);
             } else if (oldCard.name !== card.name || oldCard.description !== card.description) {
                 oldCard.name = card.name;
                 oldCard.description = card.description;
+                const boardId = parseInt(
+                    document.querySelector('.board-name__input').dataset.board,
+                    10,
+                );
+                await sendChange(
+                    boardId,
+                    `Изменил описание карточки ${card.name} в списке ${
+                        this.getListById(oldCard.list_id).name
+                    }`,
+                );
                 Card.changeNameAndDescriptionHelper(card.id);
             }
         }
@@ -463,6 +536,15 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const deletedCard = this.getCardById(card.id);
             const list = this.getListById(deletedCard.list_id);
+
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалили карточку ${card.name} в списке ${list.name}`,
+            );
 
             list.cards.forEach((cardId) => {
                 const listCard = this.getCardById(parseInt(cardId, 10));
@@ -516,6 +598,18 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            const card = this.getCardById(file.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Прикрепил файл ${file.filename} к карточке ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
+            );
+
             Card.getFiles();
         }
     }
@@ -537,6 +631,19 @@ class WorkspaceStorage extends BaseStorage {
             const oldFile = document
                 .querySelector(`a[href="/${file.file_path}"]`)
                 .closest('.card-information__file-wrapper');
+
+            const card = this.getCardById(file.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалил файл ${file.original_name} из карточке ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
+            );
+
             oldFile.remove();
 
             if (!document.querySelectorAll('.card-information__file-wrapper').length) {
@@ -741,6 +848,18 @@ class WorkspaceStorage extends BaseStorage {
             cardChecklists.push(`${body.body.checklist.id}`);
             cardChecklists.sort((f, s) => parseInt(f.id, 10) < parseInt(s.id, 10));
 
+            const card = this.getCardById(checklist.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Создал чек-лист ${checklist.name} в карточке ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
+            );
+
             AddChecklist.addChecklist(body.body.checklist);
         }
     }
@@ -779,10 +898,22 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
+            const checklst = this.getChecklistById(checklist.id);
+            const card = this.getCardById(checklst.task_id);
+
             const boardChecklists = this.storage.get(this.workspaceModel.checklists);
-            const cardChecklists = this.getCardById(
-                this.getChecklistById(checklist.id).task_id,
-            ).checklists;
+            const cardChecklists = card.checklists;
+
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалил чек-лист ${checklist.name} в карточке ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
+            );
 
             const boardChecklistInd = boardChecklists.findIndex(
                 (checklistElement) =>
@@ -823,6 +954,20 @@ class WorkspaceStorage extends BaseStorage {
             checklistItems.push(body.body.checklistItem);
             checklist.items.push(`${body.body.checklistItem.id}`);
 
+            const card = this.getCardById(checklist.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Создал пункт ${checklistItem.name} в чек-листе ${
+                    checklist.name
+                } карточки ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
+            );
+
             AddChecklist.addCheckItem(body.body.checklistItem);
         }
     }
@@ -845,6 +990,22 @@ class WorkspaceStorage extends BaseStorage {
             const oldChecklistItem = this.getChecklistItemById(checklistItem.id);
             if (oldChecklistItem.done !== checklistItem.done) {
                 oldChecklistItem.done = checklistItem.done;
+                const card = this.getCardById(
+                    this.getChecklistById(oldChecklistItem.checklist_id).task_id,
+                );
+                const boardId = parseInt(
+                    document.querySelector('.board-name__input').dataset.board,
+                    10,
+                );
+                await sendChange(
+                    boardId,
+                    `Обновил пункт ${oldChecklistItem.name} в чек-листе ${
+                        oldChecklistItem.name
+                    } карточки ${card.name} в списке ${
+                        this.getListById(card.list_id).name
+                    }
+                    `,
+                );
             }
         }
     }
@@ -889,8 +1050,23 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             const checklistItems = this.storage.get(this.workspaceModel.items);
-            const { items } = this.getChecklistById(
+            const checklist = this.getChecklistById(
                 this.getChecklistItemById(checklistItem.id).checklist_id,
+            );
+            const { items } = checklist;
+
+            const card = this.getCardById(checklist.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалил пункт ${
+                    this.getChecklistItemById(checklistItem.id).name
+                } в чек-листе ${checklist.name} карточки ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
             );
 
             const checklistItemInd = checklistItems.findIndex(
@@ -937,6 +1113,17 @@ class WorkspaceStorage extends BaseStorage {
             card.comments.push(`${newComment.id}`);
 
             comments.push(newComment);
+
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Добавил комментарий в карточке ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
+            );
 
             Card.addComment(newComment);
         }
@@ -1012,6 +1199,20 @@ class WorkspaceStorage extends BaseStorage {
 
             currentCardUserIds.sort((f, s) => parseInt(f, 10) < parseInt(s, f));
 
+            const card = this.getCardById(data.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Добавил пользователя ${
+                    this.getUserById(data.user_id).email
+                } на карточку ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
+            );
+
             Card.updateUsers(parseInt(data.task_id, 10));
         }
     }
@@ -1040,6 +1241,20 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             currentCardUserIds.splice(ind, 1);
+
+            const card = this.getCardById(data.task_id);
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+            await sendChange(
+                boardId,
+                `Удалил пользователя ${
+                    this.getUserById(data.user_id).email
+                } из карточки ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
+            );
 
             Card.updateUsers(parseInt(data.task_id, 10));
         }

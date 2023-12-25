@@ -1,5 +1,11 @@
+.board-history {
+    width: 300px;
+    background-color: transparent;
+}
+
 .board-history-wrapper {
     height: 100%;
+    background-color: transparent;
 }
 
 .board-history__list {
@@ -7,5 +13,21 @@
     list-style: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100%;
+    max-height: 100%;
+}
+
+.board-history__list::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+}
+
+.board-history__list::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.board-history__list::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 5px;
 }
