@@ -136,14 +136,14 @@ export default class TagSettings extends Component {
         const resetFilterBtn = document.querySelector('.btn-filter-action');
         resetFilterBtn.removeAttribute('disabled');
 
-        const { tag } =
-            e.target.closest('.btn-list-card__tag')?.dataset ??
-            document.querySelector('#tag-settings').dataset;
-        if (e) {
-            TagSettings.filteredTag = tag;
+        if (e?.target.closest('.btn-list-card__tag')) {
+            TagSettings.filteredTag = e.target.closest('.btn-list-card__tag').dataset.tag;
         }
-
+        if (e?.target.closest('.btn-filter-cards')) {
+            TagSettings.filteredTag = document.querySelector('#tag-settings').dataset.tag;
+        }
         const filteredLists = workspaceStorage.filterCardsByTag(TagSettings.filteredTag);
+        console.log(filteredLists);
         const listsContainer = document.querySelector('.board__lists');
 
         listsContainer.innerHTML = '';

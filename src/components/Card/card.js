@@ -68,17 +68,20 @@ export default class Card extends Component {
             .querySelector('.card-information__card-description')
             .addEventListener('keydown', this.#processKeydownHandler);
         this.parent
+            .querySelector('.card-information__add-comment-text')
+            .addEventListener('keydown', this.#processKeydownHandler);
+        this.parent
             .querySelector('.card-information__card-description')
             .addEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .addEventListener('input', Card.resizeCardComment);
         this.parent
             .querySelector('.card-information__card-description')
             .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
             .addEventListener('blur', this.#changeNameAndDescription);
-        this.parent
-            .querySelector('.card-information__add-comment-text')
-            .addEventListener('keydown', this.#createComment);
     }
 
     removeEventListeners() {
@@ -101,17 +104,20 @@ export default class Card extends Component {
             .querySelector('.card-information__card-description')
             .removeEventListener('keydown', this.#processKeydownHandler);
         this.parent
+            .querySelector('.card-information__add-comment-text')
+            .removeEventListener('keydown', this.#processKeydownHandler);
+        this.parent
             .querySelector('.card-information__card-description')
             .removeEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .removeEventListener('input', Card.resizeCardComment);
         this.parent
             .querySelector('.card-information__card-description')
             .removeEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
             .removeEventListener('blur', this.#changeNameAndDescription);
-        this.parent
-            .querySelector('.card-information__add-comment-text')
-            .removeEventListener('keydown', this.#createComment);
     }
 
     static openByRedirect = (id) => {
@@ -134,6 +140,8 @@ export default class Card extends Component {
         Card.addChecklists(parseInt(dialog.dataset.card, 10));
         Card.getFiles();
         Card.getTags();
+
+        Card.resizeCardComments();
 
         if (!dialog.hasAttribute('open')) {
             popupEvent.addPopup(dialog);
@@ -178,6 +186,8 @@ export default class Card extends Component {
             Card.addChecklists(parseInt(dialog.dataset.card, 10));
             Card.getFiles();
             Card.getTags();
+
+            Card.resizeCardComments();
 
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
@@ -234,6 +244,10 @@ export default class Card extends Component {
                 e.preventDefault();
                 e.target.closest('.card-information__card-description').blur();
             }
+            if (!e.shiftKey && e.target.closest('.card-information__add-comment-text')) {
+                e.preventDefault();
+                this.#createComment(e);
+            }
         } else if (e.key === 'Escape') {
             const card = workspaceStorage.getCardById(
                 parseInt(this.parent.querySelector('#card').dataset.card, 10),
@@ -244,11 +258,19 @@ export default class Card extends Component {
                 cardName.textContent = card.name;
                 cardName.blur();
             }
-            if (!e.shiftKey && e.target.closest('.card-information__card-description')) {
+            if (e.target.closest('.card-information__card-description')) {
                 e.preventDefault();
                 const cardDescription = e.target.closest('.card-information__card-description');
                 cardDescription.value = card.description;
                 cardDescription.blur();
+                Card.resizeCardDescription(e);
+            }
+            if (e.target.closest('.card-information__add-comment-text')) {
+                e.preventDefault();
+                const cardComment = e.target.closest('.card-information__add-comment-text');
+                cardComment.value = '';
+                cardComment.blur();
+                Card.resizeCardComment(e);
             }
         }
     };
@@ -258,13 +280,13 @@ export default class Card extends Component {
 
         const dialog = this.parent.querySelector('#card');
 
-        const name = dialog.querySelector('.card-information__card-name').textContent;
+        const name = dialog.querySelector('.card-information__card-name').textContent.trim();
         const description = dialog.querySelector('.card-information__card-description');
         const text = description.value;
         const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
         const card = workspaceStorage.getCardById(cardId, 10);
 
-        if (cardId && card.name !== name && card.description !== text) {
+        if (cardId && (card.name !== name || card.description !== text)) {
             await dispatcher.dispatch(
                 actionUpdateCard({
                     id: cardId,
@@ -304,36 +326,58 @@ export default class Card extends Component {
         }
     };
 
+    static resizeCardComment = (e) => {
+        if (e.target.closest('.card-information__add-comment-text')) {
+            e?.stopPropagation();
+            const comment = document.querySelector('.card-information__add-comment-text');
+            comment.setAttribute(
+                'style',
+                `height:${([...comment.value.matchAll(/\n/g)].length + 2) * 20}px`,
+            );
+        }
+    };
+
+    static resizeCardComments = () => {
+        const dialog = document.querySelector('#card');
+        const comments = dialog.querySelectorAll('.card-information__comment-text');
+
+        comments.forEach((comment) => {
+            comment.setAttribute(
+                'style',
+                `height:${([...comment.value.matchAll(/\n/g)].length + 2) * 20}px`,
+            );
+        });
+    };
+
     #createComment = async (e) => {
         e.stopPropagation();
+        e.preventDefault();
 
-        if (e.key === 'Enter') {
-            e.preventDefault();
+        const dialog = this.parent.querySelector('#card');
+        const comment = dialog.querySelector('.card-information__add-comment-text');
+        const text = comment.value.trim();
+        comment.value = '';
 
-            const dialog = this.parent.querySelector('#card');
-            const comment = dialog.querySelector('.card-information__add-comment-text').value;
-            dialog.querySelector('.card-information__add-comment-text').value = '';
-            const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
-            if (Validator.validateObjectName(comment)) {
-                await dispatcher.dispatch(
-                    actionCommentCard({
-                        task_id: parseInt(dialog.dataset.card, 10),
-                        user_id: userId,
-                        text: comment,
-                    }),
-                );
-            } else {
-                NotificationMessage.showNotification(
-                    this.parent.querySelector('.card-information__add-comment').parentNode,
-                    false,
-                    true,
-                    {
-                        fontSize: 14,
-                        fontWeight: 200,
-                        text: 'Неккоректное сообщение',
-                    },
-                );
-            }
+        const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
+        if (Validator.validateObjectName(text)) {
+            await dispatcher.dispatch(
+                actionCommentCard({
+                    task_id: parseInt(dialog.dataset.card, 10),
+                    user_id: userId,
+                    text,
+                }),
+            );
+        } else {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('.card-information__add-comment-text'),
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Использованы некорректные символы в сообщении',
+                },
+            );
         }
     };
 

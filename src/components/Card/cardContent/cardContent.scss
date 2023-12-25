@@ -189,29 +189,35 @@
     width: 100%;
     min-height: 40px;
     max-height: 150px;
-    resize: vertical;
-    color: var(--text-color-in-card);
+    overflow-y: auto;
+    overflow-x: hidden;
+    resize: none;
     outline: none;
+    color: var(--text-color-in-card);
+}
+
+.card-information__add-comment-text:focus {
+    border: 2px solid var(--text-color-on-page);
 }
 
 .card-information__add-comment-text::placeholder {
     color: var(--text-color-in-card);
 }
 
-.card-information__comment-text::-webkit-scrollbar {
+.card-information__add-comment-text::-webkit-scrollbar {
     height: 4px;
     width: 4px;
 }
 
-.card-information__comment-text::-webkit-scrollbar-track {
+.card-information__add-comment-text::-webkit-scrollbar-track {
     background: #00000026;
-    border-radius: 6px;
-    margin: 10px;
+    border-radius: 4px;
+    margin: 5px;
 }
 
-.card-information__comment-text::-webkit-scrollbar-thumb {
+.card-information__add-comment-text::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 .card-information__users-comments {

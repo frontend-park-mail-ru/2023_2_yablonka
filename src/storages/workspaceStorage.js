@@ -169,6 +169,7 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.checklists, body.body.checklists);
             this.storage.set(this.workspaceModel.items, body.body.checklist_items);
             this.storage.set(this.workspaceModel.tags, body.body.tags);
+            this.#sanitizeItems();
         } else {
             dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
             dispatcher.dispatch(actionRedirect('/404', false));
@@ -558,11 +559,19 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const tags = this.storage.get(this.workspaceModel.tags);
             const card = this.getCardById(parseInt(body.body.tag.task_id, 10));
-            tags.push(body.body.tag);
+            tags.push({
+                id: body.body.tag.id,
+                name: body.body.tag.name,
+                color: body.body.tag.color,
+            });
             card.tags.push(`${body.body.tag.id}`);
 
             Card.addTag(body.body.tag);
             BoardPage.addTag(body.body.tag);
+
+            const dialog = document.querySelector('#tag-create');
+            popupEvent.deletePopup(dialog);
+            dialog.close();
         }
     }
 
@@ -590,6 +599,11 @@ class WorkspaceStorage extends BaseStorage {
             };
             Card.addTag(attachedTag);
             BoardPage.addTag(attachedTag);
+
+            const dialog = document.querySelector('#tag-create');
+            popupEvent.deletePopup(dialog);
+            dialog.close();
+        } else {
         }
     }
 
@@ -607,7 +621,7 @@ class WorkspaceStorage extends BaseStorage {
             const cards = this.storage.get(this.workspaceModel.cards);
 
             cards.forEach((c) => {
-                if (c.id === tag.task_id) {
+                if (parseInt(c.id, 10) === parseInt(tag.task_id, 10)) {
                     const delInd = c.tags.findIndex(
                         (t) => parseInt(t, 10) === parseInt(tag.tag_id, 10),
                     );
@@ -616,9 +630,19 @@ class WorkspaceStorage extends BaseStorage {
             });
 
             const detachedTag = this.getTagById(parseInt(tag.tag_id, 10));
+            console.log(detachedTag);
             Card.removeTag(detachedTag);
-            BoardPage.removeTag({ ...detachedTag, task_id: tag.task_id });
-            TagSettings.filterCards();
+
+            if (TagSettings.filteredTag) {
+                TagSettings.filterCards();
+            } else {
+                BoardPage.removeTag({ ...detachedTag, task_id: tag.task_id });
+            }
+            const dialog = document.querySelector('#tag-settings');
+            if (dialog.hasAttribute('open')) {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+            }
         }
     }
 
@@ -657,7 +681,6 @@ class WorkspaceStorage extends BaseStorage {
             const deletedTag = this.getTagById(parseInt(tag.tag_id, 10));
             Card.removeTag(deletedTag);
             BoardPage.deleteTag(deletedTag);
-            TagSettings.filterCards();
 
             const tags = this.storage.get(this.workspaceModel.tags);
             const tagDelInd = tags.findIndex((t) => t.id === tag.tag_id);
@@ -671,6 +694,18 @@ class WorkspaceStorage extends BaseStorage {
                 );
                 c.tags.splice(delInd, 1);
             });
+
+            const dialog = document.querySelector('#tag-settings');
+
+            dialog.dataset.tag = '';
+            if (TagSettings.filteredTag) {
+                TagSettings.filteredTag = '';
+                TagSettings.filterCards();
+            }
+            if (dialog.hasAttribute('open')) {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+            }
         }
     }
 
@@ -1325,7 +1360,7 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     filterCardsByTag(name) {
-        const id = `${this.getTagOnBoard(name).id}`;
+        const id = `${this.getTagOnBoard(name)?.id}`;
         const cards = this.storage
             .get(this.workspaceModel.cards)
             .filter((c) => c.tags.includes(id));
@@ -1364,6 +1399,26 @@ class WorkspaceStorage extends BaseStorage {
 
     getTagById(id) {
         return this.storage.get(this.workspaceModel.tags).find((t) => t.id === id);
+    }
+
+    #sanitizeItems() {
+        const lists = this.storage.get(this.workspaceModel.lists);
+        lists.forEach((list) => {
+            list.cards = [...new Set(list.cards)];
+        });
+
+        const cards = this.storage.get(this.workspaceModel.cards);
+        cards.forEach((card) => {
+            card.comments = [...new Set(card.comments)];
+            card.tags = [...new Set(card.tags)];
+            card.checklists = [...new Set(card.checklists)];
+            card.users = [...new Set(card.users)];
+        });
+
+        const checklists = this.storage.get(this.workspaceModel.checklists);
+        checklists.forEach((checklist) => {
+            checklist.items = [...new Set(checklist.items)];
+        });
     }
 }
 
