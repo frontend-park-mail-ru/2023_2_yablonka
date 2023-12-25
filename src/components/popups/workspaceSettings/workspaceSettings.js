@@ -127,7 +127,7 @@ export default class WorkspaceSettings extends Component {
             popupEvent.deletePopup(dialog);
             dialog.close();
             await dispatcher.dispatch(
-                actionDeleteWorkspace(parseInt(dialog.dataset.workspace, 10)),
+                actionDeleteWorkspace({ workspace_id: parseInt(dialog.dataset.workspace, 10) }),
             );
         }
     };
