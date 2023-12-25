@@ -96,13 +96,17 @@
     min-width: 80px;
 }
 
-@media screen and (max-width: 650px) {
-    .board-menu__board-actions {
+@media screen and (max-width: 400px) {
+    .board-actions__title {
         display: none;
+    }
+
+    .btn-filter-action {
+        min-width: 0px;
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 750px) {
     .board-menu__team {
         display: none;
     }
