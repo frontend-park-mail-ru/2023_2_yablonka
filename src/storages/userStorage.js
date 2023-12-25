@@ -48,7 +48,6 @@ class UserStorage extends BaseStorage {
         try {
             xhr.send();
         } catch (err) {
-            console.log(err);
         }
     }
 
@@ -346,7 +345,6 @@ class UserStorage extends BaseStorage {
         try {
             body = await responsePromise.json();
         } catch (error) {
-            console.log(error);
         }
 
         const { status } = responsePromise;

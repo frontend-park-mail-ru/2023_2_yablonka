@@ -4,7 +4,6 @@ const initCache = () =>
     caches.open(CacheKey).then(
         (cache) => cache.addAll(['/index.html']),
         (error) => {
-            console.log(error);
         },
     );
 

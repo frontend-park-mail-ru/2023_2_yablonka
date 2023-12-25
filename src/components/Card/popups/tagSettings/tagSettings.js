@@ -143,7 +143,6 @@ export default class TagSettings extends Component {
             TagSettings.filteredTag = document.querySelector('#tag-settings').dataset.tag;
         }
         const filteredLists = workspaceStorage.filterCardsByTag(TagSettings.filteredTag);
-        console.log(filteredLists);
         const listsContainer = document.querySelector('.board__lists');
 
         listsContainer.innerHTML = '';
