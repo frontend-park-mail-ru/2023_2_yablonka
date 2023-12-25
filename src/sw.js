@@ -43,11 +43,8 @@ self.addEventListener('activate', (e) => {
     e.waitUntil(
         caches.keys().then((keyList) =>
             Promise.all(
-                keyList.forEach((key) => {
-                    if (key !== CacheKey) {
-                        return caches.delete(key);
-                    }
-                }),
+                keyList.forEach((key) => key !== CacheKey? caches.delete(key):undefined   
+                ),
             ),
         ),
     );
