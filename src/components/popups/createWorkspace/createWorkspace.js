@@ -74,7 +74,8 @@ export default class CreateWorkspace extends Component {
     #openCreateWorkspace = (e) => {
         if (
             e.target.closest('.btn-create-workspace') ||
-            e.target.closest('.btn-create-first-workspace')
+            e.target.closest('.btn-create-first-workspace') ||
+            e.target.closest('.menu__btn-create')
         ) {
             e.preventDefault();
             e.stopPropagation();
