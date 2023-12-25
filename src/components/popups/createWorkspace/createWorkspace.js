@@ -27,10 +27,7 @@ export default class CreateWorkspace extends Component {
             .querySelector('.btn-create-workspace-pop-up')
             .addEventListener('click', this.#createWorkspace);
         this.parent
-            .querySelector('.btn-create-first-workspace')
-            ?.addEventListener('click', this.#openCreateWorkspace);
-        this.parent
-            .querySelector('.btn-create-workspace')
+            .querySelector('.container-main')
             ?.addEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('.menu__btn-create')
@@ -49,10 +46,7 @@ export default class CreateWorkspace extends Component {
             .querySelector('.btn-create-workspace-pop-up')
             .removeEventListener('click', this.#createWorkspace);
         this.parent
-            .querySelector('.btn-create-first-workspace')
-            ?.removeEventListener('click', this.#openCreateWorkspace);
-        this.parent
-            .querySelector('.btn-create-workspace')
+            .querySelector('.container-main')
             ?.removeEventListener('click', this.#openCreateWorkspace);
         this.parent
             .querySelector('.menu__btn-create')
@@ -68,38 +62,42 @@ export default class CreateWorkspace extends Component {
 
     #blockCreateButton = (e) => {
         e.preventDefault();
-        const input = this.parent.querySelector('input[data-name="workspace-name"]');
         const btn = this.parent.querySelector('.btn-create-workspace-pop-up');
 
         if (e.target.value.length === 0) {
             btn.disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             btn.disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 
     #openCreateWorkspace = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        if (
+            e.target.closest('.btn-create-workspace') ||
+            e.target.closest('.btn-create-first-workspace')
+        ) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        const dialog = this.parent.querySelector('#create-workspace');
+            const dialog = this.parent.querySelector('#create-workspace');
 
-        if (!dialog.hasAttribute('open')) {
-            popupEvent.closeAllPopups(e);
-            popupEvent.addPopup(dialog);
-            dialog.showModal();
-            const dialogSizes = dialog.getBoundingClientRect();
-            const windowSizes = this.parent.getBoundingClientRect();
+            if (!dialog.hasAttribute('open')) {
+                popupEvent.closeAllPopups(e);
+                popupEvent.addPopup(dialog);
+                dialog.showModal();
+                const dialogSizes = dialog.getBoundingClientRect();
+                const windowSizes = this.parent.getBoundingClientRect();
 
-            dialog.setAttribute(
-                'style',
-                `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
-            );
-        } else {
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+                dialog.setAttribute(
+                    'style',
+                    `top: ${5}%; left: ${Math.floor(
+                        (windowSizes.width - dialogSizes.width) / 2,
+                    )}px`,
+                );
+            } else {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+            }
         }
     };
 
