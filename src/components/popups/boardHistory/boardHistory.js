@@ -1,6 +1,5 @@
 import { actionGetHistory } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
-import userStorage from '../../../storages/userStorage.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import Component from '../../core/basicComponent.js';
 import popupEvent from '../../core/popeventProcessing.js';
