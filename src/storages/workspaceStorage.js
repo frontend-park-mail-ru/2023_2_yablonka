@@ -10,7 +10,10 @@ import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js
 import BoardPage from '../pages/Board/board.js';
 import dispatcher from '../modules/dispatcher.js';
 import { actionNavigate, actionRedirect } from '../actions/userActions.js';
+import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
+import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
 import sendChange from '../modules/sendChange.js';
+
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -29,6 +32,7 @@ class WorkspaceStorage extends BaseStorage {
         items: 'items',
         files: 'files',
         history: 'history',
+        tags: 'tags',
     };
 
     /**
@@ -46,6 +50,7 @@ class WorkspaceStorage extends BaseStorage {
         this.storage.set(this.workspaceModel.items, []);
         this.storage.set(this.workspaceModel.files, []);
         this.storage.set(this.workspaceModel.history, []);
+        this.storage.set(this.workspaceModel.tags, []);
     }
 
     /**
@@ -131,7 +136,12 @@ class WorkspaceStorage extends BaseStorage {
 
         const { status } = responsePromise;
 
-        if (status !== 200) {
+        if (status === 200) {
+            const workspace = this.getWorkspaceById(parseInt(newWorkspace.id, 10));
+            workspace.workspace_name = newWorkspace.name;
+            workspace.description = newWorkspace.description;
+            WorkspaceSettings.changeWorkspaceName(newWorkspace);
+        } else {
             emitter.trigger('rerender');
         }
     }
@@ -166,6 +176,8 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.set(this.workspaceModel.comments, body.body.comments);
             this.storage.set(this.workspaceModel.checklists, body.body.checklists);
             this.storage.set(this.workspaceModel.items, body.body.checklist_items);
+            this.storage.set(this.workspaceModel.tags, body.body.tags);
+            this.#sanitizeItems();
         } else {
             dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
             dispatcher.dispatch(actionRedirect('/404', false));
@@ -440,7 +452,7 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             const body = await responsePromise.json();
             const list = this.getListById(parseInt(body.body.task.list_id, 10));
-
+            body.body.task.tags = [];
             this.storage.get(this.workspaceModel.cards).push(body.body.task);
             list.cards.push(`${body.body.task.id}`);
 
@@ -642,11 +654,172 @@ class WorkspaceStorage extends BaseStorage {
 
     async createTag(tag) {
         const responsePromise = await AJAX(
-            `${apiPath + apiVersion}task/file/remove/`,
+            `${apiPath + apiVersion}tag/create/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        let body;
+        try {
+            body = await responsePromise.json();
+        } catch (error) {
+            body = {};
+        }
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            const tags = this.storage.get(this.workspaceModel.tags);
+            const card = this.getCardById(parseInt(body.body.tag.task_id, 10));
+            tags.push({
+                id: body.body.tag.id,
+                name: body.body.tag.name,
+                color: body.body.tag.color,
+            });
+            card.tags.push(`${body.body.tag.id}`);
+
+            Card.addTag(body.body.tag);
+            BoardPage.addTag(body.body.tag);
+
+            const dialog = document.querySelector('#tag-create');
+            popupEvent.deletePopup(dialog);
+            dialog.close();
+        }
+    }
+
+    async attachTag(tag) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/add_to_task/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            const cards = this.storage.get(this.workspaceModel.cards);
+            cards.forEach((c) => {
+                if (c.id === tag.task_id) {
+                    c.tags.push(`${tag.tag_id}`);
+                }
+            });
+
+            const attachedTag = {
+                ...this.getTagById(parseInt(tag.tag_id, 10)),
+                task_id: tag.task_id,
+            };
+            Card.addTag(attachedTag);
+            BoardPage.addTag(attachedTag);
+
+            const dialog = document.querySelector('#tag-create');
+            popupEvent.deletePopup(dialog);
+            dialog.close();
+        } else {
+        }
+    }
+
+    async detachTag(tag) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/remove_from_task/`,
             'DELETE',
             userStorage.storage.get(userStorage.userModel.csrf),
-            file,
+            tag,
         );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            const cards = this.storage.get(this.workspaceModel.cards);
+
+            cards.forEach((c) => {
+                if (parseInt(c.id, 10) === parseInt(tag.task_id, 10)) {
+                    const delInd = c.tags.findIndex(
+                        (t) => parseInt(t, 10) === parseInt(tag.tag_id, 10),
+                    );
+                    c.tags.splice(delInd, 1);
+                }
+            });
+
+            const detachedTag = this.getTagById(parseInt(tag.tag_id, 10));
+            console.log(detachedTag);
+            Card.removeTag(detachedTag);
+
+            if (TagSettings.filteredTag) {
+                TagSettings.filterCards();
+            } else {
+                BoardPage.removeTag({ ...detachedTag, task_id: tag.task_id });
+            }
+            const dialog = document.querySelector('#tag-settings');
+            if (dialog.hasAttribute('open')) {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+            }
+        }
+    }
+
+    async updateTag(tag) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/update/`,
+            'POST',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            const tags = this.storage.get(this.workspaceModel.tags);
+            tags.forEach((t) => {
+                if (t.id === tag.id) {
+                    t.name = tag.name;
+                }
+            });
+            this.workspaceStorage.set(this.workspaceModel.tags, tags);
+        }
+    }
+
+    async deleteTag(tag) {
+        const responsePromise = await AJAX(
+            `${apiPath + apiVersion}tag/delete/`,
+            'DELETE',
+            userStorage.storage.get(userStorage.userModel.csrf),
+            tag,
+        );
+
+        const { status } = responsePromise;
+
+        if (status === 200) {
+            const deletedTag = this.getTagById(parseInt(tag.tag_id, 10));
+            Card.removeTag(deletedTag);
+            BoardPage.deleteTag(deletedTag);
+
+            const tags = this.storage.get(this.workspaceModel.tags);
+            const tagDelInd = tags.findIndex((t) => t.id === tag.tag_id);
+            tags.splice(tagDelInd, 1);
+
+            const cards = this.storage.get(this.workspaceModel.cards);
+
+            cards.forEach((c) => {
+                const delInd = c.tags.findIndex(
+                    (t) => parseInt(t, 10) === parseInt(tag.tag_id, 10),
+                );
+                c.tags.splice(delInd, 1);
+            });
+
+            const dialog = document.querySelector('#tag-settings');
+
+            dialog.dataset.tag = '';
+            if (TagSettings.filteredTag) {
+                TagSettings.filteredTag = '';
+                TagSettings.filterCards();
+            }
+            if (dialog.hasAttribute('open')) {
+                popupEvent.deletePopup(dialog);
+                dialog.close();
+            }
+        }
     }
 
     /**
@@ -1406,6 +1579,68 @@ class WorkspaceStorage extends BaseStorage {
     getBoardHistory() {
         return this.storage.get(this.workspaceModel.history);
     }
+
+    filterCardsByTag(name) {
+        const id = `${this.getTagOnBoard(name)?.id}`;
+        const cards = this.storage
+            .get(this.workspaceModel.cards)
+            .filter((c) => c.tags.includes(id));
+
+        let lists = structuredClone(this.storage.get(this.workspaceModel.lists)).map((l) => {
+            l.cards = cards
+                .filter((c) => c.list_id === l.id)
+                .sort((a, b) => a.list_position - b.list_position);
+            return l;
+        });
+
+        lists = lists.filter((l) => l.cards.length > 0);
+
+        return lists.sort((a, b) => a.list_position - b.list_position);
+    }
+
+    getCardTags(id) {
+        const tagIds = this.storage
+            .get(this.workspaceModel.cards)
+            .find((c) => c.id === id)
+            .tags?.map((i) => parseInt(i, 10));
+
+        if (!tagIds) {
+            return [];
+        }
+
+        const tags = this.storage
+            .get(this.workspaceModel.tags)
+            .filter((t) => tagIds.includes(t.id));
+        return [...tags].sort((first, second) => parseInt(first.id, 10) < parseInt(second.id, 10));
+    }
+
+    getTagOnBoard(name) {
+        return this.storage.get(this.workspaceModel.tags).find((t) => t.name === name);
+    }
+
+    getTagById(id) {
+        return this.storage.get(this.workspaceModel.tags).find((t) => t.id === id);
+    }
+
+    #sanitizeItems = () => {
+        const lists = this.storage.get(this.workspaceModel.lists);
+        lists.forEach((list) => {
+            list.cards = [...new Set(list.cards)];
+        });
+
+        const cards = this.storage.get(this.workspaceModel.cards);
+        cards.forEach((card) => {
+            card.comments = [...new Set(card.comments)];
+            card.tags = [...new Set(card.tags)];
+            card.checklists = [...new Set(card.checklists)];
+            card.users = [...new Set(card.users)];
+        });
+
+        const checklists = this.storage.get(this.workspaceModel.checklists);
+        checklists.forEach((checklist) => {
+            checklist.items = [...new Set(checklist.items)];
+        });
+    };
 }
 
 const workspaceStorage = new WorkspaceStorage();

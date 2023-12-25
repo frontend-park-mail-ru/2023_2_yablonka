@@ -1,5 +1,6 @@
 import workspaceStorage from '../../../../storages/workspaceStorage';
 import Component from '../../../core/basicComponent';
+import AddNewList from '../atomic/addNewList/addNewList';
 import List from '../atomic/list/list';
 import template from './boardContent.hbs';
 import './boardContent.scss';
@@ -17,6 +18,7 @@ export default class BoardContent extends Component {
     render() {
         return template({
             lists: this.#getLists(this.config.lists),
+            addNewList: new AddNewList(null, {}).render(),
         });
     }
 
@@ -28,7 +30,7 @@ export default class BoardContent extends Component {
                     name: list.name,
                     id: list.id,
                     list_position: list.list_position,
-                    cards: workspaceStorage.getListCards(list.id),
+                    cards: list.cards,
                 }).render(),
             );
         });

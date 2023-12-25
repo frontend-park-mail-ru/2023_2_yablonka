@@ -1,7 +1,6 @@
 import { actionAddUserBoard, actionRemoveUserBoard } from '../../../actions/boardActions.js';
 import dispatcher from '../../../modules/dispatcher.js';
 import Validator from '../../../modules/validator.js';
-import userStorage from '../../../storages/userStorage.js';
 import workspaceStorage from '../../../storages/workspaceStorage.js';
 import NotificationMessage from '../../Common/notification/notificationMessage.js';
 import Component from '../../core/basicComponent.js';
@@ -24,9 +23,6 @@ export default class AddBoardUsers extends Component {
 
     addEventListeners() {
         this.parent
-            .querySelector('.btn-share-action')
-            .addEventListener('click', this.#openAddUserPopup);
-        this.parent
             .querySelector('.btn-add-user-to-board')
             .addEventListener('click', this.#openAddUserPopup);
         this.parent
@@ -41,9 +37,6 @@ export default class AddBoardUsers extends Component {
     }
 
     removeEventListeners() {
-        this.parent
-            .querySelector('.btn-share-action')
-            .removeEventListener('click', this.#openAddUserPopup);
         this.parent
             .querySelector('.btn-add-user-to-board')
             .addEventListener('click', this.#openAddUserPopup);
@@ -67,16 +60,8 @@ export default class AddBoardUsers extends Component {
         const btn = e.target.closest('button');
         const btnCoordinates = btn.getBoundingClientRect();
 
-        let top;
-        let left;
-
-        if (btn.classList.contains('btn-add-user-to-board')) {
-            top = btnCoordinates.top - 10;
-            left = btnCoordinates.left + 60;
-        } else {
-            top = btnCoordinates.top + 60;
-            left = btnCoordinates.left - 65;
-        }
+        const top = btnCoordinates.top - 10;
+        const left = btnCoordinates.left + 60;
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeAllPopups();

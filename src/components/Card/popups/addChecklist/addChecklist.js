@@ -178,10 +178,8 @@ export default class AddChecklist extends Component {
 
         if (input.value.length === 0) {
             btnCreate.disabled = true;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--need-text-color)');
         } else {
             btnCreate.disabled = false;
-            input.setAttribute('style', 'box-shadow: inset 0 0 0 2px var(--main-btn-border-color)');
         }
     };
 

@@ -18,7 +18,9 @@
         "implicit-arrow-linebreak": "off",
         "no-unused-vars": ["error", { "argsIgnorePattern": "_" }],
         "no-restricted-syntax": ["error", "WithStatement"],
-        "operator-linebreak": ["error", "after"],
+        "no-param-reassign": "off",
+        "prefer-promise-reject-errors": ["error", {"allowEmptyReject": true}],
+        "object-curly-spacing": "off",
         "import/extensions": [
             "error",
             {

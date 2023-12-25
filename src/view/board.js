@@ -18,6 +18,8 @@ import AddChecklist from '../components/Card/popups/addChecklist/addChecklist.js
 import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 import AddFile from '../components/Card/popups/addFile/addFile.js';
 import BoardHistory from '../components/popups/boardHistory/boardHistory.js';
+import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
+import CreateTag from '../components/Card/popups/createTag/createTag.js';
 
 /**
  * Класс для рендера страницы доски
@@ -52,8 +54,8 @@ class Board extends BaseView {
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
         const board = workspaceStorage.getBoardById(parseInt(this.boardID, 10));
-
-        if (!board || board.workspace_id !== parseInt(wsID, 10)) {
+        console.log(workspaceStorage.storage.get(workspaceStorage.workspaceModel.boards));
+        if (!board || board.workspace_id !== parseInt(this.workspaceID, 10)) {
             await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
             await dispatcher.dispatch(actionRedirect('/404', false));
             return;
@@ -78,15 +80,17 @@ class Board extends BaseView {
                 new AddChecklist(this.root, {}),
                 new AddFile(this.root, {}),
                 new BoardHistory(this.root, {}),
+                new TagSettings(this.root, {}),
+                new CreateTag(this.root, {}),
             ],
         );
 
         this.render();
         this.addListeners();
 
-        if (cID) {
-            if (workspaceStorage.getCardById(parseInt(cID, 10))) {
-                Card.openByRedirect(cID);
+        if (this.cardID) {
+            if (workspaceStorage.getCardById(parseInt(this.cardID, 10))) {
+                Card.openByRedirect(this.cardID);
             } else {
                 await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
                 await dispatcher.dispatch(actionRedirect('/404', false));

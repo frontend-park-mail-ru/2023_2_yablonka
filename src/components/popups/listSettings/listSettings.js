@@ -61,9 +61,10 @@ export default class ListSettings extends Component {
     };
 
     #openSettings = (e) => {
-        e.preventDefault();
         if (e.target.closest('.btn-change-list')) {
             e.stopPropagation();
+            e.preventDefault();
+
             BoardPage.closeAllCreateMenu();
 
             const dialog = this.parent.querySelector('#list-settings');
@@ -102,10 +103,20 @@ export default class ListSettings extends Component {
     };
 
     #enterButtonHandler = (e) => {
-        if (e.key === 'Enter' && e.target.closest('.list__title')) {
-            e.stopPropagation();
-            e.preventDefault();
-            e.target.closest('.list__title').blur();
+        if (e.target.closest('.list__title')) {
+            if (e.key === 'Enter') {
+                e.stopPropagation();
+                e.preventDefault();
+                e.target.closest('.list__title').blur();
+            } else if (e.key === 'Escape') {
+                e.stopPropagation();
+                e.preventDefault();
+                const listName = e.target.closest('.list__title');
+                listName.textContent = workspaceStorage.getListById(
+                    parseInt(listName.dataset.list, 10),
+                ).name;
+                listName.blur();
+            }
         }
     };
 

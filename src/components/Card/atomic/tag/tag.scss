@@ -1,0 +1,9 @@
+.card-tag {
+    height: 32px;
+    width: fit-content;
+    background-color: var(--tag-background-color);
+}
+
+.card-tag__text {
+    color: var(--text-color-in-card);
+}

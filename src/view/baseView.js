@@ -13,8 +13,9 @@ export default class BaseView {
     }
 
     /**
-     * функция рендера всех компонентов
-     */
+
+     * Рендер компонентов */
+
     render() {
         this.components.forEach((cmp) => cmp.render());
     }

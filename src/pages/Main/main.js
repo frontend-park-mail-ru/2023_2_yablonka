@@ -1,5 +1,6 @@
 import { actionNavigate, actionRedirect } from '../../actions/userActions.js';
 import Header from '../../components/Common/header/header.js';
+import GuestWorkspaces from '../../components/Main/guestWorkspaces/guestWorkspaces.js';
 import Sidebar from '../../components/Main/sidebar/sidebar.js';
 import UserWorkspaces from '../../components/Main/userWorkspaces/userWorkspaces.js';
 import Component from '../../components/core/basicComponent.js';
@@ -35,6 +36,13 @@ export default class MainPage extends Component {
      */
     addEventListeners() {
         this.parent.addEventListener('click', this.#toBoardHandler);
+        this.parent
+            .querySelector('.btn-sidebar-boards-menu[data-workspaces="user"]')
+            .addEventListener('click', this.#renderWorkspaces);
+        this.parent
+            .querySelector('.btn-sidebar-boards-menu[data-workspaces="guest"]')
+            .addEventListener('click', this.#renderWorkspaces);
+
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
 
         emitter.bind('logout', this.close);
@@ -45,6 +53,12 @@ export default class MainPage extends Component {
      */
     removeEventListeners() {
         this.parent.removeEventListener('click', this.#toBoardHandler);
+        this.parent
+            .querySelector('.btn-sidebar-boards-menu[data-workspaces="user"]')
+            .removeEventListener('click', this.#renderWorkspaces);
+        this.parent
+            .querySelector('.btn-sidebar-boards-menu[data-workspaces="guest"]')
+            .removeEventListener('click', this.#renderWorkspaces);
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
 
         emitter.unbind('logout', this.close);
@@ -61,6 +75,39 @@ export default class MainPage extends Component {
             dispatcher.dispatch(actionNavigate(window.location.pathname, '', true));
             dispatcher.dispatch(
                 actionRedirect(e.target.closest('.link-user-board').getAttribute('href'), false),
+            );
+        }
+    };
+
+    #renderWorkspaces = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        const btnUserWorkspaces = this.parent.querySelector(
+            '.btn-sidebar-boards-menu[data-workspaces="user"]',
+        );
+        const btnGuestWorkspaces = this.parent.querySelector(
+            '.btn-sidebar-boards-menu[data-workspaces="guest"]',
+        );
+        const workspacesContainer = this.parent.querySelector('.workspaces');
+
+        workspacesContainer.innerHTML = '';
+
+        if (e.target.closest('.btn-sidebar-boards-menu[data-workspaces="user"]')) {
+            btnGuestWorkspaces.classList.remove('btn-sidebar-boards-menu_selected');
+            btnUserWorkspaces.classList.add('btn-sidebar-boards-menu_selected');
+
+            workspacesContainer.insertAdjacentHTML(
+                'afterbegin',
+                new UserWorkspaces(null, this.config.workspaces).render(),
+            );
+        } else {
+            btnGuestWorkspaces.classList.add('btn-sidebar-boards-menu_selected');
+            btnUserWorkspaces.classList.remove('btn-sidebar-boards-menu_selected');
+
+            workspacesContainer.insertAdjacentHTML(
+                'afterbegin',
+                new GuestWorkspaces(null, this.config.workspaces).render(),
             );
         }
     };

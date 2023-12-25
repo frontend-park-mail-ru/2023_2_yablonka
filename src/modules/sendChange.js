@@ -1,4 +1,3 @@
-import workspaceStorage from '../storages/workspaceStorage.js';
 import { actionSubmitHistoryAction } from '../actions/boardActions.js';
 import dispatcher from './dispatcher.js';
 

@@ -25,6 +25,8 @@ import BoardPage from '../../pages/Board/board.js';
 import FilesContainer from './filesContainer/filesContainer.js';
 import File from './atomic/file/file.js';
 import ChecklistsContainer from './checklistsContainer/checklistsContainer.js';
+import Tag from './atomic/tag/tag.js';
+import AddTag from './atomic/addTag/addTag.js';
 
 /**
  * Попап для хедера
@@ -61,22 +63,25 @@ export default class Card extends Component {
             .addEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-name')
-            .addEventListener('keydown', this.#enterButtonHandler);
+            .addEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
-            .addEventListener('keydown', this.#enterButtonHandler);
+            .addEventListener('keydown', this.#processKeydownHandler);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .addEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
             .addEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .addEventListener('input', Card.resizeCardComment);
         this.parent
             .querySelector('.card-information__card-description')
             .addEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
             .addEventListener('blur', this.#changeNameAndDescription);
-        this.parent
-            .querySelector('.card-information__add-comment-text')
-            .addEventListener('keydown', this.#createComment);
     }
 
     removeEventListeners() {
@@ -94,22 +99,25 @@ export default class Card extends Component {
             .removeEventListener('click', this.#deleteCard);
         this.parent
             .querySelector('.card-information__card-name')
-            .removeEventListener('keydown', this.#enterButtonHandler);
+            .removeEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
-            .removeEventListener('keydown', this.#enterButtonHandler);
+            .removeEventListener('keydown', this.#processKeydownHandler);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .removeEventListener('keydown', this.#processKeydownHandler);
         this.parent
             .querySelector('.card-information__card-description')
             .removeEventListener('input', Card.resizeCardDescription);
+        this.parent
+            .querySelector('.card-information__add-comment-text')
+            .removeEventListener('input', Card.resizeCardComment);
         this.parent
             .querySelector('.card-information__card-description')
             .removeEventListener('blur', this.#changeNameAndDescription);
         this.parent
             .querySelector('.card-information__card-name')
             .removeEventListener('blur', this.#changeNameAndDescription);
-        this.parent
-            .querySelector('.card-information__add-comment-text')
-            .removeEventListener('keydown', this.#createComment);
     }
 
     static openByRedirect = (id) => {
@@ -131,6 +139,9 @@ export default class Card extends Component {
         Card.updateUsers(parseInt(dialog.dataset.card, 10));
         Card.addChecklists(parseInt(dialog.dataset.card, 10));
         Card.getFiles();
+        Card.getTags();
+
+        Card.resizeCardComments();
 
         if (!dialog.hasAttribute('open')) {
             popupEvent.addPopup(dialog);
@@ -147,10 +158,10 @@ export default class Card extends Component {
     };
 
     #openCard = (e) => {
-        e.preventDefault();
-
-        if (e.target.closest('.list__card-wrapper')) {
+        if (e.target.closest('.list__card-wrapper') && !e.target.closest('.btn-list-card__tag')) {
             e.stopPropagation();
+            e.preventDefault();
+
             BoardPage.closeAllCreateMenu();
 
             const dialog = this.parent.querySelector('#card');
@@ -174,6 +185,9 @@ export default class Card extends Component {
             Card.updateUsers(parseInt(dialog.dataset.card, 10));
             Card.addChecklists(parseInt(dialog.dataset.card, 10));
             Card.getFiles();
+            Card.getTags();
+
+            Card.resizeCardComments();
 
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
@@ -218,7 +232,7 @@ export default class Card extends Component {
         }
     };
 
-    #enterButtonHandler = (e) => {
+    #processKeydownHandler = (e) => {
         e.stopPropagation();
 
         if (e.key === 'Enter') {
@@ -230,6 +244,34 @@ export default class Card extends Component {
                 e.preventDefault();
                 e.target.closest('.card-information__card-description').blur();
             }
+            if (!e.shiftKey && e.target.closest('.card-information__add-comment-text')) {
+                e.preventDefault();
+                this.#createComment(e);
+            }
+        } else if (e.key === 'Escape') {
+            const card = workspaceStorage.getCardById(
+                parseInt(this.parent.querySelector('#card').dataset.card, 10),
+            );
+            if (e.target.closest('.card-information__card-name')) {
+                e.preventDefault();
+                const cardName = e.target.closest('.card-information__card-name');
+                cardName.textContent = card.name;
+                cardName.blur();
+            }
+            if (e.target.closest('.card-information__card-description')) {
+                e.preventDefault();
+                const cardDescription = e.target.closest('.card-information__card-description');
+                cardDescription.value = card.description;
+                cardDescription.blur();
+                Card.resizeCardDescription(e);
+            }
+            if (e.target.closest('.card-information__add-comment-text')) {
+                e.preventDefault();
+                const cardComment = e.target.closest('.card-information__add-comment-text');
+                cardComment.value = '';
+                cardComment.blur();
+                Card.resizeCardComment(e);
+            }
         }
     };
 
@@ -238,26 +280,13 @@ export default class Card extends Component {
 
         const dialog = this.parent.querySelector('#card');
 
-        const name = dialog.querySelector('.card-information__card-name').textContent;
+        const name = dialog.querySelector('.card-information__card-name').textContent.trim();
         const description = dialog.querySelector('.card-information__card-description');
         const text = description.value;
         const cardId = parseInt(e.target.closest('dialog')?.dataset.card, 10);
         const card = workspaceStorage.getCardById(cardId, 10);
 
-        if (cardId) {
-            if (e.target.closest('.card-information__card-name')) {
-                e.preventDefault();
-                e.target.closest('.card-information__card-name').blur();
-            }
-            await dispatcher.dispatch(
-                actionNavigate(
-                    `${
-                        window.location.pathname.match(/^\/workspace\/\d+\/board\/\d+/)[0]
-                    }/card/${cardId}`,
-                    '',
-                    false,
-                ),
-            );
+        if (cardId && (card.name !== name || card.description !== text)) {
             await dispatcher.dispatch(
                 actionUpdateCard({
                     id: cardId,
@@ -297,36 +326,58 @@ export default class Card extends Component {
         }
     };
 
+    static resizeCardComment = (e) => {
+        if (e.target.closest('.card-information__add-comment-text')) {
+            e.stopPropagation();
+            const comment = document.querySelector('.card-information__add-comment-text');
+            comment.setAttribute(
+                'style',
+                `height:${([...comment.value.matchAll(/\n/g)].length + 2) * 20}px`,
+            );
+        }
+    };
+
+    static resizeCardComments = () => {
+        const dialog = document.querySelector('#card');
+        const comments = dialog.querySelectorAll('.card-information__comment-text');
+
+        comments.forEach((comment) => {
+            comment.setAttribute(
+                'style',
+                `height:${([...comment.value.matchAll(/\n/g)].length + 2) * 20}px`,
+            );
+        });
+    };
+
     #createComment = async (e) => {
         e.stopPropagation();
+        e.preventDefault();
 
-        if (e.key === 'Enter') {
-            e.preventDefault();
+        const dialog = this.parent.querySelector('#card');
+        const comment = dialog.querySelector('.card-information__add-comment-text');
+        const text = comment.value.trim();
+        comment.value = '';
 
-            const dialog = this.parent.querySelector('#card');
-            const comment = dialog.querySelector('.card-information__add-comment-text').value;
-            dialog.querySelector('.card-information__add-comment-text').value = '';
-            const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
-            if (Validator.validateObjectName(comment)) {
-                await dispatcher.dispatch(
-                    actionCommentCard({
-                        task_id: parseInt(dialog.dataset.card, 10),
-                        user_id: userId,
-                        text: comment,
-                    }),
-                );
-            } else {
-                NotificationMessage.showNotification(
-                    this.parent.querySelector('.card-information__add-comment').parentNode,
-                    false,
-                    true,
-                    {
-                        fontSize: 14,
-                        fontWeight: 200,
-                        text: 'Неккоректное сообщение',
-                    },
-                );
-            }
+        const userId = userStorage.storage.get(userStorage.userModel.body).body.user.user_id;
+        if (Validator.validateObjectName(text)) {
+            await dispatcher.dispatch(
+                actionCommentCard({
+                    task_id: parseInt(dialog.dataset.card, 10),
+                    user_id: userId,
+                    text,
+                }),
+            );
+        } else {
+            NotificationMessage.showNotification(
+                this.parent.querySelector('.card-information__add-comment-text'),
+                false,
+                true,
+                {
+                    fontSize: 14,
+                    fontWeight: 200,
+                    text: 'Использованы некорректные символы в сообщении',
+                },
+            );
         }
     };
 
@@ -523,6 +574,68 @@ export default class Card extends Component {
         }
     };
 
+    static getTags = () => {
+        const card = document.querySelector('#card');
+        const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
+
+        const tagsContainer = card.querySelector('.card-information__card-tags');
+        tags.forEach((tag) =>
+            tagsContainer.insertAdjacentHTML(
+                'beforeend',
+                new Tag(null, {
+                    tagName: tag.name,
+                }).render(),
+            ),
+        );
+        Card.addTagCreateButton();
+    };
+
+    static addTagCreateButton = () => {
+        const card = document.querySelector('#card');
+        const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
+
+        if (tags.length < 3) {
+            card.querySelector('.card-information__card-tags').insertAdjacentHTML(
+                'beforeend',
+                new AddTag(null, {}).render(),
+            );
+        }
+    };
+
+    static addTag = (tag) => {
+        const card = document.querySelector('#card');
+        const tags = workspaceStorage.getCardTags(parseInt(card.dataset.card, 10));
+
+        const prevTag =
+            tags.findIndex((item) => parseInt(tag.id, 10) === parseInt(item.id, 10)) - 1;
+        const tagsContainer = card.querySelector('.card-information__card-tags');
+
+        if (prevTag < 0) {
+            tagsContainer.insertAdjacentHTML(
+                'afterbegin',
+                new Tag(null, { tagName: tag.name }).render(),
+            );
+        } else {
+            tagsContainer.children[prevTag].insertAdjacentHTML(
+                'afterend',
+                new Tag(null, { tagName: tag.name }).render(),
+            );
+        }
+
+        if (tags.length >= 3) {
+            card.querySelector('.btn-add-new-tag').remove();
+        }
+    };
+
+    static removeTag = (tag) => {
+        const card = document.querySelector('#card');
+        card.querySelector(`.card-tag[data-tag="${tag.name}"]`).remove();
+
+        if (!card.querySelector('.btn-add-new-tag')) {
+            Card.addTagCreateButton();
+        }
+    };
+
     static clearCard = (deleteCard) => {
         const dialog = document.querySelector('#card');
         dialog.close();
@@ -532,6 +645,7 @@ export default class Card extends Component {
         dialog.querySelector('.card-information-list-name__title').textContent = '';
         dialog.querySelector('.card-information__date-wrapper').innerHTML = '';
         dialog.querySelector('.card-information__users-wrapper').innerHTML = '';
+        dialog.querySelector('.card-information__card-tags').innerHTML = '';
         dialog.querySelector('.card-information__card-description').value = '';
         dialog.querySelector('.card-information__checklists')?.remove();
         dialog.querySelector('.card-information__users-comments').innerHTML = '';

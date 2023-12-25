@@ -7,7 +7,7 @@
     overflow: hidden;
 }
 
-.card-information__name-and-tags-wrapper {
+.card-information__main {
     color: var(--text-color-in-card);
     position: relative;
     align-items: flex-start;
@@ -37,6 +37,16 @@
 .card-information__icon {
     position: absolute;
     left: -35px;
+}
+
+.card-information__tags {
+    position: relative;
+    align-items: flex-start;
+}
+
+.card-information__card-tags {
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 .card-information__description-wrapper {
@@ -179,29 +189,35 @@
     width: 100%;
     min-height: 40px;
     max-height: 150px;
-    resize: vertical;
-    color: var(--text-color-in-card);
+    overflow-y: auto;
+    overflow-x: hidden;
+    resize: none;
     outline: none;
+    color: var(--text-color-in-card);
+}
+
+.card-information__add-comment-text:focus {
+    border: 2px solid var(--text-color-on-page);
 }
 
 .card-information__add-comment-text::placeholder {
     color: var(--text-color-in-card);
 }
 
-.card-information__comment-text::-webkit-scrollbar {
+.card-information__add-comment-text::-webkit-scrollbar {
     height: 4px;
     width: 4px;
 }
 
-.card-information__comment-text::-webkit-scrollbar-track {
+.card-information__add-comment-text::-webkit-scrollbar-track {
     background: #00000026;
-    border-radius: 6px;
-    margin: 10px;
+    border-radius: 4px;
+    margin: 5px;
 }
 
-.card-information__comment-text::-webkit-scrollbar-thumb {
+.card-information__add-comment-text::-webkit-scrollbar-thumb {
     background-color: rgba(192, 192, 192, 0.858);
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 .card-information__users-comments {
@@ -225,7 +241,7 @@
 }
 
 @media screen and (max-width: 800px) {
-    .card-information__name-and-tags-wrapper {
+    .card-information__main {
         flex-direction: column;
         gap: 10px;
     }

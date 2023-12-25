@@ -1,0 +1,36 @@
+.tag-create::backdrop {
+    background: transparent;
+}
+
+.tag-create {
+    background-color: var(--card-background-popups);
+    width: 220px;
+}
+
+.card-tag__content {
+    width: 100%;
+}
+
+.card-tag__title {
+    color: var(--text-color-on-page);
+    align-self: center;
+}
+
+.input-card-tag__input {
+    outline: none;
+    color: var(--text-color-on-page);
+    width: 100%;
+    min-height: 32px;
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 0 2px var(--main-btn-border-color);
+}
+
+.btn-create-tag {
+    width: 100%;
+    background-color: var(--action-button-color);
+}
+
+.btn-create-tag:active {
+    background-color: var(--action-active-button-color);
+    color: var(--text-color-on-page);
+}

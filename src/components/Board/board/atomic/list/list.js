@@ -1,3 +1,4 @@
+import workspaceStorage from '../../../../../storages/workspaceStorage';
 import Component from '../../../../core/basicComponent';
 import Card from '../card/card';
 import template from './list.hbs';
@@ -25,7 +26,14 @@ export default class List extends Component {
     #getListCards(cards) {
         const listCards = [];
         cards.forEach((card) => {
-            listCards.push(new Card(null, { id: card.id, name: card.name }).render());
+            listCards.push(
+                new Card(null, {
+                    id: card.id ? card.id : card,
+                    name: card.name
+                        ? card.name
+                        : workspaceStorage.getCardById(parseInt(card, 10)).name,
+                }).render(),
+            );
         });
         return listCards;
     }

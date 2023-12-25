@@ -1,4 +1,4 @@
-import { actionLogout, actionNavigate, actionRedirect } from '../../actions/userActions.js';
+import { actionNavigate, actionRedirect } from '../../actions/userActions.js';
 import BoardContent from '../../components/Board/board/boardContent/boardContent.js';
 import Header from '../../components/Common/header/header.js';
 import Sidebar from '../../components/Board/sidebar/sidebar.js';
@@ -21,6 +21,10 @@ import './board.scss';
 import popupEvent from '../../components/core/popeventProcessing.js';
 import List from '../../components/Board/board/atomic/list/list.js';
 import Card from '../../components/Board/board/atomic/card/card.js';
+import CardTag from '../../components/Board/board/atomic/cardTag/cardTag.js';
+import TagsContainer from '../../components/Board/board/atomic/tagsContainer/tagsContainer.js';
+import AddNewList from '../../components/Board/board/atomic/addNewList/addNewList.js';
+import TagSettings from '../../components/Card/popups/tagSettings/tagSettings.js';
 
 /**
  * слои-обертки
@@ -80,6 +84,10 @@ export default class BoardPage extends Component {
         this.parent.addEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.addEventListener('click', this.#createEntity);
         this.parent.addEventListener('keydown', this.#proccessKeydownWithEntity);
+        this.parent.addEventListener('click', this.#filterCards);
+        this.parent
+            .querySelector('.btn-filter-action')
+            .addEventListener('click', this.#resetFilters);
 
         this.parent.addEventListener('click', popupEvent.closeAllPopups);
         this.parent.addEventListener('dragstart', this.#dragStartHandler, false);
@@ -104,6 +112,10 @@ export default class BoardPage extends Component {
         this.parent.removeEventListener('click', this.#cancelCreateNewEntityBtn);
         this.parent.removeEventListener('click', this.#createEntity);
         this.parent.removeEventListener('keydown', this.#proccessKeydownWithEntity);
+        this.parent.removeEventListener('click', this.#filterCards);
+        this.parent
+            .querySelector('.btn-filter-action')
+            .removeEventListener('click', this.#resetFilters);
 
         this.parent.removeEventListener('click', popupEvent.closeAllPopups);
         this.parent.removeEventListener('dragstart', this.#dragStartHandler, false);
@@ -443,8 +455,8 @@ export default class BoardPage extends Component {
 
             const ids = [];
 
-            document.querySelectorAll('.list').forEach((e) => {
-                ids.push(parseInt(e.dataset.list, 10));
+            this.parent.querySelectorAll('.list').forEach((el) => {
+                ids.push(parseInt(el.dataset.list, 10));
             });
             await dispatcher.dispatch(actionReorderLists({ ids }));
         } else if (
@@ -485,6 +497,88 @@ export default class BoardPage extends Component {
 
     #dragoverHandler = (e) => {
         e.preventDefault();
+    };
+
+    static addTag = (tag) => {
+        const card = document.querySelector(`.list__card-wrapper[data-card="${tag.task_id}"]`);
+        const tags = workspaceStorage.getCardTags(parseInt(tag.task_id, 10));
+
+        const prevTag =
+            tags.findIndex((item) => parseInt(tag.id, 10) === parseInt(item.id, 10)) - 1;
+        const cardContent = card.querySelector('.list__card');
+        if (prevTag < 0) {
+            cardContent.insertAdjacentHTML(
+                'beforeend',
+                new TagsContainer(null, { id: null }).render(),
+            );
+            cardContent
+                .querySelector('.list-card__tags')
+                .insertAdjacentHTML(
+                    'afterbegin',
+                    new CardTag(null, { tagName: tag.name }).render(),
+                );
+        } else {
+            cardContent
+                .querySelector('.list-card__tags')
+                .children[prevTag].insertAdjacentHTML(
+                    'afterend',
+                    new CardTag(null, { tagName: tag.name }).render(),
+                );
+        }
+    };
+
+    static deleteTag = (tag) => {
+        const board = document.querySelector('.board__lists');
+
+        board.querySelectorAll('.list__card-wrapper').forEach((item) => {
+            const tagsContainer = item.querySelector('.list-card__tags');
+            if (tagsContainer) {
+                tagsContainer
+                    .querySelector(`.btn-list-card__tag[data-tag="${tag.name}"]`)
+                    ?.remove();
+                if (!tagsContainer.childElementCount) {
+                    tagsContainer.remove();
+                }
+            }
+        });
+    };
+
+    static removeTag = (tag) => {
+        const board = document.querySelector('.board__lists');
+
+        const card = board.querySelector(`.list__card-wrapper[data-card="${tag.task_id}"]`);
+        const tagsContainer = card.querySelector('.list-card__tags');
+
+        if (tagsContainer) {
+            tagsContainer.querySelector(`.btn-list-card__tag[data-tag="${tag.name}"]`).remove();
+            if (!tagsContainer.childElementCount) {
+                tagsContainer.remove();
+            }
+        }
+    };
+
+    #filterCards = (e) => {
+        if (e.target.closest('.btn-list-card__tag')) {
+            e.stopPropagation();
+            e.preventDefault();
+            TagSettings.filterCards(e);
+        }
+    };
+
+    #resetFilters = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const listsContainer = this.parent.querySelector('.board__lists');
+        const resetFilterBtn = e.target.closest('.btn-filter-action');
+        resetFilterBtn.setAttribute('disabled', '');
+
+        listsContainer.innerHTML = '';
+        workspaceStorage.getBoardLists().forEach((list) => {
+            listsContainer.insertAdjacentHTML('beforeend', new List(null, list).render());
+        });
+        listsContainer.insertAdjacentHTML('beforeend', new AddNewList(null, {}).render());
+        TagSettings.filteredTag = '';
     };
 
     /**

@@ -1,7 +1,5 @@
 import QuestionnairePage from '../pages/Questionnaire/questionnaire.js';
 import BaseView from './baseView.js';
-import { actionGetQuestions } from '../actions/userActions.js';
-import dispatcher from '../modules/dispatcher.js';
 import userStorage from '../storages/userStorage.js';
 
 /**

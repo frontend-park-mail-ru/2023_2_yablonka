@@ -53,6 +53,11 @@ const handlers = [
     {type: 'deleteFile', method:workspaceStorage.deleteFile.bind(workspaceStorage)},
     {type: 'submitAction', method:workspaceStorage.submitHistoryAction.bind(workspaceStorage)},
     {type: 'getHistory', method:workspaceStorage.getHistory.bind(workspaceStorage)},
+    {type: 'createTag', method:workspaceStorage.createTag.bind(workspaceStorage)},
+    {type: 'updateTag', method:workspaceStorage.updateTag.bind(workspaceStorage)},
+    {type: 'deleteTag', method:workspaceStorage.deleteTag.bind(workspaceStorage)},
+    {type: 'attachTag', method:workspaceStorage.attachTag.bind(workspaceStorage)},
+    {type: 'detachTag', method:workspaceStorage.detachTag.bind(workspaceStorage)},
 
 ];
 

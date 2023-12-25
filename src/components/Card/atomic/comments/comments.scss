@@ -19,6 +19,27 @@
 .card-information__comment-text {
     background-color: var(--comment-background-color);
     width: 100%;
+    min-height: 40px;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    resize: none;
+    outline: none;
     color: var(--text-color-in-card);
-    overflow: auto;
+}
+
+.card-information__comment-text::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+}
+
+.card-information__comment-text::-webkit-scrollbar-track {
+    background: #00000026;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.card-information__comment-text::-webkit-scrollbar-thumb {
+    background-color: rgba(192, 192, 192, 0.858);
+    border-radius: 4px;
 }

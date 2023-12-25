@@ -1,7 +1,7 @@
 import '../static/scss/style.scss';
 
 import Dispatcher, { dispatcher } from './modules/dispatcher.js';
-import { actionGoOffline, actionRedirect, actionStart } from './actions/userActions.js';
+import { actionGoOffline, actionStart } from './actions/userActions.js';
 
 Dispatcher.dispatch(actionStart());
 
