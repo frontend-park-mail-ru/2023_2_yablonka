@@ -119,7 +119,9 @@ export default class AddChecklist extends Component {
         e.stopPropagation();
 
         const dialog = this.parent.querySelector('#card-checklist');
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
+        const btnCoordinates = this.parent
+            .querySelector('button[data-action="manage-card-checklists"]')
+            .getBoundingClientRect();
 
         if (dialog.getAttribute('open') === null) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);

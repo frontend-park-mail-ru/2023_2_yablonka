@@ -55,7 +55,9 @@ export default class AddCardUsers extends Component {
         e.stopPropagation();
 
         const dialog = this.parent.querySelector('#add-card-user');
-        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
+        const btnCoordinates = this.parent
+            .querySelector('button[data-action="manage-card-users"]')
+            .getBoundingClientRect();
 
         if (!dialog.hasAttribute('open')) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
