@@ -149,6 +149,8 @@ export default class AddDate extends Component {
                         start: start === '' ? null : new Date(start).toISOString(),
                     }),
                 );
+                popupEvent.deletePopup(dialog);
+                dialog.close();
             }
         }
     };

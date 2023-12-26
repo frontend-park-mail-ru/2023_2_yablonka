@@ -145,6 +145,7 @@ export default class AddChecklist extends Component {
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
+            AddChecklist.#clearForm();
         }
     };
 
@@ -176,11 +177,18 @@ export default class AddChecklist extends Component {
         });
     };
 
+    static #clearForm = () => {
+        const dialog = document.querySelector('#card-checklist');
+        const form = dialog.querySelector('.form-add-card-checklist');
+        form.reset();
+    };
+
     #closePopupByBackground = (e) => {
         e.stopPropagation();
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            AddChecklist.#clearForm();
         }
     };
 
@@ -207,6 +215,11 @@ export default class AddChecklist extends Component {
                 text: 'Неккоректное название',
             });
         }
+    };
+
+    static clearPopup = () => {
+        popupEvent.closeOtherPopups([document.querySelector('#card')]);
+        AddChecklist.#clearForm();
     };
 
     #blockButton = (e) => {

@@ -13,13 +13,13 @@ import { actionAttachFile, actionDeleteFile } from '../../../../actions/boardAct
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class AddFile extends Component {
-    file;
+    static #file;
 
-    filename;
+    static #filename;
 
-    mimetype;
+    static #mimetype;
 
-    fileTypes = [
+    static #fileTypes = [
         'application/pdf',
         'text/plain',
         'application/zip',
@@ -42,7 +42,7 @@ export default class AddFile extends Component {
         this.parent.insertAdjacentHTML(
             'beforeend',
             template({
-                fileTypes: this.fileTypes.join(', '),
+                fileTypes: AddFile.#fileTypes.join(', '),
             }),
         );
     }
@@ -65,7 +65,7 @@ export default class AddFile extends Component {
             .addEventListener('click', this.#uploadFile);
         this.parent
             .querySelector('.btn-attach-file_cancel')
-            .addEventListener('click', this.#clearForm);
+            .addEventListener('click', AddFile.#clearForm);
         this.parent.querySelector('#card').addEventListener('click', this.#deleteFile);
         this.parent
             .querySelector('.card-data__card-information')
@@ -91,7 +91,7 @@ export default class AddFile extends Component {
             .removeEventListener('click', this.#uploadFile);
         this.parent
             .querySelector('.btn-attach-file_cancel')
-            .removeEventListener('click', this.#clearForm);
+            .removeEventListener('click', AddFile.#clearForm);
         this.parent.querySelector('#card').removeEventListener('click', this.#deleteFile);
         this.parent
             .querySelector('.card-data__card-information')
@@ -169,8 +169,7 @@ export default class AddFile extends Component {
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
-            this.#clearForm();
-            this.#clearFile();
+            AddFile.clearPopup();
         }
     };
 
@@ -184,13 +183,13 @@ export default class AddFile extends Component {
         e.stopPropagation();
 
         const file = this.parent.querySelector('.input-upload-file').files[0];
-        this.file = structuredClone(file);
-        this.filename = file.name;
-        this.mimetype = file.type;
+        AddFile.file = structuredClone(file);
+        AddFile.filename = file.name;
+        AddFile.mimetype = file.type;
 
         const filename = this.parent.querySelector('.card-file__filename');
         filename.removeAttribute('style');
-        filename.textContent = this.filename;
+        filename.textContent = AddFile.filename;
 
         this.parent.querySelector('.upload-card-file').setAttribute('style', 'display: none');
     };
@@ -198,25 +197,27 @@ export default class AddFile extends Component {
     #uploadFile = async (e) => {
         e.stopPropagation();
 
-        if (this.file) {
+        if (AddFile.#file) {
             const cardId = this.parent.querySelector('#card').dataset.card;
-            const file = await readFileAsByteArray(this.file);
+            const file = await readFileAsByteArray(AddFile.#file);
 
             await dispatcher.dispatch(
                 actionAttachFile({
                     task_id: parseInt(cardId, 10),
-                    filename: this.filename,
+                    filename: AddFile.#filename,
                     file: Array.from(file.values()),
-                    mimetype: this.mimetype,
+                    mimetype: AddFile.#mimetype,
                 }),
             );
-
-            this.#clearFile();
-            this.#clearForm();
         }
     };
 
-    #clearForm = (e) => {
+    static clearPopup = () => {
+        AddFile.#clearFile();
+        AddFile.#clearForm();
+    }
+
+    static #clearForm = (e) => {
         e?.stopPropagation();
 
         const form = this.parent.querySelector('.upload-card-file');
@@ -227,7 +228,7 @@ export default class AddFile extends Component {
         filename.setAttribute('style', 'display: none');
         filename.textContent = '';
 
-        this.#clearFile();
+        AddFile.#clearFile();
     };
 
     #uploadFileByUser = (e) => {
@@ -254,9 +255,9 @@ export default class AddFile extends Component {
         }
     };
 
-    #clearFile = () => {
-        this.file = null;
-        this.filename = null;
-        this.mimetype = null;
+    static #clearFile = () => {
+        AddFile.#file = null;
+        AddFile.#filename = null;
+        AddFile.#mimetype = null;
     };
 }

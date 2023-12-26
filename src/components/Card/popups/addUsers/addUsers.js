@@ -119,6 +119,7 @@ export default class AddCardUsers extends Component {
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            this.#clearForm();
         }
     };
 

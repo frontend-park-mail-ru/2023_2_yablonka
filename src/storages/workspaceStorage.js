@@ -13,6 +13,7 @@ import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
 import sendChange from '../modules/sendChange.js';
+import AddFile from '../components/Card/popups/addFile/addFile.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -604,6 +605,18 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             Card.getFiles();
+            AddFile.clearPopup();
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.btn-upload-file'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось загрузить файл. Его размер не должен превышать 5 МБ',
+                },
+            );
         }
     }
 
@@ -829,6 +842,7 @@ class WorkspaceStorage extends BaseStorage {
                 }
             });
             this.workspaceStorage.set(this.workspaceModel.tags, tags);
+        } else {
         }
     }
 
@@ -918,8 +932,19 @@ class WorkspaceStorage extends BaseStorage {
                     this.getListById(card.list_id).name
                 }`,
             );
-
+            AddChecklist.clearPopup();
             AddChecklist.addChecklist(body.body.checklist);
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-card-checklist__input'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось создать чеклист. Перезагрузите страницу',
+                },
+            );
         }
     }
 
