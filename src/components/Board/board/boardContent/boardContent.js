@@ -1,4 +1,3 @@
-import workspaceStorage from '../../../../storages/workspaceStorage';
 import Component from '../../../core/basicComponent';
 import AddNewList from '../atomic/addNewList/addNewList';
 import List from '../atomic/list/list';

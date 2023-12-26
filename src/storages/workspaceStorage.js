@@ -168,7 +168,6 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            console.log(structuredClone(body));
             this.addBoard(body.body.board);
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
@@ -716,7 +715,6 @@ class WorkspaceStorage extends BaseStorage {
             const dialog = document.querySelector('#tag-create');
             popupEvent.deletePopup(dialog);
             dialog.close();
-        } else {
         }
     }
 
@@ -743,7 +741,6 @@ class WorkspaceStorage extends BaseStorage {
             });
 
             const detachedTag = this.getTagById(parseInt(tag.tag_id, 10));
-            console.log(detachedTag);
             Card.removeTag(detachedTag);
 
             if (TagSettings.filteredTag) {
@@ -1283,7 +1280,7 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     async submitHistoryAction(action) {
-        const responsePromise = await AJAX(
+        await AJAX(
             `${apiPath + apiVersion}board/history/submit/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),

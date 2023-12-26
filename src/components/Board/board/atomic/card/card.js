@@ -1,6 +1,5 @@
 import workspaceStorage from '../../../../../storages/workspaceStorage';
 import Component from '../../../../core/basicComponent';
-import CardTag from '../cardTag/cardTag';
 import TagsContainer from '../tagsContainer/tagsContainer';
 import template from './card.hbs';
 import './card.scss';

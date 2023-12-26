@@ -45,11 +45,15 @@ class UserStorage extends BaseStorage {
             this.storage.set(this.userModel.name, 'auth');
         };
 
-        try {
+        try
+        {
             xhr.send();
-        } catch (err) {
-            console.log(err);
         }
+        catch(e){
+            console.log(e);
+        }
+
+
     }
 
     /**
@@ -346,7 +350,7 @@ class UserStorage extends BaseStorage {
         try {
             body = await responsePromise.json();
         } catch (error) {
-            console.log(error);
+            body={};
         }
 
         const { status } = responsePromise;

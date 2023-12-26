@@ -3,7 +3,6 @@ import WorkspaceBoard from './atomic/workspaceBoard/workspaceBoard';
 import Component from '../../core/basicComponent';
 import template from './sidebar.hbs';
 import './sidebar.scss';
-import userStorage from '../../../storages/userStorage';
 
 /**
  * слои-обертки
