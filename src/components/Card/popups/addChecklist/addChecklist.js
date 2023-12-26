@@ -127,7 +127,7 @@ export default class AddChecklist extends Component {
             dialog.showModal();
             const dialogSizes = dialog.getBoundingClientRect();
             const windowWidth = window.innerWidth;
-            if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+            if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
@@ -158,7 +158,7 @@ export default class AddChecklist extends Component {
                     .getBoundingClientRect();
                 const dialogSizes = dialog.getBoundingClientRect();
                 const windowWidth = window.innerWidth;
-                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
                     dialog.setAttribute(
                         'style',
                         `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${

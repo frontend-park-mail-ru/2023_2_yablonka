@@ -114,7 +114,7 @@ export default class AddFile extends Component {
                 dialog.showModal();
                 const dialogSizes = dialog.getBoundingClientRect();
                 const windowWidth = window.innerWidth;
-                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
                     dialog.setAttribute(
                         'style',
                         `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
@@ -145,7 +145,7 @@ export default class AddFile extends Component {
                     .getBoundingClientRect();
                 const dialogSizes = dialog.getBoundingClientRect();
                 const windowWidth = window.innerWidth;
-                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
                     dialog.setAttribute(
                         'style',
                         `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
@@ -200,12 +200,6 @@ export default class AddFile extends Component {
         if (this.#file) {
             const cardId = this.parent.querySelector('#card').dataset.card;
             const file = await readFileAsByteArray(this.#file);
-            console.log({
-                task_id: parseInt(cardId, 10),
-                filename: this.#filename,
-                file: Array.from(file.values()),
-                mimetype: this.#mimetype,
-            });
             await dispatcher.dispatch(
                 actionAttachFile({
                     task_id: parseInt(cardId, 10),
@@ -248,9 +242,7 @@ export default class AddFile extends Component {
 
             await dispatcher.dispatch(
                 actionDeleteFile({
-                    file_path: file
-                        .querySelector('.card-file-download')
-                        .download.replace(`/`, ''),
+                    file_path: file.querySelector('.card-file-download').download.replace(`/`, ''),
                     original_name: file.querySelector('.card-information__filename').textContent,
                     task_id: parseInt(e.target.closest('#card').dataset.card, 10),
                 }),

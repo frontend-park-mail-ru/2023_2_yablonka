@@ -57,14 +57,14 @@ export default class AddCardUsers extends Component {
         const dialog = this.parent.querySelector('#add-card-user');
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
             popupEvent.addPopup(dialog);
             dialog.showModal();
             this.#searchUsers();
             const dialogSizes = dialog.getBoundingClientRect();
             const windowWidth = window.innerWidth;
-            if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+            if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
                 dialog.setAttribute(
                     'style',
                     `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
@@ -95,7 +95,7 @@ export default class AddCardUsers extends Component {
                     .getBoundingClientRect();
                 const dialogSizes = dialog.getBoundingClientRect();
                 const windowWidth = window.innerWidth;
-                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
                     dialog.setAttribute(
                         'style',
                         `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
