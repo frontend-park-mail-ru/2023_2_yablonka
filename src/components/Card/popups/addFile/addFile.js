@@ -105,9 +105,7 @@ export default class AddFile extends Component {
 
         const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
         const dialog = this.parent.querySelector('#card-file');
-        const btnCoordinates = this.parent
-            .querySelector('button[data-action="manage-card-files"]')
-            .getBoundingClientRect();
+        const btnCoordinates = e.target.closest('button').getBoundingClientRect();
 
         if (cardId) {
             if (!dialog.hasAttribute('open')) {
