@@ -662,7 +662,6 @@ class WorkspaceStorage extends BaseStorage {
                 .querySelector(`a[href="/${file.file_path}"]`)
                 .closest('.card-information__file-wrapper')
                 .querySelector('.btn-file-actions_delete');
-            console.log(btn);
             NotificationMessage.showNotification(btn, false, true, {
                 fontSize: 12,
                 fontWeight: 200,
