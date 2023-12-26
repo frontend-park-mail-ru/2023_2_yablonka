@@ -220,11 +220,11 @@ export default class AddFile extends Component {
     static #clearForm = (e) => {
         e?.stopPropagation();
 
-        const form = this.parent.querySelector('.upload-card-file');
+        const form = document.querySelector('.upload-card-file');
         form.reset();
         form.removeAttribute('style');
 
-        const filename = this.parent.querySelector('.card-file__filename');
+        const filename = document.querySelector('.card-file__filename');
         filename.setAttribute('style', 'display: none');
         filename.textContent = '';
 
