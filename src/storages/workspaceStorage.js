@@ -657,6 +657,21 @@ class WorkspaceStorage extends BaseStorage {
             if (!document.querySelectorAll('.card-information__file-wrapper').length) {
                 document.querySelector('.card-information__files').remove();
             }
+        } else {
+            const btn = document
+                .querySelector(`a[href="/${file.file_path}"]`)
+                .closest('.card-information__file-wrapper')
+                .querySelector('.btn btn-file-actions_delete');
+            NotificationMessage.showNotification(
+                btn,
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось удалить файл. Перезагрузите страницу',
+                },
+            );
         }
     }
 
