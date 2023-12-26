@@ -659,9 +659,9 @@ class WorkspaceStorage extends BaseStorage {
             }
         } else {
             const btn = document
-                .querySelector(`a[download="${file.file_path}"]`)
+                .querySelector(`a[download="/${file.file_path}"]`)
                 .closest('.card-information__file-wrapper')
-                .querySelector('.btn btn-file-actions_delete');
+                .querySelector('.btn-file-actions_delete');
             NotificationMessage.showNotification(
                 btn,
                 false,
