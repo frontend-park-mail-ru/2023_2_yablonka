@@ -96,7 +96,11 @@
     min-width: 80px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 750px) {
+    .board-menu__team {
+        display: none;
+    }
+
     .board-actions__title {
         display: none;
     }
@@ -104,10 +108,8 @@
     .btn-filter-action {
         min-width: 0px;
     }
-}
 
-@media screen and (max-width: 750px) {
-    .board-menu__team {
-        display: none;
+    .board-name__input {
+        margin-right: 10px;
     }
 }

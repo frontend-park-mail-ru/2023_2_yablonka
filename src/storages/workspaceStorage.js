@@ -1572,6 +1572,9 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Array}
      */
     searchUsers(substring) {
+        if (substring === '') {
+            return this.storage.get(this.workspaceModel.users);
+        }
         return this.storage
             .get(this.workspaceModel.users)
             .filter((usr) => usr.email.indexOf(substring) !== -1);

@@ -70,6 +70,7 @@ export default class AddFile extends Component {
         this.parent
             .querySelector('.card-data__card-information')
             .addEventListener('click', this.#uploadFileByUser);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
@@ -95,6 +96,7 @@ export default class AddFile extends Component {
         this.parent
             .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#uploadFileByUser);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #openPopup = (e) => {
@@ -111,17 +113,55 @@ export default class AddFile extends Component {
                 popupEvent.addPopup(dialog);
                 dialog.showModal();
                 const dialogSizes = dialog.getBoundingClientRect();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                        btnCoordinates.x - 10
-                    }px`,
-                );
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
             } else {
                 popupEvent.deletePopup(dialog);
                 dialog.close();
             }
         }
+    };
+
+    #resize = () => {
+        window.requestAnimationFrame(() => {
+            const dialog = this.parent.querySelector('#card-file');
+            if (dialog.hasAttribute('open')) {
+                const btnCoordinates = this.parent
+                    .querySelector('button[data-action="manage-card-files"]')
+                    .getBoundingClientRect();
+                const dialogSizes = dialog.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 50) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
+            }
+        });
     };
 
     #closePopupByBackground = (e) => {
