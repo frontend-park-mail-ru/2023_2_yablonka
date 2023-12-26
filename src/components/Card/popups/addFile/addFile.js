@@ -183,13 +183,13 @@ export default class AddFile extends Component {
         e.stopPropagation();
 
         const file = this.parent.querySelector('.input-upload-file').files[0];
-        this.file = structuredClone(file);
-        this.filename = file.name;
-        this.mimetype = file.type;
+        this.#file = structuredClone(file);
+        this.#filename = file.name;
+        this.#mimetype = file.type;
 
         const filename = this.parent.querySelector('.card-file__filename');
         filename.removeAttribute('style');
-        filename.textContent = this.filename;
+        filename.textContent = this.#filename;
 
         this.parent.querySelector('.upload-card-file').setAttribute('style', 'display: none');
     };
