@@ -13,13 +13,13 @@ import { actionAttachFile, actionDeleteFile } from '../../../../actions/boardAct
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class AddFile extends Component {
-    static #file;
+    #file;
 
-    static #filename;
+    #filename;
 
-    static #mimetype;
+    #mimetype;
 
-    static #fileTypes = [
+    #fileTypes = [
         'application/pdf',
         'text/plain',
         'application/zip',
@@ -42,7 +42,7 @@ export default class AddFile extends Component {
         this.parent.insertAdjacentHTML(
             'beforeend',
             template({
-                fileTypes: AddFile.#fileTypes.join(', '),
+                fileTypes: this.#fileTypes.join(', '),
             }),
         );
     }
@@ -197,25 +197,25 @@ export default class AddFile extends Component {
     #uploadFile = async (e) => {
         e.stopPropagation();
 
-        if (AddFile.#file) {
+        if (this.#file) {
             const cardId = this.parent.querySelector('#card').dataset.card;
-            const file = await readFileAsByteArray(AddFile.#file);
+            const file = await readFileAsByteArray(this.#file);
 
             await dispatcher.dispatch(
                 actionAttachFile({
                     task_id: parseInt(cardId, 10),
-                    filename: AddFile.#filename,
+                    filename: this.#filename,
                     file: Array.from(file.values()),
-                    mimetype: AddFile.#mimetype,
+                    mimetype: this.#mimetype,
                 }),
             );
+            this.#clearFile();
         }
     };
 
     static clearPopup = () => {
-        AddFile.#clearFile();
         AddFile.#clearForm();
-    }
+    };
 
     static #clearForm = (e) => {
         e?.stopPropagation();
@@ -227,8 +227,6 @@ export default class AddFile extends Component {
         const filename = document.querySelector('.card-file__filename');
         filename.setAttribute('style', 'display: none');
         filename.textContent = '';
-
-        AddFile.#clearFile();
     };
 
     #uploadFileByUser = (e) => {
@@ -255,9 +253,9 @@ export default class AddFile extends Component {
         }
     };
 
-    static #clearFile = () => {
-        AddFile.#file = null;
-        AddFile.#filename = null;
-        AddFile.#mimetype = null;
+    #clearFile = () => {
+        this.#file = null;
+        this.#filename = null;
+        this.#mimetype = null;
     };
 }
