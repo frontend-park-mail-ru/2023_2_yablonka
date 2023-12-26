@@ -86,7 +86,6 @@ export default class CreateTag extends Component {
         e.preventDefault();
         e.stopPropagation();
 
-
         const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
         const input = this.parent.querySelector('.input-card-tag__input');
         const name = input.value.trim();
@@ -100,7 +99,6 @@ export default class CreateTag extends Component {
                         task_id: cardId,
                     }),
                 );
-                
             } else {
                 const boardId = parseInt(
                     this.parent.querySelector('.board-name__input').dataset.board,
@@ -144,5 +142,11 @@ export default class CreateTag extends Component {
         } else {
             btnCreate.disabled = false;
         }
+    };
+
+    static clearPopup = () => {
+        const dialog = document.querySelector('#tag-create');
+        const form = dialog.querySelector('.form-add-card-tag');
+        form.reset();
     };
 }

@@ -14,6 +14,7 @@ import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
 import sendChange from '../modules/sendChange.js';
 import AddFile from '../components/Card/popups/addFile/addFile.js';
+import CreateTag from '../components/Card/popups/createTag/createTag.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -607,6 +608,7 @@ class WorkspaceStorage extends BaseStorage {
             Card.getFiles();
             AddFile.clearPopup();
         } else {
+            AddFile.clearPopup();
             NotificationMessage.showNotification(
                 document.querySelector('.btn-upload-file'),
                 false,
@@ -700,9 +702,8 @@ class WorkspaceStorage extends BaseStorage {
             Card.addTag(body.body.tag);
             BoardPage.addTag(body.body.tag);
 
-            const dialog = document.querySelector('#tag-create');
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+            popupEvent.closeOtherPopups([document.querySelector('#card')]);
+            CreateTag.clearPopup();
         } else {
             NotificationMessage.showNotification(
                 document.querySelector('.input-card-tag__input'),
