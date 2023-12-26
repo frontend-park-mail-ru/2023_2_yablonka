@@ -250,7 +250,7 @@ export default class AddFile extends Component {
                 actionDeleteFile({
                     file_path: file
                         .querySelector('.card-file-download')
-                        .download.replace(`${window.origin}/`, ''),
+                        .download.replace(`/`, ''),
                     original_name: file.querySelector('.card-information__filename').textContent,
                     task_id: parseInt(e.target.closest('#card').dataset.card, 10),
                 }),
