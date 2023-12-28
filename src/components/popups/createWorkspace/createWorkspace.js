@@ -80,6 +80,7 @@ export default class CreateWorkspace extends Component {
             e.preventDefault();
             e.stopPropagation();
 
+            this.#clearForm();
             const dialog = this.parent.querySelector('#create-workspace');
 
             if (!dialog.hasAttribute('open')) {
@@ -99,6 +100,21 @@ export default class CreateWorkspace extends Component {
                 popupEvent.deletePopup(dialog);
                 dialog.close();
             }
+        }
+    };
+
+    #clearForm = () => {
+        const dialog = this.parent.querySelector('#create-workspace');
+        const form = dialog.querySelector('.form__create-workspace');
+        form.reset();
+
+        const input = dialog.querySelector('.input-workspace-name');
+        const btnCreate = dialog.querySelector('.btn-create-workspace-pop-up');
+
+        if (input.value.length === 0) {
+            btnCreate.disabled = true;
+        } else {
+            btnCreate.disabled = false;
         }
     };
 

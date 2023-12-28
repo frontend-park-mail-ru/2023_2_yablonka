@@ -73,6 +73,8 @@ export default class CreateBoard extends Component {
             const btnCoordinates = btn.getBoundingClientRect();
             const workspaceId = btn.dataset.workspace;
 
+            this.#clearForm();
+
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
@@ -122,6 +124,21 @@ export default class CreateBoard extends Component {
                     dialog.dataset.workspace = workspaceId;
                 }
             }
+        }
+    };
+
+    #clearForm = () => {
+        const dialog = this.parent.querySelector('#create-board');
+        const form = dialog.querySelector('.form__create-board');
+        form.reset();
+
+        const input = dialog.querySelector('.input-board-name');
+        const btnCreate = dialog.querySelector('.btn-create-board-pop-up');
+
+        if (input.value.length === 0) {
+            btnCreate.disabled = true;
+        } else {
+            btnCreate.disabled = false;
         }
     };
 

@@ -163,5 +163,14 @@ export default class CreateTag extends Component {
         const dialog = document.querySelector('#tag-create');
         const form = dialog.querySelector('.form-add-card-tag');
         form.reset();
+
+        const input = dialog.querySelector('.input-card-tag__input');
+        const btnCreate = dialog.querySelector('.btn-create-tag');
+
+        if (input.value.length === 0) {
+            btnCreate.disabled = true;
+        } else {
+            btnCreate.disabled = false;
+        }
     };
 }

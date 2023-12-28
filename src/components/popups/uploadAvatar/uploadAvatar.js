@@ -31,6 +31,9 @@ export default class UploadAvatarModal extends Component {
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .addEventListener('click', this.#openModal);
         this.parent
+            .querySelector('#upload-avatar')
+            .addEventListener('keydown', this.#processEscapeKeydown);
+        this.parent
             .querySelector('.btn-upload-avatar')
             .addEventListener('click', this.#chooseFileAction);
         this.parent
@@ -59,6 +62,9 @@ export default class UploadAvatarModal extends Component {
         this.parent
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .removeEventListener('click', this.#openModal);
+        this.parent
+            .querySelector('#upload-avatar')
+            .removeEventListener('keydown', this.#processEscapeKeydown);
         this.parent
             .querySelector('.btn-upload-avatar')
             .removeEventListener('click', this.#chooseFileAction);
@@ -97,7 +103,7 @@ export default class UploadAvatarModal extends Component {
 
         const dialog = this.parent.querySelector('#upload-avatar');
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.showModal();
@@ -118,6 +124,16 @@ export default class UploadAvatarModal extends Component {
 
     #closeModal = (e) => {
         if (e.target === e.currentTarget) {
+            this.#changeForm('none', 'flex');
+            popupEvent.closeAllPopups();
+            this.#clearFile();
+        }
+    };
+
+    #processEscapeKeydown = (e) => {
+        e.stopPropagation();
+        if (e.key === 'Escape') {
+            e.preventDefault();
             this.#changeForm('none', 'flex');
             popupEvent.closeAllPopups();
             this.#clearFile();

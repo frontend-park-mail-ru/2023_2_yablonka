@@ -121,6 +121,7 @@ export default class AddChecklist extends Component {
         if (e.key === 'Enter') {
             e.preventDefault();
         } else if (e.key === 'Escape') {
+            console.log(123);
             e.preventDefault();
             AddChecklist.clearPopup();
         }
@@ -235,6 +236,15 @@ export default class AddChecklist extends Component {
     static clearPopup = () => {
         popupEvent.closeOtherPopups([document.querySelector('#card')]);
         AddChecklist.#clearForm();
+
+        const input = this.parent.querySelector('.input-card-checklist__input');
+        const btnCreate = this.parent.querySelector('.btn-create-checklist');
+
+        if (input.value.length === 0) {
+            btnCreate.disabled = true;
+        } else {
+            btnCreate.disabled = false;
+        }
     };
 
     #blockButton = (e) => {
