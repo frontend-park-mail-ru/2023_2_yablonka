@@ -80,10 +80,21 @@ export default class WorkspaceSettings extends Component {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
-                );
+                const windowWidth = window.innerWidth;
+                const dialogSizes = dialog.getBoundingClientRect();
+                if (btnCoordinates.left + dialogSizes.width > windowWidth) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + 50}px; left: ${
+                            windowWidth - dialogSizes.width - 20
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
+                    );
+                }
             } else {
                 popupEvent.deletePopup(dialog);
                 dialog.close();
@@ -91,10 +102,23 @@ export default class WorkspaceSettings extends Component {
                     popupEvent.closeAllPopups();
                     popupEvent.addPopup(dialog);
                     dialog.show();
-                    dialog.setAttribute(
-                        'style',
-                        `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
-                    );
+                    const windowWidth = window.innerWidth;
+                    const dialogSizes = dialog.getBoundingClientRect();
+                    if (btnCoordinates.left + dialogSizes.width > windowWidth) {
+                        dialog.setAttribute(
+                            'style',
+                            `top: ${btnCoordinates.top + 50}px; left: ${
+                                windowWidth - dialogSizes.width - 20
+                            }px`,
+                        );
+                    } else {
+                        dialog.setAttribute(
+                            'style',
+                            `top: ${btnCoordinates.top + 50}px; left: ${
+                                btnCoordinates.left - 20
+                            }px`,
+                        );
+                    }
                 }
             }
             dialog.dataset.workspace = workspaceId;
@@ -111,10 +135,21 @@ export default class WorkspaceSettings extends Component {
                         `.btn-change-workspace[data-workspace="${dialog.dataset.workspace}"]`,
                     )
                     .getBoundingClientRect();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
-                );
+                const windowWidth = window.innerWidth;
+                const dialogSizes = dialog.getBoundingClientRect();
+                if (btnCoordinates.left + dialogSizes.width > windowWidth) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + 50}px; left: ${
+                            windowWidth - dialogSizes.width - 20
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + 50}px; left: ${btnCoordinates.left - 20}px`,
+                    );
+                }
             }
         });
     };
