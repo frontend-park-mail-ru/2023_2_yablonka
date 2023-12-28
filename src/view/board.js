@@ -20,6 +20,7 @@ import AddFile from '../components/Card/popups/addFile/addFile.js';
 import BoardHistory from '../components/popups/boardHistory/boardHistory.js';
 import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 import CreateTag from '../components/Card/popups/createTag/createTag.js';
+import ErrorMessage from '../components/Common/errorMessage/errorMessage.js';
 
 /**
  * Класс для рендера страницы доски
@@ -54,7 +55,7 @@ class Board extends BaseView {
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
         const board = workspaceStorage.getBoardById(parseInt(this.boardID, 10));
-        
+
         if (!board || board.workspace_id !== parseInt(this.workspaceID, 10)) {
             await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
             await dispatcher.dispatch(actionRedirect('/404', false));
@@ -84,7 +85,7 @@ class Board extends BaseView {
                 new CreateTag(this.root, {}),
             ],
         );
-
+        
         this.render();
         this.addListeners();
 

@@ -15,6 +15,7 @@ import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceS
 import sendChange from '../modules/sendChange.js';
 import AddFile from '../components/Card/popups/addFile/addFile.js';
 import CreateTag from '../components/Card/popups/createTag/createTag.js';
+import ErrorMessage from '../components/Common/errorMessage/errorMessage.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -205,6 +206,8 @@ class WorkspaceStorage extends BaseStorage {
             emitter.trigger('rerender');
         } else if (status === 403) {
             emitter.trigger('noaccess');
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -247,6 +250,8 @@ class WorkspaceStorage extends BaseStorage {
             } else {
                 emitter.trigger('rerender');
             }
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -278,6 +283,8 @@ class WorkspaceStorage extends BaseStorage {
             this.storage.get(this.workspaceModel.lists).push(newList);
             BoardPage.addNewList(newList);
             BoardPage.closeAllCreateMenu();
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -304,6 +311,8 @@ class WorkspaceStorage extends BaseStorage {
             await sendChange(boardId, `Переименовал список ${lst.name} на ${list.name}`);
 
             lst.name = list.name;
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -337,6 +346,8 @@ class WorkspaceStorage extends BaseStorage {
             });
 
             BoardPage.deleteList(parseInt(list.id, 10));
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -402,6 +413,8 @@ class WorkspaceStorage extends BaseStorage {
             if (TagSettings.filteredTag) {
                 TagSettings.filterCards();
             }
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -426,6 +439,8 @@ class WorkspaceStorage extends BaseStorage {
                 lists[idx].list_position = index;
             });
             this.storage.set(this.workspaceModel.lists, lists);
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -462,6 +477,8 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             BoardPage.addNewCard(body.body.task);
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -853,7 +870,6 @@ class WorkspaceStorage extends BaseStorage {
                 }
             });
             this.workspaceStorage.set(this.workspaceModel.tags, tags);
-        } else {
         }
     }
 
@@ -1243,6 +1259,8 @@ class WorkspaceStorage extends BaseStorage {
                 fontWeight: 200,
                 text: 'Такого пользователя не существует',
             });
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -1263,6 +1281,8 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             popupEvent.closeAllPopups();
             emitter.trigger('rerender');
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
