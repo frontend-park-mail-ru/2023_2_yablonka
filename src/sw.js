@@ -1,5 +1,6 @@
 const CacheKey = 'cache-tabula';
 
+
 const initCache = () => caches.open(CacheKey).then((cache) => cache.addAll(['/index.html']));
 
 const tryNetwork = (req) =>
@@ -29,6 +30,7 @@ const tryNetwork = (req) =>
 
 const getFromCache = (req) =>
     caches.open(CacheKey).then((cache) => cache.match(req).then((result) => result));
+
 
 self.addEventListener('install', (e) => {
     e.waitUntil(initCache());

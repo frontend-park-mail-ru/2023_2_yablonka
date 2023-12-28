@@ -170,7 +170,6 @@ class WorkspaceStorage extends BaseStorage {
         const { status } = responsePromise;
 
         if (status === 200) {
-            console.log(structuredClone(body));
             this.addBoard(body.body.board);
             this.storage.set(this.workspaceModel.lists, body.body.lists);
             this.storage.set(this.workspaceModel.cards, body.body.cards);
@@ -823,7 +822,6 @@ class WorkspaceStorage extends BaseStorage {
             });
 
             const detachedTag = this.getTagById(parseInt(tag.tag_id, 10));
-
             Card.removeTag(detachedTag);
 
             const card = this.getCardById(parseInt(tag.task_id, 10));

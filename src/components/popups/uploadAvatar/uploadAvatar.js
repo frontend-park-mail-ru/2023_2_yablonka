@@ -46,6 +46,8 @@ export default class UploadAvatarModal extends Component {
         this.parent
             .querySelector('.upload-avatar-modal__button_upload')
             .addEventListener('click', this.#updateAvatar);
+        this.parent.querySelector('.form-upload-avatar').addEventListener('dragover',this.dragoverAvatarHandler);
+        this.parent.querySelector('.form-upload-avatar').addEventListener('drop',this.dropAvatarHandler);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -189,4 +191,23 @@ export default class UploadAvatarModal extends Component {
             );
         });
     };
+
+    dropAvatarHandler(e){
+        e.preventDefault();
+  
+        if (!e.dataTransfer.files.length) {
+            return;
+        }
+  
+        this.parent.querySelector('.input-upload-avatar').files = e.dataTransfer.files;
+
+        if(this.parent.querySelector('.input-upload-avatar').files[0].type.startsWith('image/')){
+            this.#previewAvatar(e);
+        }
+        
+    }
+
+    dragoverAvatarHandler(e){
+        e.preventDefault();
+    }
 }
