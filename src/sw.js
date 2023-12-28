@@ -1,12 +1,6 @@
 const CacheKey = 'cache-tabula';
 
-const initCache = () =>
-    caches.open(CacheKey).then(
-        (cache) => cache.addAll(['/index.html']),
-        (error) => {
-            console.log(error);
-        },
-    );
+const initCache = () => caches.open(CacheKey).then((cache) => cache.addAll(['/index.html']));
 
 const tryNetwork = (req) =>
     new Promise((resolve, reject) => {
@@ -34,9 +28,7 @@ const tryNetwork = (req) =>
     });
 
 const getFromCache = (req) =>
-    caches
-        .open(CacheKey)
-        .then((cache) => cache.match(req).then((result) => result || Promise.reject('no-match')));
+    caches.open(CacheKey).then((cache) => cache.match(req).then((result) => result));
 
 self.addEventListener('install', (e) => {
     e.waitUntil(initCache());
@@ -44,15 +36,13 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
     e.waitUntil(
-        caches.keys().then((keyList) =>
-            Promise.all(
-                keyList.map((key) => {
-                    if (key !== CacheKey) {
-                        return caches.delete(key);
-                    }
-                }),
+        caches
+            .keys()
+            .then((keyList) =>
+                Promise.all(
+                    keyList.forEach((key) => (key !== CacheKey ? caches.delete(key) : undefined)),
+                ),
             ),
-        ),
     );
 });
 

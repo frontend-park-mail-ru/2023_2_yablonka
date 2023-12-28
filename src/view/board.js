@@ -20,7 +20,6 @@ import AddFile from '../components/Card/popups/addFile/addFile.js';
 import BoardHistory from '../components/popups/boardHistory/boardHistory.js';
 import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 import CreateTag from '../components/Card/popups/createTag/createTag.js';
-import ErrorMessage from '../components/Common/errorMessage/errorMessage.js';
 
 /**
  * Класс для рендера страницы доски

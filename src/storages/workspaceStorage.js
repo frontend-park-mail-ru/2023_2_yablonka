@@ -1410,7 +1410,7 @@ class WorkspaceStorage extends BaseStorage {
     }
 
     async submitHistoryAction(action) {
-        const responsePromise = await AJAX(
+        await AJAX(
             `${apiPath + apiVersion}board/history/submit/`,
             'POST',
             userStorage.storage.get(userStorage.userModel.csrf),
