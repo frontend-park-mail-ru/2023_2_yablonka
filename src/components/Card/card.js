@@ -121,6 +121,8 @@ export default class Card extends Component {
     }
 
     static openByRedirect = (id) => {
+        Card.clearCard();
+
         const dialog = document.querySelector('#card');
 
         const card = workspaceStorage.getCardById(parseInt(id, 10));
@@ -159,6 +161,8 @@ export default class Card extends Component {
 
     #openCard = (e) => {
         if (e.target.closest('.list__card-wrapper') && !e.target.closest('.btn-list-card__tag')) {
+            Card.clearCard();
+
             e.stopPropagation();
             e.preventDefault();
 

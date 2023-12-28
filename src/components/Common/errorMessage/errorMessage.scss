@@ -1,0 +1,12 @@
+.error-message {
+    background-color: var(--error-background-color);
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+    width: 270px;
+    z-index: 100;
+}
+
+.error-message__text {
+    color: var(--error-text-color);
+}

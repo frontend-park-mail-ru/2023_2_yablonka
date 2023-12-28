@@ -18,8 +18,9 @@
 .sidebar__workspace-name {
     overflow-x: auto;
     overflow-y: hidden;
+    white-space: nowrap;
     text-wrap: nowrap;
-    max-width: 80%;
+    max-width: 65%;
 }
 
 .sidebar__workspace-name::-webkit-scrollbar {

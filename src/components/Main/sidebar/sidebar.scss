@@ -24,7 +24,7 @@
 }
 
 .btn-sidebar-boards-menu_selected {
-    transition: 0.3s ;
+    transition: 0.3s;
     background-color: var(--action-active-button-color);
     color: var(--text-color-on-page);
 }
@@ -88,13 +88,18 @@
 
 .btn-create-workspace__title {
     white-space: break-spaces;
-    line-height: normal;
+    line-height: 10px;
     text-align: left;
     min-height: 35px;
 }
 
 @media screen and (max-width: 545px) {
+    .sidebar-main-wrapper,
     .sidebar-main-wrapper {
+        height: fit-content;
+    }
+
+    .workspaces-list {
         display: none;
     }
 }
