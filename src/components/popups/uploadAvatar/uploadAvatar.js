@@ -201,17 +201,16 @@ export default class UploadAvatarModal extends Component {
 
         if (e.dataTransfer.items) {
             const fls = [];
-            [...e.dataTransfer.items].forEach((item, i) => {
-              if (item.kind === "file") {
-                const file = item.getAsFile();
-                fls.push(file);
-              }
+            [...e.dataTransfer.items].forEach((item) => {
+                if (item.kind === 'file') {
+                    const file = item.getAsFile();
+                    fls.push(file);
+                }
             });
             this.parent.querySelector('.input-upload-avatar').files = [...fls];
-          }
-          else {
+        } else {
             this.parent.querySelector('.input-upload-avatar').files = [...e.dataTransfer.files];
-          }
+        }
 
         if (this.parent.querySelector('.input-upload-avatar').files[0]?.type.startsWith('image/')) {
             this.#previewAvatar(e);
