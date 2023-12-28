@@ -13,15 +13,24 @@ export default class ErrorMessage extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        return template({});
+        return template({ id: this.config.id });
     }
 
     static ShowErrorMessage = (delay) => {
-        const err = new ErrorMessage(null, {}).render();
-        document.querySelector('.page__layout').insertAdjacentHTML('beforeend', err);
+        const id = Date.now();
+        const err = new ErrorMessage(null, { id }).render();
+        const errors = document.querySelectorAll('.error-message');
+
+        if (!errors.length) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex-column-centered gap-10 error-message-container';
+            document.querySelector('.page__layout').appendChild(wrapper);
+        }
+        const container = document.querySelector('.error-message-container');
+        container.insertAdjacentHTML('beforeend', err);
 
         setTimeout(() => {
-            document.querySelector('.error-message').remove();
+            document.getElementById(`${id}`).remove();
         }, delay);
     };
 }

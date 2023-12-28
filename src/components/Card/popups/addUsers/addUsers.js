@@ -28,6 +28,7 @@ export default class AddCardUsers extends Component {
         this.parent
             .querySelector('#add-card-user')
             .addEventListener('click', this.#closePopupByBackground);
+        this.parent.querySelector('#add-card-user').addEventListener('keydown', this.#proccessEnter);
         this.parent
             .querySelector('.input-add-card-user__search')
             .addEventListener('input', this.#searchUsers);
@@ -45,10 +46,19 @@ export default class AddCardUsers extends Component {
             .querySelector('#add-card-user')
             .removeEventListener('click', this.#closePopupByBackground);
         this.parent
+            .querySelector('#add-card-user')
+            .removeEventListener('keydown', this.#proccessEnter);
+        this.parent
             .querySelector('.input-add-card-user__search')
             .removeEventListener('input', this.#searchUsers);
         window.removeEventListener('resize', this.#resize);
     }
+
+    #proccessEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    };
 
     #openPopup = (e) => {
         e.preventDefault();

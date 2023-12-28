@@ -27,9 +27,10 @@ export default class CreateTag extends Component {
         this.parent
             .querySelector('#tag-create')
             .addEventListener('click', this.#closePopupByBackground);
+        this.parent.querySelector('#tag-create').addEventListener('keydown', this.#proccessEnter);
         this.parent.querySelector('.btn-create-tag').addEventListener('click', this.#createTag);
         this.parent
-            .querySelector('.input-card-checklist__input')
+            .querySelector('.input-card-tag__input')
             .addEventListener('input', this.#blockButton);
     }
 
@@ -38,11 +39,20 @@ export default class CreateTag extends Component {
         this.parent
             .querySelector('#tag-create')
             .removeEventListener('click', this.#closePopupByBackground);
+        this.parent
+            .querySelector('#tag-create')
+            .removeEventListener('keydown', this.#proccessEnter);
         this.parent.querySelector('.btn-create-tag').removeEventListener('click', this.#createTag);
         this.parent
-            .querySelector('.input-card-checklist__input')
+            .querySelector('.input-card-tag__input')
             .removeEventListener('input', this.#blockButton);
     }
+
+    #proccessEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    };
 
     #openPopup = (e) => {
         if (e.target.closest('.btn-add-new-tag')) {

@@ -42,6 +42,9 @@ export default class AddChecklist extends Component {
             .querySelector('#card-checklist')
             .addEventListener('click', this.#closePopupByBackground);
         this.parent
+            .querySelector('#card-checklist')
+            .addEventListener('keydown', this.#proccessEnter);
+        this.parent
             .querySelector('.btn-create-checklist')
             .addEventListener('click', this.#createChecklist);
         this.parent
@@ -82,6 +85,9 @@ export default class AddChecklist extends Component {
             .querySelector('#card-checklist')
             .removeEventListener('click', this.#closePopupByBackground);
         this.parent
+            .querySelector('#card-checklist')
+            .removeEventListener('keydown', this.#proccessEnter);
+        this.parent
             .querySelector('.btn-create-checklist')
             .removeEventListener('click', this.#createChecklist);
         this.parent
@@ -110,6 +116,12 @@ export default class AddChecklist extends Component {
             .removeEventListener('keydown', this.#proccessKeydownWithChecklist);
         window.removeEventListener('resize', this.#resize);
     }
+
+    #proccessEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    };
 
     /**
      * Функция, добавляющая обработчики событий
