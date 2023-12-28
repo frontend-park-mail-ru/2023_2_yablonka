@@ -238,8 +238,8 @@ export default class AddChecklist extends Component {
         popupEvent.closeOtherPopups([dialog]);
         AddChecklist.#clearForm();
 
-        const input = dialog.querySelector('.input-card-checklist__input');
-        const btnCreate = dialog.querySelector('.btn-create-checklist');
+        const input = document.querySelector('.input-card-checklist__input');
+        const btnCreate = document.querySelector('.btn-create-checklist');
 
         if (input.value.length === 0) {
             btnCreate.disabled = true;
