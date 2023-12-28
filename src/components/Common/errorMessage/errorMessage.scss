@@ -1,0 +1,15 @@
+.error-message-container {
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+    z-index: 100;
+}
+
+.error-message {
+    background-color: var(--error-background-color);
+    width: 270px;
+}
+
+.error-message__text {
+    color: var(--error-text-color);
+}

@@ -54,6 +54,7 @@ class Board extends BaseView {
 
         const { user } = userStorage.storage.get(userStorage.userModel.body).body;
         const board = workspaceStorage.getBoardById(parseInt(this.boardID, 10));
+
         if (!board || board.workspace_id !== parseInt(this.workspaceID, 10)) {
             await dispatcher.dispatch(actionNavigate(window.location.pathname, '', false));
             await dispatcher.dispatch(actionRedirect('/404', false));
@@ -83,7 +84,7 @@ class Board extends BaseView {
                 new CreateTag(this.root, {}),
             ],
         );
-
+        
         this.render();
         this.addListeners();
 

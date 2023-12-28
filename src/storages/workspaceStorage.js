@@ -13,7 +13,9 @@ import { actionNavigate, actionRedirect } from '../actions/userActions.js';
 import TagSettings from '../components/Card/popups/tagSettings/tagSettings.js';
 import WorkspaceSettings from '../components/popups/workspaceSettings/workspaceSettings.js';
 import sendChange from '../modules/sendChange.js';
-
+import AddFile from '../components/Card/popups/addFile/addFile.js';
+import CreateTag from '../components/Card/popups/createTag/createTag.js';
+import ErrorMessage from '../components/Common/errorMessage/errorMessage.js';
 
 /**
  * Хранилище объекта "рабочее пространство"
@@ -199,13 +201,12 @@ class WorkspaceStorage extends BaseStorage {
 
         if (status === 200) {
             const body = await responsePromise.json();
-            await sendChange(
-                body.body.board.board_id,
-                `Создал доску ${body.body.board.name}`,
-            );
+            await sendChange(body.body.board.board_id, `Создал доску ${body.body.board.name}`);
             emitter.trigger('rerender');
         } else if (status === 403) {
             emitter.trigger('noaccess');
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -248,6 +249,8 @@ class WorkspaceStorage extends BaseStorage {
             } else {
                 emitter.trigger('rerender');
             }
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -274,14 +277,13 @@ class WorkspaceStorage extends BaseStorage {
                 list_position: body.body.list.list_position,
                 board_id: body.body.list.board_id,
             };
-            await sendChange(
-                body.body.list.board_id,
-                `Создал список ${body.body.list.name}`,
-            );
+            await sendChange(body.body.list.board_id, `Создал список ${body.body.list.name}`);
 
             this.storage.get(this.workspaceModel.lists).push(newList);
             BoardPage.addNewList(newList);
             BoardPage.closeAllCreateMenu();
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -305,12 +307,11 @@ class WorkspaceStorage extends BaseStorage {
                 document.querySelector('.board-name__input').dataset.board,
                 10,
             );
-            await sendChange(
-                boardId,
-                `Переименовал список ${lst.name} на ${list.name}`,
-            );
+            await sendChange(boardId, `Переименовал список ${lst.name} на ${list.name}`);
 
             lst.name = list.name;
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -344,6 +345,8 @@ class WorkspaceStorage extends BaseStorage {
             });
 
             BoardPage.deleteList(parseInt(list.id, 10));
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -399,14 +402,18 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Переместил карточку ${
-                    this.getCardById(ids.task_id).name
-                } из списка ${
+                `Переместил карточку ${this.getCardById(ids.task_id).name} из списка ${
                     this.getListById(ids.old_list.id).name
                 } в список ${this.getListById(ids.new_list.id).name}`,
             );
 
             this.storage.set(this.workspaceModel.lists, lists);
+
+            if (TagSettings.filteredTag) {
+                TagSettings.filterCards();
+            }
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -431,6 +438,8 @@ class WorkspaceStorage extends BaseStorage {
                 lists[idx].list_position = index;
             });
             this.storage.set(this.workspaceModel.lists, lists);
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -467,6 +476,8 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             BoardPage.addNewCard(body.body.task);
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -495,9 +506,9 @@ class WorkspaceStorage extends BaseStorage {
                 );
                 await sendChange(
                     boardId,
-                    `Обновил сроки выполнения у карточки ${
-                        card.name
-                    } в списке ${this.getListById(oldCard.list_id).name}`,
+                    `Обновил сроки выполнения у карточки ${card.name} в списке ${
+                        this.getListById(oldCard.list_id).name
+                    }`,
                 );
                 Card.addDate(card.id);
             } else if (oldCard.name !== card.name || oldCard.description !== card.description) {
@@ -540,10 +551,7 @@ class WorkspaceStorage extends BaseStorage {
                 document.querySelector('.board-name__input').dataset.board,
                 10,
             );
-            await sendChange(
-                boardId,
-                `Удалили карточку ${card.name} в списке ${list.name}`,
-            );
+            await sendChange(boardId, `Удалил карточку ${deletedCard.name} в списке ${list.name}`);
 
             list.cards.forEach((cardId) => {
                 const listCard = this.getCardById(parseInt(cardId, 10));
@@ -559,6 +567,10 @@ class WorkspaceStorage extends BaseStorage {
                 .findIndex((item) => item.id === card.id);
 
             this.storage.get(this.workspaceModel.cards).splice(idxCard, 1);
+
+            if (TagSettings.filteredTag) {
+                TagSettings.filterCards();
+            }
 
             Card.clearCard(true);
         }
@@ -604,12 +616,25 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Прикрепил файл ${file.filename} к карточке ${
-                    card.name
-                } в списке ${this.getListById(card.list_id).name}`,
+                `Прикрепил файл ${file.filename} к карточке ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
             );
 
             Card.getFiles();
+            AddFile.clearPopup();
+        } else {
+            AddFile.clearPopup();
+            NotificationMessage.showNotification(
+                document.querySelector('.btn-upload-file'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось загрузить файл. Его размер не должен превышать 5 МБ',
+                },
+            );
         }
     }
 
@@ -638,9 +663,9 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Удалил файл ${file.original_name} из карточке ${
-                    card.name
-                } в списке ${this.getListById(card.list_id).name}`,
+                `Удалил файл ${file.original_name} из карточке ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
             );
 
             oldFile.remove();
@@ -648,6 +673,16 @@ class WorkspaceStorage extends BaseStorage {
             if (!document.querySelectorAll('.card-information__file-wrapper').length) {
                 document.querySelector('.card-information__files').remove();
             }
+        } else {
+            const btn = document
+                .querySelector(`a[href="/${file.file_path}"]`)
+                .closest('.card-information__file-wrapper')
+                .querySelector('.btn-file-actions_delete');
+            NotificationMessage.showNotification(btn, false, true, {
+                fontSize: 12,
+                fontWeight: 200,
+                text: 'Не удалось удалить файл. Перезагрузите страницу',
+            });
         }
     }
 
@@ -678,12 +713,34 @@ class WorkspaceStorage extends BaseStorage {
             });
             card.tags.push(`${body.body.tag.id}`);
 
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+
+            await sendChange(
+                boardId,
+                `Создал тег ${body.body.tag.name} и прикрепил к карточке ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
+            );
+
             Card.addTag(body.body.tag);
             BoardPage.addTag(body.body.tag);
 
-            const dialog = document.querySelector('#tag-create');
-            popupEvent.deletePopup(dialog);
-            dialog.close();
+            popupEvent.closeOtherPopups([document.querySelector('#card')]);
+            CreateTag.clearPopup();
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-card-tag__input'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось создать тег',
+                },
+            );
         }
     }
 
@@ -712,9 +769,33 @@ class WorkspaceStorage extends BaseStorage {
             Card.addTag(attachedTag);
             BoardPage.addTag(attachedTag);
 
+            const card = this.getCardById(parseInt(tag.task_id, 10));
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+
+            await sendChange(
+                boardId,
+                `Прикрепил тег ${attachedTag.name} к карточке ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
+            );
+
             const dialog = document.querySelector('#tag-create');
             popupEvent.deletePopup(dialog);
             dialog.close();
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-card-tag__input'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Тег уже прикреплён к карточке',
+                },
+            );
         }
     }
 
@@ -742,6 +823,19 @@ class WorkspaceStorage extends BaseStorage {
 
             const detachedTag = this.getTagById(parseInt(tag.tag_id, 10));
             Card.removeTag(detachedTag);
+
+            const card = this.getCardById(parseInt(tag.task_id, 10));
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+
+            await sendChange(
+                boardId,
+                `Открепил тег ${detachedTag.name} от карточки ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
+            );
 
             if (TagSettings.filteredTag) {
                 TagSettings.filterCards();
@@ -805,10 +899,17 @@ class WorkspaceStorage extends BaseStorage {
                 c.tags.splice(delInd, 1);
             });
 
+            const boardId = parseInt(
+                document.querySelector('.board-name__input').dataset.board,
+                10,
+            );
+
+            await sendChange(boardId, `Удалил тег ${deletedTag.name} с доски`);
+
             const dialog = document.querySelector('#tag-settings');
 
             dialog.dataset.tag = '';
-            if (TagSettings.filteredTag) {
+            if (TagSettings.filteredTag === deletedTag.name) {
                 TagSettings.filteredTag = '';
                 TagSettings.filterCards();
             }
@@ -852,12 +953,23 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Создал чек-лист ${checklist.name} в карточке ${
-                    card.name
-                } в списке ${this.getListById(card.list_id).name}`,
+                `Создал чек-лист ${checklist.name} в карточке ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
             );
-
+            AddChecklist.clearPopup();
             AddChecklist.addChecklist(body.body.checklist);
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-card-checklist__input'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось создать чеклист. Перезагрузите страницу',
+                },
+            );
         }
     }
 
@@ -907,9 +1019,9 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Удалил чек-лист ${checklist.name} в карточке ${
-                    card.name
-                } в списке ${this.getListById(card.list_id).name}`,
+                `Удалил чек-лист ${checklist.name} в карточке ${card.name} в списке ${
+                    this.getListById(card.list_id).name
+                }`,
             );
 
             const boardChecklistInd = boardChecklists.findIndex(
@@ -958,11 +1070,9 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Создал пункт ${checklistItem.name} в чек-листе ${
-                    checklist.name
-                } карточки ${card.name} в списке ${
-                    this.getListById(card.list_id).name
-                }`,
+                `Создал пункт ${checklistItem.name} в чек-листе ${checklist.name} карточки ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
             );
 
             AddChecklist.addCheckItem(body.body.checklistItem);
@@ -998,9 +1108,7 @@ class WorkspaceStorage extends BaseStorage {
                     boardId,
                     `Обновил пункт ${oldChecklistItem.name} в чек-листе ${
                         oldChecklistItem.name
-                    } карточки ${card.name} в списке ${
-                        this.getListById(card.list_id).name
-                    }
+                    } карточки ${card.name} в списке ${this.getListById(card.list_id).name}
                     `,
                 );
             }
@@ -1059,11 +1167,9 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Удалил пункт ${
-                    this.getChecklistItemById(checklistItem.id).name
-                } в чек-листе ${checklist.name} карточки ${
-                    card.name
-                } в списке ${this.getListById(card.list_id).name}`,
+                `Удалил пункт ${this.getChecklistItemById(checklistItem.id).name} в чек-листе ${
+                    checklist.name
+                } карточки ${card.name} в списке ${this.getListById(card.list_id).name}`,
             );
 
             const checklistItemInd = checklistItems.findIndex(
@@ -1151,6 +1257,8 @@ class WorkspaceStorage extends BaseStorage {
                 fontWeight: 200,
                 text: 'Такого пользователя не существует',
             });
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -1171,6 +1279,8 @@ class WorkspaceStorage extends BaseStorage {
         if (status === 200) {
             popupEvent.closeAllPopups();
             emitter.trigger('rerender');
+        } else {
+            ErrorMessage.ShowErrorMessage(5000);
         }
     }
 
@@ -1203,14 +1313,23 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Добавил пользователя ${
-                    this.getUserById(data.user_id).email
-                } на карточку ${card.name} в списке ${
-                    this.getListById(card.list_id).name
-                }`,
+                `Добавил пользователя ${this.getUserById(data.user_id).email} на карточку ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
             );
 
             Card.updateUsers(parseInt(data.task_id, 10));
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-add-card-user__search'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось добавить пользователя. Попробуйте перезагрузить страницу',
+                },
+            );
         }
     }
 
@@ -1246,14 +1365,23 @@ class WorkspaceStorage extends BaseStorage {
             );
             await sendChange(
                 boardId,
-                `Удалил пользователя ${
-                    this.getUserById(data.user_id).email
-                } из карточки ${card.name} в списке ${
-                    this.getListById(card.list_id).name
-                }`,
+                `Удалил пользователя ${this.getUserById(data.user_id).email} из карточки ${
+                    card.name
+                } в списке ${this.getListById(card.list_id).name}`,
             );
 
             Card.updateUsers(parseInt(data.task_id, 10));
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-add-card-user__search'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось удалить пользователя. Попробуйте перезагрузить страницу',
+                },
+            );
         }
     }
 
@@ -1520,6 +1648,9 @@ class WorkspaceStorage extends BaseStorage {
      * @returns {Array}
      */
     searchUsers(substring) {
+        if (substring === '') {
+            return this.storage.get(this.workspaceModel.users);
+        }
         return this.storage
             .get(this.workspaceModel.users)
             .filter((usr) => usr.email.indexOf(substring) !== -1);

@@ -87,3 +87,18 @@
     background-color: var(--action-active-button-color);
     color: var(--text-color-in-main);
 }
+
+
+@media screen and (max-width: 460px) {
+    .create-board {
+        width: 200px;
+    }
+
+    .create-board-wrapper {
+        gap: 15px;
+    }
+
+    .form__create-board {
+        gap: 15px;
+    }
+}

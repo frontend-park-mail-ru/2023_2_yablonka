@@ -13,13 +13,13 @@ import { actionAttachFile, actionDeleteFile } from '../../../../actions/boardAct
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class AddFile extends Component {
-    file;
+    #file;
 
-    filename;
+    #filename;
 
-    mimetype;
+    #mimetype;
 
-    fileTypes = [
+    #fileTypes = [
         'application/pdf',
         'text/plain',
         'application/zip',
@@ -42,7 +42,7 @@ export default class AddFile extends Component {
         this.parent.insertAdjacentHTML(
             'beforeend',
             template({
-                fileTypes: this.fileTypes.join(', '),
+                fileTypes: this.#fileTypes.join(', '),
             }),
         );
     }
@@ -65,11 +65,12 @@ export default class AddFile extends Component {
             .addEventListener('click', this.#uploadFile);
         this.parent
             .querySelector('.btn-attach-file_cancel')
-            .addEventListener('click', this.#clearForm);
+            .addEventListener('click', AddFile.#clearForm);
         this.parent.querySelector('#card').addEventListener('click', this.#deleteFile);
         this.parent
             .querySelector('.card-data__card-information')
             .addEventListener('click', this.#uploadFileByUser);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
@@ -90,11 +91,12 @@ export default class AddFile extends Component {
             .removeEventListener('click', this.#uploadFile);
         this.parent
             .querySelector('.btn-attach-file_cancel')
-            .removeEventListener('click', this.#clearForm);
+            .removeEventListener('click', AddFile.#clearForm);
         this.parent.querySelector('#card').removeEventListener('click', this.#deleteFile);
         this.parent
             .querySelector('.card-data__card-information')
             .removeEventListener('click', this.#uploadFileByUser);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #openPopup = (e) => {
@@ -111,12 +113,22 @@ export default class AddFile extends Component {
                 popupEvent.addPopup(dialog);
                 dialog.showModal();
                 const dialogSizes = dialog.getBoundingClientRect();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                        btnCoordinates.x - 10
-                    }px`,
-                );
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
             } else {
                 popupEvent.deletePopup(dialog);
                 dialog.close();
@@ -124,13 +136,40 @@ export default class AddFile extends Component {
         }
     };
 
+    #resize = () => {
+        window.requestAnimationFrame(() => {
+            const dialog = this.parent.querySelector('#card-file');
+            if (dialog.hasAttribute('open')) {
+                const btnCoordinates = this.parent
+                    .querySelector('button[data-action="manage-card-files"]')
+                    .getBoundingClientRect();
+                const dialogSizes = dialog.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
+            }
+        });
+    };
+
     #closePopupByBackground = (e) => {
         e.stopPropagation();
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
-            this.#clearForm();
-            this.#clearFile();
+            AddFile.clearPopup();
         }
     };
 
@@ -144,13 +183,13 @@ export default class AddFile extends Component {
         e.stopPropagation();
 
         const file = this.parent.querySelector('.input-upload-file').files[0];
-        this.file = structuredClone(file);
-        this.filename = file.name;
-        this.mimetype = file.type;
+        this.#file = structuredClone(file);
+        this.#filename = file.name;
+        this.#mimetype = file.type;
 
         const filename = this.parent.querySelector('.card-file__filename');
         filename.removeAttribute('style');
-        filename.textContent = this.filename;
+        filename.textContent = this.#filename;
 
         this.parent.querySelector('.upload-card-file').setAttribute('style', 'display: none');
     };
@@ -158,36 +197,35 @@ export default class AddFile extends Component {
     #uploadFile = async (e) => {
         e.stopPropagation();
 
-        if (this.file) {
+        if (this.#file) {
             const cardId = this.parent.querySelector('#card').dataset.card;
-            const file = await readFileAsByteArray(this.file);
-
+            const file = await readFileAsByteArray(this.#file);
             await dispatcher.dispatch(
                 actionAttachFile({
                     task_id: parseInt(cardId, 10),
-                    filename: this.filename,
+                    filename: this.#filename,
                     file: Array.from(file.values()),
-                    mimetype: this.mimetype,
+                    mimetype: this.#mimetype,
                 }),
             );
-
             this.#clearFile();
-            this.#clearForm();
         }
     };
 
-    #clearForm = (e) => {
+    static clearPopup = () => {
+        AddFile.#clearForm();
+    };
+
+    static #clearForm = (e) => {
         e?.stopPropagation();
 
-        const form = this.parent.querySelector('.upload-card-file');
+        const form = document.querySelector('.upload-card-file');
         form.reset();
         form.removeAttribute('style');
 
-        const filename = this.parent.querySelector('.card-file__filename');
+        const filename = document.querySelector('.card-file__filename');
         filename.setAttribute('style', 'display: none');
         filename.textContent = '';
-
-        this.#clearFile();
     };
 
     #uploadFileByUser = (e) => {
@@ -204,9 +242,7 @@ export default class AddFile extends Component {
 
             await dispatcher.dispatch(
                 actionDeleteFile({
-                    file_path: file
-                        .querySelector('.card-file-download')
-                        .href.replace(`${window.origin}/`, ''),
+                    file_path: file.querySelector('.card-file-download').download.replace(`/`, ''),
                     original_name: file.querySelector('.card-information__filename').textContent,
                     task_id: parseInt(e.target.closest('#card').dataset.card, 10),
                 }),
@@ -215,8 +251,8 @@ export default class AddFile extends Component {
     };
 
     #clearFile = () => {
-        this.file = null;
-        this.filename = null;
-        this.mimetype = null;
+        this.#file = null;
+        this.#filename = null;
+        this.#mimetype = null;
     };
 }

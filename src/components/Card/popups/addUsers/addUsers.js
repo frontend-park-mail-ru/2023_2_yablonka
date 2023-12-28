@@ -29,11 +29,15 @@ export default class AddCardUsers extends Component {
             .querySelector('#add-card-user')
             .addEventListener('click', this.#closePopupByBackground);
         this.parent
+            .querySelector('#add-card-user')
+            .addEventListener('keydown', this.#proccessEnter);
+        this.parent
             .querySelector('.input-add-card-user__search')
             .addEventListener('input', this.#searchUsers);
         this.parent
             .querySelector('.add-card-user__content')
             .addEventListener('click', this.#selectUsers);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
@@ -44,9 +48,23 @@ export default class AddCardUsers extends Component {
             .querySelector('#add-card-user')
             .removeEventListener('click', this.#closePopupByBackground);
         this.parent
+            .querySelector('#add-card-user')
+            .removeEventListener('keydown', this.#proccessEnter);
+        this.parent
             .querySelector('.input-add-card-user__search')
             .removeEventListener('input', this.#searchUsers);
+        window.removeEventListener('resize', this.#resize);
     }
+
+    #proccessEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            this.#clearForm();
+        }
+    };
 
     #openPopup = (e) => {
         e.preventDefault();
@@ -55,21 +73,61 @@ export default class AddCardUsers extends Component {
         const dialog = this.parent.querySelector('#add-card-user');
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
             popupEvent.addPopup(dialog);
             dialog.showModal();
+            this.#searchUsers();
             const dialogSizes = dialog.getBoundingClientRect();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                    btnCoordinates.x - 10
-                }px`,
-            );
+            const windowWidth = window.innerWidth;
+            if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                dialog.setAttribute(
+                    'style',
+                    `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                        windowWidth - dialogSizes.width
+                    }px`,
+                );
+            } else {
+                dialog.setAttribute(
+                    'style',
+                    `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                        btnCoordinates.left
+                    }px`,
+                );
+            }
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
+            this.#clearForm();
         }
+    };
+
+    #resize = () => {
+        window.requestAnimationFrame(() => {
+            const dialog = this.parent.querySelector('#add-card-user');
+            if (dialog.hasAttribute('open')) {
+                const btnCoordinates = this.parent
+                    .querySelector('button[data-action="manage-card-users"]')
+                    .getBoundingClientRect();
+                const dialogSizes = dialog.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
+            }
+        });
     };
 
     #closePopupByBackground = (e) => {
@@ -77,16 +135,22 @@ export default class AddCardUsers extends Component {
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            this.#clearForm();
         }
     };
 
     #searchUsers = (e) => {
-        e.stopPropagation();
-        const query = e.target.value;
-        const searchedUsers = query === '' ? [] : workspaceStorage.searchUsers(query);
+        let query;
+        if (e) {
+            e.stopPropagation();
+            query = e.target.value;
+        } else {
+            query = '';
+        }
+        const searchedUsers = workspaceStorage.searchUsers(query);
         const dialog = this.parent.querySelector('#card');
-
         const usersContainer = this.parent.querySelector('.add-card-user__users');
+
         usersContainer.innerHTML = '';
         searchedUsers.forEach((user) => {
             usersContainer.insertAdjacentHTML(
@@ -131,5 +195,14 @@ export default class AddCardUsers extends Component {
                 );
             }
         }
+    };
+
+    #clearForm = () => {
+        const dialog = this.parent.querySelector('#add-card-user');
+        const form = dialog.querySelector('.form-add-card-user');
+        form.reset();
+
+        const users = dialog.querySelector('.add-card-user__users');
+        users.innerHTML = '';
     };
 }

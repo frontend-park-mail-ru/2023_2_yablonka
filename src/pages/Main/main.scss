@@ -12,7 +12,6 @@
 }
 
 .user-workspaces {
-    width: 60%;
     padding: 0 0 0 40px;
     background-color: transparent;
     height: 100%;
@@ -28,4 +27,12 @@
     align-items: flex-start;
     width: 95%;
     overflow-y: auto;
+}
+
+@media screen and (max-width: 545px) {
+    .container-main {
+        gap: 20px;
+        align-items: center;
+        flex-direction: column;
+    }
 }

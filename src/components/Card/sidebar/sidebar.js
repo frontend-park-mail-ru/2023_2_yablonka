@@ -12,7 +12,7 @@ export default class Sidebar extends Component {
     #innerConfig = {
         settings: [
             { name: 'Участники', icon: 'person.svg', action: 'manage-card-users' },
-            { name: 'Даты', icon: 'clock.svg', action: 'manage-card-data' },
+            { name: 'Даты', icon: 'clock.svg', action: 'manage-card-date' },
             { name: 'Чеклист', icon: 'checklist.svg', action: 'manage-card-checklist' },
             { name: 'Вложения', icon: 'paperclip.svg', action: 'manage-card-files' },
         ],

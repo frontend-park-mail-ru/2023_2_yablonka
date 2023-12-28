@@ -13,7 +13,7 @@ import './tagSettings.scss';
  * @param {Object} config - Объект с конфигурацией компонента.
  */
 export default class TagSettings extends Component {
-    static filteredTag;
+    static filteredTag = '';
 
     /**
      * Рендерит компонент в DOM

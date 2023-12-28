@@ -1,13 +1,17 @@
 <dialog id='tag-create' class='padding-10-20 border-radius-10 tag-create'>
     <div class='flex-column-centered gap-30 card-tag__content'>
         <span class='font-size-18 font-weight-500 card-tag__title'>Метки</span>
-        <input
-            placeholder='Название метки...'
-            class='padding-0-10 border-radius-5 font-size-16 font-weight-500 input input-card-tag__input'
-            type='text'
-        />
+        <form class='flex-column-centered gap-10 form form-add-card-tag'>
+            <input
+                placeholder='Название метки...'
+                class='padding-0-10 border-radius-5 font-size-16 font-weight-500 input input-card-tag__input'
+                type='text'
+            />
+        </form>
         <button
+            type='button'
             class='border-radius-5 padding-5-10 font-size-16 font-weight-500 btn btn-create-tag'
+            disabled
         >Прикрепить</button>
     </div>
 </dialog>

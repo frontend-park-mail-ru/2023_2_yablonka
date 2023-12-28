@@ -30,6 +30,7 @@ export default class ListSettings extends Component {
             .addEventListener('click', this.#deleteListHandler);
         this.parent.querySelector('.board').addEventListener('focusout', this.#changeListName);
         this.parent.querySelector('.board').addEventListener('keydown', this.#enterButtonHandler);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
@@ -44,6 +45,7 @@ export default class ListSettings extends Component {
         this.parent
             .querySelector('.board')
             .removeEventListener('keydown', this.#enterButtonHandler);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #renameList = () => {
@@ -76,26 +78,46 @@ export default class ListSettings extends Component {
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
+                const windowWidth = window.innerWidth;
                 dialog.show();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.top - 10}px; left: ${
-                        btnCoordinates.left + btnCoordinates.width + 20
-                    }px`,
-                );
+                const dialogSizes = dialog.getBoundingClientRect();
+                if (btnCoordinates.left + dialogSizes.width + 100 > windowWidth) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + 20}px; left: ${
+                            windowWidth - dialogSizes.width - 20
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + 50}px`,
+                    );
+                }
             } else {
                 popupEvent.deletePopup(dialog);
                 dialog.close();
                 if (listId !== parseInt(dialog.dataset.list, 10)) {
                     popupEvent.closeAllPopups();
                     popupEvent.addPopup(dialog);
+                    const windowWidth = window.innerWidth;
                     dialog.show();
-                    dialog.setAttribute(
-                        'style',
-                        `top: ${btnCoordinates.top - 10}px; left: ${
-                            btnCoordinates.left + btnCoordinates.width + 20
-                        }px`,
-                    );
+                    const dialogSizes = dialog.getBoundingClientRect();
+                    if (btnCoordinates.left + dialogSizes.width + 100 > windowWidth) {
+                        dialog.setAttribute(
+                            'style',
+                            `top: ${btnCoordinates.top + 40}px; left: ${
+                                windowWidth - dialogSizes.width - 20
+                            }px`,
+                        );
+                    } else {
+                        dialog.setAttribute(
+                            'style',
+                            `top: ${btnCoordinates.top - 10}px; left: ${
+                                btnCoordinates.left + 50
+                            }px`,
+                        );
+                    }
                 }
             }
             dialog.dataset.list = listId;
@@ -170,5 +192,34 @@ export default class ListSettings extends Component {
                 e.target.textContent = name;
             }
         }
+    };
+
+    #resize = () => {
+        window.requestAnimationFrame(() => {
+            const dialog = this.parent.querySelector('#list-settings');
+
+            if (dialog.dataset.list) {
+                const btnCoordinates = this.parent
+                    .querySelector(`.btn-change-list[data-list="${dialog.dataset.list}"]`)
+                    .getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                const dialogSizes = dialog.getBoundingClientRect();
+                console.log(btnCoordinates.left + dialogSizes.width, windowWidth);
+
+                if (btnCoordinates.left + dialogSizes.width + 100 > windowWidth) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + 40}px; left: ${
+                            windowWidth - dialogSizes.width - 20
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top - 10}px; left: ${btnCoordinates.left + 50}px`,
+                    );
+                }
+            }
+        });
     };
 }

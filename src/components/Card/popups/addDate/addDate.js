@@ -22,7 +22,7 @@ export default class AddDate extends Component {
 
     addEventListeners() {
         this.parent
-            .querySelector('button[data-action=manage-card-data]')
+            .querySelector('button[data-action=manage-card-date]')
             .addEventListener('click', this.#openPopup);
         this.parent
             .querySelector('.start-date__checkbox-wrapper')
@@ -43,10 +43,13 @@ export default class AddDate extends Component {
         this.parent
             .querySelector('.end-date__date')
             .addEventListener('change', this.#processDateSelect);
+        window.addEventListener('resize', this.#resize);
     }
 
     removeEventListeners() {
-        this.parent.querySelector('#card-date').removeEventListener('click', this.#openPopup);
+        this.parent
+            .querySelector('button[data-action=manage-card-date]')
+            .removeEventListener('click', this.#openPopup);
         this.parent
             .querySelector('.start-date__checkbox')
             .removeEventListener('click', this.#blockDateInput);
@@ -68,6 +71,7 @@ export default class AddDate extends Component {
         this.parent
             .querySelector('.end-date__date')
             .removeEventListener('change', this.#processDateSelect);
+        window.removeEventListener('resize', this.#resize);
     }
 
     #processDateSelect = (e) => {
@@ -145,6 +149,8 @@ export default class AddDate extends Component {
                         start: start === '' ? null : new Date(start).toISOString(),
                     }),
                 );
+                popupEvent.deletePopup(dialog);
+                dialog.close();
             }
         }
     };
@@ -190,17 +196,55 @@ export default class AddDate extends Component {
                 popupEvent.addPopup(dialog);
                 dialog.showModal();
                 const dialogSizes = dialog.getBoundingClientRect();
-                dialog.setAttribute(
-                    'style',
-                    `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                        btnCoordinates.x - 10
-                    }px`,
-                );
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
             } else {
                 popupEvent.deletePopup(dialog);
                 dialog.close();
             }
         }
+    };
+
+    #resize = () => {
+        window.requestAnimationFrame(() => {
+            const dialog = this.parent.querySelector('#card-date');
+            if (dialog.hasAttribute('open')) {
+                const btnCoordinates = this.parent
+                    .querySelector('button[data-action="manage-card-date"]')
+                    .getBoundingClientRect();
+                const dialogSizes = dialog.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
+            }
+        });
     };
 
     #closePopupByBackground = (e) => {
