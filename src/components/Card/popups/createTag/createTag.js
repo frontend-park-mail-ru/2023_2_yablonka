@@ -51,6 +51,10 @@ export default class CreateTag extends Component {
     #proccessEnter = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            CreateTag.clearPopup();
         }
     };
 
@@ -89,6 +93,7 @@ export default class CreateTag extends Component {
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            CreateTag.clearPopup();
         }
     };
 

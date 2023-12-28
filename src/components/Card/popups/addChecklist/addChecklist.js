@@ -120,6 +120,9 @@ export default class AddChecklist extends Component {
     #proccessEnter = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            AddChecklist.clearPopup();
         }
     };
 
