@@ -1321,6 +1321,17 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             Card.updateUsers(parseInt(data.task_id, 10));
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-add-card-user__search'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось добавить пользователя. Попробуйте перезагрузить страницу',
+                },
+            );
         }
     }
 
@@ -1362,6 +1373,17 @@ class WorkspaceStorage extends BaseStorage {
             );
 
             Card.updateUsers(parseInt(data.task_id, 10));
+        } else {
+            NotificationMessage.showNotification(
+                document.querySelector('.input-add-card-user__search'),
+                false,
+                true,
+                {
+                    fontSize: 12,
+                    fontWeight: 200,
+                    text: 'Не удалось удалить пользователя. Попробуйте перезагрузить страницу',
+                },
+            );
         }
     }
 
