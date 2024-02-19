@@ -18,7 +18,7 @@ export default class ErrorMessage extends Component {
 
     static ShowErrorMessage = (delay, text) => {
         const id = Date.now();
-        const err = new ErrorMessage({ parent: null, config: { text, id } }).render();
+        const err = new ErrorMessage(null, { text, id }).render();
         const errors = document.querySelectorAll('.error-message');
 
         if (!errors.length) {
