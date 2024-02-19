@@ -4,6 +4,7 @@ import { apiPath, apiVersion } from '../configs/configs.js';
 import emitter from '../modules/actionTrigger.js';
 import NotificationMessage from '../components/Common/notification/notificationMessage.js';
 import Profile from '../pages/Profile/profile.js';
+import ErrorMessage from '../components/Common/errorMessage/errorMessage.js';
 
 /**
  * Хранилище объекта "пользователь"
@@ -45,15 +46,11 @@ class UserStorage extends BaseStorage {
             this.storage.set(this.userModel.name, 'auth');
         };
 
-        try
-        {
+        try {
             xhr.send();
-        }
-        catch(e){
+        } catch (e) {
             console.log(e);
         }
-
-
     }
 
     /**
@@ -248,9 +245,8 @@ class UserStorage extends BaseStorage {
             oldUser.body.user.avatar_url = body.body.avatar_url.url;
             this.storage.set(this.userModel.body, oldUser);
             Profile.changeAvatar(body.body.avatar_url.url);
-            emitter.trigger('changeSuccess');
         } else {
-            emitter.trigger('changeError');
+            ErrorMessage.ShowErrorMessage(5000, 'Размер файла не должен превышать 5 Мб');
         }
     }
 
@@ -350,7 +346,7 @@ class UserStorage extends BaseStorage {
         try {
             body = await responsePromise.json();
         } catch (error) {
-            body={};
+            body = {};
         }
 
         const { status } = responsePromise;

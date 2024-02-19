@@ -1,4 +1,8 @@
 <div id="{{this.id}}" class='padding-10-20 flex-centered border-radius-10 error-message'>
+    {{#if this.text}}
+    <span class='font-weight-bold font-size-18 error-message__text'>{{this.text}}</span>
+    {{else}}
     <span class='font-weight-bold font-size-18 error-message__text'>Что-то пошло не так.
         Перезагрузите страницу</span>
+    {{/if}}
 </div>

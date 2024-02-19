@@ -13,12 +13,12 @@ export default class ErrorMessage extends Component {
      * Рендерит компонент в DOM
      */
     render() {
-        return template({ id: this.config.id });
+        return template({ text: this.config.text, id: this.config.id });
     }
 
-    static ShowErrorMessage = (delay) => {
+    static ShowErrorMessage = (delay, text) => {
         const id = Date.now();
-        const err = new ErrorMessage(null, { id }).render();
+        const err = new ErrorMessage({ text: text || null, id }).render();
         const errors = document.querySelectorAll('.error-message');
 
         if (!errors.length) {
