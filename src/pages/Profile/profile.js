@@ -116,7 +116,7 @@ export default class Profile extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Имя должно содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                    text: `Имя может содержать лишь буквы латиницы и кириллицы, цифры, спецсимволы $@!?#^:;%'"\\*_ и быть не пустым`,
                 },
             );
         } else if (!Validator.validateObjectName(surname)) {
@@ -127,7 +127,7 @@ export default class Profile extends Component {
                 {
                     fontSize: 14,
                     fontWeight: 200,
-                    text: 'Фамилия должна содержать лишь буквы, цифры, спецсимволы и быть не пустым',
+                    text: `Фамилия должна содержать лишь буквы латиницы и кириллицы, цифры, спецсимволы $@!?#^:;%'"\\*_ и быть не пустой`,
                 },
             );
         } else if (name.length > 32 || surname.length > 32) {
