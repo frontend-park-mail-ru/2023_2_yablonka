@@ -165,7 +165,7 @@ export default class CreateBoard extends Component {
             NotificationMessage.showNotification(boardName, true, true, {
                 fontSize: 14,
                 fontWeight: 200,
-                text: 'Название доски должно содержать лишь символы латиницы, кириллицы, цифры и спецсимволы',
+                text: `Название доски может содержать лишь буквы кириллицы и латиницы, цифры, спецсимволы $@!?#^:;%'"\\*_ и быть не пустым`,
             });
         }
     };
