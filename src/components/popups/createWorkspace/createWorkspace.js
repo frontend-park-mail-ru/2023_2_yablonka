@@ -151,7 +151,7 @@ export default class CreateWorkspace extends Component {
             NotificationMessage.showNotification(workspaceName, true, true, {
                 fontSize: 12,
                 fontWeight: 200,
-                text: 'Неккоректное название рабочего пространства',
+                text: `Название рабочего пространства может содержать лишь буквы кириллицы и латиницы, цифры, спецсимволы $@!?#^:;%'"\\*_ и быть не пустым`,
             });
         }
     };
