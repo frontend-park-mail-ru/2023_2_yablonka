@@ -18,14 +18,13 @@ export default class File extends Component {
             filename: this.config.original_name,
             creationDate: this.#processDateToLocale(this.config.date_created),
             fileExtension: this.config.file_path.match(/\.\w+$/)[0],
-            file: this.config.file_path.match(/\w+\.\w+$/)[0],
         });
     }
 
     #processDateToLocale = (creationDate) => {
         const date = new Date(creationDate);
-        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${date.getHours()}:${
-            (date.getMinutes() < 10 ? '0' : '') + date.getMinutes()
-        }`;
+        return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()} в ${
+            (date.getHours() < 10 ? '0' : '') + date.getHours()
+        }:${(date.getMinutes() < 10 ? '0' : '') + date.getMinutes()}`;
     };
 }

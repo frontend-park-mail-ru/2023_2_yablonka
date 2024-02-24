@@ -21,7 +21,12 @@ export default class CreateBoard extends Component {
     }
 
     addEventListeners() {
-        this.parent.addEventListener('click', this.#openCreateBoard);
+        this.parent
+            .querySelector('.container-main')
+            ?.addEventListener('click', this.#openCreateBoard);
+        this.parent
+            .querySelector('.container-board')
+            ?.addEventListener('click', this.#openCreateBoard);
         this.parent
             .querySelector('input[data-name=board-name]')
             .addEventListener('input', this.#blockCreateButton);
@@ -32,7 +37,12 @@ export default class CreateBoard extends Component {
     }
 
     removeEventListeners() {
-        this.parent.removeEventListener('click', this.#openCreateBoard);
+        this.parent
+            .querySelector('.container-main')
+            ?.removeEventListener('click', this.#openCreateBoard);
+        this.parent
+            .querySelector('.container-board')
+            ?.removeEventListener('click', this.#openCreateBoard);
         this.parent
             .querySelector('input[data-name=board-name')
             .removeEventListener('input', this.#blockCreateButton);
@@ -53,7 +63,7 @@ export default class CreateBoard extends Component {
     };
 
     #openCreateBoard = (e) => {
-        if (e.target.closest('.btn-create-board') || e.target.closest('.btn-board-sidebar')) {
+        if (e.target.closest('.btn-create-board')) {
             e.preventDefault();
             e.stopPropagation();
 
@@ -63,25 +73,29 @@ export default class CreateBoard extends Component {
             const btnCoordinates = btn.getBoundingClientRect();
             const workspaceId = btn.dataset.workspace;
 
+            this.#clearForm();
+
             if (!dialog.hasAttribute('open')) {
                 popupEvent.closeAllPopups();
                 popupEvent.addPopup(dialog);
                 dialog.show();
-                if (e.target.closest('.btn-create-board')) {
+                const windowHeight = window.innerHeight;
+                const dialogSizes = dialog.getBoundingClientRect();
+                if (btnCoordinates.top + dialogSizes.height > windowHeight) {
                     dialog.setAttribute(
                         'style',
-                        `top: ${btnCoordinates.top - 120}px; left: ${btnCoordinates.left + 50}px`,
+                        `top: ${windowHeight - dialogSizes.height - 20}px; left: ${
+                            btnCoordinates.left + 50
+                        }px`,
                     );
-                    dialog.setAttribute('data-workspace', workspaceId);
                 } else {
                     dialog.setAttribute(
                         'style',
-                        `top: ${btnCoordinates.top - 120}px; left: ${
-                            btnCoordinates.left + btnCoordinates.width + 30
-                        }px`,
+                        `top: ${btnCoordinates.top - 150}px; left: ${btnCoordinates.left + 50}px`,
                     );
-                    dialog.setAttribute('data-workspace', workspaceId);
                 }
+
+                dialog.setAttribute('data-workspace', workspaceId);
             } else {
                 popupEvent.deletePopup(dialog);
                 dialog.close();
@@ -89,26 +103,42 @@ export default class CreateBoard extends Component {
                     popupEvent.closeAllPopups();
                     popupEvent.addPopup(dialog);
                     dialog.show();
-                    if (e.target.closest('.btn-create-board')) {
+                    const windowHeight = window.innerHeight;
+                    const dialogSizes = dialog.getBoundingClientRect();
+                    if (btnCoordinates.top + dialogSizes.height > windowHeight) {
                         dialog.setAttribute(
                             'style',
-                            `top: ${btnCoordinates.top - 120}px; left: ${
+                            `top: ${windowHeight - dialogSizes.height - 20}px; left: ${
                                 btnCoordinates.left + 50
                             }px`,
                         );
-                        dialog.setAttribute('data-workspace', workspaceId);
                     } else {
                         dialog.setAttribute(
                             'style',
-                            `top: ${btnCoordinates.top - 120}px; left: ${
-                                btnCoordinates.left + btnCoordinates.width
+                            `top: ${btnCoordinates.top - 150}px; left: ${
+                                btnCoordinates.left + 50
                             }px`,
                         );
-                        dialog.setAttribute('data-workspace', workspaceId);
                     }
+                    dialog.setAttribute('data-workspace', workspaceId);
                     dialog.dataset.workspace = workspaceId;
                 }
             }
+        }
+    };
+
+    #clearForm = () => {
+        const dialog = this.parent.querySelector('#create-board');
+        const form = dialog.querySelector('.form__create-board');
+        form.reset();
+
+        const input = dialog.querySelector('.input-board-name');
+        const btnCreate = dialog.querySelector('.btn-create-board-pop-up');
+
+        if (input.value.length === 0) {
+            btnCreate.disabled = true;
+        } else {
+            btnCreate.disabled = false;
         }
     };
 
@@ -135,7 +165,7 @@ export default class CreateBoard extends Component {
             NotificationMessage.showNotification(boardName, true, true, {
                 fontSize: 14,
                 fontWeight: 200,
-                text: 'Неккоректное название доски',
+                text: `Название доски может содержать лишь буквы кириллицы и латиницы, цифры, спецсимволы $@!?#^:;%'"\\*_ и быть не пустым`,
             });
         }
     };
@@ -147,12 +177,21 @@ export default class CreateBoard extends Component {
             const btnCoordinates = this.parent
                 .querySelector(`.btn-create-board[data-workspace="${dialog.dataset.workspace}"]`)
                 .getBoundingClientRect();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.top - 120}px; left: ${
-                    btnCoordinates.left + btnCoordinates.width + 30
-                }px`,
-            );
+            const windowHeight = window.innerHeight;
+            const dialogSizes = dialog.getBoundingClientRect();
+            if (btnCoordinates.top + dialogSizes.height > windowHeight) {
+                dialog.setAttribute(
+                    'style',
+                    `top: ${windowHeight - dialogSizes.height - 20}px; left: ${
+                        btnCoordinates.left + 50
+                    }px`,
+                );
+            } else {
+                dialog.setAttribute(
+                    'style',
+                    `top: ${btnCoordinates.top - 150}px; left: ${btnCoordinates.left + 50}px`,
+                );
+            }
         }
     };
 }

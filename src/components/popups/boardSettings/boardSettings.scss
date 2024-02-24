@@ -14,9 +14,3 @@
 .btn-delete-board:hover {
     background-color: var(--hover-navigation-paragraph);
 }
-
-@media screen and (max-width: 400px) {
-    .create-board {
-        width: 200px;
-    }
-}

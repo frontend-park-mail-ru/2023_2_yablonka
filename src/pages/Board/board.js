@@ -411,7 +411,7 @@ export default class BoardPage extends Component {
                     .querySelector('.list__content')
                     .insertAdjacentHTML('beforeend', this.#draggingElement.parentNode.outerHTML);
             }
-            
+
             const ids = [];
 
             const cardId = parseInt(

@@ -42,6 +42,9 @@ export default class AddChecklist extends Component {
             .querySelector('#card-checklist')
             .addEventListener('click', this.#closePopupByBackground);
         this.parent
+            .querySelector('#card-checklist')
+            .addEventListener('keydown', this.#proccessEnter);
+        this.parent
             .querySelector('.btn-create-checklist')
             .addEventListener('click', this.#createChecklist);
         this.parent
@@ -68,6 +71,7 @@ export default class AddChecklist extends Component {
         this.parent
             .querySelector('.card-data__card-information')
             .addEventListener('keydown', this.#proccessKeydownWithChecklist);
+        window.addEventListener('resize', this.#resize);
     }
 
     /**
@@ -80,6 +84,9 @@ export default class AddChecklist extends Component {
         this.parent
             .querySelector('#card-checklist')
             .removeEventListener('click', this.#closePopupByBackground);
+        this.parent
+            .querySelector('#card-checklist')
+            .removeEventListener('keydown', this.#proccessEnter);
         this.parent
             .querySelector('.btn-create-checklist')
             .removeEventListener('click', this.#createChecklist);
@@ -107,7 +114,18 @@ export default class AddChecklist extends Component {
         this.parent
             .querySelector('.card-data__card-information')
             .removeEventListener('keydown', this.#proccessKeydownWithChecklist);
+        window.removeEventListener('resize', this.#resize);
     }
+
+    #proccessEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        } else if (e.key === 'Escape') {
+            console.log(123);
+            e.preventDefault();
+            AddChecklist.clearPopup();
+        }
+    };
 
     /**
      * Функция, добавляющая обработчики событий
@@ -119,21 +137,66 @@ export default class AddChecklist extends Component {
         const dialog = this.parent.querySelector('#card-checklist');
         const btnCoordinates = e.target.closest('button').getBoundingClientRect();
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
             popupEvent.addPopup(dialog);
             dialog.showModal();
             const dialogSizes = dialog.getBoundingClientRect();
-            dialog.setAttribute(
-                'style',
-                `top: ${btnCoordinates.y - Math.floor(dialogSizes.height / 3)}px; left: ${
-                    btnCoordinates.x - 10
-                }px`,
-            );
+            const windowWidth = window.innerWidth;
+            if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                dialog.setAttribute(
+                    'style',
+                    `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                        windowWidth - dialogSizes.width
+                    }px`,
+                );
+            } else {
+                dialog.setAttribute(
+                    'style',
+                    `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                        btnCoordinates.left
+                    }px`,
+                );
+            }
         } else {
             popupEvent.deletePopup(dialog);
             dialog.close();
+            AddChecklist.#clearForm();
         }
+    };
+
+    #resize = () => {
+        window.requestAnimationFrame(() => {
+            const dialog = this.parent.querySelector('#card-checklist');
+            if (dialog.hasAttribute('open')) {
+                const btnCoordinates = this.parent
+                    .querySelector('button[data-action="manage-card-checklist"]')
+                    .getBoundingClientRect();
+                const dialogSizes = dialog.getBoundingClientRect();
+                const windowWidth = window.innerWidth;
+                if (windowWidth - (btnCoordinates.left + dialogSizes.width) < 1) {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            windowWidth - dialogSizes.width
+                        }px`,
+                    );
+                } else {
+                    dialog.setAttribute(
+                        'style',
+                        `top: ${btnCoordinates.top + btnCoordinates.height + 10}px; left: ${
+                            btnCoordinates.left
+                        }px`,
+                    );
+                }
+            }
+        });
+    };
+
+    static #clearForm = () => {
+        const dialog = document.querySelector('#card-checklist');
+        const form = dialog.querySelector('.form-add-card-checklist');
+        form.reset();
     };
 
     #closePopupByBackground = (e) => {
@@ -141,6 +204,7 @@ export default class AddChecklist extends Component {
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            AddChecklist.#clearForm();
         }
     };
 
@@ -166,6 +230,21 @@ export default class AddChecklist extends Component {
                 fontWeight: 200,
                 text: 'Неккоректное название',
             });
+        }
+    };
+
+    static clearPopup = () => {
+        const dialog = document.querySelector('#card');
+        popupEvent.closeOtherPopups([dialog]);
+        AddChecklist.#clearForm();
+
+        const input = document.querySelector('.input-card-checklist__input');
+        const btnCreate = document.querySelector('.btn-create-checklist');
+
+        if (input.value.length === 0) {
+            btnCreate.disabled = true;
+        } else {
+            btnCreate.disabled = false;
         }
     };
 

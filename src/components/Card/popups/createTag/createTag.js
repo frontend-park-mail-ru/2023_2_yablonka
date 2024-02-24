@@ -27,9 +27,10 @@ export default class CreateTag extends Component {
         this.parent
             .querySelector('#tag-create')
             .addEventListener('click', this.#closePopupByBackground);
+        this.parent.querySelector('#tag-create').addEventListener('keydown', this.#proccessEnter);
         this.parent.querySelector('.btn-create-tag').addEventListener('click', this.#createTag);
         this.parent
-            .querySelector('.input-card-checklist__input')
+            .querySelector('.input-card-tag__input')
             .addEventListener('input', this.#blockButton);
     }
 
@@ -38,11 +39,24 @@ export default class CreateTag extends Component {
         this.parent
             .querySelector('#tag-create')
             .removeEventListener('click', this.#closePopupByBackground);
+        this.parent
+            .querySelector('#tag-create')
+            .removeEventListener('keydown', this.#proccessEnter);
         this.parent.querySelector('.btn-create-tag').removeEventListener('click', this.#createTag);
         this.parent
-            .querySelector('.input-card-checklist__input')
+            .querySelector('.input-card-tag__input')
             .removeEventListener('input', this.#blockButton);
     }
+
+    #proccessEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            CreateTag.clearPopup();
+        }
+    };
 
     #openPopup = (e) => {
         if (e.target.closest('.btn-add-new-tag')) {
@@ -79,13 +93,13 @@ export default class CreateTag extends Component {
 
         if (e.target === e.currentTarget) {
             popupEvent.closeOtherPopups([this.parent.querySelector('#card')]);
+            CreateTag.clearPopup();
         }
     };
 
     #createTag = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-
 
         const cardId = parseInt(this.parent.querySelector('#card').dataset.card, 10);
         const input = this.parent.querySelector('.input-card-tag__input');
@@ -100,7 +114,6 @@ export default class CreateTag extends Component {
                         task_id: cardId,
                     }),
                 );
-                
             } else {
                 const boardId = parseInt(
                     this.parent.querySelector('.board-name__input').dataset.board,
@@ -110,7 +123,7 @@ export default class CreateTag extends Component {
                     NotificationMessage.showNotification(input, false, true, {
                         fontSize: 12,
                         fontWeight: 200,
-                        text: 'Название тега должен быть не больше 10 символов',
+                        text: 'Название тега должно быть не больше 10 символов',
                     });
                 } else {
                     await dispatcher.dispatch(
@@ -138,6 +151,21 @@ export default class CreateTag extends Component {
 
         const input = this.parent.querySelector('.input-card-tag__input');
         const btnCreate = this.parent.querySelector('.btn-create-tag');
+
+        if (input.value.length === 0) {
+            btnCreate.disabled = true;
+        } else {
+            btnCreate.disabled = false;
+        }
+    };
+
+    static clearPopup = () => {
+        const dialog = document.querySelector('#tag-create');
+        const form = dialog.querySelector('.form-add-card-tag');
+        form.reset();
+
+        const input = dialog.querySelector('.input-card-tag__input');
+        const btnCreate = dialog.querySelector('.btn-create-tag');
 
         if (input.value.length === 0) {
             btnCreate.disabled = true;

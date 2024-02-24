@@ -31,6 +31,9 @@ export default class UploadAvatarModal extends Component {
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .addEventListener('click', this.#openModal);
         this.parent
+            .querySelector('#upload-avatar')
+            .addEventListener('keydown', this.#processEscapeKeydown);
+        this.parent
             .querySelector('.btn-upload-avatar')
             .addEventListener('click', this.#chooseFileAction);
         this.parent
@@ -46,6 +49,12 @@ export default class UploadAvatarModal extends Component {
         this.parent
             .querySelector('.upload-avatar-modal__button_upload')
             .addEventListener('click', this.#updateAvatar);
+        this.parent
+            .querySelector('.form-upload-avatar')
+            .addEventListener('dragover', this.#dragoverAvatarHandler);
+        this.parent
+            .querySelector('.form-upload-avatar')
+            .addEventListener('drop', this.#dropAvatarHandler);
         window.addEventListener('resize', this.#resize);
     }
 
@@ -53,6 +62,9 @@ export default class UploadAvatarModal extends Component {
         this.parent
             .querySelector('.btn-profile[data-action=open-upload-avatar-modal]')
             .removeEventListener('click', this.#openModal);
+        this.parent
+            .querySelector('#upload-avatar')
+            .removeEventListener('keydown', this.#processEscapeKeydown);
         this.parent
             .querySelector('.btn-upload-avatar')
             .removeEventListener('click', this.#chooseFileAction);
@@ -91,7 +103,7 @@ export default class UploadAvatarModal extends Component {
 
         const dialog = this.parent.querySelector('#upload-avatar');
 
-        if (dialog.getAttribute('open') === null) {
+        if (!dialog.hasAttribute('open')) {
             popupEvent.closeAllPopups();
             popupEvent.addPopup(dialog);
             dialog.showModal();
@@ -112,6 +124,16 @@ export default class UploadAvatarModal extends Component {
 
     #closeModal = (e) => {
         if (e.target === e.currentTarget) {
+            this.#changeForm('none', 'flex');
+            popupEvent.closeAllPopups();
+            this.#clearFile();
+        }
+    };
+
+    #processEscapeKeydown = (e) => {
+        e.stopPropagation();
+        if (e.key === 'Escape') {
+            e.preventDefault();
             this.#changeForm('none', 'flex');
             popupEvent.closeAllPopups();
             this.#clearFile();
@@ -188,5 +210,30 @@ export default class UploadAvatarModal extends Component {
                 `top: ${5}%; left: ${Math.floor((windowSizes.width - dialogSizes.width) / 2)}px`,
             );
         });
+    };
+
+    #dropAvatarHandler = (e) => {
+        e.preventDefault();
+
+        if (e.dataTransfer.items) {
+            const fls = [];
+            [...e.dataTransfer.items].forEach((item) => {
+                if (item.kind === 'file') {
+                    const file = item.getAsFile();
+                    fls.push(file);
+                }
+            });
+            this.parent.querySelector('.input-upload-avatar').files = [...fls];
+        } else {
+            this.parent.querySelector('.input-upload-avatar').files = [...e.dataTransfer.files];
+        }
+
+        if (this.parent.querySelector('.input-upload-avatar').files[0]?.type.startsWith('image/')) {
+            this.#previewAvatar(e);
+        }
+    };
+
+    #dragoverAvatarHandler = (e) => {
+        e.preventDefault();
     };
 }

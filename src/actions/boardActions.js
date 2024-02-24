@@ -13,9 +13,9 @@ export const actionUpdateBoard = (newBoard) => ({
     value: newBoard,
 });
 
-export const actionDeleteBoard = (id) => ({
+export const actionDeleteBoard = (board) => ({
     type: 'deleteBoard',
-    value: { board_id: id },
+    value: board,
 });
 
 export const actionCreateList = (newList) => ({
